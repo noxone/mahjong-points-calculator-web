@@ -1,6 +1,6 @@
 package org.olafneumann.mahjong.points.result
 
-data class MahjongResult(
+data class PlayerResult(
     val lines: List<Line>,
     val points: Int,
     val doublings: Int,

@@ -10,23 +10,36 @@ import org.olafneumann.mahjong.points.model.Combination.Type.Pair
 import org.olafneumann.mahjong.points.model.Combination.Visibility
 import org.olafneumann.mahjong.points.model.Combination.Visibility.Open
 import org.olafneumann.mahjong.points.model.Combination.Visibility.Closed
+import org.olafneumann.mahjong.points.model.Game
+import org.olafneumann.mahjong.points.model.GameModifiers
 import org.olafneumann.mahjong.points.model.Hand
 import org.olafneumann.mahjong.points.model.Tile
-import org.olafneumann.mahjong.points.model.Tile.DragonRed
-import org.olafneumann.mahjong.points.model.Tile.DragonWhite
-import org.olafneumann.mahjong.points.model.Tile.DragonGreen
+import org.olafneumann.mahjong.points.model.Wind
+import org.olafneumann.mahjong.points.result.ClassicRulesResultComputer.Companion.getFigures
 import kotlin.math.pow
 
 // according to: http://dmjl.de/wp-content/uploads/2009/05/DMJL_CC_Wertung_2005.pdf
 class ClassicRulesResultComputer : ResultComputer {
-    override fun computeResult(hand: Hand): MahjongResult {
+    override fun computeResult(gameModifiers: GameModifiers, platzWind: Wind, hand: Hand): PlayerResult {
+        TODO("Not yet implemented")
+    }
+
+    private fun computeResult(hand: Hand, gameModifiers: GameModifiers, platzWind: Wind): PlayerResult {
         val lines = listOf(
+            // Points
             checkForFlowers(hand),
             checkForChis(hand),
             checkForPongs(hand),
             checkForKangs(hand),
             checkPairs(hand),
+            // Points for Mahjong
+            hand.isMahjong.map { checkMahjongPoints(gameModifiers) },
+            // Doublings for all
+            checkDoublings(hand = hand, rundenWind = gameModifiers.rundenWind, platzWind = platzWind),
+            // Doublings for Mahjong
+            hand.isMahjong.map { checkMahjongDoublings(gameModifiers, hand) }
         )
+            .mapNotNull { it }
             .flatten()
 
         val points = lines
@@ -37,7 +50,7 @@ class ClassicRulesResultComputer : ResultComputer {
             .sumOf { it.doublings }
         val resultPoints = points * 2.0.pow(doublings)
 
-        return MahjongResult(lines = lines, points = points, doublings = doublings, result = resultPoints.toInt())
+        return PlayerResult(lines = lines, points = points, doublings = doublings, result = resultPoints.toInt())
     }
 
     private fun checkForFlowers(hand: Hand): List<Line> =
@@ -82,51 +95,81 @@ class ClassicRulesResultComputer : ResultComputer {
          .map { Line(description = "Pair.Wind", points = 2) }*/
             )
 
-    private fun checkMahjongPoints(): List<Line> =
-        emptyList()
-
-    private fun checkDoublings(hand: Hand): List<Line> =
+    private fun checkMahjongPoints(gameModifiers: GameModifiers): List<Line> =
         listOf(
-            // TODO Beide Bonusziegel des Platzwindes
+            // Mahjong
+            Line(description = "Mahjong", points = 20),
+            // Schlussziegel von der Mauer
+            gameModifiers.schlussziegelVonMauer
+                .map { Line("Schlussziegel.von.Mauer", points = 2) },
+            // Schlussziegel ist einzig möglicher Stein
+            gameModifiers.schlussziegelEinzigMoeglicherZiegel
+                .map { Line("Schlussziegel.einzig.Moeglich", points = 2) },
+            // Schlussziegel komplettiert Paar aus Grundziegeln
+            gameModifiers.schlussziegelKomplettiertPaarAusGrundziegeln
+                .map { Line("Schlussziegel.komplettiert.Grundziegel", points = 2) },
+            // Schlussziegel komplettiert Paar aus Hauptziegeln
+            gameModifiers.schlussziegelKomplettiertPaarAusHauptziegeln
+                .map { Line("Schlussziegel.komplettiert.Hauptziegel", points = 2) },
+        ).mapNotNull { it }
+
+    private fun checkDoublings(hand: Hand, rundenWind: Wind, platzWind: Wind): List<Line> =
+        listOf(
             listOf(
+                // Beide Bonusziegel des Platzwindes
+                (hand.pair?.getTiles()?.all { it.wind == platzWind } ?: false)
+                    .map { Line(description = "Bonus.Wind.Place", doublings = 1) },
+                // alle Blumenziegel
                 hand.bonusTiles.containsAll(Tile.flowers)
                     .map { Line(description = "All.Flowers", doublings = 1) },
+                // Alle Jahreszeitenziegel
                 hand.bonusTiles.containsAll(Tile.seasons)
                     .map { Line(description = "All.Seasons", doublings = 1) },
             ),
+            // Pong oder Kang aus Drachen
             hand.getFigures(Pong, tiles = Tile.dragons)
                 .map { Line(description = "Pong.Dragons", doublings = 1) },
             hand.getFigures(Kang, tiles = Tile.dragons)
                 .map { Line(description = "Kang.Dragons", doublings = 1) },
-            // TODO Pong/ Kang des Platzwindes
-            // TODO Pong/ Kang des Rundenwindes
             listOf(
-                hand.getFigures(Pong, Closed).hasSize(3)
+                // Pong/ Kang des Rundenwindes
+                hand.getFigures(Pong).any { it.tile.wind == rundenWind }
+                    .map { Line(description = "Pong.Roundwind", doublings = 1) },
+                hand.getFigures(Kang).any { it.tile.wind == rundenWind }
+                    .map { Line(description = "Kang.Roundwind", doublings = 1) },
+                // drei verdeckte pong
+                hand.fullFigures.filter { it.type == Pong || it.type == Kang }
+                    .filter { it.visibility == Closed }
+                    .hasSize(3)
                     .map { Line(description = "3.ClosedPongs", doublings = 1) },
+                // kleine drei Drachen
                 (hand.fullFigures.filter { it.type == Pong || it.type == Kang }
                     .filter { it.tile.isDragon }
                     .hasSize(2)
-                        && hand.pair?.tile?.let { it.isDragon } == true)
+                        && hand.pair?.tile?.isDragon == true)
                     .map { Line(description = "Small.3.Dragons", doublings = 1) },
+                // große drei Drachen
                 hand.fullFigures.filter { it.type == Pong || it.type == Kang }
                     .filter { it.tile.isDragon }
                     .hasSize(3)
                     .map { Line(description = "Big.3.Dragons", doublings = 2) },
+                // kleine drei Freunde
                 (hand.fullFigures.filter { it.type == Pong || it.type == Kang }
                     .filter { it.tile.isWind }
                     .hasSize(3)
-                        && hand.pair?.tile?.let { it.isWind } == true)
+                        && hand.pair?.tile?.isWind == true)
                     .map { Line(description = "Small.3.Friends", doublings = 1) },
+                // große drei Freunde
                 hand.fullFigures.filter { it.type == Pong || it.type == Kang }
                     .filter { it.tile.isWind }
                     .hasSize(4)
                     .map { Line(description = "Big.4.Friends", doublings = 2) },
-            )
+            ),
         )
             .flatten()
             .mapNotNull { it }
 
-    private fun checkMahjongDoublings(hand: Hand): List<Line> =
+    private fun checkMahjongDoublings(gameModifiers: GameModifiers, hand: Hand): List<Line> =
         listOf(
             // TODO Null-Punkte-Hand 1
             listOf(
@@ -141,7 +184,7 @@ class ClassicRulesResultComputer : ResultComputer {
                         && hand.allTiles.mapNotNull { it.color }.distinct().hasSize(1))
                     .map { Line(description = "All.Tiles.One.Color.And.Pictures", doublings = 1) },
                 // Nur Ziegel einer Farbe
-                    (hand.allTiles.map { it.color }.distinct().hasSize(1)
+                (hand.allTiles.map { it.color }.distinct().hasSize(1)
                         && hand.allTiles.first().color != null)
                     .map { Line(description = "All.Tiles.One.Color", doublings = 3) },
                 // Nur Hauptziegel
@@ -150,11 +193,21 @@ class ClassicRulesResultComputer : ResultComputer {
                 // Nur Bildziegel
                 hand.allTiles.all { it.isImage }
                     .map { Line(description = "Only.Imagetiles", doublings = 2) },
-                // TODO Schlussziegel von der toten Mauer 1
-                // TODO mit dem letzten Ziegel der Mauer gewonnenes Spiel 1
-                // TODO Schlussziegel: abgelegter Ziegel nach Abbau der Mauer 1
-                // Beraubung des Kang 1
-                // Mahjong-Ruf zu Beginn 1
+                // Schlussziegel von der toten Mauer
+                gameModifiers.schlussziegelVonToterMauer
+                    .map { Line(description = "Schlussziegel.tote.Mauer", doublings = 1) },
+                // mit dem letzten Ziegel der Mauer gewonnenes Spiel
+                gameModifiers.mitDemLetztenZiegelDerMauerGewonnen
+                    .map { Line(description = "Letzer.Ziegel.der.Mauer", doublings = 1) },
+                // Schlussziegel: abgelegter Ziegel nach Abbau der Mauer 1
+                gameModifiers.schlussziegelIstAbgelegterZiegelNachAbbauDerMauer
+                    .map { Line(description = "Schlussziegel.abgelegt.nach.Mauer", doublings = 1) },
+                // Beraubung des Kang
+                gameModifiers.beraubungDesKang
+                    .map { Line(description = "Beraubung.des.Kang", doublings = 1) },
+                // Mahjong-Ruf zu Beginn
+                gameModifiers.mahjongAtBeginning
+                    .map { Line(description = "Mahjong.at.Beginning", doublings = 1) },
             )
 
         )
@@ -179,9 +232,9 @@ class ClassicRulesResultComputer : ResultComputer {
                 .filter { tiles.isEmpty() || it.tile in tiles }
                 .toList()
 
-        private fun <T> Boolean.map(out: () -> T): T? =
+        private fun <T> Boolean.map(function: () -> T): T? =
             if (this) {
-                out()
+                function()
             } else {
                 null
             }

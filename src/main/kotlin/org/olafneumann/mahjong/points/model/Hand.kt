@@ -12,4 +12,6 @@ data class Hand(
     val allFigures: List<Combination> = listOf(figure1, figure2, figure3, figure4, pair).mapNotNull { it }
 
     val allTiles: List<Tile> = allFigures.flatMap { it.getTiles() }
+
+    val isMahjong: Boolean = allFigures.size == 5
 }

@@ -1,8 +1,14 @@
 package org.olafneumann.mahjong.points.model
 
+import org.olafneumann.mahjong.points.model.Wind.East
+import org.olafneumann.mahjong.points.model.Wind.North
+import org.olafneumann.mahjong.points.model.Wind.South
+import org.olafneumann.mahjong.points.model.Wind.West
+
 enum class Tile(
     val color: Color?,
     val number: Int?,
+    val wind: Wind? = null,
 ) {
     Bamboo1(color = Color.Bamboo, number = 1),
     Bamboo2(color = Color.Bamboo, number = 2),
@@ -31,10 +37,10 @@ enum class Tile(
     Character7(color = Color.Character, number = 7),
     Character8(color = Color.Character, number = 8),
     Character9(color = Color.Character, number = 9),
-    WindEast(color = null, number = null),
-    WindSouth(color = null, number = null),
-    WindWest(color = null, number = null),
-    WindNorth(color = null, number = null),
+    WindEast(color = null, number = null, wind = East),
+    WindSouth(color = null, number = null, wind = South),
+    WindWest(color = null, number = null, wind = West),
+    WindNorth(color = null, number = null, wind = North),
     DragonWhite(color = null, number = null),
     DragonGreen(color = null, number = null),
     DragonRed(color = null, number = null),
