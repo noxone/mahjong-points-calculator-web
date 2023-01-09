@@ -64,6 +64,8 @@ enum class Tile(
     val isFlower: Boolean get() = this in flowers
     val isSeason: Boolean get() = this in seasons
 
+    val filename = "${name}.svg".lowercase()
+
     companion object {
         val flowers: Collection<Tile> = setOf(Flower1, Flower2, Flower3, Flower4)
         val seasons: Collection<Tile> = setOf(Season1, Season2, Season3, Season4)
