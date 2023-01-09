@@ -24,7 +24,7 @@ class ClassicRulesResultComputer : ResultComputer {
         TODO("Not yet implemented")
     }
 
-    private fun computeResult(hand: Hand, gameModifiers: GameModifiers, platzWind: Wind): PlayerResult {
+    fun computeResult(hand: Hand, gameModifiers: GameModifiers, platzWind: Wind): PlayerResult {
         val lines = listOf(
             // Points
             checkForFlowers(hand),
@@ -58,14 +58,14 @@ class ClassicRulesResultComputer : ResultComputer {
             Line(description = Language.KEY_BONUS, points = POINT_BONUS, times = hand.bonusTiles.size)
         )
 
-    private fun checkForChis(hand: Hand): List<Line> = (
+    private fun checkForChis(hand: Hand) = (
             hand.getFigures(Chow, Open)
                 .map { Line(description = Language.KEY_CHOW_OPEN, points = 0) }
                     + hand.getFigures(Chow, Closed)
                 .map { Line(description = Language.KEY_CHOW_CLOSED, points = 0) }
             )
 
-    private fun checkForPongs(hand: Hand): List<Line> = (
+    private fun checkForPongs(hand: Hand) = (
             hand.getFigures(Pong, Open, baseTile = true)
                 .map { Line(description = "Pong.Basetile.Open", points = 2) }
                     + hand.getFigures(Pong, Closed, baseTile = true)
@@ -95,7 +95,7 @@ class ClassicRulesResultComputer : ResultComputer {
          .map { Line(description = "Pair.Wind", points = 2) }*/
             )
 
-    private fun checkMahjongPoints(gameModifiers: GameModifiers): List<Line> =
+    private fun checkMahjongPoints(gameModifiers: GameModifiers) =
         listOf(
             // Mahjong
             Line(description = "Mahjong", points = 20),

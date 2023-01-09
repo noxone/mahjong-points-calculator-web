@@ -1,10 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>JS Client</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- search engine -->
+    <meta name="description" content="Mahjong Point Calculator." />
+    <meta name="keywords" content="mahjong, points" />
+    <meta name="author" content="Olaf Neumann" />
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+    <!-- sources of regex generator -->
+    <script type="text/javascript" src="mahjong-points.js"></script>
+
+    <!-- now for our page -->
+    <link rel="stylesheet" href="styles/mahjong-points.css">
+    <title>Mahjong Point Calculator</title>
 </head>
-<body>
-<script src="mahjong-points.js"></script>
+
+<body class="bg-dark">
+    <!--<script src="mahjong-points.js"></script>-->
+    <div class="container-fluid p-2">
+        <div class="bg-danger rounded p-3 row g-0">
+            <h1>Mahjong Punkte Rechner</h1>
+        </div>
+
+        <div class="bg-light rounded p-3 mt-3 row g-0">
+            <div>Tiles</div>
+            <div class="rounded border p-1 mr-tiles" id="mr_tiles">
+                <div>
+                    <img src="images/bamboo1.svg" title="bamboo 1"/>
+                    <img src="images/bamboo2.svg" title="bamboo 2"/>
+                    <img src="images/bamboo3.svg" title="bamboo 3"/>
+                    <img src="images/bamboo4.svg" title="bamboo 4"/>
+                    <img src="images/bamboo5.svg" title="bamboo 5"/>
+                    <img src="images/bamboo6.svg" title="bamboo 6"/>
+                    <img src="images/bamboo7.svg" title="bamboo 7"/>
+                    <img src="images/bamboo8.svg" title="bamboo 8"/>
+                    <img src="images/bamboo9.svg" title="bamboo 9"/>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

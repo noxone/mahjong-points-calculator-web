@@ -19,15 +19,15 @@ enum class Tile(
     Bamboo7(color = Color.Bamboo, number = 7),
     Bamboo8(color = Color.Bamboo, number = 8),
     Bamboo9(color = Color.Bamboo, number = 9),
-    Circles1(color = Color.Circles, number = 1),
-    Circles2(color = Color.Circles, number = 2),
-    Circles3(color = Color.Circles, number = 3),
-    Circles4(color = Color.Circles, number = 4),
-    Circles5(color = Color.Circles, number = 5),
-    Circles6(color = Color.Circles, number = 6),
-    Circles7(color = Color.Circles, number = 7),
-    Circles8(color = Color.Circles, number = 8),
-    Circles9(color = Color.Circles, number = 9),
+    Circles1(color = Color.Circle, number = 1),
+    Circles2(color = Color.Circle, number = 2),
+    Circles3(color = Color.Circle, number = 3),
+    Circles4(color = Color.Circle, number = 4),
+    Circles5(color = Color.Circle, number = 5),
+    Circles6(color = Color.Circle, number = 6),
+    Circles7(color = Color.Circle, number = 7),
+    Circles8(color = Color.Circle, number = 8),
+    Circles9(color = Color.Circle, number = 9),
     Character1(color = Color.Character, number = 1),
     Character2(color = Color.Character, number = 2),
     Character3(color = Color.Character, number = 3),
@@ -71,5 +71,10 @@ enum class Tile(
         val seasons: Collection<Tile> = setOf(Season1, Season2, Season3, Season4)
         val dragons: Collection<Tile> = setOf(DragonGreen, DragonRed, DragonWhite)
         val winds: Collection<Tile> = setOf(WindEast, WindSouth, WindWest, WindNorth)
+        val bamboos: Collection<Tile> = allOfColor(Color.Bamboo)
+        val characters: Collection<Tile> = allOfColor(Color.Character)
+        val cirles: Collection<Tile> = allOfColor(Color.Circle)
+
+        private fun allOfColor(color: Color) = values().filter { it.color == color }
     }
 }

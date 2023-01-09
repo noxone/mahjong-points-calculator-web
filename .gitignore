@@ -235,4 +235,5 @@ gradle-app.setting
 # End of https://www.toptal.com/developers/gitignore/api/kotlin,java,visualstudiocode,macos,intellij,gradle
 
 
+kotlin-js-store/
 .idea/
