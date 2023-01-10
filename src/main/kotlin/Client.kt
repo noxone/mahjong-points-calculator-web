@@ -6,9 +6,15 @@ import kotlinx.browser.window
 import kotlinx.dom.clear
 import kotlinx.html.DIV
 import kotlinx.html.a
+import kotlinx.html.id
 import kotlinx.html.img
 import kotlinx.html.js.onClickFunction
+import org.olafneumann.mahjong.points.html.inject2
 import org.olafneumann.mahjong.points.model.Tile
+import org.w3c.dom.HTMLElement
+import org.w3c.dom.HTMLImageElement
+import org.w3c.dom.HTMLInputElement
+import kotlin.properties.Delegates
 
 fun main() {
     window.onload = { initMahjongPointCalculator() }
@@ -20,9 +26,14 @@ private fun initMahjongPointCalculator() {
 
 val selectedTiles = mutableListOf<Tile>()
 
-fun DIV.tileImage(tile: Tile) = a {
-    img(classes = "mr-tile", src = "images/${tile.filename}") {
+val Tile.htmlId: String
+    get() = "mr_tile_${this.name}"
+
+fun DIV.tileImage(tile: Tile) = a(classes = "mr-tile") {
+    img(classes = "mr-tile mr-tile-img", src = "images/${tile.filename}") {
         alt = tile.name
+        id = tile.htmlId
+        attributes["mr-tile"] = tile.name
     }
     onClickFunction = {
         selectedTiles += tile
@@ -33,6 +44,7 @@ fun DIV.tileImage(tile: Tile) = a {
         }
     }
 }
+
 
 fun showSelectedNodes() {
     document.getElementById("mr_selected_tiles")?.showSelectedTiles(selectedTiles)
@@ -47,35 +59,49 @@ fun Node.showSelectedTiles(tiles: Collection<Tile>) {
     }
 }
 
+private class PopoverElements {
+    var nameText: HTMLInputElement by Delegates.notNull()
+    var tileImages: Map<Tile, HTMLImageElement> by Delegates.notNull()
+}
+
 fun Node.appendTileDivs() {
+    val elements = PopoverElements()
+
     clear()
     append {
-        div(classes = "mr-tile-field") {
-            div {
-                Tile.bamboos.forEach { tileImage(it) }
-            }
-            div {
-                Tile.characters.forEach { tileImage(it) }
-            }
-            div {
-                Tile.cirles.forEach { tileImage(it) }
-            }
-            div(classes = "d-flex justify-content-between") {
+        /*inject(
+            elements, listOf(
+                InjectByClassName("mr-tile-img") to PopoverElements::tileImages
+            )
+        )*/
+        inject2(elements, PopoverElements::tileImages)
+            .div(classes = "mr-tile-field") {
                 div {
-                    Tile.winds.forEach { tileImage(it) }
+                    Tile.bamboos.forEach { tileImage(it) }
                 }
                 div {
-                    Tile.dragons.forEach { tileImage(it) }
-                }
-            }
-            div(classes = "d-flex justify-content-between") {
-                div {
-                    Tile.flowers.forEach { tileImage(it) }
+                    Tile.characters.forEach { tileImage(it) }
                 }
                 div {
-                    Tile.seasons.forEach { tileImage(it) }
+                    Tile.cirles.forEach { tileImage(it) }
+                }
+                div(classes = "d-flex justify-content-between") {
+                    div {
+                        Tile.winds.forEach { tileImage(it) }
+                    }
+                    div {
+                        Tile.dragons.forEach { tileImage(it) }
+                    }
+                }
+                div(classes = "d-flex justify-content-between") {
+                    div {
+                        Tile.flowers.forEach { tileImage(it) }
+                    }
+                    div {
+                        Tile.seasons.forEach { tileImage(it) }
+                    }
                 }
             }
-        }
+        console.log(elements.tileImages.keys.map { it.name }.toTypedArray())
     }
 }

@@ -1,9 +1,9 @@
 .mr-tile-field {
-  font-size: 10pt;
-  width: 46.79em;
+  font-size: 8pt;
+  width: 46.8em;
 }
 
-img.mr-tile {
+a.mr-tile img {
   width: 5em;
   background-color: white;
   border-radius: 0.5em;
