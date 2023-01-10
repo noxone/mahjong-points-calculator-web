@@ -1,5 +1,10 @@
+.mr-tile-field {
+  font-size: 10pt;
+  width: 45em;
+}
+
 img.mr-tile {
-    width: 70px;
-    background-color: white;
-    border-radius: 9px;
+  width: 5em;
+  background-color: white;
+  border-radius: 0.6em;
 }

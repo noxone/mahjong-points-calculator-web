@@ -9,7 +9,7 @@ import org.olafneumann.mahjong.points.model.Color
 import org.olafneumann.mahjong.points.model.Tile
 
 fun main() {
-    window.onload = { document.body?.appendTileDivs() }
+    window.onload = { document.getElementById("mr_tiles")?.appendTileDivs() }
 }
 
 fun Node.sayHello() {
@@ -23,39 +23,45 @@ fun Node.sayHello() {
 fun Node.appendTileDivs() {
     clear()
     append {
-        div {
-            Tile.bamboos.forEach {
-                img(classes = "mr-tile", src = "images/${it.filename}") {  }
+        div(classes = "mr-tile-field") {
+            div {
+                Tile.bamboos.forEach {
+                    img(classes = "mr-tile", src = "images/${it.filename}") { }
+                }
             }
-        }
-        div {
-            Tile.characters.forEach {
-                img(classes = "mr-tile", src = "images/${it.filename}") {  }
+            div {
+                Tile.characters.forEach {
+                    img(classes = "mr-tile", src = "images/${it.filename}") { }
+                }
             }
-        }
-        div {
-            Tile.cirles.forEach {
-                img(classes = "mr-tile", src = "images/${it.filename}") {  }
+            div {
+                Tile.cirles.forEach {
+                    img(classes = "mr-tile", src = "images/${it.filename}") { }
+                }
             }
-        }
-        div {
-            Tile.winds.forEach {
-                img(classes = "mr-tile", src = "images/${it.filename}") {  }
+            div(classes = "d-flex justify-content-between") {
+                div {
+                    Tile.winds.forEach {
+                        img(classes = "mr-tile", src = "images/${it.filename}") { }
+                    }
+                }
+                div {
+                    Tile.dragons.forEach {
+                        img(classes = "mr-tile", src = "images/${it.filename}") { }
+                    }
+                }
             }
-        }
-        div {
-            Tile.dragons.forEach {
-                img(classes = "mr-tile", src = "images/${it.filename}") {  }
-            }
-        }
-        div {
-            Tile.flowers.forEach {
-                img(classes = "mr-tile", src = "images/${it.filename}") {  }
-            }
-        }
-        div {
-            Tile.seasons.forEach {
-                img(classes = "mr-tile", src = "images/${it.filename}") {  }
+            div(classes = "d-flex justify-content-between") {
+                div {
+                    Tile.flowers.forEach {
+                        img(classes = "mr-tile", src = "images/${it.filename}") { }
+                    }
+                }
+                div {
+                    Tile.seasons.forEach {
+                        img(classes = "mr-tile", src = "images/${it.filename}") { }
+                    }
+                }
             }
         }
     }
