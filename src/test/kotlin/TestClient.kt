@@ -9,4 +9,4 @@ class TestClient {
         container.sayHello()
         assertEquals("Hello from JS", container.textContent)
     }*/
-} 
+}

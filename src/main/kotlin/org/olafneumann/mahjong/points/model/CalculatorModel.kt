@@ -1,12 +1,13 @@
 package org.olafneumann.mahjong.points.model
 
+import org.olafneumann.mahjong.points.game.Constants.MAX_NUMBER_OF_TILES_PER_TYPE
 import org.olafneumann.mahjong.points.game.Tile
 
 data class CalculatorModel(
     val selectedTiles: List<Tile>
 ) {
     fun isSelectable(tile: Tile): Boolean =
-        selectedTiles.filter { it == tile }.size < 4
+        selectedTiles.filter { it == tile }.size < MAX_NUMBER_OF_TILES_PER_TYPE
 
     fun select(tile: Tile): CalculatorModel {
         if (!isSelectable(tile)) {

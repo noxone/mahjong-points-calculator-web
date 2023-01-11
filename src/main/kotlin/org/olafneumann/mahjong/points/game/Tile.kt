@@ -55,7 +55,7 @@ enum class Tile(
     Season4(color = null, number = 4);
 
     val isBaseTile: Boolean =
-        color != null && number in 2..8
+        color != null && number in Constants.BASE_TILES
     val isImage: Boolean = color == null
 
     val next: Tile? by lazy { values().find { it.color == color && it.number == (number?.plus(1)) } }

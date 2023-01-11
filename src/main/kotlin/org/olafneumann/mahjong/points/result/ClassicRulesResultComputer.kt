@@ -17,6 +17,7 @@ import org.olafneumann.mahjong.points.game.Wind
 import kotlin.math.pow
 
 // according to: http://dmjl.de/wp-content/uploads/2009/05/DMJL_CC_Wertung_2005.pdf
+@Suppress("MagicNumber") // TODO Remove
 class ClassicRulesResultComputer : ResultComputer {
     override fun computeResult(gameModifiers: GameModifiers, platzWind: Wind, hand: Hand): PlayerResult {
         TODO("Not yet implemented")

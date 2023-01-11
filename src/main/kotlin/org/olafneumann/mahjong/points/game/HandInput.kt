@@ -19,7 +19,7 @@ data class HandInput(
             map
         }
             .values
-            .find { it > 4 } == null
+            .find { it > MAX_IDENTICAL_TILE_COUNT } == null
 
         return maxFourOfEachTile
     }
@@ -29,4 +29,8 @@ data class HandInput(
             figure1 = Combination()
         )
     }*/
+
+    companion object {
+        private const val MAX_IDENTICAL_TILE_COUNT = 4
+    }
 }

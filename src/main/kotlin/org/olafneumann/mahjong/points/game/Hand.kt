@@ -13,5 +13,9 @@ data class Hand(
 
     val allTiles: List<Tile> = allFigures.flatMap { it.getTiles() }
 
-    val isMahjong: Boolean = allFigures.size == 5
+    val isMahjong: Boolean = allFigures.size == FIGURES_IN_COMPLETE_HAND
+
+    companion object {
+        private const val FIGURES_IN_COMPLETE_HAND = 5
+    }
 }
