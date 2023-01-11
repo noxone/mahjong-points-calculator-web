@@ -129,12 +129,12 @@ jobs:
 #
 #          head -n $startLine README.md > $filename
 #          tail -n +$endLine README.md >> $filename
-      - name: Publish docker description
-        if: ${{ inputs.pushImages }}
-        uses: peter-evans/dockerhub-description@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: noxone/mahjongpoints
-          short-description: ${{ github.event.repository.description }}
-          readme-filepath: ./docker.README.md
+#      - name: Publish docker description
+#        if: ${{ inputs.pushImages }}
+#        uses: peter-evans/dockerhub-description@v3
+#        with:
+#          username: ${{ secrets.DOCKERHUB_USERNAME }}
+#          password: ${{ secrets.DOCKERHUB_TOKEN }}
+#          repository: noxone/mahjongpoints
+#          short-description: ${{ github.event.repository.description }}
+#          readme-filepath: ./docker.README.md
