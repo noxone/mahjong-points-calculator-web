@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- search engine -->
+    <meta name="description" content="Mahjong Point Calculator." />
+    <meta name="keywords" content="mahjong, points" />
+    <meta name="author" content="Olaf Neumann" />
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+    <!-- sources of regex generator -->
+    <script type="text/javascript" src="mahjong-points.js"></script>
+
+    <!-- now for our page -->
+    <link rel="stylesheet" href="styles/mahjong-points.css">
+    <title>Mahjong Point Calculator</title>
+</head>
+
+<body class="bg-dark">
+    <!--<script src="mahjong-points.js"></script>-->
+    <div class="container p-2">
+        <div class="bg-danger rounded p-3 row g-0">
+            <h1>Mahjong Punkte Rechner</h1>
+        </div>
+
+        <div class="bg-light rounded p-3 mt-3 row g-0">
+            <div class="d-flex justify-content-between">
+                <h2>Tiles</h2>
+                <button class="btn btn-secondary" id="mr_btn_calc"><i class="bi bi-calculator-fill"></i></button>
+            </div>
+            <div class="rounded border p-1 mr-tiles" id="mr_tiles">
+            </div>
+        </div>
+
+        <div class="bg-light rounded p-3 mt-3 row g-0">
+            <h2>Hand</h2>
+            <div id="mr_selected_tiles" class="mr-tile-field">
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

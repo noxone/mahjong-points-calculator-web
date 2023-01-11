@@ -1,0 +1,17 @@
+.mr-tile-field {
+  font-size: 8pt;
+  width: 46.8em;
+}
+
+a.mr-tile img {
+  width: 5em;
+  background-color: white;
+  border-radius: 0.5em;
+  margin: 0.1em;
+  cursor: pointer;
+}
+
+.not-selectable {
+    cursor: not-allowed !important;
+    opacity: 40%;
+}
