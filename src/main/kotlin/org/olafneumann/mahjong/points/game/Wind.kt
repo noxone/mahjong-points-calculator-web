@@ -1,4 +1,4 @@
-package org.olafneumann.mahjong.points.model
+package org.olafneumann.mahjong.points.game
 
 enum class Wind {
     East, North, West, South

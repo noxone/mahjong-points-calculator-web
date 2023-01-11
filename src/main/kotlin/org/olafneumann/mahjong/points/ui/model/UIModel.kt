@@ -1,24 +1,33 @@
 package org.olafneumann.mahjong.points.ui.model
 
-import org.olafneumann.mahjong.points.model.Tile
+import org.olafneumann.mahjong.points.game.Tile
+import org.olafneumann.mahjong.points.model.CalculatorModel
 
 class UIModel {
     private val changeListeners = mutableListOf<UIModelChangeListener>()
     fun registerChangeListener(listener: UIModelChangeListener) = changeListeners.add(listener)
     private fun fireChange() = changeListeners.forEach { it.modelChanged(this) }
 
-    val selectedTiles = mutableListOf<Tile>()
+    var calculatorModel: CalculatorModel = createInitialCalculatorModel()
+        private set(value) {
+            field = value
+            fireChange()
+        }
 
-    fun select(tile: Tile) {
-        selectedTiles += tile
-        fireChange()
+    private fun setNewModel(calculatorModel: CalculatorModel) {
+        this.calculatorModel = calculatorModel
     }
-    fun deselect(tile: Tile) {
-        selectedTiles -= tile
-        fireChange()
-    }
+
+    fun select(tile: Tile) = setNewModel(calculatorModel.select(tile))
+
+    fun deselect(tile: Tile) = setNewModel(calculatorModel.deselect(tile))
 
     fun start() = fireChange()
+
+    companion object {
+        private fun createInitialCalculatorModel(): CalculatorModel =
+            CalculatorModel(selectedTiles = emptyList())
+    }
 }
 
 

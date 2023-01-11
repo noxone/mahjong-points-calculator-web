@@ -1,4 +1,4 @@
-package org.olafneumann.mahjong.points.model
+package org.olafneumann.mahjong.points.game
 
 data class HandInput(
     val tiles: List<Tile>

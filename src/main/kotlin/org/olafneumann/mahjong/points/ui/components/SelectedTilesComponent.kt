@@ -10,14 +10,14 @@ import org.w3c.dom.HTMLElement
 class SelectedTilesComponent(
     parent: HTMLElement,
     private val model: UIModel
-) : Component(parent = parent), UIModelChangeListener {
+) : AbstractComponent(parent = parent), UIModelChangeListener {
     init {
         model.registerChangeListener(this)
     }
 
     override fun TagConsumer<HTMLElement>.buildUI() {
         div {
-            model.selectedTiles.forEach { tile ->
+            model.calculatorModel.selectedTiles.forEach { tile ->
                 tileImage(tile) { model.deselect(tile) }
             }
         }

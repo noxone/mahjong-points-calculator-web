@@ -5,7 +5,7 @@ import kotlinx.html.div
 import org.olafneumann.mahjong.points.ui.html.getAllChildren
 import org.olafneumann.mahjong.points.ui.html.filterAttributeIsPresent
 import org.olafneumann.mahjong.points.ui.html.injectRoot
-import org.olafneumann.mahjong.points.model.Tile
+import org.olafneumann.mahjong.points.game.Tile
 import org.olafneumann.mahjong.points.ui.controls.tileImage
 import org.olafneumann.mahjong.points.ui.model.UIModel
 import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
@@ -18,7 +18,7 @@ import kotlin.properties.Delegates
 class TileSelectionComponent(
     parent: HTMLElement,
     private val model: UIModel
-) : Component(parent = parent), UIModelChangeListener {
+) : AbstractComponent(parent = parent), UIModelChangeListener {
     private var imageTiles: Map<Tile, HTMLImageElement> by Delegates.notNull()
 
     init {
@@ -47,11 +47,13 @@ class TileSelectionComponent(
     }
 
     private fun TagConsumer<HTMLElement>.tileImages(tiles: Collection<Tile>) =
-        tiles.forEach { tileImage(it, createOnClickListener(it)) }
+        tiles.forEach { tile -> tileImage(tile, tile.isSelectable, createOnClickListener(tile)) }
 
     private fun createOnClickListener(tile: Tile): (Event) -> Unit = { model.select(tile) }
 
     override fun modelChanged(model: UIModel) {
         createUI()
     }
+
+    private val Tile.isSelectable: Boolean get() = model.calculatorModel.isSelectable(this)
 }

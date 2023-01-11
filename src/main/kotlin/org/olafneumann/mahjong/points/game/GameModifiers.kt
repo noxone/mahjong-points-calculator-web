@@ -1,8 +1,7 @@
-package org.olafneumann.mahjong.points.model
+package org.olafneumann.mahjong.points.game
 
-data class Game(
-    val match: Match,
-    val mahjong: Player,
+data class GameModifiers(
+    val rundenWind: Wind,
     val mahjongAtBeginning: Boolean,
     val schlussziegelVonMauer: Boolean,
     val schlussziegelEinzigMoeglicherZiegel: Boolean,
@@ -12,8 +11,4 @@ data class Game(
     val mitDemLetztenZiegelDerMauerGewonnen: Boolean,
     val schlussziegelIstAbgelegterZiegelNachAbbauDerMauer: Boolean,
     val beraubungDesKang: Boolean,
-
-) {
-    val platzWind: Wind get() = Wind.East
-    val rundenWind: Wind get() = Wind.West
-}
+)

@@ -1,9 +1,9 @@
-package org.olafneumann.mahjong.points.model
+package org.olafneumann.mahjong.points.game
 
-import org.olafneumann.mahjong.points.model.Wind.East
-import org.olafneumann.mahjong.points.model.Wind.North
-import org.olafneumann.mahjong.points.model.Wind.South
-import org.olafneumann.mahjong.points.model.Wind.West
+import org.olafneumann.mahjong.points.game.Wind.East
+import org.olafneumann.mahjong.points.game.Wind.North
+import org.olafneumann.mahjong.points.game.Wind.South
+import org.olafneumann.mahjong.points.game.Wind.West
 
 enum class Tile(
     val color: Color?,

@@ -11,7 +11,7 @@ a.mr-tile img {
   cursor: pointer;
 }
 
-img.not-selectable {
+.not-selectable {
     cursor: not-allowed !important;
-    opacity: 60%;
+    opacity: 40%;
 }

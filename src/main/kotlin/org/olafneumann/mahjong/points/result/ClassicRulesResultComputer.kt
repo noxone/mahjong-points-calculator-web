@@ -1,21 +1,19 @@
 package org.olafneumann.mahjong.points.result
 
 import org.olafneumann.mahjong.points.lang.Language
-import org.olafneumann.mahjong.points.model.Combination
-import org.olafneumann.mahjong.points.model.Combination.Type
-import org.olafneumann.mahjong.points.model.Combination.Type.Pong
-import org.olafneumann.mahjong.points.model.Combination.Type.Chow
-import org.olafneumann.mahjong.points.model.Combination.Type.Kang
-import org.olafneumann.mahjong.points.model.Combination.Type.Pair
-import org.olafneumann.mahjong.points.model.Combination.Visibility
-import org.olafneumann.mahjong.points.model.Combination.Visibility.Open
-import org.olafneumann.mahjong.points.model.Combination.Visibility.Closed
-import org.olafneumann.mahjong.points.model.Game
-import org.olafneumann.mahjong.points.model.GameModifiers
-import org.olafneumann.mahjong.points.model.Hand
-import org.olafneumann.mahjong.points.model.Tile
-import org.olafneumann.mahjong.points.model.Wind
-import org.olafneumann.mahjong.points.result.ClassicRulesResultComputer.Companion.getFigures
+import org.olafneumann.mahjong.points.game.Combination
+import org.olafneumann.mahjong.points.game.Combination.Type
+import org.olafneumann.mahjong.points.game.Combination.Type.Pong
+import org.olafneumann.mahjong.points.game.Combination.Type.Chow
+import org.olafneumann.mahjong.points.game.Combination.Type.Kang
+import org.olafneumann.mahjong.points.game.Combination.Type.Pair
+import org.olafneumann.mahjong.points.game.Combination.Visibility
+import org.olafneumann.mahjong.points.game.Combination.Visibility.Open
+import org.olafneumann.mahjong.points.game.Combination.Visibility.Closed
+import org.olafneumann.mahjong.points.game.GameModifiers
+import org.olafneumann.mahjong.points.game.Hand
+import org.olafneumann.mahjong.points.game.Tile
+import org.olafneumann.mahjong.points.game.Wind
 import kotlin.math.pow
 
 // according to: http://dmjl.de/wp-content/uploads/2009/05/DMJL_CC_Wertung_2005.pdf

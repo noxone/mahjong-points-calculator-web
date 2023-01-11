@@ -5,7 +5,7 @@ import kotlinx.html.TagConsumer
 import kotlinx.html.dom.append
 import org.w3c.dom.HTMLElement
 
-abstract class Component(
+abstract class AbstractComponent(
     private val parent: HTMLElement,
 ) {
     fun createUI() {
