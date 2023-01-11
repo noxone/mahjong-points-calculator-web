@@ -1,6 +1,5 @@
 import kotlinx.html.div
 import kotlinx.html.dom.append
-import org.w3c.dom.Node
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.dom.clear
@@ -9,12 +8,13 @@ import kotlinx.html.a
 import kotlinx.html.id
 import kotlinx.html.img
 import kotlinx.html.js.onClickFunction
-import org.olafneumann.mahjong.points.html.inject2
+import org.olafneumann.mahjong.points.html.assign
+import org.olafneumann.mahjong.points.html.injectRoot
 import org.olafneumann.mahjong.points.model.Tile
-import org.w3c.dom.HTMLElement
-import org.w3c.dom.HTMLImageElement
-import org.w3c.dom.HTMLInputElement
+import org.w3c.dom.*
 import kotlin.properties.Delegates
+import org.olafneumann.mahjong.points.html.getAllChildren
+import kotlin.reflect.KMutableProperty0
 
 fun main() {
     window.onload = { initMahjongPointCalculator() }
@@ -51,12 +51,16 @@ fun showSelectedNodes() {
 }
 
 fun Node.showSelectedTiles(tiles: Collection<Tile>) {
+    var blub by Delegates.notNull<HTMLDivElement>()
     clear()
     append {
         div {
-            tiles.forEach { tileImage(it) }
+            assign { blub = it as HTMLDivElement }
+                .run { tiles.forEach { tile -> tileImage(tile) } }
         }
     }
+
+    console.log(blub)
 }
 
 private class PopoverElements {
@@ -64,17 +68,18 @@ private class PopoverElements {
     var tileImages: Map<Tile, HTMLImageElement> by Delegates.notNull()
 }
 
-fun Node.appendTileDivs() {
+fun Node.appendTileDivs(): Map<Tile, HTMLImageElement> {
     val elements = PopoverElements()
+    var imageTiles: Map<Tile, HTMLImageElement> by Delegates.notNull()
 
     clear()
     append {
-        /*inject(
-            elements, listOf(
-                InjectByClassName("mr-tile-img") to PopoverElements::tileImages
-            )
-        )*/
-        inject2(elements, PopoverElements::tileImages)
+        injectRoot { element ->
+                imageTiles = element.getAllChildren()
+                    .filterIsInstance<HTMLImageElement>()
+                    .filter { it.attributes["mr-tile"]?.value != null }
+                    .associateBy { Tile.valueOf(it.attributes["mr-tile"]!!.value) }
+            }
             .div(classes = "mr-tile-field") {
                 div {
                     Tile.bamboos.forEach { tileImage(it) }
@@ -104,4 +109,6 @@ fun Node.appendTileDivs() {
             }
         console.log(elements.tileImages.keys.map { it.name }.toTypedArray())
     }
+
+    return imageTiles
 }
