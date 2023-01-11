@@ -1,5 +1,6 @@
 package org.olafneumann.mahjong.points.game
 
+import org.olafneumann.mahjong.points.Constants
 import org.olafneumann.mahjong.points.game.Wind.East
 import org.olafneumann.mahjong.points.game.Wind.North
 import org.olafneumann.mahjong.points.game.Wind.South
