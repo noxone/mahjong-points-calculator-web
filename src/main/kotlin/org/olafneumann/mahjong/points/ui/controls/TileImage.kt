@@ -8,6 +8,7 @@ import kotlinx.html.js.onClickFunction
 import org.olafneumann.mahjong.points.game.Tile
 import org.olafneumann.mahjong.points.util.toString
 import org.w3c.dom.HTMLElement
+import org.w3c.dom.HTMLImageElement
 import org.w3c.dom.events.Event
 
 fun TagConsumer<HTMLElement>.tileImage(tile: Tile, selectable: Boolean = true, onClickFunction: (Event) -> Unit = {}) =
@@ -17,10 +18,11 @@ fun TagConsumer<HTMLElement>.tileImage(tile: Tile, selectable: Boolean = true, o
             id = tile.htmlId
             attributes["mr-tile"] = tile.name
         }
-        if (selectable) {
-            this.onClickFunction = onClickFunction
-        }
+        this.onClickFunction = onClickFunction
     }
 
 private val Tile.htmlId: String
     get() = "mr_tile_${this.name}"
+
+fun HTMLImageElement.setSelectable(selectable: Boolean) =
+    parentElement!!.classList.toggle("not-selectable", !selectable)

@@ -4,8 +4,7 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, minimum-scale=1.0, maximum-scale = 1.0, user-scalable = no">-->
-    <meta name="viewport" content="width=device-width, user-scalable = no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
     <!-- search engine -->
     <meta name="description" content="Mahjong Point Calculator." />
@@ -31,25 +30,25 @@
 </head>
 
 <body class="bg-dark">
-    <!--<script src="mahjong-points.js"></script>-->
     <div class="container-fluid p-2">
         <div class="bg-danger rounded mt-2 p-3 row g-0">
             <h1>Mahjong Punkte Rechner</h1>
         </div>
 
-        <div class="bg-light rounded p-3 mt-3 row g-0">
-            <div class="d-flex justify-content-between">
-                <h2>Tiles</h2>
-                <button class="btn btn-secondary" id="mr_btn_calc"><i class="bi bi-calculator-fill"></i></button>
+        <div class="row g-0">
+            <div class="col-md-8 col-lg-6 pe-md-3 mt-3 ">
+                <div class="bg-light rounded p-3 row g-0">
+                    <h2>Tiles</h2>
+                    <div class="mr-tiles" id="mr_tiles">
+                    </div>
+                </div>
             </div>
-            <div class="rounded border p-1 mr-tiles" id="mr_tiles">
-            </div>
-        </div>
-
-        <div class="bg-light rounded p-3 mt-3 row g-0">
-            <h2>Hand</h2>
-            <div id="mr_selected_tiles" class="mr-tile-field">
-
+    
+            <div class="col-md-4 col-lg-6 bg-light rounded p-3 mt-3 row g-0">
+                <h2>Hand</h2>
+                <div class="mr-tile-container">text</div>
+                <div id="mr_selected_tiles" class="mr-tile-container">
+                </div>
             </div>
         </div>
 

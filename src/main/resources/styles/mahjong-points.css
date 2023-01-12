@@ -3,8 +3,23 @@ body {
   /*touch-action: none;*/
 }
 
+.mr-tile-container {
+  font-size: 0.97vw;
+}
+
+@media (min-width: 768px) { 
+  .mr-tile-container {
+    font-size: 1.275vw;
+  }
+}
+
+@media (min-width: 992px) { 
+  .mr-tile-container {
+    font-size: 0.97vw;
+  }
+}
+
 .mr-tile-field {
-  font-size: 8pt;
   width: 46.8em;
 }
 

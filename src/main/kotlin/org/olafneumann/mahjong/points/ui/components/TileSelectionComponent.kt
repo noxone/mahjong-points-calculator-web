@@ -6,6 +6,7 @@ import org.olafneumann.mahjong.points.ui.html.getAllChildren
 import org.olafneumann.mahjong.points.ui.html.filterAttributeIsPresent
 import org.olafneumann.mahjong.points.ui.html.injectRoot
 import org.olafneumann.mahjong.points.game.Tile
+import org.olafneumann.mahjong.points.ui.controls.setSelectable
 import org.olafneumann.mahjong.points.ui.controls.tileImage
 import org.olafneumann.mahjong.points.ui.model.UIModel
 import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
@@ -19,6 +20,7 @@ class TileSelectionComponent(
     parent: HTMLElement,
     private val model: UIModel
 ) : AbstractComponent(parent = parent), UIModelChangeListener {
+    private var initialBuild = true
     private var imageTiles: Map<Tile, HTMLImageElement> by Delegates.notNull()
 
     init {
@@ -31,7 +33,7 @@ class TileSelectionComponent(
                 .filterAttributeIsPresent("mr-tile")
                 .associateBy { Tile.valueOf(it.attributes["mr-tile"]!!.value) }
         }
-            .div(classes = "mr-tile-field") {
+            .div(classes = "mr-tile-field mr-tile-container") {
                 div { tileImages(Tile.bamboos) }
                 div { tileImages(Tile.characters) }
                 div { tileImages(Tile.circles) }
@@ -49,10 +51,25 @@ class TileSelectionComponent(
     private fun TagConsumer<HTMLElement>.tileImages(tiles: Collection<Tile>) =
         tiles.forEach { tile -> tileImage(tile, tile.isSelectable, createOnClickListener(tile)) }
 
-    private fun createOnClickListener(tile: Tile): (Event) -> Unit = { model.select(tile) }
+    private fun createOnClickListener(tile: Tile): (Event) -> Unit = {
+        if (tile.isSelectable) {
+            model.select(tile)
+        }
+    }
+
+    private fun updateTiles() {
+        imageTiles.forEach { (tile, element) ->
+            element.setSelectable(tile.isSelectable)
+        }
+    }
 
     override fun modelChanged(model: UIModel) {
-        createUI()
+        if (initialBuild) {
+            createUI()
+        } else {
+            updateTiles()
+        }
+        initialBuild = false
     }
 
     private val Tile.isSelectable: Boolean get() = model.calculatorModel.isSelectable(this)
