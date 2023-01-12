@@ -1,3 +1,8 @@
+body {
+  touch-action: /*pan-x*/ pan-y;
+  /*touch-action: none;*/
+}
+
 .mr-tile-field {
   font-size: 8pt;
   width: 46.8em;
@@ -5,7 +10,9 @@
 
 a.mr-tile img {
   width: 5em;
-  background-color: white;
+  background: rgb(255,255,255);
+  /* https://cssgradient.io/ */
+  background: linear-gradient(165deg, rgba(255,255,255,1) 0%, rgba(194,194,194,1) 8%, rgba(223,223,223,1) 33%, rgba(251,251,251,1) 100%);
   border-radius: 0.5em;
   margin: 0.1em;
   cursor: pointer;
