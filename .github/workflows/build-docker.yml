@@ -125,7 +125,7 @@ jobs:
 
           startLine=$(grep -n '## Usage' README.md | sed 's/[^00-9]*//g')
           startLine=$((startLine - 1))
-          endLine=$(grep -n '## Project goal' README.md | sed 's/[^00-9]*//g')
+          endLine=$(grep -n '## Project Goal' README.md | sed 's/[^00-9]*//g')
 
           head -n $startLine README.md > $filename
           tail -n +$endLine README.md >> $filename
