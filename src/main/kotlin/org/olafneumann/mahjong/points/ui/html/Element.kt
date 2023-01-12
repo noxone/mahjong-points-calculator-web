@@ -14,8 +14,6 @@ inline fun <reified T : HTMLElement> Element.getAllChildren() =
 fun <T : HTMLElement> Sequence<T>.filterAttributeIsPresent(attributeName: String) =
     filter { it.hasAttribute(attributeName) }
 
-fun HTMLElement.hasAttribute(name: String) = attributes[name]?.value != null
-
 // https://stackoverflow.com/questions/66755991/kotlin-get-all-children-recursively
 private fun <T : Element> Sequence<T>.selectRecursive(recursiveSelector: T.() -> Sequence<T>): Sequence<T> = flatMap {
     sequence {

@@ -21,21 +21,29 @@ kotlin {
         binaries.executable()
         browser {
             commonWebpackConfig {
-                cssSupport.enabled = true
+                cssSupport {
+                    //enabled.set(true)
+                }
             }
 
             webpackTask {
-                cssSupport.enabled = true
+                cssSupport {
+                    enabled.set(true)
+                }
             }
 
             runTask {
-                cssSupport.enabled = true
+                cssSupport {
+                    enabled.set(true)
+                }
             }
 
             testTask {
                 useKarma {
                     useFirefoxHeadless()
-                    webpackConfig.cssSupport.enabled = true
+                    webpackConfig.cssSupport {
+                        enabled.set(true)
+                    }
                 }
             }
         }
