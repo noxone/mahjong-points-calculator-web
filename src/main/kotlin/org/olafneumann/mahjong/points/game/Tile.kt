@@ -1,6 +1,7 @@
 package org.olafneumann.mahjong.points.game
 
-import org.olafneumann.mahjong.points.Constants
+import org.olafneumann.mahjong.points.Constants.BASE_TILES
+import org.olafneumann.mahjong.points.Constants.MAX_NUMBER_OF_TILES_PER_TYPE
 import org.olafneumann.mahjong.points.game.Wind.East
 import org.olafneumann.mahjong.points.game.Wind.North
 import org.olafneumann.mahjong.points.game.Wind.South
@@ -56,7 +57,7 @@ enum class Tile(
     Season4(color = null, number = 4);
 
     val isBaseTile: Boolean =
-        color != null && number in Constants.BASE_TILES
+        color != null && number in BASE_TILES
     val isImage: Boolean = color == null
 
     val next: Tile? by lazy { values().find { it.color == color && it.number == (number?.plus(1)) } }
@@ -66,7 +67,7 @@ enum class Tile(
     val isFlower: Boolean get() = this in flowers
     val isSeason: Boolean get() = this in seasons
     val isBonusTile: Boolean get() = isFlower ||isSeason
-    val numberOfTilesInSet: Int get() = if (isBonusTile) 1 else 4
+    val numberOfTilesInSet: Int get() = if (isBonusTile) 1 else MAX_NUMBER_OF_TILES_PER_TYPE
 
     val filename = "${name}.svg".lowercase()
 
