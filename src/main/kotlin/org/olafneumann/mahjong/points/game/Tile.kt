@@ -65,8 +65,8 @@ enum class Tile(
     val isDragon: Boolean get() = this in dragons
     val isFlower: Boolean get() = this in flowers
     val isSeason: Boolean get() = this in seasons
-    val isBonusTile: Boolean = isFlower ||isSeason
-    val numberOfTilesInSet: Int = if (isBonusTile) 1 else 4
+    val isBonusTile: Boolean get() = isFlower ||isSeason
+    val numberOfTilesInSet: Int get() = if (isBonusTile) 1 else 4
 
     val filename = "${name}.svg".lowercase()
 
