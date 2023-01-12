@@ -65,6 +65,8 @@ enum class Tile(
     val isDragon: Boolean get() = this in dragons
     val isFlower: Boolean get() = this in flowers
     val isSeason: Boolean get() = this in seasons
+    val isBonusTile: Boolean = isFlower ||isSeason
+    val numberOfTilesInSet: Int = if (isBonusTile) 1 else 4
 
     val filename = "${name}.svg".lowercase()
 
@@ -75,7 +77,7 @@ enum class Tile(
         val winds: Collection<Tile> = setOf(WindEast, WindSouth, WindWest, WindNorth)
         val bamboos: Collection<Tile> = allOfColor(Color.Bamboo)
         val characters: Collection<Tile> = allOfColor(Color.Character)
-        val cirles: Collection<Tile> = allOfColor(Color.Circle)
+        val circles: Collection<Tile> = allOfColor(Color.Circle)
 
         private fun allOfColor(color: Color) = values().filter { it.color == color }
     }

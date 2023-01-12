@@ -34,7 +34,7 @@ class TileSelectionComponent(
             .div(classes = "mr-tile-field") {
                 div { tileImages(Tile.bamboos) }
                 div { tileImages(Tile.characters) }
-                div { tileImages(Tile.cirles) }
+                div { tileImages(Tile.circles) }
                 div(classes = "d-flex justify-content-between") {
                     div { tileImages(Tile.winds) }
                     div { tileImages(Tile.dragons) }

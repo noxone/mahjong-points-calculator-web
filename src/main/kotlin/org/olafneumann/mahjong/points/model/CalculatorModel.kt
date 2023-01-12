@@ -7,7 +7,7 @@ data class CalculatorModel(
     val selectedTiles: List<Tile>
 ) {
     fun isSelectable(tile: Tile): Boolean =
-        selectedTiles.filter { it == tile }.size < MAX_NUMBER_OF_TILES_PER_TYPE
+        selectedTiles.filter { it == tile }.size < tile.numberOfTilesInSet
 
     fun select(tile: Tile): CalculatorModel {
         if (!isSelectable(tile)) {
