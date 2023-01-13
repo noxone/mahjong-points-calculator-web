@@ -3,7 +3,6 @@ package org.olafneumann.mahjong.points.game
 data class Combination(
     val type: Type,
     val tile: Tile,
-    val color: Color?,
     val visibility: Visibility = Visibility.Closed,
 ) {
     fun getTiles(): List<Tile> =
@@ -14,8 +13,10 @@ data class Combination(
             Type.Chow -> listOf(tile, tile.next!!, tile.next?.next!!)
         }
 
-    enum class Type {
-        Pair, Chow, Pong, Kang
+    enum class Type(
+        val size: Int
+    ) {
+        Pair(2), Chow(3), Pong(3), Kang(4);
     }
 
     enum class Visibility {

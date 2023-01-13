@@ -7,5 +7,7 @@ object Constants {
 
     const val MAX_NUMBER_OF_TILES_PER_TYPE = 4
 
+    const val FIGURES_IN_COMPLETE_HAND = 5
     const val MIN_NUMBER_OF_TILES_FOR_HAND = 13
+    const val WINNING_NUMBER_OF_TILES_FOR_HAND = 14
 }

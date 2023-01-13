@@ -6,7 +6,10 @@ import org.olafneumann.mahjong.points.model.CalculatorModel
 class UIModel {
     private val changeListeners = mutableListOf<UIModelChangeListener>()
     fun registerChangeListener(listener: UIModelChangeListener) = changeListeners.add(listener)
-    private fun fireChange() = changeListeners.forEach { it.modelChanged(this) }
+    private fun fireChange() = changeListeners.forEach {
+        console.log("fire change", it)
+        it.modelChanged(this)
+    }
 
     var calculatorModel: CalculatorModel = createInitialCalculatorModel()
         private set(value) {

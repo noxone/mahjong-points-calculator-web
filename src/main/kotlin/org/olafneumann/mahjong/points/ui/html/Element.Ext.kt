@@ -3,7 +3,6 @@ package org.olafneumann.mahjong.points.ui.html
 import org.w3c.dom.Element
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.asList
-import org.w3c.dom.get
 
 fun Element.getAllChildren(): Sequence<Element> =
     children.asList().asSequence().selectRecursive { children.asList().asSequence() }
