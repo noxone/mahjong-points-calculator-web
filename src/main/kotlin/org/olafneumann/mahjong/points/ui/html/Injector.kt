@@ -14,6 +14,14 @@ inline fun <reified T : HTMLElement> TagConsumer<HTMLElement>.capture(
     injectRoot { property?.set(it.getAllChildren<T>().first()) }
         .block()
 
+inline fun <reified T : HTMLElement, P> TagConsumer<HTMLElement>.capture2(
+    property: KMutableProperty0<P>?,
+    crossinline mapFunction: (List<T>) -> P,
+    block: TagConsumer<HTMLElement>.() -> Unit
+) =
+    injectRoot { property?.set(mapFunction(it.getAllChildren<T>().toList())) }
+        .block()
+
 fun TagConsumer<HTMLElement>.injectRoot(
     action: (HTMLElement) -> Unit
 ): TagConsumer<HTMLElement> = InjectorConsumerRoot(this, action)

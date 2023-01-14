@@ -21,7 +21,12 @@ fun TagConsumer<HTMLElement>.bsButton(label: String, onClickFunction: (Event) ->
         this.onClickFunction = onClickFunction
     }
 
-fun TagConsumer<HTMLElement>.radioGroup(label: String, items: Collection<Any>) =
+fun <T> TagConsumer<HTMLElement>.radioGroup(
+    label: String,
+    items: List<T>,
+    property: KMutableProperty0<RadioGroup<T>>? = null,
+    action: (T) -> Unit = {},
+) = capture2<HTMLInputElement, RadioGroup<T>>(property, { RadioGroup(it, items) }) {
     div {
         label { +label }
         div(classes = "btn-group btn-group-sm") {
@@ -30,6 +35,12 @@ fun TagConsumer<HTMLElement>.radioGroup(label: String, items: Collection<Any>) =
                 input(type = InputType.radio, classes = "btn-check", name = label.asId) {
                     autoComplete = false
                     id = radioId
+                    onInputFunction = {
+                        val input = it.target!! as HTMLInputElement
+                        if (input.checked) {
+                            action(item)
+                        }
+                    }
                 }
                 label(classes = "btn btn-outline-primary") {
                     htmlFor = radioId
@@ -38,6 +49,7 @@ fun TagConsumer<HTMLElement>.radioGroup(label: String, items: Collection<Any>) =
             }
         }
     }
+}
 
 fun TagConsumer<HTMLElement>.checkbox(
     label: String,
@@ -60,3 +72,25 @@ fun TagConsumer<HTMLElement>.checkbox(
 
 
 private val String.asId: String get() = replace(Regex("\\s+"), "")
+
+class RadioGroup<T> internal constructor(
+    elements: List<HTMLInputElement>,
+    items: List<T>,
+) {
+    private val inputs: Map<T, HTMLInputElement>
+
+    init {
+        inputs = elements
+            .filter { it.type == "radio" }
+            .mapIndexed { index, radio -> items[index] to radio }
+            .toMap()
+    }
+
+    fun select(item: T) {
+        inputs[item]?.checked = true
+    }
+
+    fun selection(): T? = inputs.filterValues { it.checked }
+        .map { it.key }
+        .firstOrNull()
+}

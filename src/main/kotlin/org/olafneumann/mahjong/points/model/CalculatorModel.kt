@@ -128,5 +128,5 @@ data class CalculatorModel(
     fun setPlatzWind(wind: Wind) = copy(platzWind = wind)
 
     val result: PlayerResult get() =
-        ClassicRulesResultComputer().computeResult(hand, gameModifiers, platzWind = Wind.West)
+        ClassicRulesResultComputer().computeResult(hand, gameModifiers, platzWind = platzWind)
 }
