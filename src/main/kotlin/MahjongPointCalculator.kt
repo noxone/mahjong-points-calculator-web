@@ -3,7 +3,6 @@ import kotlinx.browser.window
 import org.olafneumann.mahjong.points.ui.components.HandComponent
 import org.olafneumann.mahjong.points.ui.components.OptionsComponent
 import org.olafneumann.mahjong.points.ui.html.getElement
-import org.olafneumann.mahjong.points.ui.components.SelectedTilesComponent
 import org.olafneumann.mahjong.points.ui.components.TileSelectionComponent
 import org.olafneumann.mahjong.points.ui.model.UIModel
 import org.w3c.dom.HTMLDivElement
@@ -32,7 +31,6 @@ private fun initMahjongPointCalculatorUnsafe() {
     val model = UIModel()
 
     TileSelectionComponent(parent = tilesDiv, model = model)
-    //SelectedTilesComponent(parent = selectedTilesDiv, model = model)
     OptionsComponent(parent = optionsDiv, model = model)
     HandComponent(parent = selectedTilesDiv, model = model)
 

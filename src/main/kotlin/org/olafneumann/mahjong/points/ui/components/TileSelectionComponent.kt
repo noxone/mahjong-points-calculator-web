@@ -8,6 +8,8 @@ import org.olafneumann.mahjong.points.ui.html.injectRoot
 import org.olafneumann.mahjong.points.game.Tile
 import org.olafneumann.mahjong.points.ui.controls.setSelectable
 import org.olafneumann.mahjong.points.ui.controls.tileImage
+import org.olafneumann.mahjong.points.ui.html.MrAttributes
+import org.olafneumann.mahjong.points.ui.html.mrTile
 import org.olafneumann.mahjong.points.ui.model.UIModel
 import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
 import org.w3c.dom.HTMLElement
@@ -20,18 +22,17 @@ class TileSelectionComponent(
     parent: HTMLElement,
     private val model: UIModel
 ) : AbstractComponent(parent = parent), UIModelChangeListener {
-    private var initialBuild = true
     private var imageTiles: Map<Tile, HTMLImageElement> by Delegates.notNull()
 
     init {
         model.registerChangeListener(this)
     }
 
-    override fun TagConsumer<HTMLElement>.buildUI() {
+    override fun TagConsumer<HTMLElement>.createUI() {
         injectRoot { element ->
             imageTiles = element.getAllChildren<HTMLImageElement>()
-                .filterAttributeIsPresent("mr-tile")
-                .associateBy { Tile.valueOf(it.attributes["mr-tile"]!!.value) }
+                .filterAttributeIsPresent(MrAttributes.TILE)
+                .associateBy { Tile.valueOf(it.mrTile!!) }
         }
             .div(classes = "mr-tile-field mr-tile-container") {
                 div { tileImages(Tile.bamboos) }
@@ -57,19 +58,14 @@ class TileSelectionComponent(
         }
     }
 
-    private fun updateTiles() {
+    override fun updateUI() {
         imageTiles.forEach { (tile, element) ->
             element.setSelectable(tile.isSelectable)
         }
     }
 
     override fun modelChanged(model: UIModel) {
-        if (initialBuild) {
-            createUI()
-        } else {
-            updateTiles()
-        }
-        initialBuild = false
+        buildUI()
     }
 
     private val Tile.isSelectable: Boolean get() = model.calculatorModel.isSelectable(this)

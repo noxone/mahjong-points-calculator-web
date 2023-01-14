@@ -6,6 +6,7 @@ import kotlinx.html.id
 import kotlinx.html.img
 import kotlinx.html.js.onClickFunction
 import org.olafneumann.mahjong.points.game.Tile
+import org.olafneumann.mahjong.points.ui.html.mrTile
 import org.olafneumann.mahjong.points.util.toString
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLImageElement
@@ -16,7 +17,7 @@ fun TagConsumer<HTMLElement>.tileImage(tile: Tile, selectable: Boolean = true, o
         img(classes = "mr-tile mr-tile-img", src = "images/${tile.filename}") {
             alt = tile.name
             id = tile.htmlId
-            attributes["mr-tile"] = tile.name
+            mrTile = tile.name
         }
         this.onClickFunction = onClickFunction
     }
