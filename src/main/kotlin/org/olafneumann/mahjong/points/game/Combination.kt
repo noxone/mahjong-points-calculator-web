@@ -1,5 +1,7 @@
 package org.olafneumann.mahjong.points.game
 
+import org.olafneumann.mahjong.points.Constants
+
 data class Combination(
     val type: Type,
     val tile: Tile,
@@ -17,7 +19,10 @@ data class Combination(
     enum class Type(
         val size: Int
     ) {
-        Pair(2), Chow(3), Pong(3), Kang(4),
+        Pair(Constants.NUMBER_OF_TILE_IN_PAIR),
+        Chow(Constants.NUMBER_OF_TILE_IN_CHOW),
+        Pong(Constants.NUMBER_OF_TILE_IN_PONG),
+        Kang(Constants.NUMBER_OF_TILE_IN_KANG),
         Unfinished(1)
         ;
     }

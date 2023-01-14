@@ -31,8 +31,8 @@ data class Hand(
                 map.getOrPut(entry.value) { mutableListOf() }.add(entry.key)
                 map
             }.toMap()
-            if (countToTiles[4]?.size == numberOfKangs) {
-                val kangTiles = countToTiles[4]!!
+            if (countToTiles[Constants.MAX_NUMBER_OF_KANGS_PER_HAND]?.size == numberOfKangs) {
+                val kangTiles = countToTiles[Constants.MAX_NUMBER_OF_KANGS_PER_HAND]!!
                 foundFigures.addAll(kangTiles.map { tile -> Combination(Combination.Type.Kang, tile) })
                 foundFigures.removeAll { kangTiles.contains(it.tile) }
             }
