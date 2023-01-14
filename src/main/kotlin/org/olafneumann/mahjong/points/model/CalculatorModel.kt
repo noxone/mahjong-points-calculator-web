@@ -15,11 +15,11 @@ data class CalculatorModel(
     val hand: Hand,
     val selectedFigure: Figure = Figure1,
 ) {
-    val availableTiles = run {
+    private val availableTiles = run {
         val allTilesInGame =
             Tile.values().flatMap { tile -> MutableList(tile.numberOfTilesInSet) { tile } }.toMutableList()
         hand.allTiles.forEach { allTilesInGame.remove(it) }
-        allTilesInGame
+        allTilesInGame.toList()
     }
 
     fun isAvailable(tile: Tile, times: Int = 1): Boolean =
@@ -28,6 +28,10 @@ data class CalculatorModel(
     fun select(figure: Figure): CalculatorModel =
         copy(selectedFigure = figure)
 
+    private fun canConsume(vararg tiles: Tile): Boolean {
+        val remaining = availableTiles.toMutableList()
+        return tiles.all { remaining.remove(it) }
+    }
 
     fun select(tile: Tile): CalculatorModel {
         if (tile.isBonusTile) {
@@ -37,7 +41,17 @@ data class CalculatorModel(
             return this
         }
 
+        if (tile.isWindOrDragon && hand.allFigures.filter { it.type == Pong }.map { it.tile }.contains(tile)) {
+            return copy(hand = hand.allFigures.first { it.tile == tile }.replace(hand, type = Kang))
+        }
+
         if (selectedFigure == Pair) {
+            if (hand.allFigures.filter { it.type == Pong }.map { it.tile }.contains(tile)) {
+                return copy(hand = hand.allFigures.first { it.tile == tile }.replace(hand, type = Kang))
+            }
+            if (!canConsume(tile, tile)) {
+                return this
+            }
             return copy(
                 hand = hand.copy(
                     pair = Combination(
@@ -67,8 +81,7 @@ data class CalculatorModel(
                         )
                     )
                 }
-                if (tile == combination.tile.next?.next
-                /* TODO || tile == combination.tile.next && combination.tile.number == 1*/) {
+                if (tile == combination.tile.next?.next) {
                     return copy(hand = combination.replace(hand = hand, type = Chow))
                 }
                 if (tile == combination.tile.next) {
@@ -80,8 +93,7 @@ data class CalculatorModel(
                 if (tile == combination.tile.previous?.previous) {
                     return copy(hand = combination.replace(hand = hand, type = Chow, tile = tile))
                 }
-                console.log("Current hand:", hand, "Selected Figure:", selectedFigure, "Tile to select:", tile)
-                throw Exception("Invalid selection. Maybe use tile somewhere else")
+                return this
             }
 
             UnfinishedPlus1 -> {
@@ -91,20 +103,14 @@ data class CalculatorModel(
                 if (tile == combination.tile.previous) {
                     return copy(hand = combination.replace(hand = hand, type = Chow, tile = tile))
                 }
-                throw Exception("Use tile somewhere else")
+                return this
             }
 
             Pong -> {
                 if (combination.tile == tile) {
-                    return copy(
-                        hand = hand.replace(
-                            oldCombination = combination,
-                            newCombination = Combination(Kang, tile, combination.visibility)
-                        )
-                    )
-                } else {
-                    throw Exception("Not same tile as pong!")
+                    return copy(hand = combination.replace(hand, type = Kang))
                 }
+                return this
             }
 
             else -> return this
