@@ -9,6 +9,8 @@ import kotlinx.html.span
 import org.olafneumann.mahjong.points.game.Combination
 import org.olafneumann.mahjong.points.game.Hand
 import org.olafneumann.mahjong.points.game.Tile
+import org.olafneumann.mahjong.points.model.Figure
+import org.olafneumann.mahjong.points.model.getTiles
 import org.olafneumann.mahjong.points.ui.controls.tileImage
 import org.olafneumann.mahjong.points.ui.html.MrAttributes
 import org.olafneumann.mahjong.points.ui.html.bsButton
@@ -28,7 +30,6 @@ class HandComponent(
 ) : AbstractComponent(parent = parent), UIModelChangeListener {
     private var selectorDivs: Map<Figure, HTMLDivElement> by Delegates.notNull()
     private var figureDivs: Map<Figure, HTMLDivElement> by Delegates.notNull()
-    private var selectedFigure: Figure = Figure.Figure1
 
     init {
         model.registerChangeListener(this)
@@ -58,7 +59,7 @@ class HandComponent(
             div(classes = "mr-tile-container") {
                 mrFigure = figure.name
                 onClickFunction = {
-                    selectedFigure = figure
+                    model.select(figure)
                     updateUI()
                 }
             }
@@ -66,14 +67,17 @@ class HandComponent(
 
     override fun updateUI() {
         selectorDivs.forEach { (figure, div) ->
-            div.classList.toggle("mr-selected", figure == selectedFigure)
+            div.classList.toggle("mr-selected", figure == model.calculatorModel.selectedFigure)
         }
         figureDivs.forEach { (figure, div) ->
             div.clear()
             div.append {
-                model.calculatorModel.hand.getTiles(figure).forEach { tile ->
-                    tileImage(tile, selectable = true) {}
-                }
+                model.calculatorModel.hand
+                    .getTiles(figure)
+                    .sortedBy { it.ordinal }
+                    .forEach { tile ->
+                        tileImage(tile, selectable = true) {}
+                    }
             }
         }
     }
@@ -81,25 +85,4 @@ class HandComponent(
     override fun modelChanged(model: UIModel) {
         buildUI()
     }
-
-    private enum class Figure(
-        val title: String
-    ) {
-        Figure1("Figur 1"),
-        Figure2("Figur 2"),
-        Figure3("Figur 3"),
-        Figure4("Figur 4"),
-        Pair("Paar"),
-        Bonus("Bonus")
-    }
-
-    private fun Hand.getTiles(figure: Figure): Collection<Tile> =
-        when (figure) {
-            Figure.Figure1 -> figure1?.getTiles() ?: emptyList()
-            Figure.Figure2 -> figure2?.getTiles() ?: emptyList()
-            Figure.Figure3 -> figure3?.getTiles() ?: emptyList()
-            Figure.Figure4 -> figure4?.getTiles() ?: emptyList()
-            Figure.Pair -> pair?.getTiles() ?: emptyList()
-            Figure.Bonus -> bonusTiles
-        }
 }

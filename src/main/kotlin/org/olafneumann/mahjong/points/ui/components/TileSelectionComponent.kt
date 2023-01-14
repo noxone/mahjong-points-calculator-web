@@ -68,5 +68,5 @@ class TileSelectionComponent(
         buildUI()
     }
 
-    private val Tile.isSelectable: Boolean get() = model.calculatorModel.isSelectable(this)
+    private val Tile.isSelectable: Boolean get() = model.calculatorModel.isAvailable(this)
 }

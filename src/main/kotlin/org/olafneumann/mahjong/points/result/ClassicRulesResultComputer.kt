@@ -179,18 +179,18 @@ class ClassicRulesResultComputer : ResultComputer {
                 hand.getFigures(visibility = Closed).hasSize(5)
                     .map { Line(description = "All.Figures.Closed", doublings = 1) },
                 // Nur Ziegel einer Farbe und Bildziegel
-                (hand.allTiles.map { it.color }.distinct().hasSize(2)
-                        && hand.allTiles.mapNotNull { it.color }.distinct().hasSize(1))
+                (hand.allTilesOfFigures.map { it.color }.distinct().hasSize(2)
+                        && hand.allTilesOfFigures.mapNotNull { it.color }.distinct().hasSize(1))
                     .map { Line(description = "All.Tiles.One.Color.And.Pictures", doublings = 1) },
                 // Nur Ziegel einer Farbe
-                (hand.allTiles.map { it.color }.distinct().hasSize(1)
-                        && hand.allTiles.first().color != null)
+                (hand.allTilesOfFigures.map { it.color }.distinct().hasSize(1)
+                        && hand.allTilesOfFigures.first().color != null)
                     .map { Line(description = "All.Tiles.One.Color", doublings = 3) },
                 // Nur Hauptziegel
-                hand.allTiles.all { !it.isBaseTile }
+                hand.allTilesOfFigures.all { !it.isBaseTile }
                     .map { Line(description = "Only.Maintiles", doublings = 1) },
                 // Nur Bildziegel
-                hand.allTiles.all { it.isImage }
+                hand.allTilesOfFigures.all { it.isImage }
                     .map { Line(description = "Only.Imagetiles", doublings = 2) },
                 // Schlussziegel von der toten Mauer
                 gameModifiers.schlussziegelVonToterMauer

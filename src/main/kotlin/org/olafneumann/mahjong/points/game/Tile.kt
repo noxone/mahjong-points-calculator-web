@@ -61,11 +61,13 @@ enum class Tile(
     val isImage: Boolean = color == null
 
     val next: Tile? by lazy { values().find { it.color == color && it.number == (number?.plus(1)) } }
+    val previous: Tile? by lazy { values().find { it.color == color && it.number == (number?.minus(1)) } }
 
     val isWind: Boolean get() = this in winds
     val isDragon: Boolean get() = this in dragons
     val isFlower: Boolean get() = this in flowers
     val isSeason: Boolean get() = this in seasons
+    val isWindOrDragon: Boolean get() = isWind || isDragon
     val isBonusTile: Boolean get() = isFlower ||isSeason
     val numberOfTilesInSet: Int get() = if (isBonusTile) 1 else MAX_NUMBER_OF_TILES_PER_TYPE
 

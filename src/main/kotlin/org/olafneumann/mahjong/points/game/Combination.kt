@@ -1,7 +1,5 @@
 package org.olafneumann.mahjong.points.game
 
-import org.olafneumann.mahjong.points.Constants
-
 data class Combination(
     val type: Type,
     val tile: Tile,
@@ -9,21 +7,26 @@ data class Combination(
 ) {
     fun getTiles(): List<Tile> =
         when (type) {
-            Type.Unfinished -> listOf(tile)
+            Type.Unfinished0 -> listOf(tile)
+            Type.UnfinishedPlus1 -> listOf(tile, tile.next!!)
             Type.Pair -> listOf(tile, tile)
             Type.Pong -> listOf(tile, tile, tile)
             Type.Kang -> listOf(tile, tile, tile, tile)
             Type.Chow -> listOf(tile, tile.next!!, tile.next?.next!!)
         }
 
+    fun replace(hand: Hand, type: Type, tile: Tile = this.tile, visibility: Visibility = this.visibility) =
+        hand.replace(this, copy(type = type, tile = tile, visibility = visibility))
+
     enum class Type(
-        val size: Int
+        val finished: Boolean = true
     ) {
-        Pair(Constants.NUMBER_OF_TILE_IN_PAIR),
-        Chow(Constants.NUMBER_OF_TILE_IN_CHOW),
-        Pong(Constants.NUMBER_OF_TILE_IN_PONG),
-        Kang(Constants.NUMBER_OF_TILE_IN_KANG),
-        Unfinished(1)
+        Pair(),
+        Chow(),
+        Pong(),
+        Kang(),
+        Unfinished0(false) /*only one tile selected*/,
+        UnfinishedPlus1(false) /*this and the next tile selected*/,
         ;
     }
 
