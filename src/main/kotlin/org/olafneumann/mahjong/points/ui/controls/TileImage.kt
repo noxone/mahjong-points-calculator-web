@@ -13,7 +13,7 @@ import org.w3c.dom.HTMLImageElement
 import org.w3c.dom.events.Event
 
 fun TagConsumer<HTMLElement>.tileImage(tile: Tile, selectable: Boolean = true, onClickFunction: (Event) -> Unit = {}) =
-    a(classes = "mr-tile ${(!selectable).toString("not-selectable")}") {
+    a(classes = "mr-tile ${(!selectable).toString("not-selectable")} mr-tile-${tile.name}") {
         img(classes = "mr-tile mr-tile-img", src = "images/${tile.filename}") {
             alt = tile.name
             id = tile.htmlId

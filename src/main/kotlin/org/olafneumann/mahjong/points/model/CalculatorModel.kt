@@ -48,7 +48,10 @@ data class CalculatorModel(
         }
 
         if (tile.isWindOrDragon && hand.allFigures.filter { it.type == Pong }.map { it.tile }.contains(tile)) {
-            return copy(hand = hand.allFigures.first { it.tile == tile }.replace(hand, type = Kang))
+            return copy(
+                hand = hand.allFigures.first { it.tile == tile }.replace(hand, type = Kang),
+                selectedFigure = selectedFigure.next
+            )
         }
 
         if (selectedFigure == Pair) {
@@ -73,6 +76,9 @@ data class CalculatorModel(
         val combination = hand.getCombination(selectedFigure)
         if (combination == null) {
             if (tile.isWindOrDragon) {
+                if (!canConsume(tile, tile, tile)) {
+                    return this
+                }
                 return copy(hand = hand.setCombination(selectedFigure, Combination(Pong, tile, Open)))
             }
             return copy(hand = hand.setCombination(selectedFigure, Combination(Unfinished0, tile, Open)))
@@ -87,18 +93,36 @@ data class CalculatorModel(
                         )
                     )
                 }
+                // nächste Tile am Anfang
+                if (tile == combination.tile.next && combination.tile.number == 1) {
+                    return copy(
+                        hand = combination.replace(hand = hand, type = Chow),
+                        selectedFigure = selectedFigure.next
+                    )
+                }
+                // vorige Tile am Ende
+                if (tile == combination.tile.previous && combination.tile.number == 9) {
+                    return copy(
+                        hand = combination.replace(hand = hand, tile = tile.previous!!, type = Chow),
+                        selectedFigure = selectedFigure.next
+                    )
+                }
+                // übernächste Tile
                 if (tile == combination.tile.next?.next) {
                     return copy(
                         hand = combination.replace(hand = hand, type = Chow),
                         selectedFigure = selectedFigure.next
                     )
                 }
+                // nächste Tile
                 if (tile == combination.tile.next) {
                     return copy(hand = combination.replace(hand = hand, type = UnfinishedPlus1))
                 }
+                // vorige Tile
                 if (tile == combination.tile.previous) {
                     return copy(hand = combination.replace(hand = hand, type = UnfinishedPlus1, tile))
                 }
+                // vor-vorige Tile
                 if (tile == combination.tile.previous?.previous) {
                     return copy(
                         hand = combination.replace(hand = hand, type = Chow, tile = tile),
