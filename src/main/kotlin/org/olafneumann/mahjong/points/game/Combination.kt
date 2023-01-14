@@ -15,7 +15,7 @@ data class Combination(
             Type.Chow -> listOf(tile, tile.next!!, tile.next?.next!!)
         }
 
-    fun replace(hand: Hand, type: Type, tile: Tile = this.tile, visibility: Visibility = this.visibility) =
+    fun replace(hand: Hand, type: Type = this.type, tile: Tile = this.tile, visibility: Visibility = this.visibility) =
         hand.replace(this, copy(type = type, tile = tile, visibility = visibility))
 
     enum class Type(
@@ -31,6 +31,10 @@ data class Combination(
     }
 
     enum class Visibility {
-        Open, Closed
+        Open, Closed;
+
+        companion object {
+            fun from(open: Boolean) = if (open) Open else Closed
+        }
     }
 }

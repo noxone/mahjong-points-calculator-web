@@ -44,17 +44,19 @@ a.mr-tile img {
   opacity: 40%;
 }
 
+.mr-vertical-switch .form-switch {
+  padding-left: 3rem;
+}
+
 .mr-figure-holder .btn {
   width: 100%;
 }
 
 .mr-figure {
   border: 1px solid lightgray;
-  /*border-radius: 1rem;*/
   border-radius: 0.375rem;
   height: 4.2rem;
   position: relative;
-  margin-bottom: 0.4rem;
 }
 
 .mr-figure span {
@@ -80,5 +82,5 @@ a.mr-tile img {
 }
 
 .mr-selected {
-  border:  3px solid lightblue;
+  border:  3px solid #0dcaf0 !important;
 }

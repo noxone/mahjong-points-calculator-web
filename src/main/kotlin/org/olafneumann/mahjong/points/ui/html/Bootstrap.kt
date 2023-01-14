@@ -7,9 +7,11 @@ import kotlinx.html.button
 import kotlinx.html.div
 import kotlinx.html.id
 import kotlinx.html.input
+import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.js.onInputFunction
 import kotlinx.html.label
+import org.olafneumann.mahjong.points.util.nextHtmlId
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
@@ -26,7 +28,7 @@ fun <T> TagConsumer<HTMLElement>.radioGroup(
     items: List<T>,
     property: KMutableProperty0<RadioGroup<T>>? = null,
     action: (T) -> Unit = {},
-) = capture2<HTMLInputElement, RadioGroup<T>>(property, { RadioGroup(it, items) }) {
+) = capture2(property, { RadioGroup(it, items) }) {
     div {
         label { +label }
         div(classes = "btn-group btn-group-sm") {
@@ -69,6 +71,24 @@ fun TagConsumer<HTMLElement>.checkbox(
             }
         }
     }
+
+fun TagConsumer<HTMLElement>.verticalSwitch(label: String, action: (Event) -> Unit) {
+    val htmlId = nextHtmlId
+    div(classes = "text-center mr-vertical-switch") {
+        div(classes = "form-check form-switch") {
+            input(classes = "form-check-input", type = InputType.checkBox) {
+                id = htmlId
+                onInputFunction = action
+            }
+        }
+        div {
+            label(classes = "form-check-label") {
+                htmlFor = htmlId
+                +"Open"
+            }
+        }
+    }
+}
 
 
 private val String.asId: String get() = replace(Regex("\\s+"), "")

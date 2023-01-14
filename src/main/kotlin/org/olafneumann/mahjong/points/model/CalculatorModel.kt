@@ -88,7 +88,10 @@ data class CalculatorModel(
                     )
                 }
                 if (tile == combination.tile.next?.next) {
-                    return copy(hand = combination.replace(hand = hand, type = Chow))
+                    return copy(
+                        hand = combination.replace(hand = hand, type = Chow),
+                        selectedFigure = selectedFigure.next
+                    )
                 }
                 if (tile == combination.tile.next) {
                     return copy(hand = combination.replace(hand = hand, type = UnfinishedPlus1))
@@ -97,24 +100,33 @@ data class CalculatorModel(
                     return copy(hand = combination.replace(hand = hand, type = UnfinishedPlus1, tile))
                 }
                 if (tile == combination.tile.previous?.previous) {
-                    return copy(hand = combination.replace(hand = hand, type = Chow, tile = tile))
+                    return copy(
+                        hand = combination.replace(hand = hand, type = Chow, tile = tile),
+                        selectedFigure = selectedFigure.next
+                    )
                 }
                 return this
             }
 
             UnfinishedPlus1 -> {
                 if (tile == combination.tile.next?.next) {
-                    return copy(hand = combination.replace(hand = hand, type = Chow))
+                    return copy(
+                        hand = combination.replace(hand = hand, type = Chow),
+                        selectedFigure = selectedFigure.next
+                    )
                 }
                 if (tile == combination.tile.previous) {
-                    return copy(hand = combination.replace(hand = hand, type = Chow, tile = tile))
+                    return copy(
+                        hand = combination.replace(hand = hand, type = Chow, tile = tile),
+                        selectedFigure = selectedFigure.next
+                    )
                 }
                 return this
             }
 
             Pong -> {
                 if (combination.tile == tile) {
-                    return copy(hand = combination.replace(hand, type = Kang))
+                    return copy(hand = combination.replace(hand, type = Kang), selectedFigure = selectedFigure.next)
                 }
                 return this
             }
@@ -127,6 +139,12 @@ data class CalculatorModel(
 
     fun setPlatzWind(wind: Wind) = copy(platzWind = wind)
 
-    val result: PlayerResult get() =
-        ClassicRulesResultComputer().computeResult(hand, gameModifiers, platzWind = platzWind)
+    fun setOpen(figure: Figure, open: Boolean): CalculatorModel =
+        hand.getCombination(figure)?.let {
+            copy(hand = it.replace(hand = hand, visibility = Combination.Visibility.from(open)))
+        } ?: this
+
+    val result: PlayerResult
+        get() =
+            ClassicRulesResultComputer().computeResult(hand, gameModifiers, platzWind = platzWind)
 }

@@ -20,7 +20,7 @@ enum class Figure(
     Bonus("Bonus"),
     ;
 
-    val next: Figure?
+    val next: Figure
         get() =
             when (this) {
                 Figure1 -> Figure2
@@ -28,7 +28,7 @@ enum class Figure(
                 Figure3 -> Figure4
                 Figure4 -> Pair
                 Pair -> Bonus
-                else -> null
+                Bonus -> Bonus
             }
 }
 
