@@ -3,8 +3,17 @@ package org.olafneumann.mahjong.points.ui.html
 import kotlinx.html.TagConsumer
 import kotlinx.html.injector.CustomCapture
 import org.w3c.dom.HTMLElement
+import kotlin.reflect.KMutableProperty0
 
 // https://github.com/Kotlin/kotlinx.html/wiki/Injector
+
+inline fun <reified T : HTMLElement> TagConsumer<HTMLElement>.capture(
+    property: KMutableProperty0<T>?,
+    block: TagConsumer<HTMLElement>.() -> Unit
+) =
+    injectRoot { property?.set(it.getAllChildren<T>().first()) }
+        .block()
+
 fun TagConsumer<HTMLElement>.injectRoot(
     action: (HTMLElement) -> Unit
 ): TagConsumer<HTMLElement> = InjectorConsumerRoot(this, action)

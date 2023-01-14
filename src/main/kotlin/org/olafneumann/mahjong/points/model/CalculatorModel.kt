@@ -5,14 +5,20 @@ import org.olafneumann.mahjong.points.game.Combination.Type.Kang
 import org.olafneumann.mahjong.points.game.Combination.Type.Pong
 import org.olafneumann.mahjong.points.game.Combination.Type.*
 import org.olafneumann.mahjong.points.game.Combination.Visibility.Open
+import org.olafneumann.mahjong.points.game.GameModifiers
 import org.olafneumann.mahjong.points.game.Hand
 import org.olafneumann.mahjong.points.game.Tile
+import org.olafneumann.mahjong.points.game.Wind
 import org.olafneumann.mahjong.points.model.Figure.Bonus
 import org.olafneumann.mahjong.points.model.Figure.Figure1
 import org.olafneumann.mahjong.points.model.Figure.Pair
+import org.olafneumann.mahjong.points.result.ClassicRulesResultComputer
+import org.olafneumann.mahjong.points.result.PlayerResult
 
 data class CalculatorModel(
     val hand: Hand,
+    val gameModifiers: GameModifiers = GameModifiers(rundenWind = Wind.East),
+    val platzWind: Wind = Wind.East,
     val selectedFigure: Figure = Figure1,
 ) {
     private val availableTiles = run {
@@ -116,4 +122,11 @@ data class CalculatorModel(
             else -> return this
         }
     }
+
+    fun setGameModifiers(gameModifiers: GameModifiers) = copy(gameModifiers = gameModifiers)
+
+    fun setPlatzWind(wind: Wind) = copy(platzWind = wind)
+
+    val result: PlayerResult get() =
+        ClassicRulesResultComputer().computeResult(hand, gameModifiers, platzWind = Wind.West)
 }

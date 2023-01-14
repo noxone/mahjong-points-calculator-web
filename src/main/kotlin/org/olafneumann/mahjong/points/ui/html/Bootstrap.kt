@@ -8,9 +8,12 @@ import kotlinx.html.div
 import kotlinx.html.id
 import kotlinx.html.input
 import kotlinx.html.js.onClickFunction
+import kotlinx.html.js.onInputFunction
 import kotlinx.html.label
 import org.w3c.dom.HTMLElement
+import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
+import kotlin.reflect.KMutableProperty0
 
 fun TagConsumer<HTMLElement>.bsButton(label: String, onClickFunction: (Event) -> Unit = {}) =
     button(classes = "btn btn-primary", type = ButtonType.button) {
@@ -36,16 +39,24 @@ fun TagConsumer<HTMLElement>.radioGroup(label: String, items: Collection<Any>) =
         }
     }
 
-fun TagConsumer<HTMLElement>.checkbox(label: String) =
-    div(classes = "form-check") {
-        input(type = InputType.checkBox, classes = "form-check-input") {
-            value = ""
-            id = label.asId
-        }
-        label(classes = "form-check-label") {
-            htmlFor = label.asId
-            +label
+fun TagConsumer<HTMLElement>.checkbox(
+    label: String,
+    property: KMutableProperty0<HTMLInputElement>? = null,
+    action: (Boolean) -> Unit = {}
+) =
+    capture(property) {
+        div(classes = "form-check") {
+            input(type = InputType.checkBox, classes = "form-check-input") {
+                value = ""
+                id = label.asId
+                onInputFunction = { action((it.target!! as HTMLInputElement).checked) }
+            }
+            label(classes = "form-check-label") {
+                htmlFor = label.asId
+                +label
+            }
         }
     }
+
 
 private val String.asId: String get() = replace(Regex("\\s+"), "")
