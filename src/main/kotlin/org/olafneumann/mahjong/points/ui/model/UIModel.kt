@@ -33,6 +33,8 @@ class UIModel {
 
     fun setOpen(figure: Figure, open: Boolean) = setNewModel(calculatorModel.setOpen(figure, open))
 
+    fun reset(figure: Figure) = setNewModel(calculatorModel.reset(figure))
+
     fun setGameModifiers(gameModifiers: GameModifiers) = setNewModel(calculatorModel.setGameModifiers(gameModifiers))
 
     fun setPlatzWind(wind: Wind) = setNewModel(calculatorModel.setPlatzWind(wind))

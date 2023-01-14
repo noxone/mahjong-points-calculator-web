@@ -18,9 +18,9 @@ class Popover(
     private val container: String = "body",
     private val contentString: String? = null,
     private val contentElement: HTMLElement? = null,
-    private val html: Boolean = false,
+    private val html: Boolean = true,
     private val placement: Placement = Placement.Right,
-    private val title: String = "",
+    private val title: String? = null,
     private val trigger: String = "click",
     onShown: () -> Unit = {},
     private val onCloseButtonClick: Popover.() -> Unit = { dispose() },
@@ -39,19 +39,27 @@ class Popover(
     fun toggle() = jquery.popover("toggle")
 
     private fun createOptionsJson() = json(
-        "container" to container,
-        "content" to (contentString ?: contentElement),
-        "html" to html,
-        "placement" to placement.value,
-        "title" to document.create.div(classes = "d-flex justify-content-between align-items-center") {
-            +this@Popover.title
-            button(classes = "btn-close", type = ButtonType.button) {
-                attributes["aria-label"] = "Close"
-                title = "Cancel"
-                onClickFunction = { onCloseButtonClick() }
-            }
-        },
-        "trigger" to trigger
+        *listOf(
+            "container" to container,
+            "content" to (contentString ?: contentElement),
+            "html" to html,
+            "placement" to placement.value,
+            "title" to if (this@Popover.title.isNullOrBlank()) {
+                null
+            } else {
+                document.create.div(classes = "d-flex justify-content-between align-items-center") {
+                    +this@Popover.title
+                    button(classes = "btn-close", type = ButtonType.button) {
+                        attributes["aria-label"] = "Close"
+                        title = "Cancel"
+                        onClickFunction = { onCloseButtonClick() }
+                    }
+                }
+            },
+            "trigger" to trigger
+        )
+            .filter { it.second != null }
+            .toTypedArray()
     )
 
     enum class Placement(

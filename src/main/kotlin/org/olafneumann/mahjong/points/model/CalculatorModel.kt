@@ -168,6 +168,11 @@ data class CalculatorModel(
             copy(hand = it.replace(hand = hand, visibility = Combination.Visibility.from(open)))
         } ?: this
 
+    fun reset(figure: Figure): CalculatorModel {
+        val combination = hand.getCombination(figure) ?: return this
+        return copy(hand = hand.replace(combination, null))
+    }
+
     val result: PlayerResult
         get() =
             ClassicRulesResultComputer().computeResult(hand, gameModifiers, platzWind = platzWind)

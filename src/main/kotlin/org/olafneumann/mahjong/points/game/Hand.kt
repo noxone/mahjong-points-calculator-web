@@ -18,7 +18,7 @@ data class Hand(
 
     val isMahjong: Boolean = allFigures.size == Constants.FIGURES_IN_COMPLETE_HAND
 
-    fun replace(oldCombination: Combination, newCombination: Combination): Hand =
+    fun replace(oldCombination: Combination, newCombination: Combination?): Hand =
         copy(
             figure1 = if (figure1 == oldCombination) newCombination else figure1,
             figure2 = if (figure2 == oldCombination) newCombination else figure2,

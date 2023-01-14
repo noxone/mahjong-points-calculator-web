@@ -1,5 +1,6 @@
 package org.olafneumann.mahjong.points.ui.components
 
+import kotlinx.browser.document
 import kotlinx.dom.clear
 import kotlinx.html.ButtonType
 import kotlinx.html.InputType
@@ -7,6 +8,7 @@ import kotlinx.html.TagConsumer
 import kotlinx.html.button
 import kotlinx.html.classes
 import kotlinx.html.dom.append
+import kotlinx.html.dom.create
 import kotlinx.html.id
 import kotlinx.html.input
 import kotlinx.html.js.div
@@ -28,8 +30,10 @@ import org.olafneumann.mahjong.points.ui.html.getAllChildren
 import org.olafneumann.mahjong.points.ui.html.injectRoot
 import org.olafneumann.mahjong.points.ui.html.mrFigure
 import org.olafneumann.mahjong.points.ui.html.verticalSwitch
+import org.olafneumann.mahjong.points.ui.js.Popover
 import org.olafneumann.mahjong.points.ui.model.UIModel
 import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
+import org.olafneumann.regex.generator.js.jQuery
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
@@ -42,9 +46,19 @@ class HandComponent(
     private var selectorDivs: Map<Figure, HTMLDivElement> by Delegates.notNull()
     private var figureDivs: Map<Figure, HTMLDivElement> by Delegates.notNull()
     private var figureSwitches: Map<Figure, HTMLInputElement> by Delegates.notNull()
+    private var popover: Popover? = null
 
     init {
         model.registerChangeListener(this)
+        document.onmousedown = {
+            // dispose any popover if the user click somewhere else
+            disposePopover()
+        }
+    }
+
+    private fun disposePopover() {
+        popover?.dispose()
+        popover = null
     }
 
     override fun TagConsumer<HTMLElement>.createUI() {
@@ -74,13 +88,41 @@ class HandComponent(
                 span { +figure.title }
                 div(classes = "mr-tile-container") {
                     mrFigure = figure.name
-                    onClickFunction = {
-                        model.select(figure)
-                    }
+                    onClickFunction = { handleFigureClick(figure) }
                 }
             }
             verticalSwitch("Open") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
         }
+
+    private fun handleFigureClick(figure: Figure) {
+        if (model.calculatorModel.selectedFigure != figure) {
+            model.select(figure)
+            return
+        }
+
+        if (model.calculatorModel.hand.getCombination(figure) == null) {
+            return
+        }
+        popover = Popover(
+            element = figureDivs[figure]!!,
+            placement = Popover.Placement.Left,
+            trigger = "manual",
+            contentElement = document.create.div {
+                button(classes = "btn btn-danger", type = ButtonType.button) {
+                    +"Reset figure"
+                    onClickFunction = {
+                        model.reset(figure)
+                        disposePopover()
+                    }
+                }
+            },
+        )
+        popover!!.show()
+        jQuery(".popover").mousedown {
+            // prevent popover from being disposed when clicking inside
+            it.stopPropagation()
+        }
+    }
 
     override fun updateUI() {
         selectorDivs.forEach { (figure, div) ->

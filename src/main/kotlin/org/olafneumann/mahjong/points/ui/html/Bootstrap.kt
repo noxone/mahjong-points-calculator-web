@@ -11,6 +11,7 @@ import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.js.onInputFunction
 import kotlinx.html.label
+import kotlinx.html.title
 import org.olafneumann.mahjong.points.util.nextHtmlId
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
@@ -89,6 +90,13 @@ fun TagConsumer<HTMLElement>.verticalSwitch(label: String, action: (Event) -> Un
         }
     }
 }
+
+fun TagConsumer<HTMLElement>.closeButton(onCloseButtonClick: (Event) -> Unit) =
+    button(classes = "btn-close", type = ButtonType.button) {
+        attributes["aria-label"] = "Close"
+        title = "Cancel"
+        onClickFunction = onCloseButtonClick
+    }
 
 
 private val String.asId: String get() = replace(Regex("\\s+"), "")
