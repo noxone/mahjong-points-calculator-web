@@ -4,7 +4,10 @@ import kotlinx.dom.clear
 import kotlinx.html.TagConsumer
 import kotlinx.html.dom.append
 import kotlinx.html.js.div
+import kotlinx.html.js.onClickFunction
 import kotlinx.html.span
+import org.olafneumann.mahjong.points.game.Combination
+import org.olafneumann.mahjong.points.game.Hand
 import org.olafneumann.mahjong.points.game.Tile
 import org.olafneumann.mahjong.points.ui.controls.tileImage
 import org.olafneumann.mahjong.points.ui.html.MrAttributes
@@ -23,7 +26,9 @@ class HandComponent(
     parent: HTMLElement,
     val model: UIModel,
 ) : AbstractComponent(parent = parent), UIModelChangeListener {
+    private var selectorDivs: Map<Figure, HTMLDivElement> by Delegates.notNull()
     private var figureDivs: Map<Figure, HTMLDivElement> by Delegates.notNull()
+    private var selectedFigure: Figure = Figure.Figure1
 
     init {
         model.registerChangeListener(this)
@@ -34,6 +39,7 @@ class HandComponent(
             figureDivs = element.getAllChildren<HTMLDivElement>()
                 .filterAttributeIsPresent(MrAttributes.FIGURE)
                 .associateBy { Figure.valueOf(it.mrFigure!!) }
+            selectorDivs = figureDivs.mapValues { (_, div) -> div.parentElement!! as HTMLDivElement }
         }
             .div {
                 divForFigure(Figure.Figure1)
@@ -51,15 +57,22 @@ class HandComponent(
             span { +figure.title }
             div(classes = "mr-tile-container") {
                 mrFigure = figure.name
+                onClickFunction = {
+                    selectedFigure = figure
+                    updateUI()
+                }
             }
         }
 
     override fun updateUI() {
-        figureDivs.values.forEach { div ->
+        selectorDivs.forEach { (figure, div) ->
+            div.classList.toggle("mr-selected", figure == selectedFigure)
+        }
+        figureDivs.forEach { (figure, div) ->
             div.clear()
             div.append {
-                for (i in 1..(1..3).random()) {
-                    tileImage(Tile.values().random(), selectable = true) {}
+                model.calculatorModel.hand.getTiles(figure).forEach { tile ->
+                    tileImage(tile, selectable = true) {}
                 }
             }
         }
@@ -79,4 +92,14 @@ class HandComponent(
         Pair("Paar"),
         Bonus("Bonus")
     }
+
+    private fun Hand.getTiles(figure: Figure): Collection<Tile> =
+        when (figure) {
+            Figure.Figure1 -> figure1?.getTiles() ?: emptyList()
+            Figure.Figure2 -> figure2?.getTiles() ?: emptyList()
+            Figure.Figure3 -> figure3?.getTiles() ?: emptyList()
+            Figure.Figure4 -> figure4?.getTiles() ?: emptyList()
+            Figure.Pair -> pair?.getTiles() ?: emptyList()
+            Figure.Bonus -> bonusTiles
+        }
 }

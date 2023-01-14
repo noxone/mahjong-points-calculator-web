@@ -1,5 +1,6 @@
 package org.olafneumann.mahjong.points.ui.model
 
+import org.olafneumann.mahjong.points.game.Hand
 import org.olafneumann.mahjong.points.game.Tile
 import org.olafneumann.mahjong.points.model.CalculatorModel
 
@@ -29,7 +30,10 @@ class UIModel {
 
     companion object {
         private fun createInitialCalculatorModel(): CalculatorModel =
-            CalculatorModel(selectedTiles = emptyList())
+            CalculatorModel(
+                selectedTiles = emptyList(),
+                hand = Hand(),
+            )
     }
 }
 

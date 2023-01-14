@@ -7,6 +7,7 @@ data class Combination(
 ) {
     fun getTiles(): List<Tile> =
         when (type) {
+            Type.Unfinished -> listOf(tile)
             Type.Pair -> listOf(tile, tile)
             Type.Pong -> listOf(tile, tile, tile)
             Type.Kang -> listOf(tile, tile, tile, tile)
@@ -16,10 +17,12 @@ data class Combination(
     enum class Type(
         val size: Int
     ) {
-        Pair(2), Chow(3), Pong(3), Kang(4);
+        Pair(2), Chow(3), Pong(3), Kang(4),
+        Unfinished(1)
+        ;
     }
 
     enum class Visibility {
-        Open, Closed, HalfOpen
+        Open, Closed
     }
 }
