@@ -78,7 +78,7 @@ class HandComponent(
                 divForFigure(Figure.Pair)
                 divForFigure(Figure.Bonus)
                 bsButton("Compute") {
-                    showResultTable(model.calculatorModel.result)
+                    showResultTable(model.calculatorModel.result) { model.setNextPlayer() }
                 }
             }
     }

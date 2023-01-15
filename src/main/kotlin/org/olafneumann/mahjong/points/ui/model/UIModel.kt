@@ -40,6 +40,8 @@ class UIModel {
     fun setPlatzWind(wind: Wind) = setNewModel(calculatorModel.setPlatzWind(wind))
 
 
+    fun setNextPlayer() = setNewModel(calculatorModel.forNextPlayer())
+
     fun start() = fireChange()
 
     companion object {

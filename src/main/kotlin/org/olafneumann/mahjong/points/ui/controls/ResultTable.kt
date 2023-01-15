@@ -16,12 +16,12 @@ import org.olafneumann.mahjong.points.ui.html.modal2
 import org.w3c.dom.HTMLElement
 import kotlin.properties.Delegates
 
-fun showResultTable(result: PlayerResult) {
+fun showResultTable(result: PlayerResult, onNextPlayerClick: () -> Unit = {}) {
     var modal: Modal by Delegates.notNull()
     val element = document.create.modal2(
         title = "Punkteberechnung",
         buttons = listOf(
-            Button(title = "Next Player", colorClass = "secondary") { modal.hide() },
+            Button(title = "Next Player", colorClass = "secondary") { onNextPlayerClick(); modal.hide() },
             Button(title = "Close") { modal.hide() }
         )
     ) { resultTable(result) }

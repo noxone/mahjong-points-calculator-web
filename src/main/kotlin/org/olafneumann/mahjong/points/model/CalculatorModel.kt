@@ -169,6 +169,13 @@ data class CalculatorModel(
         return copy(hand = hand.replace(combination, null))
     }
 
+    fun forNextPlayer(): CalculatorModel =
+        copy(
+            hand = Hand(),
+            platzWind = platzWind.next,
+            selectedFigure = Figure1
+        )
+
     val result: PlayerResult by lazy {
         ClassicRulesResultComputer().computeResult(
             hand,
