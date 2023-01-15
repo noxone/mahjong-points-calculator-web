@@ -27,8 +27,6 @@ class UIModel {
 
     fun select(tile: Tile) = setNewModel(calculatorModel.select(tile))
 
-    fun deselect(tile: Tile) =  /*setNewModel(calculatorModel.deselect(tile))*/ this
-
     fun select(figure: Figure) = setNewModel(calculatorModel.select(figure))
 
     fun setOpen(figure: Figure, open: Boolean) = setNewModel(calculatorModel.setOpen(figure, open))
