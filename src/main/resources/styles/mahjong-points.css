@@ -1,17 +1,153 @@
+body {
+  touch-action:
+    /*pan-x*/
+    pan-y;
+  /*touch-action: none;*/
+}
+
+.mr-tile-container {
+  font-size: 0.97vw;
+}
+
+@media (min-width: 768px) {
+  .mr-tile-container {
+    /*font-size: 1.275vw;*/
+    font-size: 1.175vw;
+  }
+}
+
+@media (min-width: 992px) {
+  .mr-tile-container {
+    font-size: 0.9vw;
+  }
+}
+
 .mr-tile-field {
-  font-size: 8pt;
-  width: 46.8em;
+  /*width: 50em;*/
+}
+
+.mr-tile-field div {
+  display: flex;
+  justify-content: space-between;
 }
 
 a.mr-tile img {
   width: 5em;
-  background-color: white;
+  background: rgb(255, 255, 255);
+  /* https://cssgradient.io/ */
+  background: linear-gradient(165deg, rgba(255, 255, 255, 1) 0%, rgba(194, 194, 194, 1) 8%, rgba(223, 223, 223, 1) 33%, rgba(251, 251, 251, 1) 100%);
   border-radius: 0.5em;
-  margin: 0.1em;
+  margin: 0.2em 0.3em;
   cursor: pointer;
 }
 
 .not-selectable {
-    cursor: not-allowed !important;
-    opacity: 40%;
+  cursor: not-allowed !important;
+  opacity: 40%;
 }
+
+.mr-vertical-switch .form-switch {
+  padding-left: 3rem;
+}
+
+.mr-figure-holder .btn {
+  width: 100%;
+}
+
+.mr-figure {
+  border: 1px solid lightgray;
+  border-radius: 0.375rem;
+  height: 4.2rem;
+  position: relative;
+}
+
+.mr-figure span {
+  position: absolute;
+  font-size: 3rem;
+  opacity: 0.3;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mr-figure .mr-tile-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*font-size: 0.2rem!important;*/
+  font-size: 6pt;
+}
+
+.mr-selected {
+  border: 3px solid #0dcaf0 !important;
+}
+
+.mr-result-part {
+  color: #111;
+}
+
+.mr-result-part + .mr-result-part {
+  margin-top: 0.75rem;
+}
+
+.mr-result-heading {
+  color: #112;
+  font-weight: lighter;
+  margin-bottom: 0.175rem;
+}
+
+.mr-result-final {
+  color: #113;
+}
+
+.mr-result-row {
+  color: #114;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 0.375rem;
+}
+
+.mr-result-sum-row {
+  color: #119;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid gray;
+  font-weight: 600;
+}
+
+.mr-result-final .mr-result-sum-row {
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.mr-result-row-heading {
+  color: #115;
+}
+
+.mr-result-row-points {
+  color: #116;
+  font-family: monospace;
+  font-size: 1.3rem;
+}
+
+.mr-result-row-points span {
+  color: #117;
+}
+
+.mr-result-row-points .mr-explanation {
+  color: #118;
+  font-weight: 100;
+  opacity: 0.5;
+  margin-right: 1rem;
+}
+
+.mr-result-final .mr-result-sum-row {
+  border: none;
+}
+

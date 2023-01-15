@@ -8,10 +8,17 @@ import org.w3c.dom.HTMLElement
 abstract class AbstractComponent(
     private val parent: HTMLElement,
 ) {
-    fun createUI() {
-        parent.clear()
-        parent.append { buildUI() }
+    private var initialCreation = true
+
+    fun buildUI() {
+        if (initialCreation) {
+            parent.clear()
+            parent.append { createUI() }
+        }
+        initialCreation = false
+        updateUI()
     }
 
-    protected abstract fun TagConsumer<HTMLElement>.buildUI()
+    protected abstract fun TagConsumer<HTMLElement>.createUI()
+    protected open fun updateUI() {}
 }

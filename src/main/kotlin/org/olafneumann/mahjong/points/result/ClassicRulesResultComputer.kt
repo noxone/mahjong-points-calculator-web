@@ -26,13 +26,13 @@ class ClassicRulesResultComputer : ResultComputer {
     fun computeResult(hand: Hand, gameModifiers: GameModifiers, platzWind: Wind): PlayerResult {
         val lines = listOf(
             // Points
-            checkForFlowers(hand),
             checkForChis(hand),
             checkForPongs(hand),
             checkForKangs(hand),
             checkPairs(hand),
+            checkForFlowers(hand),
             // Points for Mahjong
-            hand.isMahjong.map { checkMahjongPoints(gameModifiers) },
+            hand.isMahjong.map { checkMahjongPoints(hand, gameModifiers) },
             // Doublings for all
             checkDoublings(hand = hand, rundenWind = gameModifiers.rundenWind, platzWind = platzWind),
             // Doublings for Mahjong
@@ -52,10 +52,14 @@ class ClassicRulesResultComputer : ResultComputer {
         return PlayerResult(lines = lines, points = points, doublings = doublings, result = resultPoints.toInt())
     }
 
-    private fun checkForFlowers(hand: Hand): List<Line> =
-        listOf(
-            Line(description = Language.KEY_BONUS, points = POINT_BONUS, times = hand.bonusTiles.size)
-        )
+    private fun checkForFlowers(hand: Hand): List<Line>? =
+        if (hand.bonusTiles.isNotEmpty()) {
+            listOf(
+                Line(description = Language.KEY_BONUS, points = POINT_BONUS, times = hand.bonusTiles.size)
+            )
+        } else {
+            null
+        }
 
     private fun checkForChis(hand: Hand) = (
             hand.getFigures(Chow, Open)
@@ -94,8 +98,9 @@ class ClassicRulesResultComputer : ResultComputer {
          .map { Line(description = "Pair.Wind", points = 2) }*/
             )
 
-    private fun checkMahjongPoints(gameModifiers: GameModifiers) =
-        listOf(
+    private fun checkMahjongPoints(hand: Hand, gameModifiers: GameModifiers): List<Line> {
+        console.log(gameModifiers)
+        return listOf(
             // Mahjong
             Line(description = "Mahjong", points = 20),
             // Schlussziegel von der Mauer
@@ -105,12 +110,13 @@ class ClassicRulesResultComputer : ResultComputer {
             gameModifiers.schlussziegelEinzigMoeglicherZiegel
                 .map { Line("Schlussziegel.einzig.Moeglich", points = 2) },
             // Schlussziegel komplettiert Paar aus Grundziegeln
-            gameModifiers.schlussziegelKomplettiertPaarAusGrundziegeln
+            (gameModifiers.schlussziegelKomplettiertPaar && (hand.pair?.tile?.isBaseTile ?: false))
                 .map { Line("Schlussziegel.komplettiert.Grundziegel", points = 2) },
             // Schlussziegel komplettiert Paar aus Hauptziegeln
-            gameModifiers.schlussziegelKomplettiertPaarAusHauptziegeln
-                .map { Line("Schlussziegel.komplettiert.Hauptziegel", points = 2) },
+            (gameModifiers.schlussziegelKomplettiertPaar && !(hand.pair?.tile?.isBaseTile ?: false))
+                .map { Line("Schlussziegel.komplettiert.Hauptziegel", points = 4) },
         ).mapNotNull { it }
+    }
 
     private fun checkDoublings(hand: Hand, rundenWind: Wind, platzWind: Wind): List<Line> =
         listOf(
@@ -179,18 +185,18 @@ class ClassicRulesResultComputer : ResultComputer {
                 hand.getFigures(visibility = Closed).hasSize(5)
                     .map { Line(description = "All.Figures.Closed", doublings = 1) },
                 // Nur Ziegel einer Farbe und Bildziegel
-                (hand.allTiles.map { it.color }.distinct().hasSize(2)
-                        && hand.allTiles.mapNotNull { it.color }.distinct().hasSize(1))
+                (hand.allTilesOfFigures.map { it.color }.distinct().hasSize(2)
+                        && hand.allTilesOfFigures.mapNotNull { it.color }.distinct().hasSize(1))
                     .map { Line(description = "All.Tiles.One.Color.And.Pictures", doublings = 1) },
                 // Nur Ziegel einer Farbe
-                (hand.allTiles.map { it.color }.distinct().hasSize(1)
-                        && hand.allTiles.first().color != null)
+                (hand.allTilesOfFigures.map { it.color }.distinct().hasSize(1)
+                        && hand.allTilesOfFigures.first().color != null)
                     .map { Line(description = "All.Tiles.One.Color", doublings = 3) },
                 // Nur Hauptziegel
-                hand.allTiles.all { !it.isBaseTile }
+                hand.allTilesOfFigures.all { !it.isBaseTile }
                     .map { Line(description = "Only.Maintiles", doublings = 1) },
                 // Nur Bildziegel
-                hand.allTiles.all { it.isImage }
+                hand.allTilesOfFigures.all { it.isImage }
                     .map { Line(description = "Only.Imagetiles", doublings = 2) },
                 // Schlussziegel von der toten Mauer
                 gameModifiers.schlussziegelVonToterMauer

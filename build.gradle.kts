@@ -1,6 +1,6 @@
 plugins {
     kotlin("js") version "1.8.0"
-    id("io.gitlab.arturbosch.detekt").version("1.22.0")
+    //id("io.gitlab.arturbosch.detekt").version("1.22.0")
 }
 
 group = "org.olafneumann.mahjong.points"
@@ -50,7 +50,7 @@ kotlin {
     }
 }
 
-detekt {
+/*detekt {
     // Define the detekt configuration(s) you want to use.
     config = files("$projectDir/.config/detekt.yml")
 
@@ -66,4 +66,4 @@ detekt {
         txt.enabled = true
         sarif.enabled = true
     }
-}
+}*/
