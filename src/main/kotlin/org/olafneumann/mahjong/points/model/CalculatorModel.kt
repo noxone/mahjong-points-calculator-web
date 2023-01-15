@@ -1,9 +1,11 @@
 package org.olafneumann.mahjong.points.model
 
 import org.olafneumann.mahjong.points.game.Combination
+import org.olafneumann.mahjong.points.game.Combination.Type.Chow
 import org.olafneumann.mahjong.points.game.Combination.Type.Kang
 import org.olafneumann.mahjong.points.game.Combination.Type.Pong
-import org.olafneumann.mahjong.points.game.Combination.Type.*
+import org.olafneumann.mahjong.points.game.Combination.Type.Unfinished0
+import org.olafneumann.mahjong.points.game.Combination.Type.UnfinishedPlus1
 import org.olafneumann.mahjong.points.game.Combination.Visibility.Open
 import org.olafneumann.mahjong.points.game.GameModifiers
 import org.olafneumann.mahjong.points.game.Hand

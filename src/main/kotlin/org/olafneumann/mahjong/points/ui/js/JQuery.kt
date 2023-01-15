@@ -1,4 +1,4 @@
-package org.olafneumann.regex.generator.js
+package org.olafneumann.mahjong.points.ui.js
 
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event

@@ -7,8 +7,6 @@ import kotlinx.html.dom.create
 import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.title
-import org.olafneumann.regex.generator.js.JQuery
-import org.olafneumann.regex.generator.js.jQuery
 import org.w3c.dom.HTMLElement
 import kotlin.js.json
 
