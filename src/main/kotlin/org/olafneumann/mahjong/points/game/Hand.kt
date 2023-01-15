@@ -17,6 +17,11 @@ data class Hand(
     val allTiles: List<Tile> = allTilesOfFigures + bonusTiles
 
     val isMahjong: Boolean = allFigures.size == Constants.FIGURES_IN_COMPLETE_HAND
+    fun containsPongWith(tile: Tile) =
+        allFigures
+            .filter { it.type == Combination.Type.Pong }
+            .map { it.tile }
+            .contains(tile)
 
     fun replace(oldCombination: Combination, newCombination: Combination?): Hand =
         copy(

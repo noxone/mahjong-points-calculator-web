@@ -49,7 +49,7 @@ data class CalculatorModel(
             return this
         }
 
-        if (tile.isWindOrDragon && hand.allFigures.filter { it.type == Pong }.map { it.tile }.contains(tile)) {
+        if (tile.isTrump && hand.containsPongWith(tile)) {
             return copy(
                 hand = hand.allFigures.first { it.tile == tile }.replace(hand, type = Kang),
                 selectedFigure = selectedFigure.next
@@ -57,27 +57,21 @@ data class CalculatorModel(
         }
 
         if (selectedFigure == Pair) {
-            if (hand.allFigures.filter { it.type == Pong }.map { it.tile }.contains(tile)) {
+            /*if (hand.containsPongWith(tile)) {
                 return copy(hand = hand.allFigures.first { it.tile == tile }.replace(hand, type = Kang))
-            }
+            }*/
             if (!canConsume(tile, tile)) {
                 return this
             }
             return copy(
-                hand = hand.copy(
-                    pair = Combination(
-                        type = Combination.Type.Pair,
-                        tile = tile,
-                        visibility = Open
-                    )
-                )
+                hand = hand.copy(pair = Combination(type = Combination.Type.Pair, tile = tile, visibility = Open))
             )
         }
 
         // combination exists, because 'bonus' has been handled before
         val combination = hand.getCombination(selectedFigure)
         if (combination == null) {
-            if (tile.isWindOrDragon) {
+            if (tile.isTrump) {
                 if (!canConsume(tile, tile, tile)) {
                     return this
                 }

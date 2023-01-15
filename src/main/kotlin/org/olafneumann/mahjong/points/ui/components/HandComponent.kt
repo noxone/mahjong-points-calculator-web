@@ -132,6 +132,7 @@ class HandComponent(
             }
         }
         figureSwitches.forEach { (figure, input) ->
+            input.disabled = model.calculatorModel.hand.getCombination(figure) == null
             input.checked = (model.calculatorModel.hand.getCombination(figure)?.visibility
                 ?: Combination.Visibility.Open) == Combination.Visibility.Open
         }
