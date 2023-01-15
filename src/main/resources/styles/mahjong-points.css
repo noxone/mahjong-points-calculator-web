@@ -89,6 +89,9 @@ a.mr-tile img {
 
 .mr-result-part {
   color: #111;
+}
+
+.mr-result-part + .mr-result-part {
   margin-top: 0.75rem;
 }
 
@@ -137,6 +140,14 @@ a.mr-tile img {
   color: #117;
 }
 
-.mr-result-row-points span+span {
+.mr-result-row-points .mr-explanation {
   color: #118;
+  font-weight: 100;
+  opacity: 0.5;
+  margin-right: 1rem;
 }
+
+.mr-result-final .mr-result-sum-row {
+  border: none;
+}
+

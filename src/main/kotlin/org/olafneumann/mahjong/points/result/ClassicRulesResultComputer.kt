@@ -26,11 +26,11 @@ class ClassicRulesResultComputer : ResultComputer {
     fun computeResult(hand: Hand, gameModifiers: GameModifiers, platzWind: Wind): PlayerResult {
         val lines = listOf(
             // Points
-            checkForFlowers(hand),
             checkForChis(hand),
             checkForPongs(hand),
             checkForKangs(hand),
             checkPairs(hand),
+            checkForFlowers(hand),
             // Points for Mahjong
             hand.isMahjong.map { checkMahjongPoints(hand, gameModifiers) },
             // Doublings for all

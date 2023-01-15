@@ -25,10 +25,11 @@ import kotlin.reflect.KMutableProperty0
 fun TagConsumer<HTMLElement>.bsButton(
     label: String,
     tooltip: String? = null,
+    colorClass: String = "primary",
     additionalAttributes: List<Pair<String, String>> = emptyList(),
     onClickFunction: (Event) -> Unit = {}
 ) =
-    button(classes = "btn btn-primary", type = ButtonType.button) {
+    button(classes = "btn btn-$colorClass", type = ButtonType.button) {
         +label
         tooltip?.let { title = it }
         additionalAttributes.forEach {
@@ -118,7 +119,11 @@ fun TagConsumer<HTMLElement>.verticalSwitch(label: String, action: (Event) -> Un
     }
 }
 
-fun TagConsumer<HTMLElement>.modal(title: String, onCloseButtonClickFunction: (Event) -> Unit, block: TagConsumer<HTMLElement>.() -> Unit = {}) =
+fun TagConsumer<HTMLElement>.modal(
+    title: String,
+    onCloseButtonClickFunction: (Event) -> Unit,
+    block: TagConsumer<HTMLElement>.() -> Unit = {}
+) =
     div(classes = "modal fade") {
         div(classes = "modal-dialog modal-dialog-scrollable modal-dialog-centered") {
             div(classes = "modal-content") {
@@ -135,6 +140,36 @@ fun TagConsumer<HTMLElement>.modal(title: String, onCloseButtonClickFunction: (E
             }
         }
     }
+
+fun TagConsumer<HTMLElement>.modal2(
+    title: String,
+    buttons: List<Button> = emptyList(),
+    mainBlock: TagConsumer<HTMLElement>.() -> Unit = {}
+) =
+    div(classes = "modal fade") {
+        div(classes = "modal-dialog modal-dialog-centered") {
+            div(classes = "modal-content") {
+                div(classes = "modal-header") {
+                    h5(classes = "modal-title") { +title }
+                    closeButton(additionalAttributes = listOf("data-bs-dismiss" to "modal"))
+                }
+                div(classes = "modal-body") {
+                    mainBlock()
+                }
+                div(classes = "modal-footer") {
+                    buttons.forEach {
+                        bsButton(label = it.title, colorClass = it.colorClass, onClickFunction = it.onClickFunction)
+                    }
+                }
+            }
+        }
+    }
+
+data class Button(
+    val title: String,
+    val colorClass: String = "primary",
+    val onClickFunction: (Event) -> Unit
+)
 
 private val String.asId: String get() = replace(Regex("\\s+"), "")
 
