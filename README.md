@@ -1,18 +1,25 @@
 # Mahjong Points Calculator [![Build and publish project](https://github.com/noxone/mahjong-point-calculator/actions/workflows/publish-project.yml/badge.svg?event=push)](https://github.com/noxone/mahjong-point-calculator/actions/workflows/publish-project.yml)
 
-``Mahjong Point Calculator`` is a tool to compute the points of a Mahjong party. In a second mode it will be able to track the points of all players of a whole Mahjong game.
+``Mahjong Point Calculator`` is a tool to compute the points of a Mahjong game. In a second mode it will be able to track the points of all players of a whole Mahjong party.
 
-``Mahjong`` (麻將) is a Chinese game for four players. Computing the points of a Mahjong party can be quite challanging so this tool will help you here.
+Mahjong (麻將) is a Chinese game for four players. Computing the points of a Mahjong party can be quite challanging so this tool will help you here. 
 
 ## Usage
 
 ### Online
 
-Once the calculator is ready and working it will be available online and you will find a link here.
+``Mahjong Point Calculator``is available online. Please visit [https://mahjong.olafneumann.org](https://mahjong.olafneumann.org) and use it directly in the browser.
+
+The page is currently optimized especially for the usage on tablets. Other form factors might look very odd and not very easy to use. This might be available in later stages of the project.
 
 ### Docker
 
-There will also be a Docker based variant of the calculator that will support the same features as the actual website. The link will be published here, too.
+You can use ``Mahjong Point Calculator``via Docker. Please find the generated images in [this repository](https://hub.docker.com/r/noxone/mahjongpoints). Use the following command and find the application on port 80 of your local machine:
+
+```bash
+docker run -d -p 80:80 noxone/mahjongpoints
+```
+
 
 ## Development
 

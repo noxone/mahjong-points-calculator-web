@@ -9,6 +9,10 @@ body {
   font-size: 0.97vw;
 }
 
+.mr-full-height {
+  height: 100%;
+}
+
 @media (min-width: 768px) {
   .mr-tile-container {
     /*font-size: 1.275vw;*/
