@@ -165,9 +165,22 @@ data class CalculatorModel(
         } ?: this
 
     fun reset(figure: Figure): CalculatorModel {
-        val combination = hand.getCombination(figure) ?: return this
-        return copy(hand = hand.replace(combination, null))
+        if (figure == Bonus) {
+            return copy(hand = hand.copy(bonusTiles = emptySet()))
+        }
+        val combination = hand.getCombination(figure)
+        if (combination != null) {
+            return copy(hand = hand.replace(combination, null))
+        }
+        return this
     }
+
+    fun forNextPlayer(): CalculatorModel =
+        copy(
+            hand = Hand(),
+            platzWind = platzWind.next,
+            selectedFigure = Figure1
+        )
 
     val result: PlayerResult by lazy {
         ClassicRulesResultComputer().computeResult(
