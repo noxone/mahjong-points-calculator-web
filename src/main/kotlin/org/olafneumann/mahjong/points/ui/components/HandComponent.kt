@@ -96,16 +96,13 @@ class HandComponent(
             return
         }
 
-        if (model.calculatorModel.hand.getCombination(figure) == null) {
-            return
-        }
         popover = Popover(
             element = figureDivs[figure]!!,
             placement = Popover.Placement.Left,
             trigger = "manual",
         ) {
             button(classes = "btn btn-danger", type = ButtonType.button) {
-                +"Reset figure"
+                +"Reset"
                 onClickFunction = {
                     model.reset(figure)
                     disposePopover()
