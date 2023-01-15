@@ -14,6 +14,7 @@ import org.olafneumann.mahjong.points.game.Combination
 import org.olafneumann.mahjong.points.model.Figure
 import org.olafneumann.mahjong.points.model.getCombination
 import org.olafneumann.mahjong.points.model.getTiles
+import org.olafneumann.mahjong.points.ui.controls.showResultTable
 import org.olafneumann.mahjong.points.ui.controls.tileImage
 import org.olafneumann.mahjong.points.ui.html.MrAttributes
 import org.olafneumann.mahjong.points.ui.html.bsButton
@@ -76,7 +77,9 @@ class HandComponent(
                 divForFigure(Figure.Figure4)
                 divForFigure(Figure.Pair)
                 divForFigure(Figure.Bonus)
-                bsButton("Compute")
+                bsButton("Compute") {
+                    showResultTable(model.calculatorModel.result)
+                }
             }
     }
 

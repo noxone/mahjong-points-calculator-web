@@ -169,7 +169,11 @@ data class CalculatorModel(
         return copy(hand = hand.replace(combination, null))
     }
 
-    val result: PlayerResult
-        get() =
-            ClassicRulesResultComputer().computeResult(hand, gameModifiers, platzWind = platzWind)
+    val result: PlayerResult by lazy {
+        ClassicRulesResultComputer().computeResult(
+            hand,
+            gameModifiers,
+            platzWind = platzWind
+        )
+    }
 }

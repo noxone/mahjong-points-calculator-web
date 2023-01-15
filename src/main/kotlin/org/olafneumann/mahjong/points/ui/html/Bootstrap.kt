@@ -118,9 +118,9 @@ fun TagConsumer<HTMLElement>.verticalSwitch(label: String, action: (Event) -> Un
     }
 }
 
-fun TagConsumer<HTMLElement>.modal(title: String, block: TagConsumer<HTMLElement>.() -> Unit = {}) =
+fun TagConsumer<HTMLElement>.modal(title: String, onCloseButtonClickFunction: (Event) -> Unit, block: TagConsumer<HTMLElement>.() -> Unit = {}) =
     div(classes = "modal fade") {
-        div(classes = "modal-dialog") {
+        div(classes = "modal-dialog modal-dialog-scrollable modal-dialog-centered") {
             div(classes = "modal-content") {
                 div(classes = "modal-header") {
                     h5(classes = "modal-title") { +title }
@@ -130,7 +130,7 @@ fun TagConsumer<HTMLElement>.modal(title: String, block: TagConsumer<HTMLElement
                     block()
                 }
                 div(classes = "modal-footer") {
-                    bsButton("Close")
+                    bsButton("Close", onClickFunction = onCloseButtonClickFunction)
                 }
             }
         }

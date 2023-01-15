@@ -1,5 +1,7 @@
 body {
-  touch-action: /*pan-x*/ pan-y;
+  touch-action:
+    /*pan-x*/
+    pan-y;
   /*touch-action: none;*/
 }
 
@@ -7,14 +9,14 @@ body {
   font-size: 0.97vw;
 }
 
-@media (min-width: 768px) { 
+@media (min-width: 768px) {
   .mr-tile-container {
     /*font-size: 1.275vw;*/
     font-size: 1.175vw;
   }
 }
 
-@media (min-width: 992px) { 
+@media (min-width: 992px) {
   .mr-tile-container {
     font-size: 0.9vw;
   }
@@ -31,9 +33,9 @@ body {
 
 a.mr-tile img {
   width: 5em;
-  background: rgb(255,255,255);
+  background: rgb(255, 255, 255);
   /* https://cssgradient.io/ */
-  background: linear-gradient(165deg, rgba(255,255,255,1) 0%, rgba(194,194,194,1) 8%, rgba(223,223,223,1) 33%, rgba(251,251,251,1) 100%);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 1) 0%, rgba(194, 194, 194, 1) 8%, rgba(223, 223, 223, 1) 33%, rgba(251, 251, 251, 1) 100%);
   border-radius: 0.5em;
   margin: 0.2em 0.3em;
   cursor: pointer;
@@ -82,5 +84,59 @@ a.mr-tile img {
 }
 
 .mr-selected {
-  border:  3px solid #0dcaf0 !important;
+  border: 3px solid #0dcaf0 !important;
+}
+
+.mr-result-part {
+  color: #111;
+  margin-top: 0.75rem;
+}
+
+.mr-result-heading {
+  color: #112;
+  font-weight: lighter;
+  margin-bottom: 0.175rem;
+}
+
+.mr-result-final {
+  color: #113;
+}
+
+.mr-result-row {
+  color: #114;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 0.375rem;
+}
+
+.mr-result-sum-row {
+  color: #119;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid gray;
+  font-weight: 600;
+}
+
+.mr-result-final .mr-result-sum-row {
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.mr-result-row-heading {
+  color: #115;
+}
+
+.mr-result-row-points {
+  color: #116;
+  font-family: monospace;
+  font-size: 1.3rem;
+}
+
+.mr-result-row-points span {
+  color: #117;
+}
+
+.mr-result-row-points span+span {
+  color: #118;
 }
