@@ -28,14 +28,14 @@ private fun initMahjongPointCalculatorUnsafe() {
     val tilesDiv = document.getElement<HTMLDivElement>("mr_tiles")
     val selectedTilesDiv = document.getElement<HTMLDivElement>("mr_selected_tiles")
     val optionsDiv = document.getElement<HTMLFormElement>("mr_options")
-    //val resultDiv = document.getElement<HTMLDivElement>("mr_result")
+    val resultDiv = document.getElement<HTMLDivElement>("mr_result")
 
     val model = UIModel()
 
     TileSelectionComponent(parent = tilesDiv, model = model)
     OptionsComponent(parent = optionsDiv, model = model)
     HandComponent(parent = selectedTilesDiv, model = model)
-    //ResultComponent(parent = resultDiv, model = model)
+    ResultComponent(parent = resultDiv, model = model)
 
     model.start()
 }

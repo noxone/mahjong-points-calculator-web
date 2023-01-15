@@ -6,7 +6,6 @@ import kotlinx.html.ButtonType
 import kotlinx.html.TagConsumer
 import kotlinx.html.button
 import kotlinx.html.dom.append
-import kotlinx.html.dom.create
 import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.span
@@ -14,10 +13,8 @@ import org.olafneumann.mahjong.points.game.Combination
 import org.olafneumann.mahjong.points.model.Figure
 import org.olafneumann.mahjong.points.model.getCombination
 import org.olafneumann.mahjong.points.model.getTiles
-import org.olafneumann.mahjong.points.ui.controls.showResultTable
 import org.olafneumann.mahjong.points.ui.controls.tileImage
 import org.olafneumann.mahjong.points.ui.html.MrAttributes
-import org.olafneumann.mahjong.points.ui.html.bsButton
 import org.olafneumann.mahjong.points.ui.html.filterAttributeIsPresent
 import org.olafneumann.mahjong.points.ui.html.getAllChildren
 import org.olafneumann.mahjong.points.ui.html.getElement
@@ -27,7 +24,6 @@ import org.olafneumann.mahjong.points.ui.html.verticalSwitch
 import org.olafneumann.mahjong.points.ui.js.Popover
 import org.olafneumann.mahjong.points.ui.model.UIModel
 import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
-import org.olafneumann.mahjong.points.ui.js.jQuery
 import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
@@ -77,9 +73,6 @@ class HandComponent(
                 divForFigure(Figure.Figure4)
                 divForFigure(Figure.Pair)
                 divForFigure(Figure.Bonus)
-                bsButton("Compute") {
-                    showResultTable(model.calculatorModel.result) { model.setNextPlayer() }
-                }
             }
     }
 
