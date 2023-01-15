@@ -19,6 +19,7 @@ import org.olafneumann.mahjong.points.ui.html.MrAttributes
 import org.olafneumann.mahjong.points.ui.html.bsButton
 import org.olafneumann.mahjong.points.ui.html.filterAttributeIsPresent
 import org.olafneumann.mahjong.points.ui.html.getAllChildren
+import org.olafneumann.mahjong.points.ui.html.getElement
 import org.olafneumann.mahjong.points.ui.html.injectRoot
 import org.olafneumann.mahjong.points.ui.html.mrFigure
 import org.olafneumann.mahjong.points.ui.html.verticalSwitch
@@ -26,6 +27,7 @@ import org.olafneumann.mahjong.points.ui.js.Popover
 import org.olafneumann.mahjong.points.ui.model.UIModel
 import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
 import org.olafneumann.mahjong.points.ui.js.jQuery
+import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
@@ -39,12 +41,16 @@ class HandComponent(
     private var figureDivs: Map<Figure, HTMLDivElement> by Delegates.notNull()
     private var figureSwitches: Map<Figure, HTMLInputElement> by Delegates.notNull()
     private var popover: Popover? = null
+    private val btnUndo = document.getElement<HTMLButtonElement>("mr_btn_undo")
 
     init {
         model.registerChangeListener(this)
         document.onmousedown = {
             // dispose any popover if the user click somewhere else
             disposePopover()
+        }
+        btnUndo.onclick = {
+            // TODO
         }
     }
 
@@ -83,7 +89,9 @@ class HandComponent(
                     onClickFunction = { handleFigureClick(figure) }
                 }
             }
-            verticalSwitch("Open") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
+            if (figure != Figure.Bonus) {
+                verticalSwitch("Open") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
+            }
         }
 
     private fun handleFigureClick(figure: Figure) {
@@ -99,21 +107,16 @@ class HandComponent(
             element = figureDivs[figure]!!,
             placement = Popover.Placement.Left,
             trigger = "manual",
-            contentElement = document.create.div {
-                button(classes = "btn btn-danger", type = ButtonType.button) {
-                    +"Reset figure"
-                    onClickFunction = {
-                        model.reset(figure)
-                        disposePopover()
-                    }
+        ) {
+            button(classes = "btn btn-danger", type = ButtonType.button) {
+                +"Reset figure"
+                onClickFunction = {
+                    model.reset(figure)
+                    disposePopover()
                 }
-            },
-        )
-        popover!!.show()
-        jQuery(".popover").mousedown {
-            // prevent popover from being disposed when clicking inside
-            it.stopPropagation()
+            }
         }
+        popover!!.show()
     }
 
     override fun updateUI() {

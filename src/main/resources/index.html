@@ -48,19 +48,18 @@
                     <div class="bg-light rounded p-3 row g-0 mt-3 mt-lg-0 ms-lg-3">
                         <h2>Options</h2>
                         <form id="mr_options">
-                            <div class="">
-                                Rundenwind
-                            </div>
-                            <div class="">
-                                Platzwind
-                            </div>
                         </form>
                     </div>
                 </div>
             </div>
     
             <div class="col-md-4 col-lg-3 bg-light rounded p-3 mt-3">
-                <h2>Hand</h2>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Hand</h2>
+                    <button class="btn btn-sm btn-outline-secondary d-none" id="mr_btn_undo" type="button">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                    </button>
+                </div>
                 <div id="mr_selected_tiles" class="mr-figure-holder">
                 </div>
             </div>

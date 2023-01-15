@@ -2,6 +2,8 @@ package org.olafneumann.mahjong.points.ui.js
 
 import kotlinx.browser.document
 import kotlinx.html.ButtonType
+import kotlinx.html.Tag
+import kotlinx.html.TagConsumer
 import kotlinx.html.button
 import kotlinx.html.dom.create
 import kotlinx.html.js.div
@@ -14,24 +16,28 @@ import kotlin.js.json
 class Popover(
     element: HTMLElement,
     private val container: String = "body",
-    private val contentString: String? = null,
-    private val contentElement: HTMLElement? = null,
-    private val html: Boolean = true,
     private val placement: Placement = Placement.Right,
     private val title: String? = null,
     private val trigger: String = "click",
     onShown: () -> Unit = {},
     private val onCloseButtonClick: Popover.() -> Unit = { dispose() },
+    private val content: TagConsumer<HTMLElement>.() -> HTMLElement,
 ) {
     private var jquery: JQuery
 
     init {
-        jquery = jQuery(element)
+        jquery = element.asJQuery()
         jquery.popover(createOptionsJson())
         jquery.on("shown.bs.popover", onShown)
     }
 
-    fun show() = jquery.popover("show")
+    fun show() {
+        jquery.popover("show")
+        jQuery(".popover").mousedown {
+            // prevent popover from being disposed when clicking inside
+            it.stopPropagation()
+        }
+    }
     fun hide() = jquery.popover("hide")
     fun dispose() = jquery.popover("dispose")
     fun toggle() = jquery.popover("toggle")
@@ -39,8 +45,8 @@ class Popover(
     private fun createOptionsJson() = json(
         *listOf(
             "container" to container,
-            "content" to (contentString ?: contentElement),
-            "html" to html,
+            "content" to document.create.content(),
+            "html" to true,
             "placement" to placement.value,
             "title" to if (this@Popover.title.isNullOrBlank()) {
                 null
