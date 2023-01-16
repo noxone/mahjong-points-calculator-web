@@ -41,8 +41,15 @@ class Language(
                     "Pair" to "Paar",
                     "Bonus" to "Bonus",
                     "Reset" to "Zurücksetzen",
+                    "Result" to "Ergebnis",
                     "Game Wind" to "Rundenwind",
                     "Place Wind" to "Platzwind",
+                    "Point Calculation" to "Punkteberechnung",
+                    "Points" to "Punkte",
+                    "Sum Points" to "Summe Punkte",
+                    "Doublings" to "Verdoppelungen",
+                    "Sum Doublings" to "Summe Verdoppelungen",
+                    "Final Result" to "Endergebnis",
                 ))
                 else -> null
             }
