@@ -1,12 +1,10 @@
 package org.olafneumann.mahjong.points.ui.html
 
-import kotlinx.browser.document
 import kotlinx.html.ButtonType
 import kotlinx.html.InputType
 import kotlinx.html.TagConsumer
 import kotlinx.html.button
 import kotlinx.html.div
-import kotlinx.html.dom.create
 import kotlinx.html.h5
 import kotlinx.html.id
 import kotlinx.html.input
@@ -15,6 +13,7 @@ import kotlinx.html.js.onClickFunction
 import kotlinx.html.js.onInputFunction
 import kotlinx.html.label
 import kotlinx.html.title
+import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.util.nextHtmlId
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
@@ -30,8 +29,8 @@ fun TagConsumer<HTMLElement>.bsButton(
     onClickFunction: (Event) -> Unit = {}
 ) =
     button(classes = "btn btn-$colorClass", type = ButtonType.button) {
-        +label
-        tooltip?.let { title = it }
+        +!label
+        tooltip?.let { title = !it }
         additionalAttributes.forEach {
             attributes[it.first] = it.second
         }
@@ -47,8 +46,8 @@ fun TagConsumer<HTMLElement>.closeButton(
         additionalAttributes.forEach {
             attributes[it.first] = it.second
         }
-        attributes["aria-label"] = "Close"
-        tooltip?.let { this.title = it }
+        attributes["aria-label"] = !"Close"
+        tooltip?.let { this.title = !it }
         this.onClickFunction = onClickFunction
     }
 
@@ -59,7 +58,7 @@ fun <T> TagConsumer<HTMLElement>.radioGroup(
     action: (T) -> Unit = {},
 ) = capture2(property, { RadioGroup(it, items) }) {
     div {
-        label { +label }
+        label { +!label }
         div(classes = "btn-group btn-group-sm") {
             items.forEach { item ->
                 val radioId = (label + item.toString()).asId
@@ -75,7 +74,7 @@ fun <T> TagConsumer<HTMLElement>.radioGroup(
                 }
                 label(classes = "btn btn-outline-primary") {
                     htmlFor = radioId
-                    +item.toString()
+                    +!item.toString()
                 }
             }
         }
@@ -96,7 +95,7 @@ fun TagConsumer<HTMLElement>.checkbox(
             }
             label(classes = "form-check-label") {
                 htmlFor = label.asId
-                +label
+                +!label
             }
         }
     }
@@ -113,7 +112,7 @@ fun TagConsumer<HTMLElement>.verticalSwitch(label: String, action: (Event) -> Un
         div {
             label(classes = "form-check-label") {
                 htmlFor = htmlId
-                +label
+                +!label
             }
         }
     }
@@ -128,7 +127,7 @@ fun TagConsumer<HTMLElement>.modal(
         div(classes = "modal-dialog modal-dialog-scrollable modal-dialog-centered") {
             div(classes = "modal-content") {
                 div(classes = "modal-header") {
-                    h5(classes = "modal-title") { +title }
+                    h5(classes = "modal-title") { +!title }
                     closeButton(additionalAttributes = listOf("data-bs-dismiss" to "modal"))
                 }
                 div(classes = "modal-body") {
@@ -150,7 +149,7 @@ fun TagConsumer<HTMLElement>.modal2(
         div(classes = "modal-dialog modal-dialog-centered") {
             div(classes = "modal-content") {
                 div(classes = "modal-header") {
-                    h5(classes = "modal-title") { +title }
+                    h5(classes = "modal-title") { +!title }
                     closeButton(additionalAttributes = listOf("data-bs-dismiss" to "modal"))
                 }
                 div(classes = "modal-body") {

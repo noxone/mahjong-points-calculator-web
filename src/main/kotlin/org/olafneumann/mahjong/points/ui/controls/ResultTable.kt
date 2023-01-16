@@ -13,6 +13,7 @@ import org.olafneumann.mahjong.points.ui.html.Button
 import org.olafneumann.mahjong.points.ui.html.Modal
 import org.olafneumann.mahjong.points.ui.html.createModal
 import org.olafneumann.mahjong.points.ui.html.modal2
+import org.olafneumann.mahjong.points.lang.not
 import org.w3c.dom.HTMLElement
 import kotlin.properties.Delegates
 
@@ -44,7 +45,7 @@ private fun TagConsumer<HTMLElement>.resultTable(result: PlayerResult) =
             )
             div(classes = "mr-result-part mr-result-final") {
                 /*span(classes = "mr-result-heading") {
-                    +"Ergebnis"
+                    +!"Ergebnis"
                 }*/
                 /*if (result.doublings > 0) {
                     pointRow("Anwendung Verdoppelungen", power = result.doublings, points = result.points)
@@ -65,7 +66,7 @@ private fun TagConsumer<HTMLElement>.pointRow(
 ) =
     div(classes = "mr-result-row") {
         div(classes = "mr-result-row-heading") {
-            +description
+            +!description
         }
         div(classes = "mr-result-row-points") {
             if (doublings != 0) {
@@ -90,7 +91,7 @@ private fun TagConsumer<HTMLElement>.pointRow(
 private fun TagConsumer<HTMLElement>.pointSumRow(description: String, points: Int, doublings: Int, result: Int) =
     div(classes = "mr-result-sum-row") {
         div(classes = "mr-result-row-heading") {
-            +description
+            +!description
         }
         div(classes = "mr-result-row-points") {
             if (doublings > 0) {
@@ -111,7 +112,7 @@ private fun TagConsumer<HTMLElement>.pointSumRow(description: String, points: In
 private fun TagConsumer<HTMLElement>.resultPart(heading: String, lines: List<Line>, sum: Int) =
     div(classes = "mr-result-part") {
         div(classes = "mr-result-heading") {
-            +heading
+            +!heading
         }
         lines.forEach { pointRow(it) }
         pointSumRow("Summe $heading", 0, 0, sum)

@@ -1,6 +1,6 @@
 package org.olafneumann.mahjong.points.result
 
-import org.olafneumann.mahjong.points.lang.Language
+import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.game.Combination
 import org.olafneumann.mahjong.points.game.Combination.Type
 import org.olafneumann.mahjong.points.game.Combination.Type.Pong
@@ -54,7 +54,7 @@ class ClassicRulesResultComputer : ResultComputer {
     private fun checkForFlowers(hand: Hand): List<Line>? =
         if (hand.bonusTiles.isNotEmpty()) {
             listOf(
-                Line(description = Language.KEY_BONUS, points = POINT_BONUS, times = hand.bonusTiles.size)
+                Line(description = StringKeys.KEY_BONUS, points = POINT_BONUS, times = hand.bonusTiles.size)
             )
         } else {
             null
@@ -62,9 +62,9 @@ class ClassicRulesResultComputer : ResultComputer {
 
     private fun checkForChis(hand: Hand) = (
             hand.getFigures(Chow, Open)
-                .map { Line(description = Language.KEY_CHOW_OPEN, points = 0) }
+                .map { Line(description = StringKeys.KEY_CHOW_OPEN, points = 0) }
                     + hand.getFigures(Chow, Closed)
-                .map { Line(description = Language.KEY_CHOW_CLOSED, points = 0) }
+                .map { Line(description = StringKeys.KEY_CHOW_CLOSED, points = 0) }
             )
 
     private fun checkForPongs(hand: Hand) = (
