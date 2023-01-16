@@ -182,6 +182,8 @@ data class CalculatorModel(
             selectedFigure = Figure1
         )
 
+    val isMahjong: Boolean = hand.isMahjong
+
     val result: PlayerResult by lazy {
         ClassicRulesResultComputer().computeResult(
             hand,

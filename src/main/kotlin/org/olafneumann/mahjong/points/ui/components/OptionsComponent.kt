@@ -76,16 +76,32 @@ class OptionsComponent(
     }
 
     override fun updateUI() {
+        val isMahjong = model.calculatorModel.isMahjong
+
         rdaRundenWind.select(gameModifiers.rundenWind)
         rdaPlatzWind.select(model.calculatorModel.platzWind)
-        chkSchlussziegelVonDerMauer.checked = gameModifiers.schlussziegelVonMauer
-        chkSchlussziegelIstEinzigMoeglicherZiegel.checked = gameModifiers.schlussziegelEinzigMoeglicherZiegel
-        chkSchlussziegelKomplettiertPaar.checked = gameModifiers.schlussziegelKomplettiertPaar
-        chkSchlussziegelVonDerTotenMauer.checked = gameModifiers.schlussziegelVonToterMauer
-        chkMitDemLetztenZiegel.checked = gameModifiers.mitDemLetztenZiegelDerMauerGewonnen
-        chkSchlussziegelIstAbgelegterZiegelNachLetztem.checked = gameModifiers.schlussziegelIstAbgelegterZiegelNachAbbauDerMauer
-        chkBeraubungDesKang.checked = gameModifiers.beraubungDesKang
-        chkMahjongZuBeginn.checked = gameModifiers.mahjongAtBeginning
+
+        // checked or not
+        chkSchlussziegelVonDerMauer.checked = isMahjong && gameModifiers.schlussziegelVonMauer
+        chkSchlussziegelIstEinzigMoeglicherZiegel.checked =
+            isMahjong && gameModifiers.schlussziegelEinzigMoeglicherZiegel
+        chkSchlussziegelKomplettiertPaar.checked = isMahjong && gameModifiers.schlussziegelKomplettiertPaar
+        chkSchlussziegelVonDerTotenMauer.checked = isMahjong && gameModifiers.schlussziegelVonToterMauer
+        chkMitDemLetztenZiegel.checked = isMahjong && gameModifiers.mitDemLetztenZiegelDerMauerGewonnen
+        chkSchlussziegelIstAbgelegterZiegelNachLetztem.checked =
+            isMahjong && gameModifiers.schlussziegelIstAbgelegterZiegelNachAbbauDerMauer
+        chkBeraubungDesKang.checked = isMahjong && gameModifiers.beraubungDesKang
+        chkMahjongZuBeginn.checked = isMahjong && gameModifiers.mahjongAtBeginning
+
+        // activated or not
+        chkSchlussziegelVonDerMauer.disabled = !isMahjong
+        chkSchlussziegelIstEinzigMoeglicherZiegel.disabled = !isMahjong
+        chkSchlussziegelKomplettiertPaar.disabled = !isMahjong
+        chkSchlussziegelVonDerTotenMauer.disabled = !isMahjong
+        chkMitDemLetztenZiegel.disabled = !isMahjong
+        chkSchlussziegelIstAbgelegterZiegelNachLetztem.disabled = !isMahjong
+        chkBeraubungDesKang.disabled = !isMahjong
+        chkMahjongZuBeginn.disabled = !isMahjong
     }
 
     override fun modelChanged(model: UIModel) {
