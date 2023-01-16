@@ -43,18 +43,20 @@ class OptionsComponent(
                 radioGroup("Place Wind", Wind.values().asList(), this@OptionsComponent::rdaPlatzWind) {
                     model.setPlatzWind(it)
                 }
-                checkbox("Schlussziegel von der Mauer", this@OptionsComponent::chkSchlussziegelVonDerMauer) {
-                    model.setGameModifiers(gameModifiers.copy(schlussziegelVonMauer = it))
-                }
-                checkbox(
-                    "Schlussziegel ist einzig möglicher Ziegel",
-                    this@OptionsComponent::chkSchlussziegelIstEinzigMoeglicherZiegel
-                ) { model.setGameModifiers(gameModifiers.copy(schlussziegelEinzigMoeglicherZiegel = it)) }
-                checkbox("Schlussziegel komplettiert Paar", this@OptionsComponent::chkSchlussziegelKomplettiertPaar) {
-                    model.setGameModifiers(gameModifiers.copy(schlussziegelKomplettiertPaar = it))
+                div(classes = "mt-3") {
+                    checkbox("Schlussziegel von der Mauer", this@OptionsComponent::chkSchlussziegelVonDerMauer) {
+                        model.setGameModifiers(gameModifiers.copy(schlussziegelVonMauer = it))
+                    }
+                    checkbox(
+                        "Schlussziegel ist einzig möglicher Ziegel",
+                        this@OptionsComponent::chkSchlussziegelIstEinzigMoeglicherZiegel
+                    ) { model.setGameModifiers(gameModifiers.copy(schlussziegelEinzigMoeglicherZiegel = it)) }
                 }
             }
             div(classes = "col-6 col-lg-12") {
+                checkbox("Schlussziegel komplettiert Paar", this@OptionsComponent::chkSchlussziegelKomplettiertPaar) {
+                    model.setGameModifiers(gameModifiers.copy(schlussziegelKomplettiertPaar = it))
+                }
                 checkbox("Schlussziegel von der toten Mauer", this@OptionsComponent::chkSchlussziegelVonDerTotenMauer) {
                     model.setGameModifiers(gameModifiers.copy(schlussziegelVonToterMauer = it))
                 }
