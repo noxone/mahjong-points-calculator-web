@@ -22,6 +22,7 @@ class Language(
                     "Compute" to "Compute"
                 ))
                 "de" -> Language(mapOf(
+                    "Mahjong Points Calculator" to "Mahjong Punkte Rechner",
                     "Compute" to "Berechnen",
                     "Options" to "Optionen",
                     "Close" to "Schließen",
@@ -39,7 +40,9 @@ class Language(
                     "Figure4" to "Figur 4",
                     "Pair" to "Paar",
                     "Bonus" to "Bonus",
-                    "Reset" to "Zurücksetzen"
+                    "Reset" to "Zurücksetzen",
+                    "Game Wind" to "Rundenwind",
+                    "Place Wind" to "Platzwind",
                 ))
                 else -> null
             }

@@ -20,7 +20,7 @@ import kotlin.properties.Delegates
 fun showResultTable(result: PlayerResult, onNextPlayerClick: () -> Unit = {}) {
     var modal: Modal by Delegates.notNull()
     val element = document.create.modal2(
-        title = "Punkteberechnung",
+        title = "Point Calculation",
         buttons = listOf(
             Button(title = "Next Player", colorClass = "secondary") { onNextPlayerClick(); modal.hide() },
             Button(title = "Close") { modal.hide() }
@@ -34,12 +34,12 @@ private fun TagConsumer<HTMLElement>.resultTable(result: PlayerResult) =
     div(classes = "mr-result") {
         div(classes = "mr-result-points") {
             resultPart(
-                heading = "Punkte",
+                heading = "Points",
                 lines = result.lines.filter { it.doublings == 0 },
                 sum = result.points
             )
             resultPart(
-                heading = "Verdoppelungen",
+                heading = "Doublings",
                 lines = result.lines.filter { it.doublings != 0 },
                 sum = result.doublings
             )
@@ -50,7 +50,7 @@ private fun TagConsumer<HTMLElement>.resultTable(result: PlayerResult) =
                 /*if (result.doublings > 0) {
                     pointRow("Anwendung Verdoppelungen", power = result.doublings, points = result.points)
                 }*/
-                pointSumRow("Endergebnis", points = result.points, doublings = result.doublings, result.result)
+                pointSumRow("Final Result", points = result.points, doublings = result.doublings, result.result)
             }
         }
     }
@@ -115,5 +115,5 @@ private fun TagConsumer<HTMLElement>.resultPart(heading: String, lines: List<Lin
             +!heading
         }
         lines.forEach { pointRow(it) }
-        pointSumRow("Summe $heading", 0, 0, sum)
+        pointSumRow("Sum $heading", 0, 0, sum)
     }

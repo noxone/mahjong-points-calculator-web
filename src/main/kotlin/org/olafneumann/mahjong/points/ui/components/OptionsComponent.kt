@@ -37,10 +37,10 @@ class OptionsComponent(
     override fun TagConsumer<HTMLElement>.createUI() {
         div(classes = "row g-0") {
             div(classes = "col-6 col-lg-12") {
-                radioGroup("Rundenwind", Wind.values().asList(), this@OptionsComponent::rdaRundenWind) {
+                radioGroup("Game Wind", Wind.values().asList(), this@OptionsComponent::rdaRundenWind) {
                     model.setGameModifiers(gameModifiers.copy(rundenWind = it))
                 }
-                radioGroup("Platzwind", Wind.values().asList(), this@OptionsComponent::rdaPlatzWind) {
+                radioGroup("Place Wind", Wind.values().asList(), this@OptionsComponent::rdaPlatzWind) {
                     model.setPlatzWind(it)
                 }
                 checkbox("Schlussziegel von der Mauer", this@OptionsComponent::chkSchlussziegelVonDerMauer) {
