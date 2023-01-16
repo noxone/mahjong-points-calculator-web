@@ -9,16 +9,16 @@ import org.olafneumann.mahjong.points.model.Figure.Figure3
 import org.olafneumann.mahjong.points.model.Figure.Figure4
 import org.olafneumann.mahjong.points.model.Figure.Pair
 
-enum class Figure(
-    val title: String
-) {
-    Figure1("Figur 1"),
-    Figure2("Figur 2"),
-    Figure3("Figur 3"),
-    Figure4("Figur 4"),
-    Pair("Paar"),
-    Bonus("Bonus"),
+enum class Figure{
+    Figure1,
+    Figure2,
+    Figure3,
+    Figure4,
+    Pair,
+    Bonus,
     ;
+
+    val title = name
 
     val next: Figure
         get() =

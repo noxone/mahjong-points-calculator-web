@@ -5,6 +5,7 @@ import org.olafneumann.mahjong.points.ui.components.OptionsComponent
 import org.olafneumann.mahjong.points.ui.components.ResultComponent
 import org.olafneumann.mahjong.points.ui.html.getElement
 import org.olafneumann.mahjong.points.ui.components.TileSelectionComponent
+import org.olafneumann.mahjong.points.ui.controls.MainPage
 import org.olafneumann.mahjong.points.ui.model.UIModel
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLFormElement
@@ -25,6 +26,8 @@ private fun initMahjongPointCalculator() {
 }
 
 private fun initMahjongPointCalculatorUnsafe() {
+    MainPage.translate(document.getElement("mr_main"))
+
     val tilesDiv = document.getElement<HTMLDivElement>("mr_tiles")
     val selectedTilesDiv = document.getElement<HTMLDivElement>("mr_selected_tiles")
     val optionsDiv = document.getElement<HTMLFormElement>("mr_options")

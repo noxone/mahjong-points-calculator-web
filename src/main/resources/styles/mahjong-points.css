@@ -52,6 +52,10 @@ a.mr-tile img {
   opacity: 40%;
 }
 
+.mr-radio label {
+  display: block;
+}
+
 .mr-vertical-switch .form-switch {
   padding-left: 3rem;
 }

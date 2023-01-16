@@ -2,6 +2,7 @@ package org.olafneumann.mahjong.points.ui.html
 
 import org.w3c.dom.Element
 import org.w3c.dom.HTMLElement
+import org.w3c.dom.Node
 import org.w3c.dom.asList
 
 fun Element.getAllChildren(): Sequence<Element> =
@@ -10,11 +11,14 @@ fun Element.getAllChildren(): Sequence<Element> =
 inline fun <reified T : HTMLElement> Element.getAllChildren() =
     getAllChildren().filterIsInstance<T>()
 
+fun Node.getAllChildNodes(): Sequence<Node> =
+    childNodes.asList().asSequence().selectRecursive { childNodes.asList().asSequence() }
+
 fun <T : HTMLElement> Sequence<T>.filterAttributeIsPresent(attributeName: String) =
     filter { it.hasAttribute(attributeName) }
 
 // https://stackoverflow.com/questions/66755991/kotlin-get-all-children-recursively
-private fun <T : Element> Sequence<T>.selectRecursive(recursiveSelector: T.() -> Sequence<T>): Sequence<T> = flatMap {
+private fun <T> Sequence<T>.selectRecursive(recursiveSelector: T.() -> Sequence<T>): Sequence<T> = flatMap {
     sequence {
         yield(it)
         yieldAll(it.recursiveSelector().selectRecursive(recursiveSelector))

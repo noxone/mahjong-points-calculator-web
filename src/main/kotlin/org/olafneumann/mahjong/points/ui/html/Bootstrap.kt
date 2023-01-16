@@ -57,7 +57,7 @@ fun <T> TagConsumer<HTMLElement>.radioGroup(
     property: KMutableProperty0<RadioGroup<T>>? = null,
     action: (T) -> Unit = {},
 ) = capture2(property, { RadioGroup(it, items) }) {
-    div {
+    div(classes = "mb-1 mr-radio") {
         label { +!label }
         div(classes = "btn-group btn-group-sm") {
             items.forEach { item ->
