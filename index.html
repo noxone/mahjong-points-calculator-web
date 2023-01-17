@@ -4,7 +4,7 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <!-- search engine -->
     <meta name="description" content="Mahjong Point Calculator." />
@@ -27,20 +27,30 @@
     <!-- now for our page -->
     <link rel="stylesheet" href="styles/mahjong-points.css">
     <title>Mahjong Point Calculator</title>
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ff72tsqse8");
+    </script>
 </head>
 
 <body class="bg-dark user-select-none">
-    <div class="container-fluid">
-        <div class="row g-0 mt-3">
+    <div class="container-xxl my-3">
+        <div class="row g-0" id="mr_main">
             <div class="col-lg-9 pe-lg-2 mb-2 order-first">
-                <div class="bg-danger rounded p-4 d-flex align-items-center" style="height: 100%;">
-                    <h1 class="fw-bold">Mahjong Punkte Rechner</h1>
+                <div class="bg-danger text-light rounded p-4 d-flex align-items-center justify-content-center mr-full-height">
+                    <h1 class="fw-bold">Mahjong Points Calculator</h1>
                 </div>
             </div>
 
             <div class="col-md-3 col-lg-3 mb-2 order-md-last order-lg-first">
                 <div class="bg-secondary border border-secondary rounded text-light p-3" style="height: 100%;">
-                    <h2>Compute</h2>
+                    <h2>Result</h2>
                     <div id="mr_result"></div>
                 </div>
             </div>
@@ -57,7 +67,8 @@
                 <div class="bg-light rounded p-3" style="height: 100%;">
                     <div class="d-flex justify-content-between align-items-center">
                         <h2>Hand</h2>
-                        <button class="btn btn-sm btn-outline-secondary d-none" id="mr_btn_undo" type="button" title="Undo">
+                        <button class="btn btn-sm btn-outline-secondary d-none" id="mr_btn_undo" type="button"
+                            title="Undo">
                             <i class="bi bi-arrow-counterclockwise"></i>
                         </button>
                     </div>
@@ -81,26 +92,40 @@
             <div class="text-center text-md-start collapse show" id="footerContent">
                 <div class="row">
                     <div class="col-md-6 mt-md-0 mt-3">
-                        <p><code>Mahjong Point Calculator</code> is a tool to compute the points of a Mahjong party or even a whole Mahjong game.</p>
+                        <p><code>Mahjong Point Calculator</code> is a tool to compute
+                            the points of a Mahjong game.</p>
                         <p>Find the project sources at <a href="https://github.com/noxone/mahjong-point-calculator"
-                                                          target="_blank" rel="noopener">Github</a>.
+                                target="_blank" rel="noopener">Github</a>.  
+                                <a class="github-button" href="https://github.com/noxone/mahjong-point-calculator"
+                                data-color-scheme="no-preference: dark; dark: dark; light: dark;"
+                                data-icon="octicon-star" data-show-count="true"
+                                aria-label="Star noxone/mahjong-point-calculator on GitHub">Star</a>
+                        <p>
+                            <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fmahjong.olafneumann.org&count_bg=%23372929&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visitors&edge_flat=false" title="Visitor Counter"/>
                         </p>
                     </div>
                     <hr class="clearfix w-100 d-md-none pb-3 border-secondary">
                     <div class="col-md-3 mb-md-0 mb-3">
                         <h5>Useful Mahjong Links</h5>
                         <ul class="list-unstyled">
-                            <li><a class="rounded" href="http://dmjl.de/mah-jongg/klassische-regeln/#:~:text=Der%20Mah%2DJongg%2DRuf%20hat,an%20der%20Reihe%20gewesen%20w%C3%A4re.&text=Das%20Ziel%20des%20Spieles%20ist,Mah%2DJongg%2DHand%E2%80%9D." target="_blank" rel="noopener">Mahjong Rules</a></li>
-                            <li><a class="rounded" href="http://dmjl.de/wp-content/uploads/2009/05/DMJL_CC_Wertung_2005.pdf" target="_blank" rel="noopener"
-                                   id="rg_anchor_regex101">Mahjong Point Table</a></li>
+                            <li><a class="rounded"
+                                    href="http://dmjl.de/mah-jongg/klassische-regeln/#:~:text=Der%20Mah%2DJongg%2DRuf%20hat,an%20der%20Reihe%20gewesen%20w%C3%A4re.&text=Das%20Ziel%20des%20Spieles%20ist,Mah%2DJongg%2DHand%E2%80%9D."
+                                    target="_blank" rel="noopener">Mahjong Rules</a></li>
+                            <li><a class="rounded"
+                                    href="http://dmjl.de/wp-content/uploads/2009/05/DMJL_CC_Wertung_2005.pdf"
+                                    target="_blank" rel="noopener" id="rg_anchor_regex101">Mahjong Point Table</a></li>
                         </ul>
                     </div>
                     <div class="col-md-3 mb-md-0 mb-3">
                         <h5>This project is built using</h5>
                         <ul class="list-unstyled">
-                            <li><a class="rounded" href="https://kotlinlang.org/" target="_blank" rel="noopener">Kotlin</a></li>
-                            <li><a class="rounded" href="https://getbootstrap.com" target="_blank" rel="noopener">Bootstrap</a></li>
-                            <li><a class="rounded" href="https://commons.wikimedia.org/wiki/Category:SVG_Planar_illustrations_of_Mahjong_tiles" target="_blank" rel="noopener">Mahjong Tile Art by 碧海风</a></li>
+                            <li><a class="rounded" href="https://kotlinlang.org/" target="_blank"
+                                    rel="noopener">Kotlin</a></li>
+                            <li><a class="rounded" href="https://getbootstrap.com" target="_blank"
+                                    rel="noopener">Bootstrap</a></li>
+                            <li><a class="rounded"
+                                    href="https://commons.wikimedia.org/wiki/Category:SVG_Planar_illustrations_of_Mahjong_tiles"
+                                    target="_blank" rel="noopener">Mahjong Tile Art by 碧海风</a></li>
                         </ul>
                     </div>
                 </div>
@@ -108,20 +133,21 @@
 
             <!-- Copyright -->
             <div class="text-center pt-3">
-                <p>© 2023 Copyright <a href="https://github.com/noxone/" target="_blank" rel="noopener">Olaf Neumann</a></p>
+                <p>© 2023 Copyright <a href="https://github.com/noxone/" target="_blank" rel="noopener">Olaf Neumann</a>
+                </p>
             </div>
         </footer>
     </div>
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-            crossorigin="anonymous"></script>
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-            integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
-            crossorigin="anonymous"></script>
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
