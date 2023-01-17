@@ -2,13 +2,13 @@ package org.olafneumann.mahjong.points.ui.js
 
 import kotlinx.browser.document
 import kotlinx.html.ButtonType
-import kotlinx.html.Tag
 import kotlinx.html.TagConsumer
 import kotlinx.html.button
 import kotlinx.html.dom.create
 import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.title
+import org.olafneumann.mahjong.points.lang.not
 import org.w3c.dom.HTMLElement
 import kotlin.js.json
 
@@ -52,9 +52,9 @@ class Popover(
                 null
             } else {
                 document.create.div(classes = "d-flex justify-content-between align-items-center") {
-                    +this@Popover.title
+                    +!this@Popover.title
                     button(classes = "btn-close", type = ButtonType.button) {
-                        attributes["aria-label"] = "Close"
+                        attributes["aria-label"] = !"Close"
                         title = "Cancel"
                         onClickFunction = { onCloseButtonClick() }
                     }

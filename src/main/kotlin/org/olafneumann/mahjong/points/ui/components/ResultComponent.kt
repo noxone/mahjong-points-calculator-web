@@ -16,7 +16,7 @@ class ResultComponent(
     }
 
     override fun TagConsumer<HTMLElement>.createUI() {
-        bsButton("Ergebnis Berechnen") {
+        bsButton("Compute") {
             showResultTable(model.calculatorModel.result) { model.setNextPlayer() }
         }
     }

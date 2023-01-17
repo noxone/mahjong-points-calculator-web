@@ -13,13 +13,14 @@ import org.olafneumann.mahjong.points.ui.html.Button
 import org.olafneumann.mahjong.points.ui.html.Modal
 import org.olafneumann.mahjong.points.ui.html.createModal
 import org.olafneumann.mahjong.points.ui.html.modal2
+import org.olafneumann.mahjong.points.lang.not
 import org.w3c.dom.HTMLElement
 import kotlin.properties.Delegates
 
 fun showResultTable(result: PlayerResult, onNextPlayerClick: () -> Unit = {}) {
     var modal: Modal by Delegates.notNull()
     val element = document.create.modal2(
-        title = "Punkteberechnung",
+        title = "Point Calculation",
         buttons = listOf(
             Button(title = "Next Player", colorClass = "secondary") { onNextPlayerClick(); modal.hide() },
             Button(title = "Close") { modal.hide() }
@@ -33,23 +34,23 @@ private fun TagConsumer<HTMLElement>.resultTable(result: PlayerResult) =
     div(classes = "mr-result") {
         div(classes = "mr-result-points") {
             resultPart(
-                heading = "Punkte",
+                heading = "Points",
                 lines = result.lines.filter { it.doublings == 0 },
                 sum = result.points
             )
             resultPart(
-                heading = "Verdoppelungen",
+                heading = "Doublings",
                 lines = result.lines.filter { it.doublings != 0 },
                 sum = result.doublings
             )
             div(classes = "mr-result-part mr-result-final") {
                 /*span(classes = "mr-result-heading") {
-                    +"Ergebnis"
+                    +!"Ergebnis"
                 }*/
                 /*if (result.doublings > 0) {
                     pointRow("Anwendung Verdoppelungen", power = result.doublings, points = result.points)
                 }*/
-                pointSumRow("Endergebnis", points = result.points, doublings = result.doublings, result.result)
+                pointSumRow("Final Result", points = result.points, doublings = result.doublings, result.result)
             }
         }
     }
@@ -65,7 +66,7 @@ private fun TagConsumer<HTMLElement>.pointRow(
 ) =
     div(classes = "mr-result-row") {
         div(classes = "mr-result-row-heading") {
-            +description
+            +!description
         }
         div(classes = "mr-result-row-points") {
             if (doublings != 0) {
@@ -90,7 +91,7 @@ private fun TagConsumer<HTMLElement>.pointRow(
 private fun TagConsumer<HTMLElement>.pointSumRow(description: String, points: Int, doublings: Int, result: Int) =
     div(classes = "mr-result-sum-row") {
         div(classes = "mr-result-row-heading") {
-            +description
+            +!description
         }
         div(classes = "mr-result-row-points") {
             if (doublings > 0) {
@@ -111,8 +112,8 @@ private fun TagConsumer<HTMLElement>.pointSumRow(description: String, points: In
 private fun TagConsumer<HTMLElement>.resultPart(heading: String, lines: List<Line>, sum: Int) =
     div(classes = "mr-result-part") {
         div(classes = "mr-result-heading") {
-            +heading
+            +!heading
         }
         lines.forEach { pointRow(it) }
-        pointSumRow("Summe $heading", 0, 0, sum)
+        pointSumRow("Sum $heading", 0, 0, sum)
     }

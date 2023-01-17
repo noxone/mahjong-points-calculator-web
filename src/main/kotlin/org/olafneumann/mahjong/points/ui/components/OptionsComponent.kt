@@ -37,24 +37,26 @@ class OptionsComponent(
     override fun TagConsumer<HTMLElement>.createUI() {
         div(classes = "row g-0") {
             div(classes = "col-6 col-lg-12") {
-                radioGroup("Rundenwind", Wind.values().asList(), this@OptionsComponent::rdaRundenWind) {
-                    model.setGameModifiers(gameModifiers.copy(rundenWind = it))
+                radioGroup("Prevailing Wind", Wind.values().asList(), this@OptionsComponent::rdaRundenWind) {
+                    model.setGameModifiers(gameModifiers.copy(prevailingWind = it))
                 }
-                radioGroup("Platzwind", Wind.values().asList(), this@OptionsComponent::rdaPlatzWind) {
+                radioGroup("Seat Wind", Wind.values().asList(), this@OptionsComponent::rdaPlatzWind) {
                     model.setPlatzWind(it)
                 }
-                checkbox("Schlussziegel von der Mauer", this@OptionsComponent::chkSchlussziegelVonDerMauer) {
-                    model.setGameModifiers(gameModifiers.copy(schlussziegelVonMauer = it))
-                }
-                checkbox(
-                    "Schlussziegel ist einzig möglicher Ziegel",
-                    this@OptionsComponent::chkSchlussziegelIstEinzigMoeglicherZiegel
-                ) { model.setGameModifiers(gameModifiers.copy(schlussziegelEinzigMoeglicherZiegel = it)) }
-                checkbox("Schlussziegel komplettiert Paar", this@OptionsComponent::chkSchlussziegelKomplettiertPaar) {
-                    model.setGameModifiers(gameModifiers.copy(schlussziegelKomplettiertPaar = it))
+                div(classes = "mt-3") {
+                    checkbox("Schlussziegel von der Mauer", this@OptionsComponent::chkSchlussziegelVonDerMauer) {
+                        model.setGameModifiers(gameModifiers.copy(schlussziegelVonMauer = it))
+                    }
+                    checkbox(
+                        "Schlussziegel ist einzig möglicher Ziegel",
+                        this@OptionsComponent::chkSchlussziegelIstEinzigMoeglicherZiegel
+                    ) { model.setGameModifiers(gameModifiers.copy(schlussziegelEinzigMoeglicherZiegel = it)) }
                 }
             }
             div(classes = "col-6 col-lg-12") {
+                checkbox("Schlussziegel komplettiert Paar", this@OptionsComponent::chkSchlussziegelKomplettiertPaar) {
+                    model.setGameModifiers(gameModifiers.copy(schlussziegelKomplettiertPaar = it))
+                }
                 checkbox("Schlussziegel von der toten Mauer", this@OptionsComponent::chkSchlussziegelVonDerTotenMauer) {
                     model.setGameModifiers(gameModifiers.copy(schlussziegelVonToterMauer = it))
                 }
@@ -68,7 +70,7 @@ class OptionsComponent(
                 checkbox("Beraubung des Kang", this@OptionsComponent::chkBeraubungDesKang) {
                     model.setGameModifiers(gameModifiers.copy(beraubungDesKang = it))
                 }
-                checkbox("\"Mahjong\"-Ruf zu Beginn", this@OptionsComponent::chkMahjongZuBeginn) {
+                checkbox("Mahjong-Ruf zu Beginn", this@OptionsComponent::chkMahjongZuBeginn) {
                     model.setGameModifiers(gameModifiers.copy(mahjongAtBeginning = it))
                 }
             }
@@ -76,16 +78,32 @@ class OptionsComponent(
     }
 
     override fun updateUI() {
-        rdaRundenWind.select(gameModifiers.rundenWind)
+        val isMahjong = model.calculatorModel.isMahjong
+
+        rdaRundenWind.select(gameModifiers.prevailingWind)
         rdaPlatzWind.select(model.calculatorModel.platzWind)
-        chkSchlussziegelVonDerMauer.checked = gameModifiers.schlussziegelVonMauer
-        chkSchlussziegelIstEinzigMoeglicherZiegel.checked = gameModifiers.schlussziegelEinzigMoeglicherZiegel
-        chkSchlussziegelKomplettiertPaar.checked = gameModifiers.schlussziegelKomplettiertPaar
-        chkSchlussziegelVonDerTotenMauer.checked = gameModifiers.schlussziegelVonToterMauer
-        chkMitDemLetztenZiegel.checked = gameModifiers.mitDemLetztenZiegelDerMauerGewonnen
-        chkSchlussziegelIstAbgelegterZiegelNachLetztem.checked = gameModifiers.schlussziegelIstAbgelegterZiegelNachAbbauDerMauer
-        chkBeraubungDesKang.checked = gameModifiers.beraubungDesKang
-        chkMahjongZuBeginn.checked = gameModifiers.mahjongAtBeginning
+
+        // checked or not
+        chkSchlussziegelVonDerMauer.checked = isMahjong && gameModifiers.schlussziegelVonMauer
+        chkSchlussziegelIstEinzigMoeglicherZiegel.checked =
+            isMahjong && gameModifiers.schlussziegelEinzigMoeglicherZiegel
+        chkSchlussziegelKomplettiertPaar.checked = isMahjong && gameModifiers.schlussziegelKomplettiertPaar
+        chkSchlussziegelVonDerTotenMauer.checked = isMahjong && gameModifiers.schlussziegelVonToterMauer
+        chkMitDemLetztenZiegel.checked = isMahjong && gameModifiers.mitDemLetztenZiegelDerMauerGewonnen
+        chkSchlussziegelIstAbgelegterZiegelNachLetztem.checked =
+            isMahjong && gameModifiers.schlussziegelIstAbgelegterZiegelNachAbbauDerMauer
+        chkBeraubungDesKang.checked = isMahjong && gameModifiers.beraubungDesKang
+        chkMahjongZuBeginn.checked = isMahjong && gameModifiers.mahjongAtBeginning
+
+        // activated or not
+        chkSchlussziegelVonDerMauer.disabled = !isMahjong
+        chkSchlussziegelIstEinzigMoeglicherZiegel.disabled = !isMahjong
+        chkSchlussziegelKomplettiertPaar.disabled = !isMahjong
+        chkSchlussziegelVonDerTotenMauer.disabled = !isMahjong
+        chkMitDemLetztenZiegel.disabled = !isMahjong
+        chkSchlussziegelIstAbgelegterZiegelNachLetztem.disabled = !isMahjong
+        chkBeraubungDesKang.disabled = !isMahjong
+        chkMahjongZuBeginn.disabled = !isMahjong
     }
 
     override fun modelChanged(model: UIModel) {

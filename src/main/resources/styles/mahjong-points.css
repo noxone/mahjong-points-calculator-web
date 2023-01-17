@@ -9,6 +9,10 @@ body {
   font-size: 0.97vw;
 }
 
+.mr-full-height {
+  height: 100%;
+}
+
 @media (min-width: 768px) {
   .mr-tile-container {
     /*font-size: 1.275vw;*/
@@ -19,6 +23,12 @@ body {
 @media (min-width: 992px) {
   .mr-tile-container {
     font-size: 0.9vw;
+  }
+}
+
+@media (min-width: 1400px) {
+  .mr-tile-container {
+    font-size: 9pt;
   }
 }
 
@@ -48,6 +58,10 @@ a.mr-tile img {
   opacity: 40%;
 }
 
+.mr-radio label {
+  display: block;
+}
+
 .mr-vertical-switch .form-switch {
   padding-left: 3rem;
 }
@@ -64,9 +78,13 @@ a.mr-tile img {
   position: relative;
 }
 
+.mr-figure:hover {
+  border-width: 3px !important;
+}
+
 .mr-figure span {
   position: absolute;
-  font-size: 3rem;
+  font-size: 2.5rem;
   opacity: 0.3;
   width: 100%;
   height: 100%;

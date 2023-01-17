@@ -1,7 +1,7 @@
 package org.olafneumann.mahjong.points.game
 
 data class GameModifiers(
-    val rundenWind: Wind,
+    val prevailingWind: Wind,
     val mahjongAtBeginning: Boolean = false,
     val schlussziegelVonMauer: Boolean = false,
     val schlussziegelEinzigMoeglicherZiegel: Boolean = false,

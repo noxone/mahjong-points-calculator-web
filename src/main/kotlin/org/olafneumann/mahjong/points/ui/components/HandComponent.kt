@@ -20,6 +20,7 @@ import org.olafneumann.mahjong.points.ui.html.getAllChildren
 import org.olafneumann.mahjong.points.ui.html.getElement
 import org.olafneumann.mahjong.points.ui.html.injectRoot
 import org.olafneumann.mahjong.points.ui.html.mrFigure
+import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.ui.html.verticalSwitch
 import org.olafneumann.mahjong.points.ui.js.Popover
 import org.olafneumann.mahjong.points.ui.model.UIModel
@@ -79,7 +80,7 @@ class HandComponent(
     private fun TagConsumer<HTMLElement>.divForFigure(figure: Figure) =
         div(classes = "d-flex justify-content-between align-items-center mb-2") {
             div(classes = "mr-figure border flex-fill me-1") {
-                span { +figure.title }
+                span { +!figure.title }
                 div(classes = "mr-tile-container") {
                     mrFigure = figure.name
                     onClickFunction = { handleFigureClick(figure) }
@@ -102,7 +103,7 @@ class HandComponent(
             trigger = "manual",
         ) {
             button(classes = "btn btn-danger", type = ButtonType.button) {
-                +"Reset"
+                +!"Reset"
                 onClickFunction = {
                     model.reset(figure)
                     disposePopover()
