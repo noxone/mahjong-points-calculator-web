@@ -37,10 +37,10 @@ class OptionsComponent(
     override fun TagConsumer<HTMLElement>.createUI() {
         div(classes = "row g-0") {
             div(classes = "col-6 col-lg-12") {
-                radioGroup("Game Wind", Wind.values().asList(), this@OptionsComponent::rdaRundenWind) {
-                    model.setGameModifiers(gameModifiers.copy(rundenWind = it))
+                radioGroup("Prevailing Wind", Wind.values().asList(), this@OptionsComponent::rdaRundenWind) {
+                    model.setGameModifiers(gameModifiers.copy(prevailingWind = it))
                 }
-                radioGroup("Place Wind", Wind.values().asList(), this@OptionsComponent::rdaPlatzWind) {
+                radioGroup("Seat Wind", Wind.values().asList(), this@OptionsComponent::rdaPlatzWind) {
                     model.setPlatzWind(it)
                 }
                 div(classes = "mt-3") {
@@ -70,7 +70,7 @@ class OptionsComponent(
                 checkbox("Beraubung des Kang", this@OptionsComponent::chkBeraubungDesKang) {
                     model.setGameModifiers(gameModifiers.copy(beraubungDesKang = it))
                 }
-                checkbox("\"Mahjong\"-Ruf zu Beginn", this@OptionsComponent::chkMahjongZuBeginn) {
+                checkbox("Mahjong-Ruf zu Beginn", this@OptionsComponent::chkMahjongZuBeginn) {
                     model.setGameModifiers(gameModifiers.copy(mahjongAtBeginning = it))
                 }
             }
@@ -80,7 +80,7 @@ class OptionsComponent(
     override fun updateUI() {
         val isMahjong = model.calculatorModel.isMahjong
 
-        rdaRundenWind.select(gameModifiers.rundenWind)
+        rdaRundenWind.select(gameModifiers.prevailingWind)
         rdaPlatzWind.select(model.calculatorModel.platzWind)
 
         // checked or not

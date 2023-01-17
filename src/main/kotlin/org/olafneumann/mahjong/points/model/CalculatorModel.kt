@@ -19,7 +19,7 @@ import org.olafneumann.mahjong.points.result.PlayerResult
 
 data class CalculatorModel(
     val hand: Hand,
-    val gameModifiers: GameModifiers = GameModifiers(rundenWind = Wind.East),
+    val gameModifiers: GameModifiers = GameModifiers(prevailingWind = Wind.East),
     val platzWind: Wind = Wind.East,
     val selectedFigure: Figure = Figure1,
 ) {
@@ -188,7 +188,7 @@ data class CalculatorModel(
         ClassicRulesResultComputer().computeResult(
             hand,
             gameModifiers,
-            platzWind = platzWind
+            seatWind = platzWind
         )
     }
 }

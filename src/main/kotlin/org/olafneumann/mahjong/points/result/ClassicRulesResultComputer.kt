@@ -18,22 +18,22 @@ import kotlin.math.pow
 
 // according to: http://dmjl.de/wp-content/uploads/2009/05/DMJL_CC_Wertung_2005.pdf
 class ClassicRulesResultComputer : ResultComputer {
-    override fun computeResult(gameModifiers: GameModifiers, platzWind: Wind, hand: Hand): PlayerResult {
+    override fun computeResult(gameModifiers: GameModifiers, seatWind: Wind, hand: Hand): PlayerResult {
         TODO("Not yet implemented")
     }
 
-    fun computeResult(hand: Hand, gameModifiers: GameModifiers, platzWind: Wind): PlayerResult {
+    fun computeResult(hand: Hand, gameModifiers: GameModifiers, seatWind: Wind): PlayerResult {
         val lines = listOf(
             // Points
             checkForChis(hand),
             checkForPongs(hand),
             checkForKangs(hand),
-            checkPairs(hand),
+            checkPairs(hand, gameModifiers, seatWind),
             checkForFlowers(hand),
             // Points for Mahjong
             hand.isMahjong.map { checkMahjongPoints(hand, gameModifiers) },
             // Doublings for all
-            checkDoublings(hand = hand, rundenWind = gameModifiers.rundenWind, platzWind = platzWind),
+            checkDoublings(hand = hand, prevailingWind = gameModifiers.prevailingWind, seatWind = seatWind),
             // Doublings for Mahjong
             hand.isMahjong.map { checkMahjongDoublings(gameModifiers, hand) }
         )
@@ -69,29 +69,29 @@ class ClassicRulesResultComputer : ResultComputer {
 
     private fun checkForPongs(hand: Hand) = (
             hand.getFigures(Pong, Open, baseTile = true)
-                .map { Line(description = "Pong.Basetile.Open", points = 2) }
+                .map { Line(description = StringKeys.PONG_BASETILE_OPEN, points = 2) }
                     + hand.getFigures(Pong, Closed, baseTile = true)
-                .map { Line(description = "Pong.Basetile.Closed", points = 4) }
+                .map { Line(description = StringKeys.PONG_BASETILE_CLOSED, points = 4) }
                     + hand.getFigures(Pong, Open, baseTile = false)
-                .map { Line(description = "Pong.Maintile.Open", points = 4) }
+                .map { Line(description = StringKeys.PONG_MAINTILE_OPEN, points = 4) }
                     + hand.getFigures(Pong, Closed, baseTile = false)
-                .map { Line(description = "Pong.Maintile.Closed", points = 8) }
+                .map { Line(description = StringKeys.PONG_MAINTILE_CLOSED, points = 8) }
             )
 
     private fun checkForKangs(hand: Hand) = (
             hand.getFigures(Kang, Open, baseTile = true)
-                .map { Line(description = "Kang.Basetile.Open", points = 8) }
+                .map { Line(description = StringKeys.KANG_BASETILE_OPEN, points = 8) }
                     + hand.getFigures(Kang, Closed, baseTile = true)
-                .map { Line(description = "Kang.Basetile.Closed", points = 16) }
+                .map { Line(description = StringKeys.KANG_BASETILE_CLOSED, points = 16) }
                     + hand.getFigures(Kang, Open, baseTile = false)
-                .map { Line(description = "Kang.Maintile.Open", points = 16) }
+                .map { Line(description = StringKeys.KANG_MAINTILE_OPEN, points = 16) }
                     + hand.getFigures(Kang, Closed, baseTile = false)
-                .map { Line(description = "Kang.Maintile.Closed", points = 32) }
+                .map { Line(description = StringKeys.KANG_MAINTILE_CLOSED, points = 32) }
             )
 
-    private fun checkPairs(hand: Hand) = (
+    private fun checkPairs(hand: Hand, gameModifiers: GameModifiers, seatWind: Wind) = (
             hand.getFigures(Pair, tiles = Tile.dragons)
-                .map { Line(description = "Pair.Dragon", points = 2) }
+                .map { Line(description = StringKeys.PAIR_OF_DRAGONS, points = 2) }
             /* TODO Compute place wind and round wind
      + hand.getFigures(Pair, tiles = Tile.winds)
          .map { Line(description = "Pair.Wind", points = 2) }*/
@@ -101,73 +101,73 @@ class ClassicRulesResultComputer : ResultComputer {
         console.log(gameModifiers)
         return listOf(
             // Mahjong
-            Line(description = "Mahjong", points = 20),
+            Line(description = StringKeys.MAHJONG, points = 20),
             // Schlussziegel von der Mauer
             gameModifiers.schlussziegelVonMauer
-                .map { Line("Schlussziegel.von.Mauer", points = 2) },
+                .map { Line(StringKeys.WINNING_TILE_FROM_WALL, points = 2) },
             // Schlussziegel ist einzig möglicher Stein
             gameModifiers.schlussziegelEinzigMoeglicherZiegel
-                .map { Line("Schlussziegel.einzig.Moeglich", points = 2) },
+                .map { Line(StringKeys.WINNING_TILE_ONLY_POSSIBLE_TILE, points = 2) },
             // Schlussziegel komplettiert Paar aus Grundziegeln
             (gameModifiers.schlussziegelKomplettiertPaar && (hand.pair?.tile?.isBaseTile ?: false))
-                .map { Line("Schlussziegel.komplettiert.Grundziegel", points = 2) },
+                .map { Line(StringKeys.WINNING_TILE_COMPLETES_PAIR_OF_BASE_TILES, points = 2) },
             // Schlussziegel komplettiert Paar aus Hauptziegeln
             (gameModifiers.schlussziegelKomplettiertPaar && !(hand.pair?.tile?.isBaseTile ?: false))
-                .map { Line("Schlussziegel.komplettiert.Hauptziegel", points = 4) },
+                .map { Line(StringKeys.WINNING_TILE_COMPLETES_PAIR_OF_MAIN_TILES, points = 4) },
         ).mapNotNull { it }
     }
 
-    private fun checkDoublings(hand: Hand, rundenWind: Wind, platzWind: Wind): List<Line> =
+    private fun checkDoublings(hand: Hand, prevailingWind: Wind, seatWind: Wind): List<Line> =
         listOf(
             listOf(
                 // Beide Bonusziegel des Platzwindes
-                (hand.pair?.getTiles()?.all { it.wind == platzWind } ?: false)
-                    .map { Line(description = "Bonus.Wind.Place", doublings = 1) },
+                (hand.pair?.getTiles()?.all { it.wind == seatWind } ?: false)
+                    .map { Line(description = StringKeys.BONUS_WIND_SEAT, doublings = 1) },
                 // alle Blumenziegel
                 hand.bonusTiles.containsAll(Tile.flowers)
-                    .map { Line(description = "All.Flowers", doublings = 1) },
+                    .map { Line(description = StringKeys.ALL_FLOWERS, doublings = 1) },
                 // Alle Jahreszeitenziegel
                 hand.bonusTiles.containsAll(Tile.seasons)
-                    .map { Line(description = "All.Seasons", doublings = 1) },
+                    .map { Line(description = StringKeys.ALL_SEASONS, doublings = 1) },
             ),
             // Pong oder Kang aus Drachen
             hand.getFigures(Pong, tiles = Tile.dragons)
-                .map { Line(description = "Pong.Dragons", doublings = 1) },
+                .map { Line(description = StringKeys.PONG_DRAGONS, doublings = 1) },
             hand.getFigures(Kang, tiles = Tile.dragons)
-                .map { Line(description = "Kang.Dragons", doublings = 1) },
+                .map { Line(description = StringKeys.KANG_DRAGONS, doublings = 1) },
             listOf(
                 // Pong/ Kang des Rundenwindes
-                hand.getFigures(Pong).any { it.tile.wind == rundenWind }
-                    .map { Line(description = "Pong.Roundwind", doublings = 1) },
-                hand.getFigures(Kang).any { it.tile.wind == rundenWind }
-                    .map { Line(description = "Kang.Roundwind", doublings = 1) },
+                hand.getFigures(Pong).any { it.tile.wind == prevailingWind }
+                    .map { Line(description = StringKeys.PONG_PREVAILING_WIND, doublings = 1) },
+                hand.getFigures(Kang).any { it.tile.wind == prevailingWind }
+                    .map { Line(description = StringKeys.KANG_PREVAILING_WIND, doublings = 1) },
                 // drei verdeckte pong
                 hand.fullFigures.filter { it.type == Pong || it.type == Kang }
                     .filter { it.visibility == Closed }
                     .hasSize(3)
-                    .map { Line(description = "3.ClosedPongs", doublings = 1) },
+                    .map { Line(description = StringKeys.THREE_CLOSED_PONGS, doublings = 1) },
                 // kleine drei Drachen
                 (hand.fullFigures.filter { it.type == Pong || it.type == Kang }
                     .filter { it.tile.isDragon }
                     .hasSize(2)
                         && hand.pair?.tile?.isDragon == true)
-                    .map { Line(description = "Small.3.Dragons", doublings = 1) },
+                    .map { Line(description = StringKeys.SMALL_THREE_DRAGONS, doublings = 1) },
                 // große drei Drachen
                 hand.fullFigures.filter { it.type == Pong || it.type == Kang }
                     .filter { it.tile.isDragon }
                     .hasSize(3)
-                    .map { Line(description = "Big.3.Dragons", doublings = 2) },
+                    .map { Line(description = StringKeys.BIG_THREE_DRAGONS, doublings = 2) },
                 // kleine drei Freunde
                 (hand.fullFigures.filter { it.type == Pong || it.type == Kang }
                     .filter { it.tile.isWind }
                     .hasSize(3)
                         && hand.pair?.tile?.isWind == true)
-                    .map { Line(description = "Small.3.Friends", doublings = 1) },
+                    .map { Line(description = StringKeys.SMALL_THREE_FRIENDS, doublings = 1) },
                 // große drei Freunde
                 hand.fullFigures.filter { it.type == Pong || it.type == Kang }
                     .filter { it.tile.isWind }
                     .hasSize(4)
-                    .map { Line(description = "Big.4.Friends", doublings = 2) },
+                    .map { Line(description = StringKeys.BIG_FOUR_FRIENDS, doublings = 2) },
             ),
         )
             .flatten()
@@ -179,39 +179,39 @@ class ClassicRulesResultComputer : ResultComputer {
             listOf(
                 // Kein Chi
                 hand.getFigures(Chow).hasSize(0)
-                    .map { Line(description = "No.Chow", doublings = 1) },
+                    .map { Line(description = StringKeys.NO_CHOW, doublings = 1) },
                 // Alle Figuren verdeckt
                 hand.getFigures(visibility = Closed).hasSize(5)
-                    .map { Line(description = "All.Figures.Closed", doublings = 1) },
+                    .map { Line(description = StringKeys.ALL_FIGURES_CLOSED, doublings = 1) },
                 // Nur Ziegel einer Farbe und Bildziegel
                 (hand.allTilesOfFigures.map { it.color }.distinct().hasSize(2)
                         && hand.allTilesOfFigures.mapNotNull { it.color }.distinct().hasSize(1))
-                    .map { Line(description = "All.Tiles.One.Color.And.Pictures", doublings = 1) },
+                    .map { Line(description = StringKeys.ALL_TILES_OF_ONE_COLOR_AND_PICTURES, doublings = 1) },
                 // Nur Ziegel einer Farbe
                 (hand.allTilesOfFigures.map { it.color }.distinct().hasSize(1)
                         && hand.allTilesOfFigures.first().color != null)
-                    .map { Line(description = "All.Tiles.One.Color", doublings = 3) },
+                    .map { Line(description = StringKeys.ALL_TILES_ONE_COLOR, doublings = 3) },
                 // Nur Hauptziegel
                 hand.allTilesOfFigures.all { !it.isBaseTile }
-                    .map { Line(description = "Only.Maintiles", doublings = 1) },
+                    .map { Line(description = StringKeys.ONLY_MAINTILES, doublings = 1) },
                 // Nur Bildziegel
                 hand.allTilesOfFigures.all { it.isImage }
-                    .map { Line(description = "Only.Imagetiles", doublings = 2) },
+                    .map { Line(description = StringKeys.ONLY_IMAGETILES, doublings = 2) },
                 // Schlussziegel von der toten Mauer
                 gameModifiers.schlussziegelVonToterMauer
-                    .map { Line(description = "Schlussziegel.tote.Mauer", doublings = 1) },
+                    .map { Line(description = StringKeys.WINNING_TILE_FROM_DEAD_WALL, doublings = 1) },
                 // mit dem letzten Ziegel der Mauer gewonnenes Spiel
                 gameModifiers.mitDemLetztenZiegelDerMauerGewonnen
-                    .map { Line(description = "Letzer.Ziegel.der.Mauer", doublings = 1) },
+                    .map { Line(description = StringKeys.WINNING_TILE_IS_LAST_TILE_FROM_WALL, doublings = 1) },
                 // Schlussziegel: abgelegter Ziegel nach Abbau der Mauer 1
                 gameModifiers.schlussziegelIstAbgelegterZiegelNachAbbauDerMauer
-                    .map { Line(description = "Schlussziegel.abgelegt.nach.Mauer", doublings = 1) },
+                    .map { Line(description = StringKeys.WINNING_TILE_IS_DISCARD_AFTER_END_OF_WALL, doublings = 1) },
                 // Beraubung des Kang
                 gameModifiers.beraubungDesKang
-                    .map { Line(description = "Beraubung.des.Kang", doublings = 1) },
+                    .map { Line(description = StringKeys.ROBBING_THE_KONG, doublings = 1) },
                 // Mahjong-Ruf zu Beginn
                 gameModifiers.mahjongAtBeginning
-                    .map { Line(description = "Mahjong.at.Beginning", doublings = 1) },
+                    .map { Line(description = StringKeys.MAHJONG_AT_BEGINNING, doublings = 1) },
             )
 
         )
