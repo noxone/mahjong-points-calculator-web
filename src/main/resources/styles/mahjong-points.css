@@ -26,6 +26,12 @@ body {
   }
 }
 
+@media (min-width: 1400px) {
+  .mr-tile-container {
+    font-size: 9pt;
+  }
+}
+
 .mr-tile-field {
   /*width: 50em;*/
 }
@@ -72,9 +78,13 @@ a.mr-tile img {
   position: relative;
 }
 
+.mr-figure:hover {
+  border-width: 3px !important;
+}
+
 .mr-figure span {
   position: absolute;
-  font-size: 2.9rem;
+  font-size: 2.5rem;
   opacity: 0.3;
   width: 100%;
   height: 100%;
