@@ -33,24 +33,34 @@ body {
 }
 
 .mr-tile-field {
-  /*width: 50em;*/
+  /*font-size: 1.2vw;*/
 }
 
-.mr-tile-field div {
+.mr-tile-field > div {
   display: flex;
   justify-content: space-between;
 }
+.mr-tile-field > div+div {
+  margin-top: 1.4vw;
+}
 
-a.mr-tile img {
+.mr-tile {
+  display: inline-block;
   width: 5em;
-  background: rgb(255, 255, 255);
-  /* https://cssgradient.io/ */
-  background: linear-gradient(165deg, rgba(255, 255, 255, 1) 0%, rgba(194, 194, 194, 1) 8%, rgba(223, 223, 223, 1) 33%, rgba(251, 251, 251, 1) 100%);
-  border-radius: 0.5em;
-  margin: 0.2em 0.3em;
+  height: 7.1em;
   cursor: pointer;
-  margin-top: 0.49rem;
-  margin-bottom: 0.4rem;
+}
+
+.mr-tile-background {
+  background: linear-gradient(165deg, rgba(255, 255, 255, 1) 0%, rgba(194, 194, 194, 1) 8%, rgba(223, 223, 223, 1) 33%, rgba(251, 251, 251, 1) 100%);
+  border-radius: 0.6em;
+}
+
+.mr-tile-content {
+  background-size: 99%;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
 }
 
 .not-selectable {
