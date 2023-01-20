@@ -34,7 +34,7 @@ class TileSelectionComponent(
                 .filterAttributeIsPresent(MrAttributes.TILE)
                 .associateBy { Tile.valueOf(it.mrTile!!) }
         }
-            .div(classes = "mr-tile-field mr-tile-container") {
+            .div(classes = "mr-tile-field mr-tile-container d-flex flex-column justify-content-between flex-fill") {
                 div { tileImages(Tile.bamboos) }
                 div { tileImages(Tile.characters) }
                 div { tileImages(Tile.circles) }

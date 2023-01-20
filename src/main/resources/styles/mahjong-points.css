@@ -32,16 +32,9 @@ body {
   }
 }
 
-.mr-tile-field {
-  /*font-size: 1.2vw;*/
-}
-
 .mr-tile-field > div {
   display: flex;
   justify-content: space-between;
-}
-.mr-tile-field > div+div {
-  margin-top: 1.4vw;
 }
 
 .mr-tile {
