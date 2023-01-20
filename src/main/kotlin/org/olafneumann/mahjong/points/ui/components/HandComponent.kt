@@ -7,6 +7,7 @@ import kotlinx.html.TagConsumer
 import kotlinx.html.button
 import kotlinx.html.dom.append
 import kotlinx.html.js.div
+import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.span
 import org.olafneumann.mahjong.points.game.Combination
@@ -29,6 +30,7 @@ import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
+import org.w3c.dom.events.Event
 import kotlin.properties.Delegates
 
 class HandComponent(
@@ -87,7 +89,7 @@ class HandComponent(
                 }
             }
             if (figure != Figure.Bonus) {
-                verticalSwitch("Open") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
+                verticalSwitch( "Closed", "Open") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
             }
         }
 
@@ -132,6 +134,7 @@ class HandComponent(
             input.disabled = model.calculatorModel.hand.getCombination(figure) == null
             input.checked = (model.calculatorModel.hand.getCombination(figure)?.visibility
                 ?: Combination.Visibility.Open) == Combination.Visibility.Open
+            input.dispatchEvent(Event("change"));
         }
     }
 
