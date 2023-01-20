@@ -44,33 +44,45 @@ class OptionsComponent(
                     model.setPlatzWind(it)
                 }
                 div(classes = "mt-3") {
-                    checkbox("Schlussziegel von der Mauer", this@OptionsComponent::chkSchlussziegelVonDerMauer) {
+                    checkbox(
+                        "Schlussziegel von der Mauer",
+                        property = this@OptionsComponent::chkSchlussziegelVonDerMauer
+                    ) {
                         model.setGameModifiers(gameModifiers.copy(schlussziegelVonMauer = it))
                     }
                     checkbox(
                         "Schlussziegel ist einzig möglicher Ziegel",
-                        this@OptionsComponent::chkSchlussziegelIstEinzigMoeglicherZiegel
+                        property = this@OptionsComponent::chkSchlussziegelIstEinzigMoeglicherZiegel
                     ) { model.setGameModifiers(gameModifiers.copy(schlussziegelEinzigMoeglicherZiegel = it)) }
                 }
             }
             div(classes = "col-6 col-lg-12") {
-                checkbox("Schlussziegel komplettiert Paar", this@OptionsComponent::chkSchlussziegelKomplettiertPaar) {
+                checkbox(
+                    "Schlussziegel komplettiert Paar",
+                    property = this@OptionsComponent::chkSchlussziegelKomplettiertPaar
+                ) {
                     model.setGameModifiers(gameModifiers.copy(schlussziegelKomplettiertPaar = it))
                 }
-                checkbox("Schlussziegel von der toten Mauer", this@OptionsComponent::chkSchlussziegelVonDerTotenMauer) {
+                checkbox(
+                    "Schlussziegel von der toten Mauer",
+                    property = this@OptionsComponent::chkSchlussziegelVonDerTotenMauer
+                ) {
                     model.setGameModifiers(gameModifiers.copy(schlussziegelVonToterMauer = it))
                 }
-                checkbox("mit dem letzten Ziegel der Mauer gewonnen", this@OptionsComponent::chkMitDemLetztenZiegel) {
+                checkbox(
+                    "mit dem letzten Ziegel der Mauer gewonnen",
+                    property = this@OptionsComponent::chkMitDemLetztenZiegel
+                ) {
                     model.setGameModifiers(gameModifiers.copy(mitDemLetztenZiegelDerMauerGewonnen = it))
                 }
                 checkbox(
                     "Schlussziegel ist abgelegter Ziegel nach Abbau der Mauer",
-                    this@OptionsComponent::chkSchlussziegelIstAbgelegterZiegelNachLetztem
+                    property = this@OptionsComponent::chkSchlussziegelIstAbgelegterZiegelNachLetztem
                 ) { model.setGameModifiers(gameModifiers.copy(schlussziegelIstAbgelegterZiegelNachAbbauDerMauer = it)) }
-                checkbox("Beraubung des Kang", this@OptionsComponent::chkBeraubungDesKang) {
+                checkbox("Beraubung des Kang", property = this@OptionsComponent::chkBeraubungDesKang) {
                     model.setGameModifiers(gameModifiers.copy(beraubungDesKang = it))
                 }
-                checkbox("Mahjong-Ruf zu Beginn", this@OptionsComponent::chkMahjongZuBeginn) {
+                checkbox("Mahjong-Ruf zu Beginn", property = this@OptionsComponent::chkMahjongZuBeginn) {
                     model.setGameModifiers(gameModifiers.copy(mahjongAtBeginning = it))
                 }
             }

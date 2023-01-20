@@ -22,7 +22,7 @@ class TileSelectionComponent(
     parent: HTMLElement,
     private val model: UIModel
 ) : AbstractComponent(parent = parent), UIModelChangeListener {
-    private var imageTiles: Map<Tile, HTMLImageElement> by Delegates.notNull()
+    private var imageTiles: Map<Tile, HTMLElement> by Delegates.notNull()
 
     init {
         model.registerChangeListener(this)
@@ -30,21 +30,24 @@ class TileSelectionComponent(
 
     override fun TagConsumer<HTMLElement>.createUI() {
         injectRoot { element ->
-            imageTiles = element.getAllChildren<HTMLImageElement>()
+            imageTiles = element.getAllChildren<HTMLElement>()
                 .filterAttributeIsPresent(MrAttributes.TILE)
                 .associateBy { Tile.valueOf(it.mrTile!!) }
         }
-            .div(classes = "mr-tile-field mr-tile-container") {
+            .div(classes = "mr-tile-field mr-tile-container d-flex flex-column justify-content-between flex-fill") {
                 div { tileImages(Tile.bamboos) }
                 div { tileImages(Tile.characters) }
                 div { tileImages(Tile.circles) }
-                div(classes = "d-flex justify-content-between") {
-                    div { tileImages(Tile.winds) }
-                    div { tileImages(Tile.dragons) }
+                div {
+                    tileImages(Tile.winds)
+                    tileImage()
+                    tileImage()
+                    tileImages(Tile.dragons)
                 }
-                div(classes = "d-flex justify-content-between") {
-                    div { tileImages(Tile.flowers) }
-                    div { tileImages(Tile.seasons) }
+                div {
+                    tileImages(Tile.flowers)
+                    tileImage()
+                    tileImages(Tile.seasons)
                 }
             }
     }

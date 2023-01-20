@@ -9,6 +9,7 @@ import kotlinx.html.h5
 import kotlinx.html.id
 import kotlinx.html.input
 import kotlinx.html.js.div
+import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.js.onInputFunction
 import kotlinx.html.label
@@ -17,8 +18,10 @@ import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.util.nextHtmlId
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
+import org.w3c.dom.HTMLLabelElement
 import org.w3c.dom.events.Event
 import kotlin.js.json
+import kotlin.properties.Delegates
 import kotlin.reflect.KMutableProperty0
 
 fun TagConsumer<HTMLElement>.bsButton(
@@ -82,37 +85,64 @@ fun <T> TagConsumer<HTMLElement>.radioGroup(
 }
 
 fun TagConsumer<HTMLElement>.checkbox(
-    label: String,
+    labelEnabled: String,
+    labelDisabled: String? = null,
     property: KMutableProperty0<HTMLInputElement>? = null,
     action: (Boolean) -> Unit = {}
-) =
-    capture(property) {
+) {
+    var checkbox: HTMLInputElement by Delegates.notNull()
+    var label: HTMLLabelElement by Delegates.notNull()
+
+    injectRoot {
+        checkbox = it.getAllChildren<HTMLInputElement>().first()
+        label = it.getAllChildren<HTMLLabelElement>().first()
+    }.capture(property) {
+        val checkboxId = nextHtmlId
         div(classes = "form-check") {
             input(type = InputType.checkBox, classes = "form-check-input") {
                 value = ""
-                id = label.asId
-                onInputFunction = { action((it.target!! as HTMLInputElement).checked) }
+                id = checkboxId
+                onInputFunction = {
+                    label.innerText = if (!checkbox.checked) !labelEnabled else !(labelDisabled ?: labelEnabled)
+                    action((it.target!! as HTMLInputElement).checked)
+                }
             }
             label(classes = "form-check-label") {
-                htmlFor = label.asId
-                +!label
+                htmlFor = checkboxId
+                +!labelEnabled
             }
         }
     }
+}
 
-fun TagConsumer<HTMLElement>.verticalSwitch(label: String, action: (Event) -> Unit) {
+fun TagConsumer<HTMLElement>.verticalSwitch(
+    labelEnabled: String,
+    labelDisabled: String? = null,
+    action: (Event) -> Unit
+) {
     val htmlId = nextHtmlId
-    div(classes = "text-center mr-vertical-switch") {
+    var checkbox: HTMLInputElement by Delegates.notNull()
+    var label: HTMLLabelElement by Delegates.notNull()
+
+    injectRoot {
+        checkbox = it.getAllChildren<HTMLInputElement>().first()
+        label = it.getAllChildren<HTMLLabelElement>().first()
+        /*val width = max(it.getTextWidth(labelEnabled), it.getTextWidth(labelDisabled ?: labelEnabled))
+        label.style.width = "${width}px"*/
+    }.div(classes = "d-flex flex-column align-items-center mr-vertical-switch") {
         div(classes = "form-check form-switch") {
             input(classes = "form-check-input", type = InputType.checkBox) {
                 id = htmlId
                 onInputFunction = action
+                onChangeFunction =
+                    { label.innerText = if (!checkbox.checked) !labelEnabled else !(labelDisabled ?: labelEnabled) }
+                checked = true
             }
         }
         div {
             label(classes = "form-check-label") {
                 htmlFor = htmlId
-                +!label
+                +!labelEnabled
             }
         }
     }
