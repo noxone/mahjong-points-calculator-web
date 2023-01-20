@@ -26,6 +26,7 @@
 
     <!-- now for our page -->
     <link rel="stylesheet" href="styles/mahjong-points.css">
+    <link rel="stylesheet" href="styles/tiles.css">
     <title>Mahjong Point Calculator</title>
 
     <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -47,7 +48,6 @@
                     <h1 class="fw-bold">Mahjong Points Calculator</h1>
                 </div>
             </div>
-
             <div class="col-md-3 col-lg-3 mb-2 order-md-last order-lg-first">
                 <div class="bg-secondary border border-secondary rounded text-light p-3" style="height: 100%;">
                     <h2>Result</h2>
@@ -56,9 +56,9 @@
             </div>
 
             <div class="col-md-8 col-lg-6 pe-2 mb-2">
-                <div class=" bg-light rounded p-3" style="height: 100%;">
+                <div class=" bg-light rounded p-3 d-flex flex-column justify-content-between" style="height: 100%;">
                     <h2>Tiles</h2>
-                    <div class="mr-tiles" id="mr_tiles">
+                    <div class="mr-tile-field mr-tile-container d-flex align-self-streched flex-fill" id="mr_tiles">
                     </div>
                 </div>
             </div>
