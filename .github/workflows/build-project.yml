@@ -51,6 +51,7 @@ jobs:
       - name: Replace placeholders
         run: |
           sed "s/GIT_COMMIT_ID/$(git rev-parse HEAD)/" ./build/distributions/index.html > temp && mv temp ./build/distributions/index.html
+          sed "s/SHORT_COMMIT_ID/$(git rev-parse --short HEAD)/" ./build/distributions/index.html > temp && mv temp ./build/distributions/index.html
       - name: Cleanup Gradle Cache
         # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
         # Restoring these files from a GitHub Actions cache might cause problems for future builds.
