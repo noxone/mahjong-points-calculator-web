@@ -1,4 +1,4 @@
-package org.olafneumann.mahjong.points.org.olafneumann.mahjong.points
+package org.olafneumann.mahjong.points
 
 import kotlinx.browser.document
 import kotlinx.browser.window
