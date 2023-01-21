@@ -7,10 +7,10 @@ import kotlinx.html.TagConsumer
 import kotlinx.html.button
 import kotlinx.html.dom.append
 import kotlinx.html.js.div
-import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.span
 import org.olafneumann.mahjong.points.game.Combination
+import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.model.Figure
 import org.olafneumann.mahjong.points.model.getCombination
 import org.olafneumann.mahjong.points.model.getTiles
@@ -21,7 +21,6 @@ import org.olafneumann.mahjong.points.ui.html.getAllChildren
 import org.olafneumann.mahjong.points.ui.html.getElement
 import org.olafneumann.mahjong.points.ui.html.injectRoot
 import org.olafneumann.mahjong.points.ui.html.mrFigure
-import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.ui.html.verticalSwitch
 import org.olafneumann.mahjong.points.ui.js.Popover
 import org.olafneumann.mahjong.points.ui.model.UIModel
@@ -40,23 +39,22 @@ class HandComponent(
     private var selectorDivs: Map<Figure, HTMLDivElement> by Delegates.notNull()
     private var figureDivs: Map<Figure, HTMLDivElement> by Delegates.notNull()
     private var figureSwitches: Map<Figure, HTMLInputElement> by Delegates.notNull()
-    private var popover: Popover? = null
+    private var figurePopovers: Map<Figure, Popover> by Delegates.notNull()
     private val btnUndo = document.getElement<HTMLButtonElement>("mr_btn_undo")
 
     init {
         model.registerChangeListener(this)
         document.onmousedown = {
-            // dispose any popover if the user click somewhere else
-            disposePopover()
+            // hide any popover if the user click somewhere else
+            hidePopovers()
         }
         btnUndo.onclick = {
             // TODO
         }
     }
 
-    private fun disposePopover() {
-        popover?.dispose()
-        popover = null
+    private fun hidePopovers() {
+        figurePopovers.values.forEach { it.hide() }
     }
 
     override fun TagConsumer<HTMLElement>.createUI() {
@@ -67,6 +65,8 @@ class HandComponent(
             selectorDivs = figureDivs.mapValues { (_, div) -> div.parentElement!! as HTMLDivElement }
             figureSwitches = element.getAllChildren<HTMLInputElement>()
                 .mapIndexed { index, input -> Figure.values()[index] to input }
+                .toMap()
+            figurePopovers = figureDivs.map { it.key to createPopover(it.value, it.key) }
                 .toMap()
         }
             .div {
@@ -99,8 +99,12 @@ class HandComponent(
             return
         }
 
-        popover = Popover(
-            element = figureDivs[figure]!!,
+        figurePopovers[figure]?.show()
+    }
+
+    private fun createPopover(element: HTMLElement, figure: Figure) =
+        Popover(
+            element = element,
             placement = Popover.Placement.Left,
             trigger = "manual",
         ) {
@@ -108,12 +112,10 @@ class HandComponent(
                 +!"Reset"
                 onClickFunction = {
                     model.reset(figure)
-                    disposePopover()
+                    hidePopovers()
                 }
             }
         }
-        popover!!.show()
-    }
 
     override fun updateUI() {
         selectorDivs.forEach { (figure, div) ->
