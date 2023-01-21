@@ -175,24 +175,27 @@ fun TagConsumer<HTMLElement>.modal2(
     buttons: List<Button> = emptyList(),
     mainBlock: TagConsumer<HTMLElement>.() -> Unit = {}
 ) =
-    div(classes = "modal fade") {
-        div(classes = "modal-dialog modal-dialog-centered") {
-            div(classes = "modal-content") {
-                div(classes = "modal-header") {
-                    h5(classes = "modal-title") { +!title }
-                    closeButton(additionalAttributes = listOf("data-bs-dismiss" to "modal"))
-                }
-                div(classes = "modal-body") {
-                    mainBlock()
-                }
-                div(classes = "modal-footer") {
-                    buttons.forEach {
-                        bsButton(label = it.title, colorClass = it.colorClass, onClickFunction = it.onClickFunction)
+    injectRoot { element ->
+        element.addEventListener("hidden.bs.modal", { element.remove() })
+    }
+        .div(classes = "modal fade") {
+            div(classes = "modal-dialog modal-dialog-centered") {
+                div(classes = "modal-content") {
+                    div(classes = "modal-header") {
+                        h5(classes = "modal-title") { +!title }
+                        closeButton(additionalAttributes = listOf("data-bs-dismiss" to "modal"))
+                    }
+                    div(classes = "modal-body") {
+                        mainBlock()
+                    }
+                    div(classes = "modal-footer") {
+                        buttons.forEach {
+                            bsButton(label = it.title, colorClass = it.colorClass, onClickFunction = it.onClickFunction)
+                        }
                     }
                 }
             }
         }
-    }
 
 data class Button(
     val title: String,

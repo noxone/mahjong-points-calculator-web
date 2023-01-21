@@ -1,3 +1,5 @@
+package org.olafneumann.mahjong.points
+
 import kotlinx.browser.document
 import kotlinx.browser.window
 import org.olafneumann.mahjong.points.ui.components.HandComponent
