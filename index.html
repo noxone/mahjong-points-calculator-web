@@ -22,11 +22,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
     <!-- sources of regex generator -->
-    <script type="text/javascript" src="mahjong-points.js"></script>
+    <script type="text/javascript" src="mahjong-points.js?commitId=$(git rev-parse HEAD)"></script>
 
     <!-- now for our page -->
-    <link rel="stylesheet" href="styles/mahjong-points.css">
-    <link rel="stylesheet" href="styles/tiles.css">
+    <link rel="stylesheet" href="styles/mahjong-points.css?commitId=$(git rev-parse HEAD)">
+    <link rel="stylesheet" href="styles/tiles.css?commitId=$(git rev-parse HEAD)">
     <title>Mahjong Point Calculator</title>
 
     <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -92,16 +92,24 @@
             <div class="text-center text-md-start collapse show" id="footerContent">
                 <div class="row">
                     <div class="col-md-6 mt-md-0 mt-3">
-                        <p><code>Mahjong Point Calculator</code> is a tool to compute
-                            the points of a Mahjong game.</p>
-                        <p>Find the project sources at <a href="https://github.com/noxone/mahjong-point-calculator"
-                                target="_blank" rel="noopener">Github</a>.  
-                                <a class="github-button" href="https://github.com/noxone/mahjong-point-calculator"
+                        <p>
+                            <code>Mahjong Point Calculator</code> is a tool to compute
+                            the points of a Mahjong game.
+                        </p>
+                        <p>
+                            Find the project sources at <a href="https://github.com/noxone/mahjong-point-calculator"
+                                target="_blank" rel="noopener">Github</a>.
+                            <a class="github-button" href="https://github.com/noxone/mahjong-point-calculator"
                                 data-color-scheme="no-preference: dark; dark: dark; light: dark;"
                                 data-icon="octicon-star" data-show-count="true"
                                 aria-label="Star noxone/mahjong-point-calculator on GitHub">Star</a>
+                            <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fmahjong.olafneumann.org&count_bg=%23372929&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visitors&edge_flat=false"
+                                title="Visitor Counter" />
+                        </p>
                         <p>
-                            <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fmahjong.olafneumann.org&count_bg=%23372929&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visitors&edge_flat=false" title="Visitor Counter"/>
+                            Build from commit ID <a
+                                href="https://github.com/noxone/mahjong-point-calculator/tree/$(git rev-parse HEAD)"
+                                target="_blank" rel="noopener">$(git rev-parse HEAD)</a>.
                         </p>
                     </div>
                     <hr class="clearfix w-100 d-md-none pb-3 border-secondary">
