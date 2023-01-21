@@ -110,10 +110,10 @@ class ClassicRulesResultComputer : ResultComputer {
                 .map { Line(StringKeys.WINNING_TILE_ONLY_POSSIBLE_TILE, points = 2) },
             // Schlussziegel komplettiert Paar aus Grundziegeln
             (gameModifiers.schlussziegelKomplettiertPaar && (hand.pair?.tile?.isBaseTile ?: false))
-                .map { Line(StringKeys.WINNING_TILE_COMPLETES_PAIR_OF_BASE_TILES, points = 2) },
+                .map { Line(StringKeys.WINNING_TILE_COMPLETES_PAIR_OF_MINOR_TILES, points = 2) },
             // Schlussziegel komplettiert Paar aus Hauptziegeln
             (gameModifiers.schlussziegelKomplettiertPaar && !(hand.pair?.tile?.isBaseTile ?: false))
-                .map { Line(StringKeys.WINNING_TILE_COMPLETES_PAIR_OF_MAIN_TILES, points = 4) },
+                .map { Line(StringKeys.WINNING_TILE_COMPLETES_PAIR_OF_MAJOR_TILES, points = 4) },
         ).mapNotNull { it }
     }
 
@@ -122,7 +122,7 @@ class ClassicRulesResultComputer : ResultComputer {
             listOf(
                 // Beide Bonusziegel des Platzwindes
                 (hand.pair?.getTiles()?.all { it.wind == seatWind } ?: false)
-                    .map { Line(description = StringKeys.BONUS_WIND_SEAT, doublings = 1) },
+                    .map { Line(description = StringKeys.PAIR_WIND_SEAT, doublings = 1) },
                 // alle Blumenziegel
                 hand.bonusTiles.containsAll(Tile.flowers)
                     .map { Line(description = StringKeys.ALL_FLOWERS, doublings = 1) },
@@ -208,7 +208,7 @@ class ClassicRulesResultComputer : ResultComputer {
                     .map { Line(description = StringKeys.WINNING_TILE_IS_DISCARD_AFTER_END_OF_WALL, doublings = 1) },
                 // Beraubung des Kang
                 gameModifiers.beraubungDesKang
-                    .map { Line(description = StringKeys.ROBBING_THE_KONG, doublings = 1) },
+                    .map { Line(description = StringKeys.ROBBING_THE_KANG, doublings = 1) },
                 // Mahjong-Ruf zu Beginn
                 gameModifiers.mahjongAtBeginning
                     .map { Line(description = StringKeys.MAHJONG_AT_BEGINNING, doublings = 1) },
