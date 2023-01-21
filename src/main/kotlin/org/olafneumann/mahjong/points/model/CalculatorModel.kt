@@ -3,7 +3,7 @@ package org.olafneumann.mahjong.points.model
 import org.olafneumann.mahjong.points.game.Combination
 import org.olafneumann.mahjong.points.game.Combination.Type.Chow
 import org.olafneumann.mahjong.points.game.Combination.Type.Kang
-import org.olafneumann.mahjong.points.game.Combination.Type.Pong
+import org.olafneumann.mahjong.points.game.Combination.Type.Pung
 import org.olafneumann.mahjong.points.game.Combination.Type.Unfinished0
 import org.olafneumann.mahjong.points.game.Combination.Type.UnfinishedPlus1
 import org.olafneumann.mahjong.points.game.Combination.Visibility.Open
@@ -49,7 +49,7 @@ data class CalculatorModel(
             return this
         }
 
-        if (tile.isTrump && hand.containsPongWith(tile)) {
+        if (tile.isTrump && hand.containsPungWith(tile)) {
             return copy(
                 hand = hand.allFigures.first { it.tile == tile }.replace(hand, type = Kang),
                 selectedFigure = selectedFigure.next
@@ -75,7 +75,7 @@ data class CalculatorModel(
                 if (!canConsume(tile, tile, tile)) {
                     return this
                 }
-                return copy(hand = hand.setCombination(selectedFigure, Combination(Pong, tile, Open)))
+                return copy(hand = hand.setCombination(selectedFigure, Combination(Pung, tile, Open)))
             }
             return copy(hand = hand.setCombination(selectedFigure, Combination(Unfinished0, tile, Open)))
         }
@@ -85,7 +85,7 @@ data class CalculatorModel(
                     return copy(
                         hand = combination.replace(
                             hand = hand,
-                            type = if (selectedFigure == Pair) Combination.Type.Pair else Pong
+                            type = if (selectedFigure == Pair) Combination.Type.Pair else Pung
                         )
                     )
                 }
@@ -144,7 +144,7 @@ data class CalculatorModel(
                 return this
             }
 
-            Pong -> {
+            Pung -> {
                 if (combination.tile == tile) {
                     return copy(hand = combination.replace(hand, type = Kang), selectedFigure = selectedFigure.next)
                 }
