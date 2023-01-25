@@ -69,7 +69,7 @@ class HandComponent(
             figurePopovers = figureDivs.map { it.key to createPopover(it.value, it.key) }
                 .toMap()
         }
-            .div {
+            .div(classes = "flex-fill") {
                 divForFigure(Figure.Figure1)
                 divForFigure(Figure.Figure2)
                 divForFigure(Figure.Figure3)
