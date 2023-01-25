@@ -13,6 +13,7 @@ import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.js.onInputFunction
 import kotlinx.html.label
+import kotlinx.html.small
 import kotlinx.html.title
 import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.util.nextHtmlId
@@ -129,20 +130,26 @@ fun TagConsumer<HTMLElement>.verticalSwitch(
         label = it.getAllChildren<HTMLLabelElement>().first()
         /*val width = max(it.getTextWidth(labelEnabled), it.getTextWidth(labelDisabled ?: labelEnabled))
         label.style.width = "${width}px"*/
-    }.div(classes = "d-flex flex-column align-items-center mr-vertical-switch") {
+    }.div(classes = "d-flex flex-column justify-content-center align-items-center mr-vertical-switch mr-full-height") {
         div(classes = "form-check form-switch") {
             input(classes = "form-check-input", type = InputType.checkBox) {
                 id = htmlId
                 onInputFunction = action
-                onChangeFunction =
-                    { label.innerText = if (!checkbox.checked) !labelEnabled else !(labelDisabled ?: labelEnabled) }
+                onChangeFunction = {
+                    val labelText = if (!checkbox.checked) !labelEnabled else !(labelDisabled ?: labelEnabled)
+                    label.innerText = labelText
+                    label.title = labelText
+                }
                 checked = true
             }
         }
         div {
-            label(classes = "form-check-label") {
-                htmlFor = htmlId
-                +!labelEnabled
+            small {
+                label(classes = "form-check-label") {
+                    htmlFor = htmlId
+                    title = !labelEnabled
+                    +!labelEnabled
+                }
             }
         }
     }

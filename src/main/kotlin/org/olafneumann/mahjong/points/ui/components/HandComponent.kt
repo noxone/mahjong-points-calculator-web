@@ -69,7 +69,7 @@ class HandComponent(
             figurePopovers = figureDivs.map { it.key to createPopover(it.value, it.key) }
                 .toMap()
         }
-            .div(classes = "flex-fill") {
+            .div(classes = "flex-fill mr-figure-list") {
                 divForFigure(Figure.Figure1)
                 divForFigure(Figure.Figure2)
                 divForFigure(Figure.Figure3)
@@ -80,8 +80,9 @@ class HandComponent(
     }
 
     private fun TagConsumer<HTMLElement>.divForFigure(figure: Figure) =
-        div(classes = "d-flex justify-content-between align-items-center mb-2") {
-            div(classes = "mr-figure border flex-fill me-1") {
+        div(classes = "row g-0") {
+            val isBonus = figure == Figure.Bonus
+            div(classes = "${if(isBonus)"col" else "col-lg-9 col-8"} mr-figure border") {
                 span { +!figure.title }
                 div(classes = "mr-tile-container") {
                     mrFigure = figure.name
@@ -89,7 +90,9 @@ class HandComponent(
                 }
             }
             if (figure != Figure.Bonus) {
-                verticalSwitch( "Closed", "Open") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
+                div(classes = "col-3 px-1") {
+                    verticalSwitch("Closed", "Open") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
+                }
             }
         }
 
