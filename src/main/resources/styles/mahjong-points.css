@@ -125,6 +125,10 @@ body {
   font-size: 6pt;
 }
 
+.mr-figure .mr-tile-container .mr-tile+.mr-tile {
+  margin-left: 0.2em;
+}
+
 .mr-selected {
   border: 3px solid #0dcaf0 !important;
 }
