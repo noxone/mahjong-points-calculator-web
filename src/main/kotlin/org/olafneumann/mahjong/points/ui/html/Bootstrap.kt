@@ -143,13 +143,11 @@ fun TagConsumer<HTMLElement>.verticalSwitch(
                 checked = true
             }
         }
-        div {
-            small {
-                label(classes = "form-check-label") {
-                    htmlFor = htmlId
-                    title = !labelEnabled
-                    +!labelEnabled
-                }
+        small {
+            label(classes = "form-check-label") {
+                htmlFor = htmlId
+                title = !labelEnabled
+                +!labelEnabled
             }
         }
     }
