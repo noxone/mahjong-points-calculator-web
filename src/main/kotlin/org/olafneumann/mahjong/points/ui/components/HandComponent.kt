@@ -132,16 +132,13 @@ class HandComponent(
             div.clear()
             div.append {
                 val combination = model.calculatorModel.hand.getCombination(figure)
-                (combination?.getTiles() ?: emptyList())
+                val isConcealed = combination?.let { it.visibility == Combination.Visibility.Closed } ?: false
+                model.calculatorModel.hand.getTiles(figure)
                     .sortedBy { it.ordinal }
                     .forEachIndexed { index, tile ->
                         tileImage(
                             tile,
-                            backside = (index == 1
-                                    && combination?.visibility == Combination.Visibility.Closed) ||
-                                    (index == 2
-                                            && combination?.type == Combination.Type.Kang
-                                            && combination?.visibility == Combination.Visibility.Closed),
+                            backside = isConcealed && (index == 1 || (index == 2 && combination?.type == Combination.Type.Kang)),
                             selectable = true
                         )
                     }
