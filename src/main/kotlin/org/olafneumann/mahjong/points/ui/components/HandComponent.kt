@@ -82,7 +82,7 @@ class HandComponent(
     private fun TagConsumer<HTMLElement>.divForFigure(figure: Figure) =
         div(classes = "row g-0") {
             val isBonus = figure == Figure.Bonus
-            div(classes = "${if(isBonus)"col" else "col-md-9 col-8"} mr-figure border") {
+            div(classes = "${if (isBonus) "col" else "col-md-9 col-8"} mr-figure border") {
                 span { +!figure.title }
                 div(classes = "mr-tile-container") {
                     mrFigure = figure.name
@@ -93,7 +93,7 @@ class HandComponent(
                 }
             }
             if (figure != Figure.Bonus) {
-                div(classes = "${if(isBonus)"col" else "col-md-3 col-4"} px-1") {
+                div(classes = "${if (isBonus) "col" else "col-md-3 col-4"} px-1") {
                     verticalSwitch("Closed", "Open") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
                 }
             }
@@ -131,12 +131,24 @@ class HandComponent(
         figureDivs.forEach { (figure, div) ->
             div.clear()
             div.append {
+                val combination = model.calculatorModel.hand.getCombination(figure)
+                (combination?.getTiles() ?: emptyList())
+                    .sortedBy { it.ordinal }
+                    .forEachIndexed { index, tile ->
+                        tileImage(
+                            tile,
+                            backside = (index == 1
+                                    && combination?.visibility == Combination.Visibility.Closed) ||
+                                    (index == 2
+                                            && combination?.type == Combination.Type.Kang
+                                            && combination?.visibility == Combination.Visibility.Closed),
+                            selectable = true
+                        )
+                    }
                 model.calculatorModel.hand
                     .getTiles(figure)
                     .sortedBy { it.ordinal }
-                    .forEach { tile ->
-                        tileImage(tile, selectable = true) {}
-                    }
+
             }
         }
         figureSwitches.forEach { (figure, input) ->

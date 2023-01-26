@@ -44,6 +44,16 @@ body {
   cursor: pointer;
 }
 
+.mr-tile.mr-tile-backside {
+  background-size: 100%;
+}
+
+.mr-tile-backside > div {
+  background-image: none !important;
+  border: 3px solid rgba(205,133,63,0.4);
+  border-radius: 0.6em;
+}
+
 .mr-tile-background {
   background: linear-gradient(165deg, rgba(255, 255, 255, 1) 0%, rgba(194, 194, 194, 1) 8%, rgba(223, 223, 223, 1) 33%, rgba(251, 251, 251, 1) 100%);
   border-radius: 0.6em;
