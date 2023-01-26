@@ -22,15 +22,11 @@ fun TagConsumer<HTMLElement>.tileImage(
     div(classes = "mr-tile ${backside.toString("mr-tile-backside")} ${(tile != null).toString("mr-tile-background")} ${(!selectable).toString("not-selectable")}") {
         div(classes = tile.cssClass) {
             if (tile != null) {
-                id = tile.htmlId
                 mrTile = tile.name
             }
         }
         this.onClickFunction = onClickFunction
     }
-
-private val Tile.htmlId: String
-    get() = "mr_tile_${this.name}"
 
 private val Tile?.cssClass: String get() = this?.let { "mr-tile-content mr-tile-${name.lowercase()}" } ?: ""
 
