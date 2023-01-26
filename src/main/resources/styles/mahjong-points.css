@@ -5,6 +5,11 @@ body {
   /*touch-action: none;*/
 }
 
+h1 {
+  font-family: 'Shanghai';
+  font-size: 3rem;
+}
+
 .mr-tile-container {
   font-size: 0.97vw;
 }

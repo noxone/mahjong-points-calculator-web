@@ -16,4 +16,8 @@ object Constants {
     const val NUMBER_OF_TILE_IN_CHOW = 3
     const val NUMBER_OF_TILE_IN_PUNG = 3
     const val NUMBER_OF_TILE_IN_KANG = 4
+
+    const val MAX_NUMBER_OF_TILES_IN_SET = 4
+    const val MAX_NUMBER_OF_TILES_IN_PAIR = 2
+    const val MAX_NUMBER_OF_TILES_IN_BONUS = 8
 }
