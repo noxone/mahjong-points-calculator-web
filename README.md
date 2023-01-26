@@ -60,6 +60,7 @@ The artwork used for this page is freely available on the internet. Currently in
 
 - [Tile images](./art/tiles/README.md)
 - [Tile backside](./art/backside/README.md)
+- [Fonts](./art/fonts/README.md)
 
 ## More Ideas
 
