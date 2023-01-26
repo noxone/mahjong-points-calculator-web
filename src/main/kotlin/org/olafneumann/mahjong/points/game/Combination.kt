@@ -10,7 +10,7 @@ data class Combination(
             Type.Unfinished0 -> listOf(tile)
             Type.UnfinishedPlus1 -> listOf(tile, tile.next!!)
             Type.Pair -> listOf(tile, tile)
-            Type.Pong -> listOf(tile, tile, tile)
+            Type.Pung -> listOf(tile, tile, tile)
             Type.Kang -> listOf(tile, tile, tile, tile)
             Type.Chow -> listOf(tile, tile.next!!, tile.next?.next!!)
         }
@@ -23,7 +23,7 @@ data class Combination(
     ) {
         Pair(),
         Chow(),
-        Pong(),
+        Pung(),
         Kang(),
         Unfinished0(false) /*only one tile selected*/,
         UnfinishedPlus1(false) /*this and the next tile selected*/,

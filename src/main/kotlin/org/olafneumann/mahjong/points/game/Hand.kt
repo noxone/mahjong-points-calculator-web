@@ -17,9 +17,9 @@ data class Hand(
     val allTiles: List<Tile> = allTilesOfFigures + bonusTiles
 
     val isMahjong: Boolean = allFigures.filter { it.type.finished }.size == Constants.FIGURES_IN_COMPLETE_HAND
-    fun containsPongWith(tile: Tile) =
+    fun containsPungWith(tile: Tile) =
         allFigures
-            .filter { it.type == Combination.Type.Pong }
+            .filter { it.type == Combination.Type.Pung }
             .map { it.tile }
             .contains(tile)
 

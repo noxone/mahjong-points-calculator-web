@@ -44,16 +44,16 @@ class HandComponent(
 
     init {
         model.registerChangeListener(this)
-        document.onmousedown = {
+        document.onclick = {
             // hide any popover if the user click somewhere else
-            hidePopovers()
+            hideAllPopovers()
         }
         btnUndo.onclick = {
             // TODO
         }
     }
 
-    private fun hidePopovers() {
+    private fun hideAllPopovers() {
         figurePopovers.values.forEach { it.hide() }
     }
 
@@ -69,7 +69,7 @@ class HandComponent(
             figurePopovers = figureDivs.map { it.key to createPopover(it.value, it.key) }
                 .toMap()
         }
-            .div {
+            .div(classes = "flex-fill mr-figure-list") {
                 divForFigure(Figure.Figure1)
                 divForFigure(Figure.Figure2)
                 divForFigure(Figure.Figure3)
@@ -80,26 +80,33 @@ class HandComponent(
     }
 
     private fun TagConsumer<HTMLElement>.divForFigure(figure: Figure) =
-        div(classes = "d-flex justify-content-between align-items-center mb-2") {
-            div(classes = "mr-figure border flex-fill me-1") {
+        div(classes = "row g-0") {
+            val isBonus = figure == Figure.Bonus
+            div(classes = "${if(isBonus)"col" else "col-md-9 col-8"} mr-figure border") {
                 span { +!figure.title }
                 div(classes = "mr-tile-container") {
                     mrFigure = figure.name
-                    onClickFunction = { handleFigureClick(figure) }
+                    onClickFunction = {
+                        it.stopPropagation()
+                        handleFigureClick(figure)
+                    }
                 }
             }
             if (figure != Figure.Bonus) {
-                verticalSwitch( "Closed", "Open") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
+                div(classes = "${if(isBonus)"col" else "col-md-3 col-4"} px-1") {
+                    verticalSwitch("Closed", "Open") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
+                }
             }
         }
 
     private fun handleFigureClick(figure: Figure) {
         if (model.calculatorModel.selectedFigure != figure) {
             model.select(figure)
+            hideAllPopovers()
             return
         }
 
-        figurePopovers[figure]?.show()
+        figurePopovers[figure]?.toggle()
     }
 
     private fun createPopover(element: HTMLElement, figure: Figure) =
@@ -112,7 +119,7 @@ class HandComponent(
                 +!"Reset"
                 onClickFunction = {
                     model.reset(figure)
-                    hidePopovers()
+                    hideAllPopovers()
                 }
             }
         }

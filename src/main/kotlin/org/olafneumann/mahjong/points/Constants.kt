@@ -14,6 +14,6 @@ object Constants {
 
     const val NUMBER_OF_TILE_IN_PAIR = 2
     const val NUMBER_OF_TILE_IN_CHOW = 3
-    const val NUMBER_OF_TILE_IN_PONG = 3
+    const val NUMBER_OF_TILE_IN_PUNG = 3
     const val NUMBER_OF_TILE_IN_KANG = 4
 }

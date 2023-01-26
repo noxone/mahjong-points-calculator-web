@@ -1,6 +1,7 @@
 package org.olafneumann.mahjong.points.ui.components
 
 import kotlinx.html.TagConsumer
+import kotlinx.html.js.div
 import org.olafneumann.mahjong.points.ui.controls.showResultTable
 import org.olafneumann.mahjong.points.ui.html.bsButton
 import org.olafneumann.mahjong.points.ui.model.UIModel
@@ -16,8 +17,10 @@ class ResultComponent(
     }
 
     override fun TagConsumer<HTMLElement>.createUI() {
-        bsButton("Compute") {
-            showResultTable(model.calculatorModel.result) { model.setNextPlayer() }
+        div(classes = "flex-fill") {
+            bsButton("Compute") {
+                showResultTable(model.calculatorModel.result) { model.setNextPlayer() }
+            }
         }
     }
 

@@ -7,12 +7,15 @@ import org.w3c.dom.HTMLElement
 
 abstract class AbstractComponent(
     private val parent: HTMLElement,
+    private val needClear: Boolean = false
 ) {
     private var initialCreation = true
 
     fun buildUI() {
         if (initialCreation) {
-            parent.clear()
+            if (needClear) {
+                parent.clear()
+            }
             parent.append { createUI() }
         }
         initialCreation = false
