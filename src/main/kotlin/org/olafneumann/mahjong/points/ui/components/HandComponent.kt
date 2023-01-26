@@ -44,16 +44,16 @@ class HandComponent(
 
     init {
         model.registerChangeListener(this)
-        document.onmousedown = {
+        document.onclick = {
             // hide any popover if the user click somewhere else
-            hidePopovers()
+            hideAllPopovers()
         }
         btnUndo.onclick = {
             // TODO
         }
     }
 
-    private fun hidePopovers() {
+    private fun hideAllPopovers() {
         figurePopovers.values.forEach { it.hide() }
     }
 
@@ -86,7 +86,10 @@ class HandComponent(
                 span { +!figure.title }
                 div(classes = "mr-tile-container") {
                     mrFigure = figure.name
-                    onClickFunction = { handleFigureClick(figure) }
+                    onClickFunction = {
+                        it.stopPropagation()
+                        handleFigureClick(figure)
+                    }
                 }
             }
             if (figure != Figure.Bonus) {
@@ -99,10 +102,11 @@ class HandComponent(
     private fun handleFigureClick(figure: Figure) {
         if (model.calculatorModel.selectedFigure != figure) {
             model.select(figure)
+            hideAllPopovers()
             return
         }
 
-        figurePopovers[figure]?.show()
+        figurePopovers[figure]?.toggle()
     }
 
     private fun createPopover(element: HTMLElement, figure: Figure) =
@@ -115,7 +119,7 @@ class HandComponent(
                 +!"Reset"
                 onClickFunction = {
                     model.reset(figure)
-                    hidePopovers()
+                    hideAllPopovers()
                 }
             }
         }
