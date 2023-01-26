@@ -22,11 +22,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
     <!-- sources of regex generator -->
-    <script type="text/javascript" src="mahjong-points.js?commitId=104a8d4e7b0680da679046cfdef6a188c663b57b"></script>
+    <script type="text/javascript" src="mahjong-points.js?commitId=7b21aefe690a8b5af889e85e790f55d400630803"></script>
 
     <!-- now for our page -->
-    <link rel="stylesheet" href="styles/mahjong-points.css?commitId=104a8d4e7b0680da679046cfdef6a188c663b57b">
-    <link rel="stylesheet" href="styles/tiles.css?commitId=104a8d4e7b0680da679046cfdef6a188c663b57b">
+    <link rel="stylesheet" href="styles/mahjong-points.css?commitId=7b21aefe690a8b5af889e85e790f55d400630803">
+    <link rel="stylesheet" href="styles/tiles.css?commitId=7b21aefe690a8b5af889e85e790f55d400630803">
     <title>Mahjong Point Calculator</title>
 
     <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -48,23 +48,21 @@
                     <h1 class="fw-bold">Mahjong Points Calculator</h1>
                 </div>
             </div>
+
             <div class="col-md-3 col-lg-3 mb-2 order-md-last order-lg-first">
-                <div class="bg-secondary border border-secondary rounded text-light p-3" style="height: 100%;">
+                <div id="mr_result" class="bg-secondary border border-secondary rounded text-light d-flex flex-column mr-full-height p-3">
                     <h2>Result</h2>
-                    <div id="mr_result"></div>
                 </div>
             </div>
 
             <div class="col-md-8 col-lg-6 pe-2 mb-2">
-                <div class=" bg-light rounded p-3 d-flex flex-column justify-content-between" style="height: 100%;">
+                <div id="mr_tiles" class=" bg-light rounded d-flex flex-column p-3 mr-full-height">
                     <h2>Tiles</h2>
-                    <div class="mr-tile-field mr-tile-container d-flex align-self-streched flex-fill" id="mr_tiles">
-                    </div>
                 </div>
             </div>
 
             <div class="col-md-4 col-lg-3 pe-lg-2 mb-2">
-                <div class="bg-light rounded p-3" style="height: 100%;">
+                <div id="mr_selected_tiles" class="bg-light rounded mr-full-height d-flex flex-column p-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <h2>Hand</h2>
                         <button class="btn btn-sm btn-outline-secondary d-none" id="mr_btn_undo" type="button"
@@ -72,16 +70,12 @@
                             <i class="bi bi-arrow-counterclockwise"></i>
                         </button>
                     </div>
-                    <div id="mr_selected_tiles" class="mr-figure-holder">
-                    </div>
                 </div>
             </div>
 
             <div class="col-md-9 col-lg-3 pe-md-2 pe-lg-0 mb-2">
-                <div class="bg-light rounded p-3" style="height: 100%;">
+                <div id="mr_options" class="bg-light rounded mr-full-height d-flex flex-column p-3">
                     <h2>Options</h2>
-                    <form id="mr_options">
-                    </form>
                 </div>
             </div>
         </div>
@@ -108,17 +102,18 @@
                         </p>
                         <p>
                             Built from commit ID <a
-                                href="https://github.com/noxone/mahjong-point-calculator/tree/104a8d4e7b0680da679046cfdef6a188c663b57b"
-                                target="_blank" rel="noopener">104a8d4</a>.
+                                href="https://github.com/noxone/mahjong-point-calculator/tree/7b21aefe690a8b5af889e85e790f55d400630803"
+                                target="_blank" rel="noopener">7b21aef</a>.
                         </p>
                     </div>
                     <hr class="clearfix w-100 d-md-none pb-3 border-secondary">
                     <div class="col-md-3 mb-md-0 mb-3">
                         <h5>Useful Mahjong Links</h5>
                         <ul class="list-unstyled">
-                            <li><a class="rounded"
-                                    href="http://dmjl.de/mah-jongg/klassische-regeln"
-                                    target="_blank" rel="noopener">Mahjong Rules</a></li>
+                            <li><a class="rounded" href="http://dmjl.de/mah-jongg/klassische-regeln" target="_blank"
+                                    rel="noopener">Mahjong Rules (German)</a></li>
+                            <li><a class="rounded" href="https://www.mastersofgames.com/rules/mah-jong-rules.htm"
+                                    target="_blank" rel="noopener">Mahjong Rules (English)</a></li>
                             <li><a class="rounded"
                                     href="http://dmjl.de/wp-content/uploads/2009/05/DMJL_CC_Wertung_2005.pdf"
                                     target="_blank" rel="noopener" id="rg_anchor_regex101">Mahjong Point Table</a></li>

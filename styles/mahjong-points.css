@@ -65,8 +65,26 @@ body {
   display: block;
 }
 
+.mr-figure-list > div+div {
+  margin-top: 0.5rem;
+}
+
 .mr-vertical-switch .form-switch {
   padding-left: 3.2rem;
+}
+
+.mr-vertical-switch .form-check + div {
+  width: 100%;
+}
+
+.mr-vertical-switch label {
+  display: block;
+  overflow: hidden;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+  height: 100%;
 }
 
 #mr_result .btn {
@@ -105,6 +123,10 @@ body {
   justify-content: center;
   /*font-size: 0.2rem!important;*/
   font-size: 6pt;
+}
+
+.mr-figure .mr-tile-container .mr-tile+.mr-tile {
+  margin-left: 0.2em;
 }
 
 .mr-selected {
