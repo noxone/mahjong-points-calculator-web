@@ -10,6 +10,8 @@ import kotlinx.html.js.onClickFunction
 import kotlinx.html.title
 import org.olafneumann.mahjong.points.lang.not
 import org.w3c.dom.HTMLElement
+import org.w3c.dom.events.Event
+import org.w3c.dom.events.EventTarget
 import kotlin.js.json
 
 @Suppress("LongParameterList")
@@ -18,7 +20,8 @@ class Popover(
     private val container: String = "body",
     private val placement: Placement = Placement.Right,
     private val title: String? = null,
-    private val trigger: String = "click",
+    private val trigger: Trigger = Trigger.Click,
+    hideOnOutsideClick: Boolean = false,
     onShown: () -> Unit = {},
     private val onCloseButtonClick: Popover.() -> Unit = { dispose() },
     private val content: TagConsumer<HTMLElement>.() -> HTMLElement,
@@ -29,7 +32,20 @@ class Popover(
         jquery = element.asJQuery()
         jquery.popover(createOptionsJson())
         jquery.on("shown.bs.popover", onShown)
+
+        if (hideOnOutsideClick) {
+            document.addEventListener("click", {
+                if (isInsidePopover(it.target) /*|| (it.target as HTMLElement).asJQuery() == jquery*/) {
+                    hide()
+                }
+            })
+        }
     }
+
+    private fun isInsidePopover(eventTarget: EventTarget?) =
+        eventTarget != null
+                && eventTarget is HTMLElement
+                && eventTarget.asJQuery().parents(".popover.show").length == 0
 
     fun show() {
         jquery.popover("show")
@@ -38,9 +54,14 @@ class Popover(
             it.stopPropagation()
         }
     }
+
     fun hide() = jquery.popover("hide")
     fun dispose() = jquery.popover("dispose")
     fun toggle() = jquery.popover("toggle")
+
+    fun hideIfClickOutside(event: Event) {
+
+    }
 
     private fun createOptionsJson() = json(
         *listOf(
@@ -60,7 +81,7 @@ class Popover(
                     }
                 }
             },
-            "trigger" to trigger
+            "trigger" to trigger.value
         )
             .filter { it.second != null }
             .toTypedArray()
@@ -73,5 +94,13 @@ class Popover(
         Bottom("bottom"),
         Left("left"),
         Right("right")
+    }
+
+    enum class Trigger(
+        val value: String
+    ) {
+        Manual("manual"),
+        Click("click"),
+        Focus("focus"),
     }
 }

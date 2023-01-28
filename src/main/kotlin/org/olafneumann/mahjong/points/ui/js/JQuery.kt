@@ -22,6 +22,7 @@ external class JQuery {
     fun show(): JQuery
     fun hide(): JQuery
     fun parent(): JQuery
+    fun parents(selector: String): JQuery
     fun remove(): JQuery
 
     @Suppress("UnusedPrivateMember")
@@ -43,6 +44,8 @@ external class JQuery {
 
     fun popover(options: Json)
     fun popover(command: String)
+
+    val length: Int
 }
 
 fun HTMLElement.asJQuery(): JQuery = jQuery(this)
