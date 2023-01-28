@@ -47,15 +47,20 @@ class ResultComponent(
                         tooltip = "Reset current hand",
                         colorClass = "danger",
                         id = "mr_reset_all",
-                    )
+                    ) {
+                        it.stopPropagation()
+                        popover.show()
+                    }
                 }
             }
 
         popover = Popover(
             element = resetButton,
-            trigger = "focus"
+            trigger = Popover.Trigger.Manual,
+            hideOnOutsideClick = true
         ) {
             div {
+                // onClickFunction = { it.stopPropagation() }
                 p {
                     +!"Do you really want to reset your input?"
                 }

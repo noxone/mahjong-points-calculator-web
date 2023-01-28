@@ -45,10 +45,7 @@ class HandComponent(
 
     init {
         model.registerChangeListener(this)
-        document.onclick = {
-            // hide any popover if the user click somewhere else
-            hideAllPopovers()
-        }
+        document.addEventListener("click", { hideAllPopovers() })
         btnUndo.onclick = {
             // TODO
         }
@@ -116,7 +113,7 @@ class HandComponent(
         Popover(
             element = element,
             placement = Popover.Placement.Left,
-            trigger = "manual",
+            trigger = Popover.Trigger.Manual,
         ) {
             button(classes = "btn btn-danger", type = ButtonType.button) {
                 +!"Reset"
