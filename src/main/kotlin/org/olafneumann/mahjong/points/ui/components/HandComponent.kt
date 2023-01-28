@@ -25,6 +25,7 @@ import org.olafneumann.mahjong.points.ui.html.verticalSwitch
 import org.olafneumann.mahjong.points.ui.js.Popover
 import org.olafneumann.mahjong.points.ui.model.UIModel
 import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
+import org.olafneumann.mahjong.points.util.toString
 import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
@@ -36,8 +37,8 @@ class HandComponent(
     parent: HTMLElement,
     val model: UIModel,
 ) : AbstractComponent(parent = parent), UIModelChangeListener {
-    private var selectorDivs: Map<Figure, HTMLDivElement> by Delegates.notNull()
-    private var figureDivs: Map<Figure, HTMLDivElement> by Delegates.notNull()
+    private var selectableDivs: Map<Figure, HTMLDivElement> by Delegates.notNull()
+    private var tileContainerDivs: Map<Figure, HTMLDivElement> by Delegates.notNull()
     private var figureSwitches: Map<Figure, HTMLInputElement> by Delegates.notNull()
     private var figurePopovers: Map<Figure, Popover> by Delegates.notNull()
     private val btnUndo = document.getElement<HTMLButtonElement>("mr_btn_undo")
@@ -59,14 +60,14 @@ class HandComponent(
 
     override fun TagConsumer<HTMLElement>.createUI() {
         injectRoot { element ->
-            figureDivs = element.getAllChildren<HTMLDivElement>()
+            tileContainerDivs = element.getAllChildren<HTMLDivElement>()
                 .filterAttributeIsPresent(MrAttributes.FIGURE)
                 .associateBy { Figure.valueOf(it.mrFigure!!) }
-            selectorDivs = figureDivs.mapValues { (_, div) -> div.parentElement!! as HTMLDivElement }
+            selectableDivs = tileContainerDivs.mapValues { (_, div) -> div.parentElement!! as HTMLDivElement }
             figureSwitches = element.getAllChildren<HTMLInputElement>()
                 .mapIndexed { index, input -> Figure.values()[index] to input }
                 .toMap()
-            figurePopovers = figureDivs.map { it.key to createPopover(it.value, it.key) }
+            figurePopovers = tileContainerDivs.map { it.key to createPopover(it.value, it.key) }
                 .toMap()
         }
             .div(classes = "flex-fill mr-figure-list") {
@@ -82,7 +83,7 @@ class HandComponent(
     private fun TagConsumer<HTMLElement>.divForFigure(figure: Figure) =
         div(classes = "row g-0") {
             val isBonus = figure == Figure.Bonus
-            div(classes = "${if (isBonus) "col" else "col-md-9 col-8"} mr-figure border") {
+            div(classes = "${isBonus.toString("col", "col-8 col-md-9")} mr-figure border") {
                 span { +!figure.title }
                 div(classes = "mr-tile-container") {
                     mrFigure = figure.name
@@ -125,10 +126,10 @@ class HandComponent(
         }
 
     override fun updateUI() {
-        selectorDivs.forEach { (figure, div) ->
+        selectableDivs.forEach { (figure, div) ->
             div.classList.toggle("mr-selected", figure == model.calculatorModel.selectedFigure)
         }
-        figureDivs.forEach { (figure, div) ->
+        tileContainerDivs.forEach { (figure, div) ->
             div.clear()
             div.append {
                 val combination = model.calculatorModel.hand.getCombination(figure)

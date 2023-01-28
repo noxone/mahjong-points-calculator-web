@@ -1,15 +1,17 @@
 package org.olafneumann.mahjong.points.model
 
+import org.olafneumann.mahjong.points.Constants
 import org.olafneumann.mahjong.points.game.Combination
 import org.olafneumann.mahjong.points.game.Hand
 import org.olafneumann.mahjong.points.game.Tile
+import org.olafneumann.mahjong.points.model.Figure.Bonus
 import org.olafneumann.mahjong.points.model.Figure.Figure1
 import org.olafneumann.mahjong.points.model.Figure.Figure2
 import org.olafneumann.mahjong.points.model.Figure.Figure3
 import org.olafneumann.mahjong.points.model.Figure.Figure4
 import org.olafneumann.mahjong.points.model.Figure.Pair
 
-enum class Figure{
+enum class Figure {
     Figure1,
     Figure2,
     Figure3,
@@ -21,15 +23,21 @@ enum class Figure{
     val title = name
 
     val next: Figure
-        get() =
-            when (this) {
-                Figure1 -> Figure2
-                Figure2 -> Figure3
-                Figure3 -> Figure4
-                Figure4 -> Pair
-                Pair -> Bonus
-                Bonus -> Bonus
-            }
+        get() = when (this) {
+            Figure1 -> Figure2
+            Figure2 -> Figure3
+            Figure3 -> Figure4
+            Figure4 -> Pair
+            Pair -> Bonus
+            Bonus -> Bonus
+        }
+
+    val maxTilesPerFigure: Int
+        get() = when (this) {
+            Figure1, Figure2, Figure3, Figure4 -> Constants.MAX_NUMBER_OF_TILES_IN_SET
+            Pair -> Constants.MAX_NUMBER_OF_TILES_IN_PAIR
+            Bonus -> Constants.MAX_NUMBER_OF_TILES_IN_BONUS
+        }
 }
 
 fun Hand.getCombination(figure: Figure): Combination? =
