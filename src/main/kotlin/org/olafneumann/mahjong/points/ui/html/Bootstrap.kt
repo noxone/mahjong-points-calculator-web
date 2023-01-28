@@ -29,12 +29,14 @@ fun TagConsumer<HTMLElement>.bsButton(
     label: String,
     tooltip: String? = null,
     colorClass: String = "primary",
+    id: String? = null,
     additionalAttributes: List<Pair<String, String>> = emptyList(),
     onClickFunction: (Event) -> Unit = {}
 ) =
     button(classes = "btn btn-$colorClass", type = ButtonType.button) {
         +!label
         tooltip?.let { title = !it }
+        id?.let { this.id = it }
         additionalAttributes.forEach {
             attributes[it.first] = it.second
         }

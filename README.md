@@ -54,6 +54,14 @@ Using this command the page will reload automatically for every source file chan
 
 I personally like to play Mahjong but calculating the points is quite cumbersome. So, to be able to track the points of several games, I started to create this project.
 
+## Artwork
+
+The artwork used for this page is freely available on the internet. Currently in use:
+
+- [Tile images](./art/tiles/README.md)
+- [Tile backside](./art/backside/README.md)
+- [Fonts](./art/fonts/README.md)
+
 ## More Ideas
 
 Feel free to propose new features or ideas via the [Github issues](https://github.com/noxone/mahjong-point-calculator/issues).

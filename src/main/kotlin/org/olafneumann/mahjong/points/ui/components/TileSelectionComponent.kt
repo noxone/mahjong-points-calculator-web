@@ -53,7 +53,7 @@ class TileSelectionComponent(
     }
 
     private fun TagConsumer<HTMLElement>.tileImages(tiles: Collection<Tile>) =
-        tiles.forEach { tile -> tileImage(tile, tile.isSelectable, createOnClickListener(tile)) }
+        tiles.forEach { tile -> tileImage(tile, selectable = tile.isSelectable, onClickFunction = createOnClickListener(tile)) }
 
     private fun createOnClickListener(tile: Tile): (Event) -> Unit = {
         if (tile.isSelectable) {

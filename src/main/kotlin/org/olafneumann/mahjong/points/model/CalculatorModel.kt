@@ -16,6 +16,7 @@ import org.olafneumann.mahjong.points.model.Figure.Figure1
 import org.olafneumann.mahjong.points.model.Figure.Pair
 import org.olafneumann.mahjong.points.result.ClassicRulesResultComputer
 import org.olafneumann.mahjong.points.result.PlayerResult
+import org.olafneumann.mahjong.points.util.to
 
 data class CalculatorModel(
     val hand: Hand,
@@ -175,10 +176,10 @@ data class CalculatorModel(
         return this
     }
 
-    fun forNextPlayer(): CalculatorModel =
+    fun forNextPlayer(moveSeatWind: Boolean): CalculatorModel =
         copy(
             hand = Hand(),
-            platzWind = platzWind.next,
+            platzWind = moveSeatWind.to(platzWind.next, platzWind),
             selectedFigure = Figure1
         )
 

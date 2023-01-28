@@ -7,9 +7,11 @@ fun <T> Boolean.map(action: () -> T?) =
         null
     }
 
-fun Boolean.toString(onTrue: String, onFalse: String = "") =
+fun <T> Boolean.to(onTrue: T, onFalse: T) =
     if (this) {
         onTrue
     } else {
         onFalse
     }
+
+fun Boolean.toString(onTrue: String, onFalse: String = "") = to(onTrue, onFalse)
