@@ -38,7 +38,9 @@ class UIModel {
     fun setPlatzWind(wind: Wind) = setNewModel(calculatorModel.setPlatzWind(wind))
 
 
-    fun setNextPlayer() = setNewModel(calculatorModel.forNextPlayer())
+    fun reset() = setNewModel(calculatorModel.forNextPlayer(moveSeatWind = false))
+
+    fun setNextPlayer() = setNewModel(calculatorModel.forNextPlayer(moveSeatWind = true))
 
     fun start() = fireChange()
 
