@@ -94,7 +94,7 @@ class HandComponent(
                 }
             }
             if (figure != Figure.Bonus) {
-                div(classes = "${if (isBonus) "col" else "col-md-3 col-4"} px-1") {
+                div(classes = "${isBonus.toString("col", "col-4 col-md-3")} px-1") {
                     verticalSwitch("Closed", "Open") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
                 }
             }
@@ -107,7 +107,9 @@ class HandComponent(
             return
         }
 
-        figurePopovers[figure]?.toggle()
+        if (model.calculatorModel.hand.getTiles(figure).isNotEmpty()) {
+            figurePopovers[figure]?.toggle()
+        }
     }
 
     private fun createPopover(element: HTMLElement, figure: Figure) =
