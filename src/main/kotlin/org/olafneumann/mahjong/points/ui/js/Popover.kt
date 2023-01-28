@@ -23,7 +23,7 @@ class Popover(
     private val trigger: Trigger = Trigger.Click,
     hideOnOutsideClick: Boolean = false,
     onShown: () -> Unit = {},
-    private val onCloseButtonClick: Popover.() -> Unit = { dispose() },
+    private val onCloseButtonClick: Popover.() -> Unit = { hide() },
     private val content: TagConsumer<HTMLElement>.() -> HTMLElement,
 ) {
     private var jquery: JQuery
