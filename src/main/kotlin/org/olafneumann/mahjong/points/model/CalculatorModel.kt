@@ -21,7 +21,7 @@ import org.olafneumann.mahjong.points.util.to
 data class CalculatorModel(
     val hand: Hand,
     val gameModifiers: GameModifiers = GameModifiers(prevailingWind = Wind.East),
-    val platzWind: Wind = Wind.East,
+    val seatWind: Wind = Wind.East,
     val selectedFigure: Figure = Figure1,
 ) {
     private val availableTiles = run {
@@ -158,7 +158,7 @@ data class CalculatorModel(
 
     fun setGameModifiers(gameModifiers: GameModifiers) = copy(gameModifiers = gameModifiers)
 
-    fun setPlatzWind(wind: Wind) = copy(platzWind = wind)
+    fun setSeatWind(wind: Wind) = copy(seatWind = wind)
 
     fun setOpen(figure: Figure, open: Boolean): CalculatorModel =
         hand.getCombination(figure)?.let {
@@ -179,7 +179,7 @@ data class CalculatorModel(
     fun forNextPlayer(moveSeatWind: Boolean): CalculatorModel =
         copy(
             hand = Hand(),
-            platzWind = moveSeatWind.to(platzWind.next, platzWind),
+            seatWind = moveSeatWind.to(seatWind.next, seatWind),
             selectedFigure = Figure1
         )
 
@@ -189,7 +189,7 @@ data class CalculatorModel(
         ClassicRulesResultComputer().computeResult(
             hand,
             gameModifiers,
-            seatWind = platzWind
+            seatWind = seatWind
         )
     }
 }
