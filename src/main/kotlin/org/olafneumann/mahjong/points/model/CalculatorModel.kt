@@ -23,6 +23,7 @@ data class CalculatorModel(
     val gameModifiers: GameModifiers = GameModifiers(prevailingWind = Wind.East),
     val seatWind: Wind = Wind.East,
     val selectedFigure: Figure = Figure1,
+    val errorMessages: List<ErrorMessage> = emptyList(),
 ) {
     private val availableTiles = run {
         val allTilesInGame =

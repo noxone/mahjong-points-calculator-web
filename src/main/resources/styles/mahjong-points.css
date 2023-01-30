@@ -53,6 +53,20 @@ h1 {
   cursor: pointer;
 }
 
+.mr-alert {
+  background: inherit;
+  background-size: 99%;
+  
+  animation: blink 0.7s;
+  animation-iteration-count: 3;
+}
+
+@keyframes blink { 
+  50% { 
+    background: rgba(230, 0, 0, 0.7) ; 
+  }  
+}
+
 .mr-tile.mr-tile-backside {
   background-size: 100%;
 }
