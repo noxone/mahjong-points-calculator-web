@@ -56,6 +56,7 @@ class ResultComponent(
 
         popover = Popover(
             element = resetButton,
+            title = "Reset current hand",
             trigger = Popover.Trigger.Manual,
             hideOnOutsideClick = true
         ) {

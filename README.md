@@ -62,6 +62,10 @@ The artwork used for this page is freely available on the internet. Currently in
 - [Tile backside](./art/backside/README.md)
 - [Fonts](./art/fonts/README.md)
 
+## App Icon
+
+The [app icon](./art/icon//README.md) is derived from the tile for ``Bamboo 1``. 
+
 ## More Ideas
 
 Feel free to propose new features or ideas via the [Github issues](https://github.com/noxone/mahjong-point-calculator/issues).
