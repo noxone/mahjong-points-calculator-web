@@ -35,7 +35,7 @@ class UIModel {
 
     fun setGameModifiers(gameModifiers: GameModifiers) = setNewModel(calculatorModel.setGameModifiers(gameModifiers))
 
-    fun setPlatzWind(wind: Wind) = setNewModel(calculatorModel.setPlatzWind(wind))
+    fun setSeatWind(wind: Wind) = setNewModel(calculatorModel.setSeatWind(wind))
 
 
     fun reset() = setNewModel(calculatorModel.forNextPlayer(moveSeatWind = false))

@@ -1,5 +1,6 @@
 package org.olafneumann.mahjong.points.ui.components
 
+import kotlinx.browser.window
 import kotlinx.html.TagConsumer
 import kotlinx.html.div
 import org.olafneumann.mahjong.points.ui.html.getAllChildren
@@ -65,6 +66,19 @@ class TileSelectionComponent(
         imageTiles.forEach { (tile, element) ->
             element.setSelectable(tile.isSelectable)
         }
+
+        model.calculatorModel.errorMessages.forEach { errorMessage ->
+            errorMessage.tile?.let { showAlertFor(it) }
+        }
+    }
+
+    private fun showAlertFor(tile: Tile) {
+        toggleAlertFor(tile, true)
+        window.setTimeout({ toggleAlertFor(tile, false) }, 3000)
+    }
+
+    private fun toggleAlertFor(tile: Tile, enabled: Boolean) {
+        imageTiles[tile]!!.parentElement!!.classList.toggle("mr-alert", enabled)
     }
 
     override fun modelChanged(model: UIModel) {

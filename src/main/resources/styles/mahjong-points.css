@@ -42,6 +42,10 @@ h1 {
   justify-content: space-between;
 }
 
+.mr-tile-field > div+div {
+  margin-top: 0.3rem;
+}
+
 .mr-tile {
   display: inline-block;
   width: 5em;
@@ -49,8 +53,24 @@ h1 {
   cursor: pointer;
 }
 
+.mr-alert {
+  background: inherit;
+  background-size: 99%;
+  
+  animation: blink 0.7s;
+  animation-iteration-count: 3;
+}
+
+@keyframes blink { 
+  50% { 
+    background: rgba(230, 0, 0, 0.7) ; 
+  }  
+}
+
 .mr-tile.mr-tile-backside {
-  background-size: 100%;
+  background-size: 99%;
+  transform: rotate3d(0, 1, 0, 180deg);
+  transition: transform 0.5s ease-in-out;
 }
 
 .mr-tile-backside > div {

@@ -18,8 +18,8 @@ class OptionsComponent(
     parent: HTMLElement,
     private val model: UIModel
 ) : AbstractComponent(parent = parent), UIModelChangeListener {
-    private var rdaRundenWind: RadioGroup<Wind> by Delegates.notNull()
-    private var rdaPlatzWind: RadioGroup<Wind> by Delegates.notNull()
+    private var rdaPrevailingWind: RadioGroup<Wind> by Delegates.notNull()
+    private var rdaSeatWind: RadioGroup<Wind> by Delegates.notNull()
     private var chkSchlussziegelVonDerMauer: HTMLInputElement by Delegates.notNull()
     private var chkSchlussziegelIstEinzigMoeglicherZiegel: HTMLInputElement by Delegates.notNull()
     private var chkSchlussziegelKomplettiertPaar: HTMLInputElement by Delegates.notNull()
@@ -40,11 +40,11 @@ class OptionsComponent(
             form {
                 div(classes = "row g-0") {
                     div(classes = "col-6 col-lg-12") {
-                        radioGroup("Prevailing Wind", Wind.values().asList(), this@OptionsComponent::rdaRundenWind) {
+                        radioGroup("Prevailing Wind", Wind.values().asList(), this@OptionsComponent::rdaPrevailingWind) {
                             model.setGameModifiers(gameModifiers.copy(prevailingWind = it))
                         }
-                        radioGroup("Seat Wind", Wind.values().asList(), this@OptionsComponent::rdaPlatzWind) {
-                            model.setPlatzWind(it)
+                        radioGroup("Seat Wind", Wind.values().asList(), this@OptionsComponent::rdaSeatWind) {
+                            model.setSeatWind(it)
                         }
                         div(classes = "mt-3") {
                             checkbox(
@@ -97,8 +97,8 @@ class OptionsComponent(
     override fun updateUI() {
         val isMahjong = model.calculatorModel.isMahjong
 
-        rdaRundenWind.select(gameModifiers.prevailingWind)
-        rdaPlatzWind.select(model.calculatorModel.platzWind)
+        rdaPrevailingWind.select(gameModifiers.prevailingWind)
+        rdaSeatWind.select(model.calculatorModel.seatWind)
 
         // checked or not
         chkSchlussziegelVonDerMauer.checked = isMahjong && gameModifiers.schlussziegelVonMauer

@@ -21,9 +21,13 @@ import org.olafneumann.mahjong.points.util.to
 data class CalculatorModel(
     val hand: Hand,
     val gameModifiers: GameModifiers = GameModifiers(prevailingWind = Wind.East),
-    val platzWind: Wind = Wind.East,
+    val seatWind: Wind = Wind.East,
     val selectedFigure: Figure = Figure1,
+    val errorMessages: List<ErrorMessage> = emptyList(),
 ) {
+    private fun withError(tile: Tile): CalculatorModel =
+        copy(errorMessages = listOf(ErrorMessage(tile = tile)))
+
     private val availableTiles = run {
         val allTilesInGame =
             Tile.values().flatMap { tile -> MutableList(tile.numberOfTilesInSet) { tile } }.toMutableList()
@@ -35,7 +39,7 @@ data class CalculatorModel(
         availableTiles.filter { it == tile }.size >= times
 
     fun select(figure: Figure): CalculatorModel =
-        copy(selectedFigure = figure)
+        copy(selectedFigure = figure, errorMessages = emptyList())
 
     private fun canConsume(vararg tiles: Tile): Boolean {
         val remaining = availableTiles.toMutableList()
@@ -44,7 +48,7 @@ data class CalculatorModel(
 
     fun select(tile: Tile): CalculatorModel {
         if (tile.isBonusTile) {
-            return copy(hand = hand.copy(bonusTiles = hand.bonusTiles + tile))
+            return copy(hand = hand.copy(bonusTiles = hand.bonusTiles + tile), errorMessages = emptyList())
         }
         if (selectedFigure == Bonus) {
             return this
@@ -53,19 +57,18 @@ data class CalculatorModel(
         if (tile.isTrump && hand.containsPungWith(tile)) {
             return copy(
                 hand = hand.allFigures.first { it.tile == tile }.replace(hand, type = Kang),
-                selectedFigure = selectedFigure.next
+                selectedFigure = selectedFigure.next,
+                errorMessages = emptyList()
             )
         }
 
         if (selectedFigure == Pair) {
-            /*if (hand.containsPongWith(tile)) {
-                return copy(hand = hand.allFigures.first { it.tile == tile }.replace(hand, type = Kang))
-            }*/
             if (!canConsume(tile, tile)) {
-                return this
+                return withError(tile)
             }
             return copy(
-                hand = hand.copy(pair = Combination(type = Combination.Type.Pair, tile = tile, visibility = Open))
+                hand = hand.copy(pair = Combination(type = Combination.Type.Pair, tile = tile, visibility = Open)),
+                errorMessages = emptyList()
             )
         }
 
@@ -74,11 +77,17 @@ data class CalculatorModel(
         if (combination == null) {
             if (tile.isTrump) {
                 if (!canConsume(tile, tile, tile)) {
-                    return this
+                    return withError(tile)
                 }
-                return copy(hand = hand.setCombination(selectedFigure, Combination(Pung, tile, Open)))
+                return copy(
+                    hand = hand.setCombination(selectedFigure, Combination(Pung, tile, Open)),
+                    errorMessages = emptyList()
+                )
             }
-            return copy(hand = hand.setCombination(selectedFigure, Combination(Unfinished0, tile, Open)))
+            return copy(
+                hand = hand.setCombination(selectedFigure, Combination(Unfinished0, tile, Open)),
+                errorMessages = emptyList()
+            )
         }
         when (combination.type) {
             Unfinished0 -> {
@@ -87,43 +96,54 @@ data class CalculatorModel(
                         hand = combination.replace(
                             hand = hand,
                             type = if (selectedFigure == Pair) Combination.Type.Pair else Pung
-                        )
+                        ),
+                        errorMessages = emptyList()
                     )
                 }
                 // nächste Tile am Anfang
                 if (tile == combination.tile.next && combination.tile.number == 1) {
                     return copy(
                         hand = combination.replace(hand = hand, type = Chow),
-                        selectedFigure = selectedFigure.next
+                        selectedFigure = selectedFigure.next,
+                        errorMessages = emptyList()
                     )
                 }
                 // vorige Tile am Ende
                 if (tile == combination.tile.previous && combination.tile.number == 9) {
                     return copy(
                         hand = combination.replace(hand = hand, tile = tile.previous!!, type = Chow),
-                        selectedFigure = selectedFigure.next
+                        selectedFigure = selectedFigure.next,
+                        errorMessages = emptyList()
                     )
                 }
                 // übernächste Tile
                 if (tile == combination.tile.next?.next) {
                     return copy(
                         hand = combination.replace(hand = hand, type = Chow),
-                        selectedFigure = selectedFigure.next
+                        selectedFigure = selectedFigure.next,
+                        errorMessages = emptyList()
                     )
                 }
                 // nächste Tile
                 if (tile == combination.tile.next) {
-                    return copy(hand = combination.replace(hand = hand, type = UnfinishedPlus1))
+                    return copy(
+                        hand = combination.replace(hand = hand, type = UnfinishedPlus1),
+                        errorMessages = emptyList()
+                    )
                 }
                 // vorige Tile
                 if (tile == combination.tile.previous) {
-                    return copy(hand = combination.replace(hand = hand, type = UnfinishedPlus1, tile))
+                    return copy(
+                        hand = combination.replace(hand = hand, type = UnfinishedPlus1, tile),
+                        errorMessages = emptyList()
+                    )
                 }
                 // vor-vorige Tile
                 if (tile == combination.tile.previous?.previous) {
                     return copy(
                         hand = combination.replace(hand = hand, type = Chow, tile = tile),
-                        selectedFigure = selectedFigure.next
+                        selectedFigure = selectedFigure.next,
+                        errorMessages = emptyList()
                     )
                 }
                 return this
@@ -133,13 +153,15 @@ data class CalculatorModel(
                 if (tile == combination.tile.next?.next) {
                     return copy(
                         hand = combination.replace(hand = hand, type = Chow),
-                        selectedFigure = selectedFigure.next
+                        selectedFigure = selectedFigure.next,
+                        errorMessages = emptyList()
                     )
                 }
                 if (tile == combination.tile.previous) {
                     return copy(
                         hand = combination.replace(hand = hand, type = Chow, tile = tile),
-                        selectedFigure = selectedFigure.next
+                        selectedFigure = selectedFigure.next,
+                        errorMessages = emptyList()
                     )
                 }
                 return this
@@ -147,7 +169,11 @@ data class CalculatorModel(
 
             Pung -> {
                 if (combination.tile == tile) {
-                    return copy(hand = combination.replace(hand, type = Kang), selectedFigure = selectedFigure.next)
+                    return copy(
+                        hand = combination.replace(hand, type = Kang),
+                        selectedFigure = selectedFigure.next,
+                        errorMessages = emptyList()
+                    )
                 }
                 return this
             }
@@ -156,22 +182,37 @@ data class CalculatorModel(
         }
     }
 
-    fun setGameModifiers(gameModifiers: GameModifiers) = copy(gameModifiers = gameModifiers)
+    fun setGameModifiers(gameModifiers: GameModifiers) = copy(
+        gameModifiers = gameModifiers,
+        errorMessages = emptyList()
+    )
 
-    fun setPlatzWind(wind: Wind) = copy(platzWind = wind)
+    fun setSeatWind(wind: Wind) = copy(
+        seatWind = wind,
+        errorMessages = emptyList()
+    )
 
     fun setOpen(figure: Figure, open: Boolean): CalculatorModel =
         hand.getCombination(figure)?.let {
-            copy(hand = it.replace(hand = hand, visibility = Combination.Visibility.from(open)))
+            copy(
+                hand = it.replace(hand = hand, visibility = Combination.Visibility.from(open)),
+                errorMessages = emptyList()
+            )
         } ?: this
 
     fun reset(figure: Figure): CalculatorModel {
         if (figure == Bonus) {
-            return copy(hand = hand.copy(bonusTiles = emptySet()))
+            return copy(
+                hand = hand.copy(bonusTiles = emptySet()),
+                errorMessages = emptyList()
+            )
         }
         val combination = hand.getCombination(figure)
         if (combination != null) {
-            return copy(hand = hand.replace(combination, null))
+            return copy(
+                hand = hand.replace(combination, null),
+                errorMessages = emptyList()
+            )
         }
         return this
     }
@@ -179,8 +220,9 @@ data class CalculatorModel(
     fun forNextPlayer(moveSeatWind: Boolean): CalculatorModel =
         copy(
             hand = Hand(),
-            platzWind = moveSeatWind.to(platzWind.next, platzWind),
-            selectedFigure = Figure1
+            seatWind = moveSeatWind.to(seatWind.next, seatWind),
+            selectedFigure = Figure1,
+            errorMessages = emptyList()
         )
 
     val isMahjong: Boolean = hand.isMahjong
@@ -189,7 +231,7 @@ data class CalculatorModel(
         ClassicRulesResultComputer().computeResult(
             hand,
             gameModifiers,
-            seatWind = platzWind
+            seatWind = seatWind
         )
     }
 }
