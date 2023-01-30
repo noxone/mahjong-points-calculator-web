@@ -68,7 +68,9 @@ h1 {
 }
 
 .mr-tile.mr-tile-backside {
-  background-size: 100%;
+  background-size: 99%;
+  transform: rotate3d(0, 1, 0, 180deg);
+  transition: transform 0.5s ease-in-out;
 }
 
 .mr-tile-backside > div {
