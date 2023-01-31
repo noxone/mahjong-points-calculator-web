@@ -146,7 +146,7 @@ data class CalculatorModel(
                         errorMessages = emptyList()
                     )
                 }
-                return this
+                return withError(tile)
             }
 
             UnfinishedPlus1 -> {
@@ -164,7 +164,7 @@ data class CalculatorModel(
                         errorMessages = emptyList()
                     )
                 }
-                return this
+                return withError(tile)
             }
 
             Pung -> {
@@ -175,7 +175,7 @@ data class CalculatorModel(
                         errorMessages = emptyList()
                     )
                 }
-                return this
+                return withError(tile)
             }
 
             else -> return this

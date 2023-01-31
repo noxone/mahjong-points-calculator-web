@@ -74,7 +74,7 @@ class TileSelectionComponent(
 
     private fun showAlertFor(tile: Tile) {
         toggleAlertFor(tile, true)
-        window.setTimeout({ toggleAlertFor(tile, false) }, 3000)
+        window.setTimeout({ toggleAlertFor(tile, false) }, 1000)
     }
 
     private fun toggleAlertFor(tile: Tile, enabled: Boolean) {
