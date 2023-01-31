@@ -25,8 +25,24 @@ data class CalculatorModel(
     val selectedFigure: Figure = Figure1,
     val errorMessages: List<ErrorMessage> = emptyList(),
 ) {
+    public fun withoutErrors() = evolve()
+    private fun evolve(
+        hand: Hand = this.hand,
+        gameModifiers: GameModifiers = this.gameModifiers,
+        seatWind: Wind = this.seatWind,
+        selectedFigure: Figure = this.selectedFigure,
+        vararg errorMessage: ErrorMessage
+    ): CalculatorModel =
+        copy(
+            hand = hand,
+            gameModifiers = gameModifiers,
+            seatWind = seatWind,
+            selectedFigure = selectedFigure,
+            errorMessages = errorMessage.asList()
+        )
+
     private fun withError(tile: Tile): CalculatorModel =
-        copy(errorMessages = listOf(ErrorMessage(tile = tile)))
+        evolve(errorMessage = arrayOf(ErrorMessage(tile = tile)))
 
     private val availableTiles = run {
         val allTilesInGame =
@@ -39,7 +55,7 @@ data class CalculatorModel(
         availableTiles.filter { it == tile }.size >= times
 
     fun select(figure: Figure): CalculatorModel =
-        copy(selectedFigure = figure, errorMessages = emptyList())
+        evolve(selectedFigure = figure)
 
     private fun canConsume(vararg tiles: Tile): Boolean {
         val remaining = availableTiles.toMutableList()
@@ -48,17 +64,19 @@ data class CalculatorModel(
 
     fun select(tile: Tile): CalculatorModel {
         if (tile.isBonusTile) {
-            return copy(hand = hand.copy(bonusTiles = hand.bonusTiles + tile), errorMessages = emptyList())
+            return evolve(
+                hand = hand.copy(bonusTiles = hand.bonusTiles + tile),
+                selectedFigure = Bonus,
+            )
         }
         if (selectedFigure == Bonus) {
             return this
         }
 
         if (tile.isTrump && hand.containsPungWith(tile)) {
-            return copy(
+            return evolve(
                 hand = hand.allFigures.first { it.tile == tile }.replace(hand, type = Kang),
                 selectedFigure = selectedFigure.next,
-                errorMessages = emptyList()
             )
         }
 
@@ -66,9 +84,8 @@ data class CalculatorModel(
             if (!canConsume(tile, tile)) {
                 return withError(tile)
             }
-            return copy(
+            return evolve(
                 hand = hand.copy(pair = Combination(type = Combination.Type.Pair, tile = tile, visibility = Open)),
-                errorMessages = emptyList()
             )
         }
 
@@ -79,71 +96,62 @@ data class CalculatorModel(
                 if (!canConsume(tile, tile, tile)) {
                     return withError(tile)
                 }
-                return copy(
+                return evolve(
                     hand = hand.setCombination(selectedFigure, Combination(Pung, tile, Open)),
-                    errorMessages = emptyList()
                 )
             }
-            return copy(
+            return evolve(
                 hand = hand.setCombination(selectedFigure, Combination(Unfinished0, tile, Open)),
-                errorMessages = emptyList()
             )
         }
         when (combination.type) {
             Unfinished0 -> {
                 if (tile == combination.tile) {
-                    return copy(
+                    return evolve(
                         hand = combination.replace(
                             hand = hand,
                             type = if (selectedFigure == Pair) Combination.Type.Pair else Pung
                         ),
-                        errorMessages = emptyList()
                     )
                 }
                 // nächste Tile am Anfang
                 if (tile == combination.tile.next && combination.tile.number == 1) {
-                    return copy(
+                    return evolve(
                         hand = combination.replace(hand = hand, type = Chow),
                         selectedFigure = selectedFigure.next,
-                        errorMessages = emptyList()
                     )
                 }
                 // vorige Tile am Ende
                 if (tile == combination.tile.previous && combination.tile.number == 9) {
-                    return copy(
+                    return evolve(
                         hand = combination.replace(hand = hand, tile = tile.previous!!, type = Chow),
                         selectedFigure = selectedFigure.next,
-                        errorMessages = emptyList()
                     )
                 }
                 // übernächste Tile
                 if (tile == combination.tile.next?.next) {
-                    return copy(
+                    return evolve(
                         hand = combination.replace(hand = hand, type = Chow),
                         selectedFigure = selectedFigure.next,
-                        errorMessages = emptyList()
                     )
                 }
                 // nächste Tile
                 if (tile == combination.tile.next) {
-                    return copy(
+                    return evolve(
                         hand = combination.replace(hand = hand, type = UnfinishedPlus1),
-                        errorMessages = emptyList()
                     )
                 }
                 // vorige Tile
                 if (tile == combination.tile.previous) {
-                    return copy(
+                    return evolve(
                         hand = combination.replace(hand = hand, type = UnfinishedPlus1, tile),
-                        errorMessages = emptyList()
                     )
                 }
                 // vor-vorige Tile
                 if (tile == combination.tile.previous?.previous) {
-                    return copy(
+                    return evolve(
                         hand = combination.replace(hand = hand, type = Chow, tile = tile),
                         selectedFigure = selectedFigure.next,
-                        errorMessages = emptyList()
                     )
                 }
                 return withError(tile)
@@ -151,17 +159,15 @@ data class CalculatorModel(
 
             UnfinishedPlus1 -> {
                 if (tile == combination.tile.next?.next) {
-                    return copy(
+                    return evolve(
                         hand = combination.replace(hand = hand, type = Chow),
                         selectedFigure = selectedFigure.next,
-                        errorMessages = emptyList()
                     )
                 }
                 if (tile == combination.tile.previous) {
-                    return copy(
+                    return evolve(
                         hand = combination.replace(hand = hand, type = Chow, tile = tile),
                         selectedFigure = selectedFigure.next,
-                        errorMessages = emptyList()
                     )
                 }
                 return withError(tile)
@@ -169,10 +175,9 @@ data class CalculatorModel(
 
             Pung -> {
                 if (combination.tile == tile) {
-                    return copy(
+                    return evolve(
                         hand = combination.replace(hand, type = Kang),
                         selectedFigure = selectedFigure.next,
-                        errorMessages = emptyList()
                     )
                 }
                 return withError(tile)
@@ -182,47 +187,41 @@ data class CalculatorModel(
         }
     }
 
-    fun setGameModifiers(gameModifiers: GameModifiers) = copy(
+    fun setGameModifiers(gameModifiers: GameModifiers) = evolve(
         gameModifiers = gameModifiers,
-        errorMessages = emptyList()
     )
 
-    fun setSeatWind(wind: Wind) = copy(
+    fun setSeatWind(wind: Wind) = evolve(
         seatWind = wind,
-        errorMessages = emptyList()
     )
 
     fun setOpen(figure: Figure, open: Boolean): CalculatorModel =
         hand.getCombination(figure)?.let {
-            copy(
+            evolve(
                 hand = it.replace(hand = hand, visibility = Combination.Visibility.from(open)),
-                errorMessages = emptyList()
             )
         } ?: this
 
     fun reset(figure: Figure): CalculatorModel {
         if (figure == Bonus) {
-            return copy(
+            return evolve(
                 hand = hand.copy(bonusTiles = emptySet()),
-                errorMessages = emptyList()
             )
         }
         val combination = hand.getCombination(figure)
         if (combination != null) {
-            return copy(
+            return evolve(
                 hand = hand.replace(combination, null),
-                errorMessages = emptyList()
             )
         }
         return this
     }
 
     fun forNextPlayer(moveSeatWind: Boolean): CalculatorModel =
-        copy(
+        evolve(
             hand = Hand(),
             seatWind = moveSeatWind.to(seatWind.next, seatWind),
             selectedFigure = Figure1,
-            errorMessages = emptyList()
         )
 
     val isMahjong: Boolean = hand.isMahjong
