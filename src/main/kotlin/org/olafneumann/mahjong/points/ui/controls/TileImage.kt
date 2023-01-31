@@ -67,11 +67,15 @@ class TileImage private constructor(
             outer.classList.toggle(CLS_NOT_SELECTABLE, !value)
         }
 
+    var isLastTileInRow: Boolean
+        get() = outer.classList.contains(CLS_BS_FLEX_SHRINK_0)
+        set(value) { outer.classList.toggle(CLS_BS_FLEX_SHRINK_0, value) }
+
     private fun activateBackground(enabled: Boolean) =
         outer.classList.toggle(CLS_BACKGROUND, enabled)
 
     private fun showTile(show: Boolean) =
-        outer.classList.toggle("d-none", !show)
+        outer.classList.toggle(CLS_BS_D_NONE, !show)
 
     private fun setTileName(name: String?) {
         inner.mrTile = name ?: ""
@@ -86,6 +90,8 @@ class TileImage private constructor(
         private const val CLS_ROTATED = "mr-tile-rotated"
         private const val CLS_BACKGROUND = "mr-tile-background"
         private const val CLS_NOT_SELECTABLE = "not-selectable"
+        private const val CLS_BS_D_NONE = "mr-invisible"
+        private const val CLS_BS_FLEX_SHRINK_0 = "flex-shrink-0"
 
         fun TagConsumer<HTMLElement>.createTileImage(tile: Tile?): TileImage {
             var outer: HTMLDivElement? = null
