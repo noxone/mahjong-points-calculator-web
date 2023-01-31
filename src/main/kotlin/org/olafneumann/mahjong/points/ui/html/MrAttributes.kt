@@ -25,8 +25,9 @@ var CommonAttributeGroupFacade.mrFigure: String
     get() = this.getAttributeString(MrAttributes.FIGURE)
     set(newValue) = this.setAttributeString(MrAttributes.FIGURE, newValue)
 
-val HTMLElement.mrTile: String?
-    get() = attributes[MrAttributes.TILE]?.value
+var HTMLElement.mrTile: String?
+    get() = getAttribute(MrAttributes.TILE)
+    set(value) { setAttribute(MrAttributes.TILE, value ?: "") }
 
 val HTMLElement.mrFigure: String?
     get() = attributes[MrAttributes.FIGURE]?.value
