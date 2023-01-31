@@ -51,6 +51,7 @@ h1 {
   width: 5em;
   height: 7.1em;
   cursor: pointer;
+  transition: transform 0.5s ease-in-out;
 }
 
 .mr-alert {
@@ -69,8 +70,10 @@ h1 {
 
 .mr-tile.mr-tile-backside {
   background-size: 100%;
+}
+
+.mr-tile.mr-tile-rotated {
   transform: rotate3d(0, 1, 0, 180deg);
-  transition: transform 0.5s ease-in-out;
 }
 
 .mr-tile-backside > div {
@@ -84,7 +87,7 @@ h1 {
   border-radius: 0.6em;
 }
 
-.mr-tile-content {
+.mr-tile-face {
   background-size: 99%;
   background-repeat: no-repeat;
   width: 100%;
