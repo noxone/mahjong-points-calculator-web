@@ -108,7 +108,7 @@ class Language(
                     "Compute" to "Berechnen",
                     "Options" to "Optionen",
                     "Close" to "Schließen",
-                    "Undo" to "Rückgänig",
+                    "Undo" to "Rückgängig",
                     "Next Player" to "Nächster Spieler",
                     "Tiles" to "Spielsteine",
                     "West" to "Westen",
