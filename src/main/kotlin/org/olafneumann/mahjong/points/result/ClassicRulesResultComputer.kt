@@ -14,6 +14,7 @@ import org.olafneumann.mahjong.points.game.GameModifiers
 import org.olafneumann.mahjong.points.game.Hand
 import org.olafneumann.mahjong.points.game.Tile
 import org.olafneumann.mahjong.points.game.Wind
+import org.olafneumann.mahjong.points.util.map
 import kotlin.math.pow
 
 // according to: http://dmjl.de/wp-content/uploads/2009/05/DMJL_CC_Wertung_2005.pdf
@@ -241,12 +242,5 @@ class ClassicRulesResultComputer : ResultComputer {
                 .filter { baseTile == null || it.tile.isBaseTile == baseTile }
                 .filter { tiles.isEmpty() || it.tile in tiles }
                 .toList()
-
-        private fun <T> Boolean.map(function: () -> T): T? =
-            if (this) {
-                function()
-            } else {
-                null
-            }
     }
 }

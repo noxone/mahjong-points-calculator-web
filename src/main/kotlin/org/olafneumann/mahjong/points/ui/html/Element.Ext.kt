@@ -17,8 +17,8 @@ fun Node.getAllChildNodes(): Sequence<Node> =
 fun <T : Element> Sequence<T>.filterAttributeIsPresent(attributeName: String) =
     filter { it.hasAttribute(attributeName) }
 
-fun <T: HTMLElement> Sequence<T>.filterClassIsPresent(className: String) =
-    filter { it.classList.contains(className) }
+//fun <T: HTMLElement> Sequence<T>.filterClassIsPresent(className: String) =
+//    filter { it.classList.contains(className) }
 
 // https://stackoverflow.com/questions/66755991/kotlin-get-all-children-recursively
 private fun <T> Sequence<T>.selectRecursive(recursiveSelector: T.() -> Sequence<T>): Sequence<T> = flatMap {

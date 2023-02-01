@@ -5,5 +5,5 @@ import org.olafneumann.mahjong.points.game.Hand
 import org.olafneumann.mahjong.points.game.Wind
 
 interface ResultComputer {
-    fun computeResult(gameModifiers: GameModifiers, platzWind: Wind, hand: Hand): PlayerResult
+    fun computeResult(gameModifiers: GameModifiers, seatWind: Wind, hand: Hand): PlayerResult
 }

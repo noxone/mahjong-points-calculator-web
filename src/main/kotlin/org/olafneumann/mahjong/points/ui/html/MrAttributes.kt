@@ -1,7 +1,6 @@
 package org.olafneumann.mahjong.points.ui.html
 
 import kotlinx.html.CommonAttributeGroupFacade
-import org.w3c.dom.Attr
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.get
 
@@ -17,9 +16,9 @@ private fun CommonAttributeGroupFacade.setAttributeString(name: String, value: S
     const val FIGURE = "mr-figure"
 }
 
-var CommonAttributeGroupFacade.mrTile: String
-    get() = this.getAttributeString(MrAttributes.TILE)
-    set(newValue) = this.setAttributeString(MrAttributes.TILE, newValue)
+//var CommonAttributeGroupFacade.mrTile: String
+//    get() = this.getAttributeString(MrAttributes.TILE)
+//    set(newValue) = this.setAttributeString(MrAttributes.TILE, newValue)
 
 var CommonAttributeGroupFacade.mrFigure: String
     get() = this.getAttributeString(MrAttributes.FIGURE)

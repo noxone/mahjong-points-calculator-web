@@ -31,7 +31,7 @@ class TileImage private constructor(
         get() = outer.classList.contains(CLS_BACKSIDE)
         set(value) {
             outer.classList.toggle(CLS_ROTATED, value)
-            window.setTimeout({ outer.classList.toggle(CLS_BACKSIDE, value) }, 250)
+            window.setTimeout({ outer.classList.toggle(CLS_BACKSIDE, value) }, ROTATION_ANIMATION_DURATION / 2)
         }
 
     var selectable: Boolean
@@ -46,7 +46,7 @@ class TileImage private constructor(
 
     fun blinkForAlert() {
         toggleAlert(true)
-        window.setTimeout({ toggleAlert(false) }, 1000)
+        window.setTimeout({ toggleAlert(false) }, BLINK_DURATION)
     }
 
     private fun toggleAlert(enabled: Boolean) {
@@ -76,6 +76,9 @@ class TileImage private constructor(
         private const val CLS_NOT_SELECTABLE = "not-selectable"
         private const val CLS_BS_D_NONE = "mr-invisible"
         private const val CLS_BS_FLEX_SHRINK_0 = "flex-shrink-0"
+
+        private const val ROTATION_ANIMATION_DURATION = 500
+        private const val BLINK_DURATION = 920
 
         fun TagConsumer<HTMLElement>.createTileImage(tile: Tile?, onClickFunction: (Event) -> Unit = {}): TileImage {
             var outer: HTMLDivElement? = null

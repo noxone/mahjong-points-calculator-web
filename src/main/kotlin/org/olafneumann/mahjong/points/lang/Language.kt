@@ -2,6 +2,7 @@ package org.olafneumann.mahjong.points.lang
 
 import kotlinx.browser.window
 
+@Suppress("MaxLineLength")
 class Language(
     private val translations: Map<String, String>
 ) {

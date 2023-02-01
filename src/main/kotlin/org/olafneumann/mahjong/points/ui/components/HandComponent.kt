@@ -149,20 +149,25 @@ class HandComponent(
             for (index in 0 until figure.maxTilesPerFigure) {
                 imageTiles[index].tile = tiles.getOrNull(index)
                 imageTiles[index].isLastTileInRow = index == tiles.size - 1
-                imageTiles[index].backside = isConcealed && (index == 1 || (index == 2 && combination?.type == Combination.Type.Kang))
+                imageTiles[index].backside =
+                    isConcealed && (index == 1 || (index == 2 && combination?.type == Combination.Type.Kang))
             }
         }
         figureSwitches.forEach { (figure, input) ->
             input.disabled = model.calculatorModel.hand.getCombination(figure) == null
             input.checked = (model.calculatorModel.hand.getCombination(figure)?.visibility
                 ?: Combination.Visibility.Open) == Combination.Visibility.Open
-            input.dispatchEvent(Event("change"));
+            input.dispatchEvent(Event("change"))
         }
 
-        errorOverlay.show(model.calculatorModel.errorMessages.mapNotNull { it.message }, 3000)
+        errorOverlay.show(model.calculatorModel.errorMessages.mapNotNull { it.message }, ERROR_MESSAGE_DELAY)
     }
 
     override fun modelChanged(model: UIModel) {
         buildUI()
+    }
+
+    companion object {
+        private const val ERROR_MESSAGE_DELAY = 3000
     }
 }

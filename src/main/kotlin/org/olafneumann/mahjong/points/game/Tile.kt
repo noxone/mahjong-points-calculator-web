@@ -11,7 +11,6 @@ enum class Tile(
     val color: Color?,
     val number: Int?,
     val wind: Wind? = null,
-    val character: Char? = number?.toString()?.get(0)
 ) {
     Bamboo1(color = Color.Bamboo, number = 1),
     Bamboo2(color = Color.Bamboo, number = 2),
@@ -40,10 +39,10 @@ enum class Tile(
     Character7(color = Color.Character, number = 7),
     Character8(color = Color.Character, number = 8),
     Character9(color = Color.Character, number = 9),
-    WindEast(color = null, number = null, wind = East, character = 'E'),
-    WindSouth(color = null, number = null, wind = South, character = 'S'),
-    WindWest(color = null, number = null, wind = West, character = 'W'),
-    WindNorth(color = null, number = null, wind = North, character = 'N'),
+    WindEast(color = null, number = null, wind = East),
+    WindSouth(color = null, number = null, wind = South),
+    WindWest(color = null, number = null, wind = West),
+    WindNorth(color = null, number = null, wind = North),
     DragonWhite(color = null, number = null),
     DragonGreen(color = null, number = null),
     DragonRed(color = null, number = null),
@@ -65,13 +64,11 @@ enum class Tile(
 
     val isWind: Boolean get() = this in winds
     val isDragon: Boolean get() = this in dragons
-    val isFlower: Boolean get() = this in flowers
-    val isSeason: Boolean get() = this in seasons
+    private val isFlower: Boolean get() = this in flowers
+    private val isSeason: Boolean get() = this in seasons
     val isTrump: Boolean get() = isWind || isDragon
     val isBonusTile: Boolean get() = isFlower ||isSeason
     val numberOfTilesInSet: Int get() = if (isBonusTile) 1 else MAX_NUMBER_OF_TILES_PER_TYPE
-
-    val filename = "${name}.svg".lowercase()
 
     companion object {
         val flowers: Collection<Tile> = setOf(Flower1, Flower2, Flower3, Flower4)

@@ -48,7 +48,7 @@ fun TagConsumer<HTMLElement>.closeButton(
     additionalAttributes: List<Pair<String, String>> = emptyList(),
     onClickFunction: (Event) -> Unit = {}
 ) =
-    button(classes = "btn-close", type = kotlinx.html.ButtonType.button) {
+    button(classes = "btn-close", type = ButtonType.button) {
         additionalAttributes.forEach {
             attributes[it.first] = it.second
         }
@@ -154,28 +154,6 @@ fun TagConsumer<HTMLElement>.verticalSwitch(
         }
     }
 }
-
-fun TagConsumer<HTMLElement>.modal(
-    title: String,
-    onCloseButtonClickFunction: (Event) -> Unit,
-    block: TagConsumer<HTMLElement>.() -> Unit = {}
-) =
-    div(classes = "modal fade") {
-        div(classes = "modal-dialog modal-dialog-scrollable modal-dialog-centered") {
-            div(classes = "modal-content") {
-                div(classes = "modal-header") {
-                    h5(classes = "modal-title") { +!title }
-                    closeButton(additionalAttributes = listOf("data-bs-dismiss" to "modal"))
-                }
-                div(classes = "modal-body") {
-                    block()
-                }
-                div(classes = "modal-footer") {
-                    bsButton("Close", onClickFunction = onCloseButtonClickFunction)
-                }
-            }
-        }
-    }
 
 fun TagConsumer<HTMLElement>.modal2(
     title: String,
