@@ -51,7 +51,9 @@ h1 {
   width: 5em;
   height: 7.1em;
   cursor: pointer;
-  transition: transform 0.5s ease-in-out, width 0.2s ease-in-out;
+  transition: transform 0.5s ease-in-out, 
+    width 0.2s ease-in-out,
+    opacity 0.2s ease-in-out;
   z-index: 500;
   transform-style: preserve-3d;
 }
