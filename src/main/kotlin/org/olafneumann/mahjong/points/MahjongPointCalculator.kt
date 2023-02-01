@@ -49,7 +49,7 @@ private fun initMahjongPointCalculatorUnsafe() {
     window.setTimeout({
         val loading = document.getElement<HTMLElement>("mr_loading")
         loading.asJQuery()
-            .fadeOut(json("duration" to 500, "complete" to { loading.asJQuery().remove() }))
+            .fadeOut(json("duration" to Constants.INTRO_FADE_DURATION, "complete" to { loading.asJQuery().remove() }))
     }, 1)
 }
 
