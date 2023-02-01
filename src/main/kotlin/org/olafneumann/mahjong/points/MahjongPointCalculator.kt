@@ -12,7 +12,6 @@ import org.olafneumann.mahjong.points.ui.js.asJQuery
 import org.olafneumann.mahjong.points.ui.model.UIModel
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
-import org.w3c.dom.HTMLFormElement
 import kotlin.js.json
 
 fun main() {
@@ -49,7 +48,6 @@ private fun initMahjongPointCalculatorUnsafe() {
 
     window.setTimeout({
         val loading = document.getElement<HTMLElement>("mr_loading")
-        console.log("hide")
         loading.asJQuery()
             .fadeOut(json("duration" to 500, "complete" to { loading.asJQuery().remove() }))
     }, 1)
