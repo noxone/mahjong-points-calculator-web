@@ -159,10 +159,14 @@ class HandComponent(
             input.dispatchEvent(Event("change"));
         }
 
-        errorOverlay.show(model.calculatorModel.errorMessages.mapNotNull { it.message }, 3000)
+        errorOverlay.show(model.calculatorModel.errorMessages.mapNotNull { it.message }, ERROR_MESSAGE_DELAY)
     }
 
     override fun modelChanged(model: UIModel) {
         buildUI()
+    }
+
+    companion object {
+        private const val ERROR_MESSAGE_DELAY = 3000
     }
 }
