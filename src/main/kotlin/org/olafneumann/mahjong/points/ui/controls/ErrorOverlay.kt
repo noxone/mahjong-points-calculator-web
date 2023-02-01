@@ -43,20 +43,6 @@ class ErrorOverlay private constructor(
 
     companion object {
         fun TagConsumer<HTMLElement>.createErrorOverlay(): ErrorOverlay {
-            /*<div style="
-                    position: absolute;
-                    top: 0;
-                    /* width: 100%; */
-                    /* background: red; */
-                    z-index: 2000;
-                    right: 0.5rem;
-                    left: 0;
-                    /* padding-left: 1rem; */
-                    " class="rounded-bottom p-3"><div class="alert alert-danger" role="alert">
-                    A simple primary alert—check it out!
-                    </div></div>*/
-
-
             var outer: HTMLDivElement? = null
             var inner: HTMLDivElement? = null
             injectRoot { outer = it as HTMLDivElement }

@@ -31,16 +31,12 @@ fun TagConsumer<HTMLElement>.bsButton(
     tooltip: String? = null,
     colorClass: String = "primary",
     id: String? = null,
-    additionalAttributes: List<Pair<String, String>> = emptyList(),
     onClickFunction: (Event) -> Unit = {}
 ) =
     button(classes = "btn btn-$colorClass", type = ButtonType.button) {
         +!label
         tooltip?.let { title = !it }
         id?.let { this.id = it }
-        additionalAttributes.forEach {
-            attributes[it.first] = it.second
-        }
         this.onClickFunction = onClickFunction
     }
 
@@ -213,7 +209,7 @@ class RadioGroup<T> internal constructor(
         .firstOrNull()
 }
 
-
+@Suppress("UnusedPrivateMember") // both members are used in JS code
 fun createModal(element: HTMLElement, static: Boolean = true): Modal {
     val options = createOptionsJson(static = static)
     val modal = js("new bootstrap.Modal(element, options)")

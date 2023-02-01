@@ -40,7 +40,7 @@ class HandComponent(
     private val model: UIModel,
 ) : AbstractComponent(parent = parent), UIModelChangeListener {
     private var selectableDivs: Map<Figure, HTMLDivElement> by Delegates.notNull()
-    private var figureTiles: MutableMap<Figure, MutableList<TileImage>> = mutableMapOf()
+    private var figureTiles: MutableMap<Figure, List<TileImage>> = mutableMapOf()
     private var figureSwitches: Map<Figure, HTMLInputElement> by Delegates.notNull()
     private var figurePopovers: Map<Figure, Popover> by Delegates.notNull()
     private val btnUndo = document.getElement<HTMLButtonElement>("mr_btn_undo")
@@ -91,10 +91,8 @@ class HandComponent(
             div(classes = "${isBonus.toString("col", "col-8 col-md-9")} mr-figure border") {
                 span { +!figure.title }
                 div(classes = "mr-tile-container") {
-                    figureTiles[figure] = mutableListOf()
-                    for (i in 1..figure.maxTilesPerFigure) {
-                        figureTiles[figure]!!.add(createTileImage(null))
-                    }
+                    figureTiles[figure] = (1..figure.maxTilesPerFigure)
+                        .map { createTileImage(null) }
                 }
                 mrFigure = figure.name
                 onClickFunction = {

@@ -40,7 +40,11 @@ class OptionsComponent(
             form {
                 div(classes = "row g-0") {
                     div(classes = "col-6 col-lg-12") {
-                        radioGroup("Prevailing Wind", Wind.values().asList(), this@OptionsComponent::rdaPrevailingWind) {
+                        radioGroup(
+                            "Prevailing Wind",
+                            Wind.values().asList(),
+                            this@OptionsComponent::rdaPrevailingWind
+                        ) {
                             model.setGameModifiers(gameModifiers.copy(prevailingWind = it))
                         }
                         radioGroup("Seat Wind", Wind.values().asList(), this@OptionsComponent::rdaSeatWind) {
