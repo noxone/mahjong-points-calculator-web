@@ -131,13 +131,15 @@ class HandComponent(
             div.classList.toggle("mr-selected", figure == model.calculatorModel.selectedFigure)
         }
         Figure.values().forEach { figure ->
+            val imageTiles = figureTiles[figure]!!
             val combination = model.calculatorModel.hand.getCombination(figure)
             val isConcealed = combination?.let { it.visibility == Combination.Visibility.Closed } ?: false
-            figureTiles[figure]!!.forEach { image -> image.tile = null }
-            model.calculatorModel.hand.getTiles(figure).sortedBy { it.ordinal }.forEachIndexed { index, tile ->
-                val tileImage = figureTiles[figure]!![index]
-                tileImage.tile = tile
-                tileImage.backside = isConcealed && (index == 1 || (index == 2 && combination?.type == Combination.Type.Kang))
+            val tiles = model.calculatorModel.hand.getTiles(figure).toList()//.sortedBy { it.ordinal }
+
+            for (index in 0 until figure.maxTilesPerFigure) {
+                imageTiles[index].tile = tiles.getOrNull(index)
+                imageTiles[index].isLastTileInRow = index == tiles.size - 1
+                imageTiles[index].backside = isConcealed && (index == 1 || (index == 2 && combination?.type == Combination.Type.Kang))
             }
         }
         figureSwitches.forEach { (figure, input) ->
