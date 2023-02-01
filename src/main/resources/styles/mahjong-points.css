@@ -5,6 +5,14 @@ body {
   /*touch-action: none;*/
 }
 
+#mr_loading {
+  display: flex;
+}
+
+#mr_loading img {
+  height: 20vw;
+}
+
 h1 {
   font-family: 'Shanghai';
   font-size: 3rem;
