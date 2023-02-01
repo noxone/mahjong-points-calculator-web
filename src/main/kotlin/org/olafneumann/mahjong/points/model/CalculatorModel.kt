@@ -26,7 +26,7 @@ data class CalculatorModel(
     val selectedFigure: Figure = Figure1,
     val errorMessages: List<ErrorMessage> = emptyList(),
 ) {
-    public fun withoutErrors() = evolve()
+    fun withoutErrors() = evolve()
 
     private fun evolve(
         hand: Hand = this.hand,
@@ -253,10 +253,6 @@ data class CalculatorModel(
 
     companion object {
         private const val FIRST_OF_COLOR = 1
-        private const val SECOND_OF_COLOR = 2
-        private const val THIRD_OF_COLOR = 2
-        private const val PREPRELAST_OF_COLOR = 7
-        private const val PRELAST_OF_COLOR = 8
         private const val LAST_OF_COLOR = 9
     }
 }

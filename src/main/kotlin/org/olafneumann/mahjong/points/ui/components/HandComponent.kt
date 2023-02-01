@@ -157,7 +157,7 @@ class HandComponent(
             input.disabled = model.calculatorModel.hand.getCombination(figure) == null
             input.checked = (model.calculatorModel.hand.getCombination(figure)?.visibility
                 ?: Combination.Visibility.Open) == Combination.Visibility.Open
-            input.dispatchEvent(Event("change"));
+            input.dispatchEvent(Event("change"))
         }
 
         errorOverlay.show(model.calculatorModel.errorMessages.mapNotNull { it.message }, ERROR_MESSAGE_DELAY)

@@ -5,7 +5,6 @@ import kotlinx.dom.clear
 import kotlinx.html.TagConsumer
 import kotlinx.html.dom.append
 import kotlinx.html.js.div
-import kotlinx.html.js.p
 import kotlinx.html.js.span
 import kotlinx.html.role
 import kotlinx.html.style

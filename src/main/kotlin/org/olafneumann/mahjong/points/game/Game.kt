@@ -14,6 +14,6 @@ data class Game(
     val beraubungDesKang: Boolean,
 
 ) {
-    val platzWind: Wind get() = Wind.East
-    val rundenWind: Wind get() = Wind.West
+    val seatWind: Wind get() = Wind.East
+    val prevailingWind: Wind get() = Wind.South
 }

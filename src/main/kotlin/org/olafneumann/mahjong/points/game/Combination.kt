@@ -21,10 +21,10 @@ data class Combination(
     enum class Type(
         val finished: Boolean = true
     ) {
-        Pair(),
-        Chow(),
-        Pung(),
-        Kang(),
+        Pair,
+        Chow,
+        Pung,
+        Kang,
         Unfinished0(false) /*only one tile selected*/,
         UnfinishedPlus1(false) /*this and the next tile selected*/,
         ;

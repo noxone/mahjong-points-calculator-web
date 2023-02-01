@@ -1,11 +1,12 @@
 package org.olafneumann.mahjong.points.util
 
-fun <T> Boolean.map(action: () -> T?) =
+fun <T> Boolean.map(function: () -> T): T? =
     if (this) {
-        action()
+        function()
     } else {
         null
     }
+
 
 fun <T> Boolean.to(onTrue: T, onFalse: T) =
     if (this) {

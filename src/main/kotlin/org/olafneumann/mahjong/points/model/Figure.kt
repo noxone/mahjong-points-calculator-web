@@ -4,7 +4,6 @@ import org.olafneumann.mahjong.points.Constants
 import org.olafneumann.mahjong.points.game.Combination
 import org.olafneumann.mahjong.points.game.Hand
 import org.olafneumann.mahjong.points.game.Tile
-import org.olafneumann.mahjong.points.model.Figure.Bonus
 import org.olafneumann.mahjong.points.model.Figure.Figure1
 import org.olafneumann.mahjong.points.model.Figure.Figure2
 import org.olafneumann.mahjong.points.model.Figure.Figure3
