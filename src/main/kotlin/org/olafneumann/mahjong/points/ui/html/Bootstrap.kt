@@ -16,6 +16,7 @@ import kotlinx.html.label
 import kotlinx.html.small
 import kotlinx.html.title
 import org.olafneumann.mahjong.points.lang.not
+import org.olafneumann.mahjong.points.ui.js.toJson
 import org.olafneumann.mahjong.points.util.nextHtmlId
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
@@ -219,19 +220,13 @@ fun createModal(element: HTMLElement, static: Boolean = true): Modal {
     return modal.unsafeCast<Modal>()
 }
 
-private fun createOptionsJson(static: Boolean) = json(
-    *listOf(
-        "backdrop" to if (static) {
-            "static"
-        } else {
-            ""
-        },
+private fun createOptionsJson(static: Boolean) =
+    mapOf(
+        "backdrop" to if (static) "static" else "",
         "focus" to true,
         "keyboard" to true
     )
-        //.filter { it.second != null }
-        .toTypedArray()
-)
+        .toJson()
 
 
 external class Modal {
