@@ -37,6 +37,19 @@ h1 {
   }
 }
 
+.mr-error-overlay {
+  position: absolute;
+  top: 0;
+  z-index: 2000;
+  right: 0.5rem;
+  left: 0;
+  opacity: 90%;
+}
+
+.mr-error-overlay span+span {
+  margin-top: 0.5rem;
+}
+
 .mr-tile-field > div {
   display: flex;
   justify-content: space-between;
@@ -58,7 +71,7 @@ h1 {
   transform-style: preserve-3d;
 }
 
-.mr-tile.mr-invisible {
+.mr-figure .mr-tile.mr-invisible {
   width: 0em;
   border: none !important;
 }

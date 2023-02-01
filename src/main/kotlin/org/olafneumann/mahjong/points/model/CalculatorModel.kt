@@ -11,6 +11,7 @@ import org.olafneumann.mahjong.points.game.GameModifiers
 import org.olafneumann.mahjong.points.game.Hand
 import org.olafneumann.mahjong.points.game.Tile
 import org.olafneumann.mahjong.points.game.Wind
+import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.model.Figure.Bonus
 import org.olafneumann.mahjong.points.model.Figure.Figure1
 import org.olafneumann.mahjong.points.model.Figure.Pair
@@ -26,6 +27,7 @@ data class CalculatorModel(
     val errorMessages: List<ErrorMessage> = emptyList(),
 ) {
     public fun withoutErrors() = evolve()
+
     private fun evolve(
         hand: Hand = this.hand,
         gameModifiers: GameModifiers = this.gameModifiers,
@@ -41,8 +43,8 @@ data class CalculatorModel(
             errorMessages = errorMessage.asList()
         )
 
-    private fun withError(tile: Tile): CalculatorModel =
-        evolve(errorMessage = arrayOf(ErrorMessage(tile = tile)))
+    private fun withError(tile: Tile, message: String): CalculatorModel =
+        evolve(errorMessage = arrayOf(ErrorMessage(tile = tile, message = message)))
 
     private val availableTiles = run {
         val allTilesInGame =
@@ -82,7 +84,7 @@ data class CalculatorModel(
 
         if (selectedFigure == Pair) {
             if (!canConsume(tile, tile)) {
-                return withError(tile)
+                return withError(tile, StringKeys.ERR_NO_TILES_LEFT_FOR_PAIR)
             }
             return evolve(
                 hand = hand.copy(pair = Combination(type = Combination.Type.Pair, tile = tile, visibility = Open)),
@@ -94,7 +96,7 @@ data class CalculatorModel(
         if (combination == null) {
             if (tile.isTrump) {
                 if (!canConsume(tile, tile, tile)) {
-                    return withError(tile)
+                    return withError(tile, StringKeys.ERR_NO_TILES_LEFT_FOR_CHOW)
                 }
                 return evolve(
                     hand = hand.setCombination(selectedFigure, Combination(Pung, tile, Open)),
@@ -154,7 +156,7 @@ data class CalculatorModel(
                         selectedFigure = selectedFigure.next,
                     )
                 }
-                return withError(tile)
+                return withError(tile, StringKeys.ERR_TILES_DOES_NOT_FIT_TO_CHOW_OR_PONG)
             }
 
             UnfinishedPlus1 -> {
@@ -170,17 +172,20 @@ data class CalculatorModel(
                         selectedFigure = selectedFigure.next,
                     )
                 }
-                return withError(tile)
+                return withError(tile, StringKeys.ERR_TILE_DOES_NOT_FIT_TO_SET)
             }
 
             Pung -> {
                 if (combination.tile == tile) {
+                    if (!canConsume(tile)) {
+                        return withError(tile, StringKeys.ERR_NO_TILE_LEFT_FOR_KANG)
+                    }
                     return evolve(
                         hand = combination.replace(hand, type = Kang),
                         selectedFigure = selectedFigure.next,
                     )
                 }
-                return withError(tile)
+                return withError(tile, StringKeys.ERR_TILE_INVALID_FOR_KANG)
             }
 
             else -> return this
