@@ -117,14 +117,14 @@ data class CalculatorModel(
                     )
                 }
                 // nächste Tile am Anfang
-                if (tile == combination.tile.next && combination.tile.number == 1) {
+                if (tile == combination.tile.next && combination.tile.number == FIRST_OF_COLOR) {
                     return evolve(
                         hand = combination.replace(hand = hand, type = Chow),
                         selectedFigure = selectedFigure.next,
                     )
                 }
                 // vorige Tile am Ende
-                if (tile == combination.tile.previous && combination.tile.number == 9) {
+                if (tile == combination.tile.previous && combination.tile.number == LAST_OF_COLOR) {
                     return evolve(
                         hand = combination.replace(hand = hand, tile = tile.previous!!, type = Chow),
                         selectedFigure = selectedFigure.next,
@@ -139,12 +139,24 @@ data class CalculatorModel(
                 }
                 // nächste Tile
                 if (tile == combination.tile.next) {
+                    if (tile.number == LAST_OF_COLOR) {
+                        return evolve(
+                            hand = combination.replace(hand = hand, type = Chow, tile = combination.tile.previous!!),
+                            selectedFigure = selectedFigure.next
+                        )
+                    }
                     return evolve(
                         hand = combination.replace(hand = hand, type = UnfinishedPlus1),
                     )
                 }
                 // vorige Tile
                 if (tile == combination.tile.previous) {
+                    if (tile.number == FIRST_OF_COLOR) {
+                        return evolve(
+                            hand = combination.replace(hand = hand, type = Chow, tile = tile),
+                            selectedFigure = selectedFigure.next
+                        )
+                    }
                     return evolve(
                         hand = combination.replace(hand = hand, type = UnfinishedPlus1, tile),
                     )
@@ -237,5 +249,14 @@ data class CalculatorModel(
             gameModifiers,
             seatWind = seatWind
         )
+    }
+
+    companion object {
+        private const val FIRST_OF_COLOR = 1
+        private const val SECOND_OF_COLOR = 2
+        private const val THIRD_OF_COLOR = 2
+        private const val PREPRELAST_OF_COLOR = 7
+        private const val PRELAST_OF_COLOR = 8
+        private const val LAST_OF_COLOR = 9
     }
 }
