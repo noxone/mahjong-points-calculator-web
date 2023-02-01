@@ -8,13 +8,13 @@ Mahjong (麻將) is a Chinese game for four players. Computing the points of a M
 
 ### Online
 
-``Mahjong Point Calculator``is available online. Please visit [https://mahjong.olafneumann.org](https://mahjong.olafneumann.org) and use it directly in the browser.
+``Mahjong Point Calculator`` is available online. Please visit [https://mahjong.olafneumann.org](https://mahjong.olafneumann.org) and use it directly in the browser.
 
-The page is currently optimized especially for the usage on tablets. Other form factors might look very odd and not very easy to use. This might be available in later stages of the project.
+The page is currently optimized especially for the usage on tablets. Other form factors might look very odd and might not be very easy to use. This might be available in later stages of the project.
 
 ### Docker
 
-You can use ``Mahjong Point Calculator``via Docker. Please find the generated images in [this repository](https://hub.docker.com/r/noxone/mahjongpoints). Use the following command and find the application on port 80 of your local machine:
+You can use ``Mahjong Point Calculator`` via Docker. Please find the generated images in [this repository](https://hub.docker.com/r/noxone/mahjongpoints). Use the following command and find the application on port 80 of your local machine:
 
 ```bash
 docker run -d -p 80:80 noxone/mahjongpoints
