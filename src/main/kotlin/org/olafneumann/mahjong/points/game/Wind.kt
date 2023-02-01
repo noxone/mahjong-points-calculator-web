@@ -1,14 +1,25 @@
 package org.olafneumann.mahjong.points.game
 
 enum class Wind {
-    East, North, West, South;
+    East, South, West, North;
 
     val next: Wind by lazy {
         when (this) {
-            East -> North
-            North -> West
-            West -> South
-            South -> East
+            East -> South
+            South -> West
+            West -> North
+            North -> East
         }
     }
+
+    val tile: Tile by lazy {
+        when (this) {
+            East -> Tile.WindEast
+            North -> Tile.WindNorth
+            West -> Tile.WindWest
+            South -> Tile.WindSouth
+        }
+    }
+
+    val tiles: Collection<Tile> by lazy { setOf(tile) }
 }
