@@ -14,7 +14,7 @@ inline fun <reified T : HTMLElement> Element.getAllChildren() =
 fun Node.getAllChildNodes(): Sequence<Node> =
     childNodes.asList().asSequence().selectRecursive { childNodes.asList().asSequence() }
 
-fun <T : HTMLElement> Sequence<T>.filterAttributeIsPresent(attributeName: String) =
+fun <T : Element> Sequence<T>.filterAttributeIsPresent(attributeName: String) =
     filter { it.hasAttribute(attributeName) }
 
 fun <T: HTMLElement> Sequence<T>.filterClassIsPresent(className: String) =
