@@ -31,27 +31,4 @@ data class Hand(
             figure4 = if (figure4 == oldCombination) newCombination else figure4,
             pair = if (pair == oldCombination) newCombination else pair
         )
-
-    companion object {
-        fun fromTiles(tiles: Collection<Tile>): Hand {
-            val bonusTiles = tiles.filter { it.isBonusTile }.toSet()
-            val tilesToHandle = (tiles - bonusTiles).toMutableList()
-            val numberOfKangs = tilesToHandle.size - Constants.WINNING_NUMBER_OF_TILES_FOR_HAND
-            val foundFigures = mutableListOf<Combination>()
-            val numberOfTiles = tilesToHandle.fold(mutableMapOf<Tile, Int>()) { map, tile ->
-                map[tile] = map.getOrPut(tile) { 0 }
-                map
-            }
-            val countToTiles = numberOfTiles.entries.fold(mutableMapOf<Int, MutableList<Tile>>()) { map, entry ->
-                map.getOrPut(entry.value) { mutableListOf() }.add(entry.key)
-                map
-            }.toMap()
-            if (countToTiles[Constants.MAX_NUMBER_OF_KANGS_PER_HAND]?.size == numberOfKangs) {
-                val kangTiles = countToTiles[Constants.MAX_NUMBER_OF_KANGS_PER_HAND]!!
-                foundFigures.addAll(kangTiles.map { tile -> Combination(Combination.Type.Kang, tile) })
-                foundFigures.removeAll { kangTiles.contains(it.tile) }
-            }
-            return Hand(bonusTiles = bonusTiles)
-        }
-    }
 }
