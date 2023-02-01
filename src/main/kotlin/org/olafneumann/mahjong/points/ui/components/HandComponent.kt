@@ -149,7 +149,8 @@ class HandComponent(
             for (index in 0 until figure.maxTilesPerFigure) {
                 imageTiles[index].tile = tiles.getOrNull(index)
                 imageTiles[index].isLastTileInRow = index == tiles.size - 1
-                imageTiles[index].backside = isConcealed && (index == 1 || (index == 2 && combination?.type == Combination.Type.Kang))
+                imageTiles[index].backside =
+                    isConcealed && (index == 1 || (index == 2 && combination?.type == Combination.Type.Kang))
             }
         }
         figureSwitches.forEach { (figure, input) ->
