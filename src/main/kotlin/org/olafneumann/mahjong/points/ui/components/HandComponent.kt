@@ -4,6 +4,7 @@ import kotlinx.browser.document
 import kotlinx.html.ButtonType
 import kotlinx.html.TagConsumer
 import kotlinx.html.button
+import kotlinx.html.dom.append
 import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.span
@@ -12,6 +13,8 @@ import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.model.Figure
 import org.olafneumann.mahjong.points.model.getCombination
 import org.olafneumann.mahjong.points.model.getTiles
+import org.olafneumann.mahjong.points.ui.controls.ErrorOverlay
+import org.olafneumann.mahjong.points.ui.controls.ErrorOverlay.Companion.createErrorOverlay
 import org.olafneumann.mahjong.points.ui.controls.TileImage
 import org.olafneumann.mahjong.points.ui.controls.TileImage.Companion.createTileImage
 import org.olafneumann.mahjong.points.ui.html.MrAttributes
@@ -33,14 +36,16 @@ import org.w3c.dom.events.Event
 import kotlin.properties.Delegates
 
 class HandComponent(
-    parent: HTMLElement,
-    val model: UIModel,
+    private val parent: HTMLElement,
+    private val model: UIModel,
 ) : AbstractComponent(parent = parent), UIModelChangeListener {
     private var selectableDivs: Map<Figure, HTMLDivElement> by Delegates.notNull()
     private var figureTiles: MutableMap<Figure, MutableList<TileImage>> = mutableMapOf()
     private var figureSwitches: Map<Figure, HTMLInputElement> by Delegates.notNull()
     private var figurePopovers: Map<Figure, Popover> by Delegates.notNull()
     private val btnUndo = document.getElement<HTMLButtonElement>("mr_btn_undo")
+
+    private var errorOverlay: ErrorOverlay by Delegates.notNull()
 
     init {
         model.registerChangeListener(this)
@@ -73,6 +78,11 @@ class HandComponent(
                 divForFigure(Figure.Pair)
                 divForFigure(Figure.Bonus)
             }
+
+        // error overlay
+        parent.parentElement!!.append {
+            errorOverlay = createErrorOverlay()
+        }
     }
 
     private fun TagConsumer<HTMLElement>.divForFigure(figure: Figure) =
@@ -148,6 +158,8 @@ class HandComponent(
                 ?: Combination.Visibility.Open) == Combination.Visibility.Open
             input.dispatchEvent(Event("change"));
         }
+
+        errorOverlay.show(model.calculatorModel.errorMessages.mapNotNull { it.message }, 3000)
     }
 
     override fun modelChanged(model: UIModel) {

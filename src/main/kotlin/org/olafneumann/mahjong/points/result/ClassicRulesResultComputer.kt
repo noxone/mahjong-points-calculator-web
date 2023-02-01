@@ -92,9 +92,10 @@ class ClassicRulesResultComputer : ResultComputer {
     private fun checkPairs(hand: Hand, gameModifiers: GameModifiers, seatWind: Wind) = (
             hand.getFigures(Pair, tiles = Tile.dragons)
                 .map { Line(description = StringKeys.PAIR_OF_DRAGONS, points = 2) }
-            /* TODO Compute place wind and round wind
-     + hand.getFigures(Pair, tiles = Tile.winds)
-         .map { Line(description = "Pair.Wind", points = 2) }*/
+                    + hand.getFigures(Pair, tiles = seatWind.tiles)
+                .map { Line(description = StringKeys.PAIR_WIND_SEAT, points = 2) }
+                    + hand.getFigures(Pair, tiles = gameModifiers.prevailingWind.tiles)
+                .map { Line(description = StringKeys.PAIR_WIND_PREVAILING, points = 2) }
             )
 
     private fun checkMahjongPoints(hand: Hand, gameModifiers: GameModifiers): List<Line> {
@@ -135,12 +136,17 @@ class ClassicRulesResultComputer : ResultComputer {
                 .map { Line(description = StringKeys.PUNG_DRAGONS, doublings = 1) },
             hand.getFigures(Kang, tiles = Tile.dragons)
                 .map { Line(description = StringKeys.KANG_DRAGONS, doublings = 1) },
+            // Pong/ Kang des Platzwindes
+            hand.getFigures(Pung, tiles = seatWind.tiles)
+                .map { Line(description = StringKeys.PUNG_SEAT_WIND, doublings = 1) },
+            hand.getFigures(Kang, tiles = seatWind.tiles)
+                .map { Line(description = StringKeys.KANG_SEAT_WIND, doublings = 1) },
+            // Pong/ Kang des Rundenwindes
+            hand.getFigures(Pung, tiles = prevailingWind.tiles)
+                .map { Line(description = StringKeys.PUNG_PREVAILING_WIND, doublings = 1) },
+            hand.getFigures(Kang, tiles = prevailingWind.tiles)
+                .map { Line(description = StringKeys.KANG_PREVAILING_WIND, doublings = 1) },
             listOf(
-                // Pong/ Kang des Rundenwindes
-                hand.getFigures(Pung).any { it.tile.wind == prevailingWind }
-                    .map { Line(description = StringKeys.PUNG_PREVAILING_WIND, doublings = 1) },
-                hand.getFigures(Kang).any { it.tile.wind == prevailingWind }
-                    .map { Line(description = StringKeys.KANG_PREVAILING_WIND, doublings = 1) },
                 // drei verdeckte pong
                 hand.fullFigures.filter { it.type == Pung || it.type == Kang }
                     .filter { it.visibility == Closed }
