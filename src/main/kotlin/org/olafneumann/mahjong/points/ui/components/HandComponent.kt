@@ -13,6 +13,8 @@ import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.model.Figure
 import org.olafneumann.mahjong.points.model.getCombination
 import org.olafneumann.mahjong.points.model.getTiles
+import org.olafneumann.mahjong.points.ui.controls.Checkbox
+import org.olafneumann.mahjong.points.ui.controls.Checkbox.Companion.verticalSwitch
 import org.olafneumann.mahjong.points.ui.controls.ErrorOverlay
 import org.olafneumann.mahjong.points.ui.controls.ErrorOverlay.Companion.errorOverlay
 import org.olafneumann.mahjong.points.ui.controls.TileImage
@@ -23,7 +25,6 @@ import org.olafneumann.mahjong.points.ui.html.getAllChildren
 import org.olafneumann.mahjong.points.ui.html.getElement
 import org.olafneumann.mahjong.points.ui.html.injectRoot
 import org.olafneumann.mahjong.points.ui.html.mrFigure
-import org.olafneumann.mahjong.points.ui.html.verticalSwitch
 import org.olafneumann.mahjong.points.ui.js.Popover
 import org.olafneumann.mahjong.points.ui.model.UIModel
 import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
@@ -41,7 +42,7 @@ class HandComponent(
 ) : AbstractComponent(parent = parent), UIModelChangeListener {
     private var selectableDivs: Map<Figure, HTMLDivElement> by Delegates.notNull()
     private var figureTiles: MutableMap<Figure, List<TileImage>> = mutableMapOf()
-    private var figureSwitches: Map<Figure, HTMLInputElement> by Delegates.notNull()
+    private var figureSwitches: Map<Figure, Checkbox?> by Delegates.notNull()
     private var figurePopovers: Map<Figure, Popover> by Delegates.notNull()
     private val btnUndo = document.getElement<HTMLButtonElement>("mr_btn_undo")
 
@@ -64,19 +65,11 @@ class HandComponent(
             selectableDivs = element.getAllChildren<HTMLDivElement>()
                 .filterAttributeIsPresent(MrAttributes.FIGURE)
                 .associateBy { Figure.valueOf(it.mrFigure!!) }
-            figureSwitches = element.getAllChildren<HTMLInputElement>()
-                .mapIndexed { index, input -> Figure.values()[index] to input }
-                .toMap()
             figurePopovers = selectableDivs.map { it.key to createPopover(it.value, it.key) }
                 .toMap()
         }
             .div(classes = "flex-fill mr-figure-list") {
-                divForFigure(Figure.Figure1)
-                divForFigure(Figure.Figure2)
-                divForFigure(Figure.Figure3)
-                divForFigure(Figure.Figure4)
-                divForFigure(Figure.Pair)
-                divForFigure(Figure.Bonus)
+                figureSwitches = Figure.values().associateWith { divForFigure(it) }
             }
 
         // error overlay
@@ -85,7 +78,8 @@ class HandComponent(
         }
     }
 
-    private fun TagConsumer<HTMLElement>.divForFigure(figure: Figure) =
+    private fun TagConsumer<HTMLElement>.divForFigure(figure: Figure): Checkbox? {
+        var checkbox: Checkbox? = null
         div(classes = "row g-0") {
             val isBonus = figure == Figure.Bonus
             div(classes = "${isBonus.toString("col", "col-8 col-md-9")} mr-figure border") {
@@ -102,10 +96,13 @@ class HandComponent(
             }
             if (figure != Figure.Bonus) {
                 div(classes = "${isBonus.toString("col", "col-4 col-md-3")} px-1") {
-                    verticalSwitch("Closed", "Open") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
+                    checkbox =
+                        verticalSwitch("Closed", "Open") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
                 }
             }
         }
+        return checkbox
+    }
 
     private fun handleFigureClick(figure: Figure) {
         if (model.calculatorModel.selectedFigure != figure) {
@@ -150,12 +147,13 @@ class HandComponent(
                 imageTiles[index].backside =
                     isConcealed && (index == 1 || (index == 2 && combination?.type == Combination.Type.Kang))
             }
-        }
-        figureSwitches.forEach { (figure, input) ->
-            input.disabled = model.calculatorModel.hand.getCombination(figure) == null
-            input.checked = (model.calculatorModel.hand.getCombination(figure)?.visibility
-                ?: Combination.Visibility.Open) == Combination.Visibility.Open
-            input.dispatchEvent(Event("change"))
+
+            figureSwitches[figure]?.let {
+                it.enabled = model.calculatorModel.hand.getCombination(figure) != null
+                it.checked =
+                    (model.calculatorModel.hand.getCombination(figure)?.visibility
+                        ?: Combination.Visibility.Open) == Combination.Visibility.Open
+            }
         }
 
         errorOverlay.show(model.calculatorModel.errorMessages.mapNotNull { it.message }, ERROR_MESSAGE_DELAY)

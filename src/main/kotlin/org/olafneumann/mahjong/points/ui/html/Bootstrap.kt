@@ -84,43 +84,6 @@ fun <T> TagConsumer<HTMLElement>.radioGroup(
     }
 }
 
-fun TagConsumer<HTMLElement>.verticalSwitch(
-    labelEnabled: String,
-    labelDisabled: String? = null,
-    action: (Event) -> Unit
-) {
-    val htmlId = nextHtmlId
-    var checkbox: HTMLInputElement by Delegates.notNull()
-    var label: HTMLLabelElement by Delegates.notNull()
-
-    injectRoot {
-        checkbox = it.getAllChildren<HTMLInputElement>().first()
-        label = it.getAllChildren<HTMLLabelElement>().first()
-        /*val width = max(it.getTextWidth(labelEnabled), it.getTextWidth(labelDisabled ?: labelEnabled))
-        label.style.width = "${width}px"*/
-    }.div(classes = "d-flex flex-column justify-content-center align-items-center mr-vertical-switch mr-full-height") {
-        div(classes = "form-check form-switch") {
-            input(classes = "form-check-input", type = InputType.checkBox) {
-                id = htmlId
-                onInputFunction = action
-                onChangeFunction = {
-                    val labelText = if (!checkbox.checked) !labelEnabled else !(labelDisabled ?: labelEnabled)
-                    label.innerText = labelText
-                    label.title = labelText
-                }
-                checked = true
-            }
-        }
-        small {
-            label(classes = "form-check-label") {
-                htmlFor = htmlId
-                title = !labelEnabled
-                +!labelEnabled
-            }
-        }
-    }
-}
-
 fun TagConsumer<HTMLElement>.modal2(
     title: String,
     buttons: List<Button> = emptyList(),
