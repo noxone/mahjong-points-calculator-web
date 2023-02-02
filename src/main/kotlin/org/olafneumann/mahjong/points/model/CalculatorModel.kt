@@ -92,7 +92,13 @@ data class CalculatorModel(
                 return withError(tile, StringKeys.ERR_NO_TILES_LEFT_FOR_PAIR)
             }
             return evolve(
-                hand = hand.copy(pair = Combination(type = Combination.Type.FinishingPair, tile = tile, visibility = Open)),
+                hand = hand.copy(
+                    pair = Combination(
+                        type = Combination.Type.FinishingPair,
+                        tile = tile,
+                        visibility = Open
+                    )
+                ),
             )
         }
 
@@ -114,6 +120,9 @@ data class CalculatorModel(
         when (combination.type) {
             Unfinished0 -> {
                 if (tile == combination.tile) {
+                    if (!canConsume(tile, tile)) {
+                        return withError(tile, StringKeys.ERR_NO_TILES_LEFT_FOR_CHOW)
+                    }
                     return evolve(
                         hand = combination.replace(
                             hand = hand,
