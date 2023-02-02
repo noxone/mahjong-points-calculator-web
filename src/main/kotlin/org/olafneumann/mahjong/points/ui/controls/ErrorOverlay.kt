@@ -13,6 +13,7 @@ import org.olafneumann.mahjong.points.ui.html.injectRoot
 import org.olafneumann.mahjong.points.ui.js.asJQuery
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
+import kotlin.properties.Delegates
 
 class ErrorOverlay private constructor(
     val outer: HTMLDivElement,
@@ -43,8 +44,8 @@ class ErrorOverlay private constructor(
 
     companion object {
         fun TagConsumer<HTMLElement>.errorOverlay(): ErrorOverlay {
-            var outer: HTMLDivElement? = null
-            var inner: HTMLDivElement? = null
+            var outer: HTMLDivElement by Delegates.notNull()
+            var inner: HTMLDivElement by Delegates.notNull()
             injectRoot { outer = it as HTMLDivElement }
                 .div(classes = "mr-error-overlay p-3") {
                     style = "display:none;"
