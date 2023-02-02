@@ -25,6 +25,7 @@ private fun initMahjongPointCalculator() {
         initMahjongPointCalculatorUnsafe()
     } catch (exception: Exception) {
         console.error(exception)
+        exception.printStackTrace()
         window.alert("Unable to initialize RegexGenerator: ${exception.message}")
     }
 }

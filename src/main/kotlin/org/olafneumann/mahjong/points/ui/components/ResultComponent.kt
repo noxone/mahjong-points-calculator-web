@@ -73,9 +73,6 @@ class ResultComponent(
         }
     }
 
-    override fun updateUI() {
-    }
-
     override fun modelChanged(model: UIModel) {
         buildUI()
     }

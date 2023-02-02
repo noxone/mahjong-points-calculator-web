@@ -1,15 +1,19 @@
 package org.olafneumann.mahjong.points.game
 
+import org.olafneumann.mahjong.points.util.IdGenerator
+
 data class Combination(
     val type: Type,
     val tile: Tile,
     val visibility: Visibility = Visibility.Closed,
+    // ID is required so JS doesn't think two objects with the same content are the same object
+    val id: Int = idGenerator.next,
 ) {
     fun getTiles(): List<Tile> =
         when (type) {
             Type.Unfinished0 -> listOf(tile)
             Type.UnfinishedPlus1 -> listOf(tile, tile.next!!)
-            Type.Pair -> listOf(tile, tile)
+            Type.FinishingPair -> listOf(tile, tile)
             Type.Pung -> listOf(tile, tile, tile)
             Type.Kang -> listOf(tile, tile, tile, tile)
             Type.Chow -> listOf(tile, tile.next!!, tile.next?.next!!)
@@ -21,7 +25,7 @@ data class Combination(
     enum class Type(
         val finished: Boolean = true
     ) {
-        Pair,
+        FinishingPair,
         Chow,
         Pung,
         Kang,
@@ -36,5 +40,9 @@ data class Combination(
         companion object {
             fun from(open: Boolean) = if (open) Open else Closed
         }
+    }
+
+    companion object {
+        private val idGenerator = IdGenerator()
     }
 }

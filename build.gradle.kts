@@ -1,6 +1,6 @@
 plugins {
     kotlin("js") version "1.8.10"
-    //id("io.gitlab.arturbosch.detekt").version("1.22.0")
+    id("io.gitlab.arturbosch.detekt").version("1.22.0")
 }
 
 group = "org.olafneumann.mahjong.points"
@@ -50,7 +50,16 @@ kotlin {
     }
 }
 
-/*detekt {
+plugins.withType<io.gitlab.arturbosch.detekt.DetektPlugin> {
+    tasks.withType<io.gitlab.arturbosch.detekt.Detekt> detekt@{
+        reports.html.required.set(true)
+        reports.xml.required.set(true)
+        reports.txt.required.set(false)
+        reports.sarif.required.set(true)
+    }
+}
+
+detekt {
     // Define the detekt configuration(s) you want to use.
     config = files("$projectDir/.config/detekt.yml")
 
@@ -60,10 +69,5 @@ kotlin {
     // Turns on all the rules. `false` by default.
     allRules = false
 
-    reports {
-        html.enabled = true
-        xml.enabled = true
-        txt.enabled = true
-        sarif.enabled = true
-    }
-}*/
+    ignoreFailures = true
+}

@@ -6,7 +6,7 @@ import org.olafneumann.mahjong.points.game.Combination.Type
 import org.olafneumann.mahjong.points.game.Combination.Type.Pung
 import org.olafneumann.mahjong.points.game.Combination.Type.Chow
 import org.olafneumann.mahjong.points.game.Combination.Type.Kang
-import org.olafneumann.mahjong.points.game.Combination.Type.Pair
+import org.olafneumann.mahjong.points.game.Combination.Type.FinishingPair
 import org.olafneumann.mahjong.points.game.Combination.Visibility
 import org.olafneumann.mahjong.points.game.Combination.Visibility.Open
 import org.olafneumann.mahjong.points.game.Combination.Visibility.Closed
@@ -91,11 +91,11 @@ class ClassicRulesResultComputer : ResultComputer {
             )
 
     private fun checkPairs(hand: Hand, gameModifiers: GameModifiers, seatWind: Wind) = (
-            hand.getFigures(Pair, tiles = Tile.dragons)
+            hand.getFigures(FinishingPair, tiles = Tile.dragons)
                 .map { Line(description = StringKeys.PAIR_OF_DRAGONS, points = 2) }
-                    + hand.getFigures(Pair, tiles = seatWind.tiles)
+                    + hand.getFigures(FinishingPair, tiles = seatWind.tiles)
                 .map { Line(description = StringKeys.PAIR_WIND_SEAT, points = 2) }
-                    + hand.getFigures(Pair, tiles = gameModifiers.prevailingWind.tiles)
+                    + hand.getFigures(FinishingPair, tiles = gameModifiers.prevailingWind.tiles)
                 .map { Line(description = StringKeys.PAIR_WIND_PREVAILING, points = 2) }
             )
 

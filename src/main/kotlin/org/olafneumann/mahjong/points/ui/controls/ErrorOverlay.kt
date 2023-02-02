@@ -13,6 +13,7 @@ import org.olafneumann.mahjong.points.ui.html.injectRoot
 import org.olafneumann.mahjong.points.ui.js.asJQuery
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
+import kotlin.properties.Delegates
 
 class ErrorOverlay private constructor(
     val outer: HTMLDivElement,
@@ -42,28 +43,14 @@ class ErrorOverlay private constructor(
     private fun hideBox() = jquery.fadeOut()
 
     companion object {
-        fun TagConsumer<HTMLElement>.createErrorOverlay(): ErrorOverlay {
-            /*<div style="
-                    position: absolute;
-                    top: 0;
-                    /* width: 100%; */
-                    /* background: red; */
-                    z-index: 2000;
-                    right: 0.5rem;
-                    left: 0;
-                    /* padding-left: 1rem; */
-                    " class="rounded-bottom p-3"><div class="alert alert-danger" role="alert">
-                    A simple primary alert—check it out!
-                    </div></div>*/
-
-
-            var outer: HTMLDivElement? = null
-            var inner: HTMLDivElement? = null
+        fun TagConsumer<HTMLElement>.errorOverlay(): ErrorOverlay {
+            var outer: HTMLDivElement by Delegates.notNull()
+            var inner: HTMLDivElement by Delegates.notNull()
             injectRoot { outer = it as HTMLDivElement }
-                .div(classes = "mr-error-overlay p-3") {
+                .div(classes = "mr-error-overlay") {
                     style = "display:none;"
                     injectRoot { inner = it as HTMLDivElement }
-                        .div(classes = "alert alert-danger") {
+                        .div(classes = "alert alert-danger p-2 m-0 h-100 d-flex flex-column justify-content-center") {
                             role = "alert"
                             +"Error Message"
                         }
