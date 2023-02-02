@@ -7,8 +7,8 @@ import org.olafneumann.mahjong.points.game.GameModifiers
 import org.olafneumann.mahjong.points.game.Wind
 import org.olafneumann.mahjong.points.ui.controls.Checkbox
 import org.olafneumann.mahjong.points.ui.controls.Checkbox.Companion.checkbox
-import org.olafneumann.mahjong.points.ui.html.RadioGroup
-import org.olafneumann.mahjong.points.ui.html.radioGroup
+import org.olafneumann.mahjong.points.ui.controls.RadioGroup
+import org.olafneumann.mahjong.points.ui.controls.RadioGroup.Companion.radioButtonGroup
 import org.olafneumann.mahjong.points.ui.model.UIModel
 import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
 import org.w3c.dom.HTMLElement
@@ -54,14 +54,10 @@ class OptionsComponent(
     }
 
     private fun TagConsumer<HTMLElement>.createWindRadioButtons() {
-        radioGroup(
-            "Prevailing Wind",
-            Wind.values().asList(),
-            this@OptionsComponent::rdaPrevailingWind
-        ) {
+        rdaPrevailingWind = radioButtonGroup("Prevailing Wind", Wind.values().asList()) {
             model.setGameModifiers(gameModifiers.copy(prevailingWind = it))
         }
-        radioGroup("Seat Wind", Wind.values().asList(), this@OptionsComponent::rdaSeatWind) {
+        rdaSeatWind = radioButtonGroup("Seat Wind", Wind.values().asList()) {
             model.setSeatWind(it)
         }
     }
@@ -104,8 +100,8 @@ class OptionsComponent(
     override fun updateUI() {
         val isMahjong = model.calculatorModel.isMahjong
 
-        rdaPrevailingWind.select(gameModifiers.prevailingWind)
-        rdaSeatWind.select(model.calculatorModel.seatWind)
+        rdaPrevailingWind.selection = gameModifiers.prevailingWind
+        rdaSeatWind.selection = model.calculatorModel.seatWind
 
         // checked or not
         chkSchlussziegelVonDerMauer.checked = isMahjong && gameModifiers.schlussziegelVonMauer
