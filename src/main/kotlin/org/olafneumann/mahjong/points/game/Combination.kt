@@ -9,7 +9,7 @@ data class Combination(
         when (type) {
             Type.Unfinished0 -> listOf(tile)
             Type.UnfinishedPlus1 -> listOf(tile, tile.next!!)
-            Type.Pair -> listOf(tile, tile)
+            Type.FinishingPair -> listOf(tile, tile)
             Type.Pung -> listOf(tile, tile, tile)
             Type.Kang -> listOf(tile, tile, tile, tile)
             Type.Chow -> listOf(tile, tile.next!!, tile.next?.next!!)
@@ -21,7 +21,7 @@ data class Combination(
     enum class Type(
         val finished: Boolean = true
     ) {
-        Pair,
+        FinishingPair,
         Chow,
         Pung,
         Kang,

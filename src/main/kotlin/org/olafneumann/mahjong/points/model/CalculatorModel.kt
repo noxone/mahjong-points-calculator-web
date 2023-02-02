@@ -4,6 +4,7 @@ import org.olafneumann.mahjong.points.game.Combination
 import org.olafneumann.mahjong.points.game.Combination.Type.Chow
 import org.olafneumann.mahjong.points.game.Combination.Type.Kang
 import org.olafneumann.mahjong.points.game.Combination.Type.Pung
+import org.olafneumann.mahjong.points.game.Combination.Type.FinishingPair
 import org.olafneumann.mahjong.points.game.Combination.Type.Unfinished0
 import org.olafneumann.mahjong.points.game.Combination.Type.UnfinishedPlus1
 import org.olafneumann.mahjong.points.game.Combination.Visibility.Open
@@ -13,8 +14,8 @@ import org.olafneumann.mahjong.points.game.Tile
 import org.olafneumann.mahjong.points.game.Wind
 import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.model.Figure.Bonus
-import org.olafneumann.mahjong.points.model.Figure.Figure1
 import org.olafneumann.mahjong.points.model.Figure.Pair
+import org.olafneumann.mahjong.points.model.Figure.Figure1
 import org.olafneumann.mahjong.points.result.ClassicRulesResultComputer
 import org.olafneumann.mahjong.points.result.PlayerResult
 import org.olafneumann.mahjong.points.util.to
@@ -85,12 +86,13 @@ data class CalculatorModel(
             )
         }
 
+        // TODO: Move down into 'when'
         if (selectedFigure == Pair) {
             if (!canConsume(tile, tile)) {
                 return withError(tile, StringKeys.ERR_NO_TILES_LEFT_FOR_PAIR)
             }
             return evolve(
-                hand = hand.copy(pair = Combination(type = Combination.Type.Pair, tile = tile, visibility = Open)),
+                hand = hand.copy(pair = Combination(type = Combination.Type.FinishingPair, tile = tile, visibility = Open)),
             )
         }
 
@@ -115,7 +117,7 @@ data class CalculatorModel(
                     return evolve(
                         hand = combination.replace(
                             hand = hand,
-                            type = if (selectedFigure == Pair) Combination.Type.Pair else Pung
+                            type = if (selectedFigure == Pair) Combination.Type.FinishingPair else Pung
                         ),
                     )
                 }
@@ -213,7 +215,9 @@ data class CalculatorModel(
                 return withError(tile, "Kang.Already.Full")
             }
 
-            else -> return this
+            FinishingPair -> {
+                return this // TODO: move here
+            }
         }
     }
 
