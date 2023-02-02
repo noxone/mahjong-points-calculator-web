@@ -14,9 +14,9 @@ import org.olafneumann.mahjong.points.model.Figure
 import org.olafneumann.mahjong.points.model.getCombination
 import org.olafneumann.mahjong.points.model.getTiles
 import org.olafneumann.mahjong.points.ui.controls.ErrorOverlay
-import org.olafneumann.mahjong.points.ui.controls.ErrorOverlay.Companion.createErrorOverlay
+import org.olafneumann.mahjong.points.ui.controls.ErrorOverlay.Companion.errorOverlay
 import org.olafneumann.mahjong.points.ui.controls.TileImage
-import org.olafneumann.mahjong.points.ui.controls.TileImage.Companion.createTileImage
+import org.olafneumann.mahjong.points.ui.controls.TileImage.Companion.tileImage
 import org.olafneumann.mahjong.points.ui.html.MrAttributes
 import org.olafneumann.mahjong.points.ui.html.filterAttributeIsPresent
 import org.olafneumann.mahjong.points.ui.html.getAllChildren
@@ -81,7 +81,7 @@ class HandComponent(
 
         // error overlay
         parent.parentElement!!.append {
-            errorOverlay = createErrorOverlay()
+            errorOverlay = errorOverlay()
         }
     }
 
@@ -92,7 +92,7 @@ class HandComponent(
                 span { +!figure.title }
                 div(classes = "mr-tile-container") {
                     figureTiles[figure] = (1..figure.maxTilesPerFigure)
-                        .map { createTileImage(null) }
+                        .map { tileImage(null) }
                 }
                 mrFigure = figure.name
                 onClickFunction = {

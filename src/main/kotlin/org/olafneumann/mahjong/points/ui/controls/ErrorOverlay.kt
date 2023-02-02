@@ -42,7 +42,7 @@ class ErrorOverlay private constructor(
     private fun hideBox() = jquery.fadeOut()
 
     companion object {
-        fun TagConsumer<HTMLElement>.createErrorOverlay(): ErrorOverlay {
+        fun TagConsumer<HTMLElement>.errorOverlay(): ErrorOverlay {
             var outer: HTMLDivElement? = null
             var inner: HTMLDivElement? = null
             injectRoot { outer = it as HTMLDivElement }

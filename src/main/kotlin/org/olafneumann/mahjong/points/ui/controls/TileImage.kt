@@ -80,7 +80,7 @@ class TileImage private constructor(
         private const val ROTATION_ANIMATION_DURATION = 500
         private const val BLINK_DURATION = 920
 
-        fun TagConsumer<HTMLElement>.createTileImage(tile: Tile?, onClickFunction: (Event) -> Unit = {}): TileImage {
+        fun TagConsumer<HTMLElement>.tileImage(tile: Tile?, onClickFunction: (Event) -> Unit = {}): TileImage {
             var outer: HTMLDivElement? = null
             var inner: HTMLDivElement? = null
             injectRoot { outer = it as HTMLDivElement }

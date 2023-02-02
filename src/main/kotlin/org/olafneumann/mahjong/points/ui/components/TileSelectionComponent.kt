@@ -4,7 +4,7 @@ import kotlinx.html.TagConsumer
 import kotlinx.html.div
 import org.olafneumann.mahjong.points.game.Tile
 import org.olafneumann.mahjong.points.ui.controls.TileImage
-import org.olafneumann.mahjong.points.ui.controls.TileImage.Companion.createTileImage
+import org.olafneumann.mahjong.points.ui.controls.TileImage.Companion.tileImage
 import org.olafneumann.mahjong.points.ui.model.UIModel
 import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
 import org.w3c.dom.HTMLElement
@@ -29,13 +29,13 @@ class TileSelectionComponent(
             div { imageTiles.putAll(tileImages(Tile.circles)) }
             div {
                 imageTiles.putAll(tileImages(Tile.winds))
-                createTileImage(null)
-                createTileImage(null)
+                tileImage(null)
+                tileImage(null)
                 imageTiles.putAll(tileImages(Tile.dragons))
             }
             div {
                 imageTiles.putAll(tileImages(Tile.flowers))
-                createTileImage(null)
+                tileImage(null)
                 imageTiles.putAll(tileImages(Tile.seasons))
             }
         }
@@ -43,7 +43,7 @@ class TileSelectionComponent(
     }
 
     private fun TagConsumer<HTMLElement>.tileImages(tiles: Collection<Tile>): Map<Tile, TileImage> =
-        tiles.associateWith { createTileImage(tile = it, onClickFunction = createOnClickListener(it)) }
+        tiles.associateWith { tileImage(tile = it, onClickFunction = createOnClickListener(it)) }
 
     private fun createOnClickListener(tile: Tile): (Event) -> Unit = {
         if (tile.isSelectable) {
