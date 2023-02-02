@@ -72,13 +72,16 @@ data class CalculatorModel(
             )
         }
         if (selectedFigure == Bonus) {
-            return this
+            return withError(tile, "Not.Bonus.Tile") // TODO: StringKey
         }
 
         if (tile.isTrump && hand.containsPungWith(tile)) {
+            val combination = hand.allFigures.first { it.tile == tile }
+            val nextFigure =
+                if (hand.getCombination(selectedFigure) == combination) selectedFigure.next else selectedFigure
             return evolve(
-                hand = hand.allFigures.first { it.tile == tile }.replace(hand, type = Kang),
-                selectedFigure = selectedFigure.next,
+                hand = combination.replace(hand, type = Kang),
+                selectedFigure = nextFigure,
             )
         }
 
@@ -198,6 +201,16 @@ data class CalculatorModel(
                     )
                 }
                 return withError(tile, StringKeys.ERR_TILE_INVALID_FOR_KANG)
+            }
+
+            Chow -> {
+                // TODO: StringKey
+                return withError(tile, "Chow.Already.Full")
+            }
+
+            Kang -> {
+                // TODO StringKey
+                return withError(tile, "Kang.Already.Full")
             }
 
             else -> return this
