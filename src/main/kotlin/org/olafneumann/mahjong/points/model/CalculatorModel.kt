@@ -4,6 +4,7 @@ import org.olafneumann.mahjong.points.game.Combination
 import org.olafneumann.mahjong.points.game.Combination.Type.Chow
 import org.olafneumann.mahjong.points.game.Combination.Type.Kang
 import org.olafneumann.mahjong.points.game.Combination.Type.Pung
+import org.olafneumann.mahjong.points.game.Combination.Type.FinishingPair
 import org.olafneumann.mahjong.points.game.Combination.Type.Unfinished0
 import org.olafneumann.mahjong.points.game.Combination.Type.UnfinishedPlus1
 import org.olafneumann.mahjong.points.game.Combination.Visibility.Open
@@ -13,8 +14,8 @@ import org.olafneumann.mahjong.points.game.Tile
 import org.olafneumann.mahjong.points.game.Wind
 import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.model.Figure.Bonus
-import org.olafneumann.mahjong.points.model.Figure.Figure1
 import org.olafneumann.mahjong.points.model.Figure.Pair
+import org.olafneumann.mahjong.points.model.Figure.Figure1
 import org.olafneumann.mahjong.points.result.ClassicRulesResultComputer
 import org.olafneumann.mahjong.points.result.PlayerResult
 import org.olafneumann.mahjong.points.util.to
@@ -44,7 +45,7 @@ data class CalculatorModel(
         )
 
     private fun withError(tile: Tile, message: String): CalculatorModel =
-        evolve(errorMessage = arrayOf(ErrorMessage(tile = tile, message = message)))
+        evolve(errorMessage = arrayOf(ErrorMessage(tile = tile, figure = selectedFigure, message = message)))
 
     private val availableTiles = run {
         val allTilesInGame =
@@ -72,22 +73,32 @@ data class CalculatorModel(
             )
         }
         if (selectedFigure == Bonus) {
-            return this
+            return withError(tile, "Not.Bonus.Tile") // TODO: StringKey
         }
 
         if (tile.isTrump && hand.containsPungWith(tile)) {
+            val combination = hand.allFigures.first { it.tile == tile }
+            val nextFigure =
+                if (hand.getCombination(selectedFigure) == combination) selectedFigure.next else selectedFigure
             return evolve(
-                hand = hand.allFigures.first { it.tile == tile }.replace(hand, type = Kang),
-                selectedFigure = selectedFigure.next,
+                hand = combination.replace(hand, type = Kang),
+                selectedFigure = nextFigure,
             )
         }
 
+        // TODO: Move down into 'when'
         if (selectedFigure == Pair) {
             if (!canConsume(tile, tile)) {
                 return withError(tile, StringKeys.ERR_NO_TILES_LEFT_FOR_PAIR)
             }
             return evolve(
-                hand = hand.copy(pair = Combination(type = Combination.Type.Pair, tile = tile, visibility = Open)),
+                hand = hand.copy(
+                    pair = Combination(
+                        type = Combination.Type.FinishingPair,
+                        tile = tile,
+                        visibility = Open
+                    )
+                ),
             )
         }
 
@@ -109,10 +120,13 @@ data class CalculatorModel(
         when (combination.type) {
             Unfinished0 -> {
                 if (tile == combination.tile) {
+                    if (!canConsume(tile, tile)) {
+                        return withError(tile, StringKeys.ERR_NO_TILES_LEFT_FOR_CHOW)
+                    }
                     return evolve(
                         hand = combination.replace(
                             hand = hand,
-                            type = if (selectedFigure == Pair) Combination.Type.Pair else Pung
+                            type = if (selectedFigure == Pair) Combination.Type.FinishingPair else Pung
                         ),
                     )
                 }
@@ -200,7 +214,19 @@ data class CalculatorModel(
                 return withError(tile, StringKeys.ERR_TILE_INVALID_FOR_KANG)
             }
 
-            else -> return this
+            Chow -> {
+                // TODO: StringKey
+                return withError(tile, "Chow.Already.Full")
+            }
+
+            Kang -> {
+                // TODO StringKey
+                return withError(tile, "Kang.Already.Full")
+            }
+
+            FinishingPair -> {
+                return this // TODO: move here
+            }
         }
     }
 

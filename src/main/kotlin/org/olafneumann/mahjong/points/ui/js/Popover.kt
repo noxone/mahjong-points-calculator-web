@@ -12,6 +12,7 @@ import org.olafneumann.mahjong.points.lang.not
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventTarget
+import kotlin.js.Json
 import kotlin.js.json
 
 @Suppress("LongParameterList")
@@ -63,8 +64,8 @@ class Popover(
 
     }
 
-    private fun createOptionsJson() = json(
-        *listOf(
+    private fun createOptionsJson() =
+        mapOf(
             "container" to container,
             "content" to document.create.content(),
             "html" to true,
@@ -82,10 +83,7 @@ class Popover(
                 }
             },
             "trigger" to trigger.value
-        )
-            .filter { it.second != null }
-            .toTypedArray()
-    )
+        ).toJson()
 
     enum class Placement(
         val value: String

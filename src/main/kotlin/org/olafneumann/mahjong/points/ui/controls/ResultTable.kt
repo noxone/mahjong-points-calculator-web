@@ -9,17 +9,13 @@ import kotlinx.html.js.span
 import kotlinx.html.sup
 import org.olafneumann.mahjong.points.result.Line
 import org.olafneumann.mahjong.points.result.PlayerResult
-import org.olafneumann.mahjong.points.ui.html.Button
-import org.olafneumann.mahjong.points.ui.html.Modal
-import org.olafneumann.mahjong.points.ui.html.createModal
-import org.olafneumann.mahjong.points.ui.html.modal2
 import org.olafneumann.mahjong.points.lang.not
 import org.w3c.dom.HTMLElement
 import kotlin.properties.Delegates
 
 fun showResultTable(result: PlayerResult, onNextPlayerClick: () -> Unit = {}) {
     var modal: Modal by Delegates.notNull()
-    val element = document.create.modal2(
+    val element = document.create.modal(
         title = "Point Calculation",
         buttons = listOf(
             Button(title = "Next Player", colorClass = "secondary") { onNextPlayerClick(); modal.hide() },
@@ -44,12 +40,6 @@ private fun TagConsumer<HTMLElement>.resultTable(result: PlayerResult) =
                 sum = result.doublings
             )
             div(classes = "mr-result-part mr-result-final") {
-                /*span(classes = "mr-result-heading") {
-                    +!"Ergebnis"
-                }*/
-                /*if (result.doublings > 0) {
-                    pointRow("Anwendung Verdoppelungen", power = result.doublings, points = result.points)
-                }*/
                 pointSumRow("Final Result", points = result.points, doublings = result.doublings, result.result)
             }
         }

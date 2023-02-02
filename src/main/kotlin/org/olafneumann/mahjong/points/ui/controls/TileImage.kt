@@ -10,6 +10,7 @@ import org.olafneumann.mahjong.points.ui.html.mrTile
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
+import kotlin.properties.Delegates
 
 class TileImage private constructor(
     private val outer: HTMLDivElement,
@@ -80,9 +81,9 @@ class TileImage private constructor(
         private const val ROTATION_ANIMATION_DURATION = 500
         private const val BLINK_DURATION = 920
 
-        fun TagConsumer<HTMLElement>.createTileImage(tile: Tile?, onClickFunction: (Event) -> Unit = {}): TileImage {
-            var outer: HTMLDivElement? = null
-            var inner: HTMLDivElement? = null
+        fun TagConsumer<HTMLElement>.tileImage(tile: Tile?, onClickFunction: (Event) -> Unit = {}): TileImage {
+            var outer: HTMLDivElement by Delegates.notNull()
+            var inner: HTMLDivElement by Delegates.notNull()
             injectRoot { outer = it as HTMLDivElement }
                 .div(classes = "mr-tile") {
                     injectRoot { inner = it as HTMLDivElement }
