@@ -44,7 +44,7 @@ data class CalculatorModel(
         )
 
     private fun withError(tile: Tile, message: String): CalculatorModel =
-        evolve(errorMessage = arrayOf(ErrorMessage(tile = tile, message = message)))
+        evolve(errorMessage = arrayOf(ErrorMessage(tile = tile, figure = selectedFigure, message = message)))
 
     private val availableTiles = run {
         val allTilesInGame =

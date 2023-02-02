@@ -41,12 +41,11 @@ class HandComponent(
     private val model: UIModel,
 ) : AbstractComponent(parent = parent), UIModelChangeListener {
     private var selectableDivs: Map<Figure, HTMLDivElement> by Delegates.notNull()
+    private var figureErrorOverlays: Map<Figure, ErrorOverlay?> by Delegates.notNull()
     private var figureTiles: MutableMap<Figure, List<TileImage>> = mutableMapOf()
     private var figureSwitches: Map<Figure, Checkbox?> by Delegates.notNull()
     private var figurePopovers: Map<Figure, Popover> by Delegates.notNull()
     private val btnUndo = document.getElement<HTMLButtonElement>("mr_btn_undo")
-
-    private var errorOverlay: ErrorOverlay by Delegates.notNull()
 
     init {
         model.registerChangeListener(this)
@@ -69,17 +68,15 @@ class HandComponent(
                 .toMap()
         }
             .div(classes = "flex-fill mr-figure-list") {
-                figureSwitches = Figure.values().associateWith { divForFigure(it) }
+                val pairs = Figure.values().associateWith { divForFigure(it) }
+                figureSwitches = pairs.mapValues { it.value.first }
+                figureErrorOverlays = pairs.mapValues { it.value.second }
             }
-
-        // error overlay
-        parent.parentElement!!.append {
-            errorOverlay = errorOverlay()
-        }
     }
 
-    private fun TagConsumer<HTMLElement>.divForFigure(figure: Figure): Checkbox? {
+    private fun TagConsumer<HTMLElement>.divForFigure(figure: Figure): Pair<Checkbox?, ErrorOverlay?> {
         var checkbox: Checkbox? = null
+        var errorOverlay: ErrorOverlay? = null
         div(classes = "row g-0") {
             val isBonus = figure == Figure.Bonus
             div(classes = "${isBonus.toString("col", "col-8 col-md-9")} mr-figure border") {
@@ -100,8 +97,9 @@ class HandComponent(
                         verticalSwitch("Closed", "Open") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
                 }
             }
+            errorOverlay = errorOverlay()
         }
-        return checkbox
+        return checkbox to errorOverlay
     }
 
     private fun handleFigureClick(figure: Figure) {
@@ -154,9 +152,14 @@ class HandComponent(
                     (model.calculatorModel.hand.getCombination(figure)?.visibility
                         ?: Combination.Visibility.Open) == Combination.Visibility.Open
             }
-        }
 
-        errorOverlay.show(model.calculatorModel.errorMessages.mapNotNull { it.message }, ERROR_MESSAGE_DELAY)
+            figureErrorOverlays[figure]?.show(
+                messages = model.calculatorModel.errorMessages
+                    .filter { it.figure == figure }
+                    .mapNotNull { it.message },
+                delay = ERROR_MESSAGE_DELAY
+            )
+        }
     }
 
     override fun modelChanged(model: UIModel) {

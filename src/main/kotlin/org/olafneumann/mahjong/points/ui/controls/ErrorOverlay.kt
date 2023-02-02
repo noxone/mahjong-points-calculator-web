@@ -47,10 +47,10 @@ class ErrorOverlay private constructor(
             var outer: HTMLDivElement by Delegates.notNull()
             var inner: HTMLDivElement by Delegates.notNull()
             injectRoot { outer = it as HTMLDivElement }
-                .div(classes = "mr-error-overlay p-3") {
+                .div(classes = "mr-error-overlay") {
                     style = "display:none;"
                     injectRoot { inner = it as HTMLDivElement }
-                        .div(classes = "alert alert-danger") {
+                        .div(classes = "alert alert-danger p-2 m-0 h-100 d-flex flex-column justify-content-center") {
                             role = "alert"
                             +"Error Message"
                         }

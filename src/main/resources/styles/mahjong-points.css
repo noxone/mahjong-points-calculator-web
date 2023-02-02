@@ -49,9 +49,10 @@ h1 {
   position: absolute;
   top: 0;
   z-index: 2000;
-  right: 0.5rem;
+  right: 0;
   left: 0;
-  opacity: 90%;
+  opacity: 98%;
+  height: 100%;
 }
 
 .mr-error-overlay span+span {
@@ -135,6 +136,10 @@ h1 {
 
 .mr-radio label {
   display: block;
+}
+
+.mr-figure-list > div {
+  position: relative;
 }
 
 .mr-figure-list > div+div {
