@@ -84,37 +84,6 @@ fun <T> TagConsumer<HTMLElement>.radioGroup(
     }
 }
 
-fun TagConsumer<HTMLElement>.checkbox(
-    labelEnabled: String,
-    labelDisabled: String? = null,
-    property: KMutableProperty0<HTMLInputElement>? = null,
-    action: (Boolean) -> Unit = {}
-) {
-    var checkbox: HTMLInputElement by Delegates.notNull()
-    var label: HTMLLabelElement by Delegates.notNull()
-
-    injectRoot {
-        checkbox = it.getAllChildren<HTMLInputElement>().first()
-        label = it.getAllChildren<HTMLLabelElement>().first()
-    }.capture(property) {
-        val checkboxId = nextHtmlId
-        div(classes = "form-check") {
-            input(type = InputType.checkBox, classes = "form-check-input") {
-                value = ""
-                id = checkboxId
-                onInputFunction = {
-                    label.innerText = if (!checkbox.checked) !labelEnabled else !(labelDisabled ?: labelEnabled)
-                    action((it.target!! as HTMLInputElement).checked)
-                }
-            }
-            label(classes = "form-check-label") {
-                htmlFor = checkboxId
-                +!labelEnabled
-            }
-        }
-    }
-}
-
 fun TagConsumer<HTMLElement>.verticalSwitch(
     labelEnabled: String,
     labelDisabled: String? = null,
