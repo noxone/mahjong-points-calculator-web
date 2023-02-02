@@ -1,9 +1,13 @@
 package org.olafneumann.mahjong.points.game
 
+import org.olafneumann.mahjong.points.util.IdGenerator
+
 data class Combination(
     val type: Type,
     val tile: Tile,
     val visibility: Visibility = Visibility.Closed,
+    // ID is required so JS doesn't think two objects with the same content are the same object
+    val id: Int = idGenerator.next,
 ) {
     fun getTiles(): List<Tile> =
         when (type) {
@@ -36,5 +40,9 @@ data class Combination(
         companion object {
             fun from(open: Boolean) = if (open) Open else Closed
         }
+    }
+
+    companion object {
+        private val idGenerator = IdGenerator()
     }
 }
