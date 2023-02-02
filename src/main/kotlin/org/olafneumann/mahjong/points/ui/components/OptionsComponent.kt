@@ -40,61 +40,73 @@ class OptionsComponent(
             form {
                 div(classes = "row g-0") {
                     div(classes = "col-6 col-lg-12") {
-                        radioGroup(
-                            "Prevailing Wind",
-                            Wind.values().asList(),
-                            this@OptionsComponent::rdaPrevailingWind
-                        ) {
-                            model.setGameModifiers(gameModifiers.copy(prevailingWind = it))
-                        }
-                        radioGroup("Seat Wind", Wind.values().asList(), this@OptionsComponent::rdaSeatWind) {
-                            model.setSeatWind(it)
-                        }
                         div(classes = "mt-3") {
-                            checkbox(
-                                "Schlussziegel von der Mauer",
-                                property = this@OptionsComponent::chkSchlussziegelVonDerMauer
-                            ) {
-                                model.setGameModifiers(gameModifiers.copy(schlussziegelVonMauer = it))
-                            }
-                            checkbox(
-                                "Schlussziegel ist einzig möglicher Ziegel",
-                                property = this@OptionsComponent::chkSchlussziegelIstEinzigMoeglicherZiegel
-                            ) { model.setGameModifiers(gameModifiers.copy(schlussziegelEinzigMoeglicherZiegel = it)) }
+                            createWindRadioButtons()
+                            createMahjongCheckboxes1()
                         }
                     }
                     div(classes = "col-6 col-lg-12") {
-                        checkbox(
-                            "Schlussziegel komplettiert Paar",
-                            property = this@OptionsComponent::chkSchlussziegelKomplettiertPaar
-                        ) {
-                            model.setGameModifiers(gameModifiers.copy(schlussziegelKomplettiertPaar = it))
-                        }
-                        checkbox(
-                            "Schlussziegel von der toten Mauer",
-                            property = this@OptionsComponent::chkSchlussziegelVonDerTotenMauer
-                        ) {
-                            model.setGameModifiers(gameModifiers.copy(schlussziegelVonToterMauer = it))
-                        }
-                        checkbox(
-                            "mit dem letzten Ziegel der Mauer gewonnen",
-                            property = this@OptionsComponent::chkMitDemLetztenZiegel
-                        ) {
-                            model.setGameModifiers(gameModifiers.copy(mitDemLetztenZiegelDerMauerGewonnen = it))
-                        }
-                        checkbox(
-                            "Schlussziegel ist abgelegter Ziegel nach Abbau der Mauer",
-                            property = this@OptionsComponent::chkSchlussziegelIstAbgelegterZiegelNachLetztem
-                        ) { model.setGameModifiers(gameModifiers.copy(schlussziegelIstAbgelegterZiegelNachAbbauDerMauer = it)) }
-                        checkbox("Beraubung des Kang", property = this@OptionsComponent::chkBeraubungDesKang) {
-                            model.setGameModifiers(gameModifiers.copy(beraubungDesKang = it))
-                        }
-                        checkbox("Mahjong-Ruf zu Beginn", property = this@OptionsComponent::chkMahjongZuBeginn) {
-                            model.setGameModifiers(gameModifiers.copy(mahjongAtBeginning = it))
-                        }
+                        createMahjongCheckboxes2()
                     }
                 }
             }
+        }
+    }
+
+    private fun TagConsumer<HTMLElement>.createWindRadioButtons() {
+        radioGroup(
+            "Prevailing Wind",
+            Wind.values().asList(),
+            this@OptionsComponent::rdaPrevailingWind
+        ) {
+            model.setGameModifiers(gameModifiers.copy(prevailingWind = it))
+        }
+        radioGroup("Seat Wind", Wind.values().asList(), this@OptionsComponent::rdaSeatWind) {
+            model.setSeatWind(it)
+        }
+    }
+
+    private fun TagConsumer<HTMLElement>.createMahjongCheckboxes1() {
+        checkbox(
+            "Schlussziegel von der Mauer",
+            property = this@OptionsComponent::chkSchlussziegelVonDerMauer
+        ) {
+            model.setGameModifiers(gameModifiers.copy(schlussziegelVonMauer = it))
+        }
+        checkbox(
+            "Schlussziegel ist einzig möglicher Ziegel",
+            property = this@OptionsComponent::chkSchlussziegelIstEinzigMoeglicherZiegel
+        ) { model.setGameModifiers(gameModifiers.copy(schlussziegelEinzigMoeglicherZiegel = it)) }
+    }
+
+    private fun TagConsumer<HTMLElement>.createMahjongCheckboxes2() {
+        checkbox(
+            "Schlussziegel komplettiert Paar",
+            property = this@OptionsComponent::chkSchlussziegelKomplettiertPaar
+        ) {
+            model.setGameModifiers(gameModifiers.copy(schlussziegelKomplettiertPaar = it))
+        }
+        checkbox(
+            "Schlussziegel von der toten Mauer",
+            property = this@OptionsComponent::chkSchlussziegelVonDerTotenMauer
+        ) {
+            model.setGameModifiers(gameModifiers.copy(schlussziegelVonToterMauer = it))
+        }
+        checkbox(
+            "mit dem letzten Ziegel der Mauer gewonnen",
+            property = this@OptionsComponent::chkMitDemLetztenZiegel
+        ) {
+            model.setGameModifiers(gameModifiers.copy(mitDemLetztenZiegelDerMauerGewonnen = it))
+        }
+        checkbox(
+            "Schlussziegel ist abgelegter Ziegel nach Abbau der Mauer",
+            property = this@OptionsComponent::chkSchlussziegelIstAbgelegterZiegelNachLetztem
+        ) { model.setGameModifiers(gameModifiers.copy(schlussziegelIstAbgelegterZiegelNachAbbauDerMauer = it)) }
+        checkbox("Beraubung des Kang", property = this@OptionsComponent::chkBeraubungDesKang) {
+            model.setGameModifiers(gameModifiers.copy(beraubungDesKang = it))
+        }
+        checkbox("Mahjong-Ruf zu Beginn", property = this@OptionsComponent::chkMahjongZuBeginn) {
+            model.setGameModifiers(gameModifiers.copy(mahjongAtBeginning = it))
         }
     }
 
