@@ -4,7 +4,6 @@ import kotlinx.browser.document
 import kotlinx.html.ButtonType
 import kotlinx.html.TagConsumer
 import kotlinx.html.button
-import kotlinx.html.dom.append
 import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.span
@@ -32,8 +31,6 @@ import org.olafneumann.mahjong.points.util.toString
 import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
-import org.w3c.dom.HTMLInputElement
-import org.w3c.dom.events.Event
 import kotlin.properties.Delegates
 
 class HandComponent(
@@ -49,7 +46,6 @@ class HandComponent(
 
     init {
         model.registerChangeListener(this)
-        document.addEventListener("click", { hideAllPopovers() })
         btnUndo.onclick = {
             // TODO
         }
@@ -114,20 +110,24 @@ class HandComponent(
         }
     }
 
-    private fun createPopover(element: HTMLElement, figure: Figure) =
-        Popover(
+    private fun createPopover(element: HTMLElement, figure: Figure): Popover {
+        var popover: Popover by Delegates.notNull()
+        popover = Popover(
             element = element,
             placement = Popover.Placement.Left,
             trigger = Popover.Trigger.Manual,
+            hideOnOutsideClick = true,
         ) {
             button(classes = "btn btn-danger", type = ButtonType.button) {
                 +!"Reset"
                 onClickFunction = {
                     model.reset(figure)
-                    hideAllPopovers()
+                    popover.hide()
                 }
             }
         }
+        return popover
+    }
 
     override fun updateUI() {
         selectableDivs.forEach { (figure, div) ->

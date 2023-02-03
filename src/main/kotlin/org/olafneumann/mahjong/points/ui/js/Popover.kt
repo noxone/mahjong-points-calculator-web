@@ -23,7 +23,8 @@ class Popover(
     private val title: String? = null,
     private val trigger: Trigger = Trigger.Click,
     hideOnOutsideClick: Boolean = false,
-    onShown: () -> Unit = {},
+    //onShown: () -> Unit = {},
+    //onHidden: () -> Unit = {},
     private val onCloseButtonClick: Popover.() -> Unit = { hide() },
     private val content: TagConsumer<HTMLElement>.() -> HTMLElement,
 ) {
@@ -32,11 +33,12 @@ class Popover(
     init {
         jquery = element.asJQuery()
         jquery.popover(createOptionsJson())
-        jquery.on("shown.bs.popover", onShown)
+        //jquery.on("shown.bs.popover", onShown)
+        //jquery.on("hidden.bs.popover", onHidden)
 
         if (hideOnOutsideClick) {
             document.addEventListener("click", {
-                if (isInsidePopover(it.target) /*|| (it.target as HTMLElement).asJQuery() == jquery*/) {
+                if (isInsidePopover(it.target)) {
                     hide()
                 }
             })
@@ -59,10 +61,6 @@ class Popover(
     fun hide() = jquery.popover("hide")
     fun dispose() = jquery.popover("dispose")
     fun toggle() = jquery.popover("toggle")
-
-    fun hideIfClickOutside(event: Event) {
-
-    }
 
     private fun createOptionsJson() =
         mapOf(
