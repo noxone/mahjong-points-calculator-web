@@ -91,7 +91,7 @@ class TileImage private constructor(
                         }
                     this.onClickFunction = onClickFunction
                 }
-            return TileImage(outer = outer!!, inner = inner!!, tile = tile)
+            return TileImage(outer = outer, inner = inner, tile = tile)
         }
     }
 }

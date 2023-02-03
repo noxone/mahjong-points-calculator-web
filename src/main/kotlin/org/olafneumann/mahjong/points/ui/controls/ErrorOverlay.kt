@@ -55,7 +55,7 @@ class ErrorOverlay private constructor(
                             +"Error Message"
                         }
                 }
-            return ErrorOverlay(outer = outer!!, inner = inner!!)
+            return ErrorOverlay(outer = outer, inner = inner)
         }
     }
 }
