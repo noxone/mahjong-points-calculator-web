@@ -51,5 +51,9 @@ object StringKeys {
     const val ERR_TILE_DOES_NOT_FIT_TO_SET = "Tile does not fit to selected set."
     const val ERR_NO_TILE_LEFT_FOR_KANG = "No tile left for Kang."
     const val ERR_TILE_INVALID_FOR_KANG = "Invalid tile for Kang."
+    const val ERR_CHOW_ALREADY_FULL = "Chow.Already.Full"
+    const val ERR_KANG_ALREADY_FULL = "Kang.Already.Full"
+    const val ERR_NOT_BONUS_TILE = "Not.Bonus.Tile"
+
 
 }

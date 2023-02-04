@@ -114,6 +114,9 @@ class Language(
                         StringKeys.ERR_TILE_DOES_NOT_FIT_TO_SET to "Tile does not fit to selected set.",
                         StringKeys.ERR_NO_TILE_LEFT_FOR_KANG to "No tile left for Kang.",
                         StringKeys.ERR_TILE_INVALID_FOR_KANG to "Invalid tile for Kang.",
+                        StringKeys.ERR_CHOW_ALREADY_FULL to "Chow is already full.",
+                        StringKeys.ERR_KANG_ALREADY_FULL to "Kang is already full.",
+                        StringKeys.ERR_NOT_BONUS_TILE to "Not a bonus tile.",
 
                         )
                 )
@@ -211,6 +214,9 @@ class Language(
                         StringKeys.ERR_TILE_DOES_NOT_FIT_TO_SET to "Ziegel passt nicht zur markierten Figur.",
                         StringKeys.ERR_NO_TILE_LEFT_FOR_KANG to "Nicht genug Ziegel für Kang.",
                         StringKeys.ERR_TILE_INVALID_FOR_KANG to "Ungültiger Ziegel für Kang.",
+                        StringKeys.ERR_CHOW_ALREADY_FULL to "Chi ist schon fertig.",
+                        StringKeys.ERR_KANG_ALREADY_FULL to "Kang ist schon fertig.",
+                        StringKeys.ERR_NOT_BONUS_TILE to "Kein Bonusziegel",
 
                         )
                 )
