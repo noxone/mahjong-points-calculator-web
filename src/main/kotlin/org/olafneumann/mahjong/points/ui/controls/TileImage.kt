@@ -5,8 +5,8 @@ import kotlinx.html.TagConsumer
 import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
 import org.olafneumann.mahjong.points.game.Tile
-import org.olafneumann.mahjong.points.ui.html.injectRoot
 import org.olafneumann.mahjong.points.ui.html.mrTile
+import org.olafneumann.mahjong.points.ui.html.returningRoot
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
@@ -82,16 +82,17 @@ class TileImage private constructor(
         private const val BLINK_DURATION = 920
 
         fun TagConsumer<HTMLElement>.tileImage(tile: Tile?, onClickFunction: (Event) -> Unit = {}): TileImage {
-            var outer: HTMLDivElement by Delegates.notNull()
             var inner: HTMLDivElement by Delegates.notNull()
-            injectRoot { outer = it as HTMLDivElement }
-                .div(classes = "mr-tile") {
-                    injectRoot { inner = it as HTMLDivElement }
-                        .div(classes = "mr-tile-face") {
+            val outer: HTMLDivElement = returningRoot {
+                div(classes = "mr-tile") {
+                    inner = returningRoot {
+                        div(classes = "mr-tile-face") {
                         }
+                    }
                     this.onClickFunction = onClickFunction
                 }
-            return TileImage(outer = outer!!, inner = inner!!, tile = tile)
+            }
+            return TileImage(outer = outer, inner = inner, tile = tile)
         }
     }
 }

@@ -1,27 +1,31 @@
 package org.olafneumann.mahjong.points.ui.controls
 
+import kotlinx.browser.document
 import kotlinx.html.TagConsumer
 import kotlinx.html.div
+import kotlinx.html.dom.create
 import kotlinx.html.h5
 import kotlinx.html.js.div
 import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.ui.html.bsButton
 import org.olafneumann.mahjong.points.ui.html.closeButton
-import org.olafneumann.mahjong.points.ui.html.injectRoot
+import org.olafneumann.mahjong.points.ui.html.onModalHiddenFunction
+import org.olafneumann.mahjong.points.ui.html.returningRoot
 import org.olafneumann.mahjong.points.ui.js.toJson
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
+import kotlin.properties.Delegates
 
-
-fun TagConsumer<HTMLElement>.modal(
+private fun TagConsumer<HTMLElement>.modal(
     title: String,
     buttons: List<Button> = emptyList(),
-    mainBlock: TagConsumer<HTMLElement>.() -> Unit = {}
-) =
-    injectRoot { element ->
-        element.addEventListener("hidden.bs.modal", { element.remove() })
-    }
-        .div(classes = "modal fade") {
+    mainBlock: TagConsumer<HTMLElement>.() -> Unit = {},
+    getModal: () -> Modal,
+): HTMLElement {
+    var element: HTMLElement by Delegates.notNull()
+    element = returningRoot {
+        div(classes = "modal fade") {
+            onModalHiddenFunction = { element.remove() }
             div(classes = "modal-dialog modal-dialog-centered") {
                 div(classes = "modal-content") {
                     div(classes = "modal-header") {
@@ -32,22 +36,38 @@ fun TagConsumer<HTMLElement>.modal(
                         mainBlock()
                     }
                     div(classes = "modal-footer") {
-                        buttons.forEach {
-                            bsButton(label = it.title, colorClass = it.colorClass, onClickFunction = it.onClickFunction)
+                        buttons.forEach { button ->
+                            bsButton(label = button.title, colorClass = button.colorClass, onClickFunction = { event ->
+                                button.onClickFunction.invoke(getModal(), event)
+                            })
                         }
                     }
                 }
             }
         }
+    }
+    return element
+}
 
 data class Button(
     val title: String,
     val colorClass: String = "primary",
-    val onClickFunction: (Event) -> Unit
+    val onClickFunction: Modal.(Event) -> Unit
 )
 
+fun createModal(
+    title: String,
+    buttons: List<Button> = emptyList(),
+    mainBlock: TagConsumer<HTMLElement>.() -> Unit = {}
+): Modal {
+    var modal: Modal by Delegates.notNull()
+    val element = document.create.modal(title = title, buttons = buttons, mainBlock = mainBlock, getModal = { modal })
+    modal = createModal(element = element)
+    return modal
+}
+
 @Suppress("UnusedPrivateMember") // both members are used in JS code
-fun createModal(element: HTMLElement, static: Boolean = true): Modal {
+private fun createModal(element: HTMLElement, static: Boolean = true): Modal {
     val options = mapOf(
         "backdrop" to if (static) "static" else null,
         "focus" to true,

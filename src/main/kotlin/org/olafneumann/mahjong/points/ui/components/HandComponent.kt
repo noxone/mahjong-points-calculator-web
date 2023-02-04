@@ -4,11 +4,11 @@ import kotlinx.browser.document
 import kotlinx.html.ButtonType
 import kotlinx.html.TagConsumer
 import kotlinx.html.button
-import kotlinx.html.dom.append
 import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.span
 import org.olafneumann.mahjong.points.game.Combination
+import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.model.Figure
 import org.olafneumann.mahjong.points.model.getCombination
@@ -19,12 +19,8 @@ import org.olafneumann.mahjong.points.ui.controls.ErrorOverlay
 import org.olafneumann.mahjong.points.ui.controls.ErrorOverlay.Companion.errorOverlay
 import org.olafneumann.mahjong.points.ui.controls.TileImage
 import org.olafneumann.mahjong.points.ui.controls.TileImage.Companion.tileImage
-import org.olafneumann.mahjong.points.ui.html.MrAttributes
-import org.olafneumann.mahjong.points.ui.html.filterAttributeIsPresent
-import org.olafneumann.mahjong.points.ui.html.getAllChildren
 import org.olafneumann.mahjong.points.ui.html.getElement
-import org.olafneumann.mahjong.points.ui.html.injectRoot
-import org.olafneumann.mahjong.points.ui.html.mrFigure
+import org.olafneumann.mahjong.points.ui.html.returningRoot
 import org.olafneumann.mahjong.points.ui.js.Popover
 import org.olafneumann.mahjong.points.ui.model.UIModel
 import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
@@ -32,24 +28,21 @@ import org.olafneumann.mahjong.points.util.toString
 import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
-import org.w3c.dom.HTMLInputElement
-import org.w3c.dom.events.Event
 import kotlin.properties.Delegates
 
 class HandComponent(
-    private val parent: HTMLElement,
+    parent: HTMLElement,
     private val model: UIModel,
 ) : AbstractComponent(parent = parent), UIModelChangeListener {
-    private var selectableDivs: Map<Figure, HTMLDivElement> by Delegates.notNull()
-    private var figureErrorOverlays: Map<Figure, ErrorOverlay?> by Delegates.notNull()
+    private var selectableDivs: MutableMap<Figure, HTMLDivElement> = mutableMapOf()
+    private var figureErrorOverlays: MutableMap<Figure, ErrorOverlay?> = mutableMapOf()
     private var figureTiles: MutableMap<Figure, List<TileImage>> = mutableMapOf()
-    private var figureSwitches: Map<Figure, Checkbox?> by Delegates.notNull()
-    private var figurePopovers: Map<Figure, Popover> by Delegates.notNull()
+    private var figureSwitches: MutableMap<Figure, Checkbox?> = mutableMapOf()
+    private var figurePopovers: MutableMap<Figure, Popover> = mutableMapOf()
     private val btnUndo = document.getElement<HTMLButtonElement>("mr_btn_undo")
 
     init {
         model.registerChangeListener(this)
-        document.addEventListener("click", { hideAllPopovers() })
         btnUndo.onclick = {
             // TODO
         }
@@ -60,46 +53,49 @@ class HandComponent(
     }
 
     override fun TagConsumer<HTMLElement>.createUI() {
-        injectRoot { element ->
-            selectableDivs = element.getAllChildren<HTMLDivElement>()
-                .filterAttributeIsPresent(MrAttributes.FIGURE)
-                .associateBy { Figure.valueOf(it.mrFigure!!) }
-            figurePopovers = selectableDivs.map { it.key to createPopover(it.value, it.key) }
-                .toMap()
+        div(classes = "flex-fill mr-figure-list") {
+            Figure.values()
+                .forEach { divForFigure(it) }
         }
-            .div(classes = "flex-fill mr-figure-list") {
-                val pairs = Figure.values().associateWith { divForFigure(it) }
-                figureSwitches = pairs.mapValues { it.value.first }
-                figureErrorOverlays = pairs.mapValues { it.value.second }
-            }
     }
 
-    private fun TagConsumer<HTMLElement>.divForFigure(figure: Figure): Pair<Checkbox?, ErrorOverlay?> {
-        var checkbox: Checkbox? = null
-        var errorOverlay: ErrorOverlay? = null
+    private fun TagConsumer<HTMLElement>.divForFigure(figure: Figure) {
         div(classes = "row g-0") {
-            val isBonus = figure == Figure.Bonus
-            div(classes = "${isBonus.toString("col", "col-8 col-md-9")} mr-figure border") {
-                span { +!figure.title }
-                div(classes = "mr-tile-container") {
-                    figureTiles[figure] = (1..figure.maxTilesPerFigure)
-                        .map { tileImage(null) }
-                }
-                mrFigure = figure.name
-                onClickFunction = {
-                    it.stopPropagation()
-                    handleFigureClick(figure)
+            selectableDivs[figure] = returningRoot {
+                div(classes = "${(!figure.canBeConcealed).toString("col", "col-8 col-md-9")} mr-figure border") {
+                    span { +!figure.title }
+                    div(classes = "mr-tile-container") {
+                        figureTiles[figure] = (1..figure.maxTilesPerFigure)
+                            .map { tileImage(null) }
+                    }
+                    onClickFunction = {
+                        it.stopPropagation()
+                        handleFigureClick(figure)
+                    }
                 }
             }
-            if (figure != Figure.Bonus) {
-                div(classes = "${isBonus.toString("col", "col-4 col-md-3")} px-1") {
-                    checkbox =
+            figurePopovers[figure] = createPopover(element = selectableDivs[figure]!!, figure = figure)
+
+            if (figure.canBeConcealed) {
+                div(classes = "col-4 col-md-3 px-1") {
+                    onClickFunction = { handleSwitchClick(figure) }
+                    figureSwitches[figure] =
                         verticalSwitch("Closed", "Open") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
                 }
             }
-            errorOverlay = errorOverlay()
+            figureErrorOverlays[figure] = errorOverlay()
         }
-        return checkbox to errorOverlay
+    }
+
+    private fun handleSwitchClick(figure: Figure) {
+        val combination = model.calculatorModel.hand.getCombination(figure)
+        if (combination == null) {
+            model.select(figure)
+            figureErrorOverlays[figure]!!.show(
+                messages = listOf(StringKeys.ERR_SELECT_TILES_FIRST),
+                delay = ERROR_MESSAGE_DELAY
+            )
+        }
     }
 
     private fun handleFigureClick(figure: Figure) {
@@ -114,20 +110,24 @@ class HandComponent(
         }
     }
 
-    private fun createPopover(element: HTMLElement, figure: Figure) =
-        Popover(
+    private fun createPopover(element: HTMLElement, figure: Figure): Popover {
+        var popover: Popover by Delegates.notNull()
+        popover = Popover(
             element = element,
             placement = Popover.Placement.Left,
             trigger = Popover.Trigger.Manual,
+            hideOnOutsideClick = true,
         ) {
             button(classes = "btn btn-danger", type = ButtonType.button) {
                 +!"Reset"
                 onClickFunction = {
                     model.reset(figure)
-                    hideAllPopovers()
+                    popover.hide()
                 }
             }
         }
+        return popover
+    }
 
     override fun updateUI() {
         selectableDivs.forEach { (figure, div) ->

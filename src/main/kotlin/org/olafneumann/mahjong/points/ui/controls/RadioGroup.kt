@@ -9,7 +9,7 @@ import kotlinx.html.js.div
 import kotlinx.html.js.onInputFunction
 import kotlinx.html.label
 import org.olafneumann.mahjong.points.lang.not
-import org.olafneumann.mahjong.points.ui.html.injectRoot
+import org.olafneumann.mahjong.points.ui.html.returningRoot
 import org.olafneumann.mahjong.points.util.nextHtmlId
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
@@ -41,8 +41,8 @@ class RadioGroup<T> private constructor(
                 div(classes = "btn-group btn-group-sm") {
                     items.forEach { item ->
                         val radioId = nextHtmlId
-                        injectRoot { map[item] = it as HTMLInputElement }
-                            .input(type = InputType.radio, classes = "btn-check", name = radioId) {
+                        map[item] = returningRoot {
+                            input(type = InputType.radio, classes = "btn-check", name = radioId) {
                                 autoComplete = false
                                 id = radioId
                                 onInputFunction = {
@@ -52,6 +52,7 @@ class RadioGroup<T> private constructor(
                                     }
                                 }
                             }
+                        }
                         label(classes = "btn btn-outline-primary") {
                             htmlFor = radioId
                             +!item.toString()

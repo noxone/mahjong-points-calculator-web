@@ -18,6 +18,7 @@ import kotlinx.html.title
 import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.ui.js.toJson
 import org.olafneumann.mahjong.points.util.nextHtmlId
+import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.HTMLLabelElement
@@ -32,19 +33,20 @@ fun TagConsumer<HTMLElement>.bsButton(
     colorClass: String = "primary",
     id: String? = null,
     onClickFunction: (Event) -> Unit = {}
-) =
+): HTMLButtonElement = returningRoot {
     button(classes = "btn btn-$colorClass", type = ButtonType.button) {
         +!label
         tooltip?.let { title = !it }
         id?.let { this.id = it }
         this.onClickFunction = onClickFunction
     }
+}
 
 fun TagConsumer<HTMLElement>.closeButton(
     tooltip: String? = null,
     additionalAttributes: List<Pair<String, String>> = emptyList(),
     onClickFunction: (Event) -> Unit = {}
-) =
+): HTMLButtonElement = returningRoot {
     button(classes = "btn-close", type = ButtonType.button) {
         additionalAttributes.forEach {
             attributes[it.first] = it.second
@@ -53,3 +55,4 @@ fun TagConsumer<HTMLElement>.closeButton(
         tooltip?.let { this.title = !it }
         this.onClickFunction = onClickFunction
     }
+}

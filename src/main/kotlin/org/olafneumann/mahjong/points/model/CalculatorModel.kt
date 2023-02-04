@@ -73,7 +73,7 @@ data class CalculatorModel(
             )
         }
         if (selectedFigure == Bonus) {
-            return withError(tile, "Not.Bonus.Tile") // TODO: StringKey
+            return withError(tile, StringKeys.ERR_NOT_BONUS_TILE)
         }
 
         if (tile.isTrump && hand.containsPungWith(tile)) {
@@ -215,13 +215,11 @@ data class CalculatorModel(
             }
 
             Chow -> {
-                // TODO: StringKey
-                return withError(tile, "Chow.Already.Full")
+                return withError(tile, StringKeys.ERR_CHOW_ALREADY_FULL)
             }
 
             Kang -> {
-                // TODO StringKey
-                return withError(tile, "Kang.Already.Full")
+                return withError(tile, StringKeys.ERR_KANG_ALREADY_FULL)
             }
 
             FinishingPair -> {
