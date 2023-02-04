@@ -10,13 +10,13 @@ import org.olafneumann.mahjong.points.model.Figure.Figure3
 import org.olafneumann.mahjong.points.model.Figure.Figure4
 import org.olafneumann.mahjong.points.model.Figure.Pair
 
-enum class Figure {
+enum class Figure(val canBeConcealed: Boolean = true) {
     Figure1,
     Figure2,
     Figure3,
     Figure4,
-    Pair,
-    Bonus,
+    Pair(canBeConcealed = false),
+    Bonus(canBeConcealed = false),
     ;
 
     val title = name

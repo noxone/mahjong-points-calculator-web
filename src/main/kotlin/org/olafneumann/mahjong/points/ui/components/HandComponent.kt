@@ -60,9 +60,8 @@ class HandComponent(
 
     private fun TagConsumer<HTMLElement>.divForFigure(figure: Figure) {
         div(classes = "row g-0") {
-            val isBonus = figure == Figure.Bonus
             selectableDivs[figure] = returningRoot {
-                div(classes = "${isBonus.toString("col", "col-8 col-md-9")} mr-figure border") {
+                div(classes = "${(!figure.canBeConcealed).toString("col", "col-8 col-md-9")} mr-figure border") {
                     span { +!figure.title }
                     div(classes = "mr-tile-container") {
                         figureTiles[figure] = (1..figure.maxTilesPerFigure)
@@ -76,8 +75,8 @@ class HandComponent(
             }
             figurePopovers[figure] = createPopover(element = selectableDivs[figure]!!, figure = figure)
 
-            if (figure != Figure.Bonus) {
-                div(classes = "${isBonus.toString("col", "col-4 col-md-3")} px-1") {
+            if (figure.canBeConcealed) {
+                div(classes = "col-4 col-md-3 px-1") {
                     figureSwitches[figure]=
                         verticalSwitch("Closed", "Open") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
                 }
