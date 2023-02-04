@@ -157,8 +157,8 @@
 
 <div>
   <ul>
-    <li>200 number of properties</li>
-    <li>155 number of functions</li>
+    <li>202 number of properties</li>
+    <li>156 number of functions</li>
     <li>110 number of classes</li>
     <li>12 number of packages</li>
     <li>47 number of kt files</li>
@@ -170,22 +170,22 @@
 
 <div>
   <ul>
-    <li>2,726 lines of code (loc)</li>
-    <li>2,320 source lines of code (sloc)</li>
-    <li>1,661 logical lines of code (lloc)</li>
-    <li>77 comment lines of code (cloc)</li>
-    <li>331 cyclomatic complexity (mcc)</li>
-    <li>149 cognitive complexity</li>
-    <li>18 number of total code smells</li>
+    <li>2,768 lines of code (loc)</li>
+    <li>2,345 source lines of code (sloc)</li>
+    <li>1,675 logical lines of code (lloc)</li>
+    <li>86 comment lines of code (cloc)</li>
+    <li>333 cyclomatic complexity (mcc)</li>
+    <li>152 cognitive complexity</li>
+    <li>10 number of total code smells</li>
     <li>3% comment source ratio</li>
-    <li>199 mcc per 1,000 lloc</li>
-    <li>10 code smells per 1,000 lloc</li>
+    <li>198 mcc per 1,000 lloc</li>
+    <li>5 code smells per 1,000 lloc</li>
   </ul>
 </div>
 
 
 <h2>Findings</h2>
-<div>Total: 18
+<div>Total: 10
   <h3>complexity: 3</h3>
   <details id="CyclomaticComplexMethod" open="open">
     <summary class="rule-container"><span class="rule">CyclomaticComplexMethod: 1 </span><span class="description">Prefer splitting up complex methods into smaller, easier to test methods.</span></summary>
@@ -207,7 +207,7 @@
     <summary class="rule-container"><span class="rule">LongMethod: 2 </span><span class="description">One method should have one responsibility. Long methods tend to handle many things at once. Prefer smaller methods to make them easier to understand.</span></summary>
 <a href="https://detekt.dev/docs/rules/complexity#longmethod">Documentation</a>
     <ul>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/lang/Language.kt:22:21</span><span class="message">The function get is too long (191). The maximum length is 61.</span>
+      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/lang/Language.kt:22:21</span><span class="message">The function get is too long (199). The maximum length is 61.</span>
         <pre><code><span class="lineno">  19 </span>
 <span class="lineno">  20 </span>    companion object {
 <span class="lineno">  21 </span>        private const val DEFAULT_LANGUAGE = &quot;en&quot;
@@ -229,55 +229,11 @@
       </li>
     </ul>
   </details>
-  <h3>empty-blocks: 1</h3>
-  <details id="EmptyFunctionBlock" open="open">
-    <summary class="rule-container"><span class="rule">EmptyFunctionBlock: 1 </span><span class="description">Empty block of code detected. As they serve no purpose they should be removed.</span></summary>
-<a href="https://detekt.dev/docs/rules/empty-blocks#emptyfunctionblock">Documentation</a>
-    <ul>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/ui/js/Popover.kt:63:42</span><span class="message">This empty block of code can be removed.</span>
-        <pre><code><span class="lineno">  60 </span>    fun dispose() = jquery.popover(&quot;dispose&quot;)
-<span class="lineno">  61 </span>    fun toggle() = jquery.popover(&quot;toggle&quot;)
-<span class="lineno">  62 </span>
-<span class="lineno">  63 </span>    fun hideIfClickOutside(event: Event) <span class="error">{</span>
-<span class="lineno">  64 </span><span class="error"></span>
-<span class="lineno">  65 </span><span class="error">    }</span>
-<span class="lineno">  66 </span>
-</code></pre>
-      </li>
-    </ul>
-  </details>
-  <h3>exceptions: 1</h3>
-  <details id="PrintStackTrace" open="open">
-    <summary class="rule-container"><span class="rule">PrintStackTrace: 1 </span><span class="description">Do not print a stack trace. These debug statements should be removed or replaced with a logger.</span></summary>
-<a href="https://detekt.dev/docs/rules/exceptions#printstacktrace">Documentation</a>
-    <ul>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/MahjongPointCalculator.kt:28:9</span><span class="message">Do not print a stack trace. These debug statements should be removed or replaced with a logger.</span>
-        <pre><code><span class="lineno">  25 </span>        initMahjongPointCalculatorUnsafe()
-<span class="lineno">  26 </span>    } catch (exception: Exception) {
-<span class="lineno">  27 </span>        console.error(exception)
-<span class="lineno">  28 </span>        <span class="error">exception</span>.printStackTrace()
-<span class="lineno">  29 </span>        window.alert(&quot;Unable to initialize RegexGenerator: ${exception.message}&quot;)
-<span class="lineno">  30 </span>    }
-<span class="lineno">  31 </span>}
-</code></pre>
-      </li>
-    </ul>
-  </details>
-  <h3>style: 13</h3>
+  <h3>style: 7</h3>
   <details id="ForbiddenComment" open="open">
-    <summary class="rule-container"><span class="rule">ForbiddenComment: 6 </span><span class="description">Flags a forbidden comment.</span></summary>
+    <summary class="rule-container"><span class="rule">ForbiddenComment: 2 </span><span class="description">Flags a forbidden comment.</span></summary>
 <a href="https://detekt.dev/docs/rules/style#forbiddencomment">Documentation</a>
     <ul>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/model/CalculatorModel.kt:76:54</span><span class="message">This comment contains 'TODO:' that has been defined as forbidden in detekt.</span>
-        <pre><code><span class="lineno">  73 </span>            )
-<span class="lineno">  74 </span>        }
-<span class="lineno">  75 </span>        if (selectedFigure == Bonus) {
-<span class="lineno">  76 </span>            return withError(tile, &quot;Not.Bonus.Tile&quot;) <span class="error">// TODO: StringKey</span>
-<span class="lineno">  77 </span>        }
-<span class="lineno">  78 </span>
-<span class="lineno">  79 </span>        if (tile.isTrump &amp;&amp; hand.containsPungWith(tile)) {
-</code></pre>
-      </li>
       <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/model/CalculatorModel.kt:89:9</span><span class="message">This comment contains 'TODO:' that has been defined as forbidden in detekt.</span>
         <pre><code><span class="lineno">  86 </span>            )
 <span class="lineno">  87 </span>        }
@@ -288,44 +244,14 @@
 <span class="lineno">  92 </span>                return withError(tile, StringKeys.ERR_NO_TILES_LEFT_FOR_PAIR)
 </code></pre>
       </li>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/model/CalculatorModel.kt:218:17</span><span class="message">This comment contains 'TODO:' that has been defined as forbidden in detekt.</span>
-        <pre><code><span class="lineno"> 215 </span>            }
-<span class="lineno"> 216 </span>
-<span class="lineno"> 217 </span>            Chow -&gt; {
-<span class="lineno"> 218 </span>                <span class="error">// TODO: StringKey</span>
-<span class="lineno"> 219 </span>                return withError(tile, &quot;Chow.Already.Full&quot;)
-<span class="lineno"> 220 </span>            }
-<span class="lineno"> 221 </span>
-</code></pre>
-      </li>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/model/CalculatorModel.kt:228:29</span><span class="message">This comment contains 'TODO:' that has been defined as forbidden in detekt.</span>
-        <pre><code><span class="lineno"> 225 </span>            }
-<span class="lineno"> 226 </span>
-<span class="lineno"> 227 </span>            FinishingPair -&gt; {
-<span class="lineno"> 228 </span>                return this <span class="error">// TODO: move here</span>
-<span class="lineno"> 229 </span>            }
-<span class="lineno"> 230 </span>        }
-<span class="lineno"> 231 </span>    }
-</code></pre>
-      </li>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/ui/html/Injector.kt:9:1</span><span class="message">This comment contains 'TODO:' that has been defined as forbidden in detekt.</span>
-        <pre><code><span class="lineno">   6 </span>
-<span class="lineno">   7 </span>// https://github.com/Kotlin/kotlinx.html/wiki/Injector
-<span class="lineno">   8 </span>
-<span class="lineno">   9 </span><span class="error">// TODO: Maybe use this method more</span>
-<span class="lineno">  10 </span>inline fun &lt;reified T : HTMLElement&gt; TagConsumer&lt;HTMLElement&gt;.capture(
-<span class="lineno">  11 </span>    property: KMutableProperty0&lt;T&gt;?,
-<span class="lineno">  12 </span>    block: TagConsumer&lt;HTMLElement&gt;.() -&gt; Unit
-</code></pre>
-      </li>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/ui/html/Injector.kt:17:1</span><span class="message">This comment contains 'TODO:' that has been defined as forbidden in detekt.</span>
-        <pre><code><span class="lineno">  14 </span>    injectRoot { property?.set(it.getAllChildren&lt;T&gt;().first()) }
-<span class="lineno">  15 </span>        .block()
-<span class="lineno">  16 </span>
-<span class="lineno">  17 </span><span class="error">// TODO: Rename this method</span>
-<span class="lineno">  18 </span>inline fun &lt;reified T : HTMLElement, P&gt; TagConsumer&lt;HTMLElement&gt;.capture2(
-<span class="lineno">  19 </span>    property: KMutableProperty0&lt;P&gt;?,
-<span class="lineno">  20 </span>    crossinline mapFunction: (List&lt;T&gt;) -&gt; P,
+      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/model/CalculatorModel.kt:226:29</span><span class="message">This comment contains 'TODO:' that has been defined as forbidden in detekt.</span>
+        <pre><code><span class="lineno"> 223 </span>            }
+<span class="lineno"> 224 </span>
+<span class="lineno"> 225 </span>            FinishingPair -&gt; {
+<span class="lineno"> 226 </span>                return this <span class="error">// TODO: move here</span>
+<span class="lineno"> 227 </span>            }
+<span class="lineno"> 228 </span>        }
+<span class="lineno"> 229 </span>    }
 </code></pre>
       </li>
     </ul>
@@ -386,42 +312,10 @@
       </li>
     </ul>
   </details>
-  <details id="MaxLineLength" open="open">
-    <summary class="rule-container"><span class="rule">MaxLineLength: 1 </span><span class="description">Line detected, which is longer than the defined maximum line length in the code style.</span></summary>
-<a href="https://detekt.dev/docs/rules/style#maxlinelength">Documentation</a>
-    <ul>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/ui/controls/Checkbox.kt:84:13</span><span class="message">Line detected, which is longer than the defined maximum line length in the code style.</span>
-        <pre><code><span class="lineno">  81 </span>            val realLabelDisabled = labelDisabled ?: labelEnabled
-<span class="lineno">  82 </span>            val getLabel: () -&gt; String = { !(if (input.checked) labelEnabled else realLabelDisabled) }
-<span class="lineno">  83 </span>
-<span class="lineno">  84 </span>            <span class="error">div</span>(classes = &quot;d-flex flex-column justify-content-center align-items-center mr-vertical-switch mr-full-height&quot;) {
-<span class="lineno">  85 </span>                div(classes = &quot;form-check form-switch&quot;) {
-<span class="lineno">  86 </span>                    injectRoot {
-<span class="lineno">  87 </span>                        input = it as HTMLInputElement
-</code></pre>
-      </li>
-    </ul>
-  </details>
-  <details id="UnusedPrivateMember" open="open">
-    <summary class="rule-container"><span class="rule">UnusedPrivateMember: 1 </span><span class="description">Private member is unused and should be removed.</span></summary>
-<a href="https://detekt.dev/docs/rules/style#unusedprivatemember">Documentation</a>
-    <ul>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/ui/js/Popover.kt:63:28</span><span class="message">Function parameter `event` is unused.</span>
-        <pre><code><span class="lineno">  60 </span>    fun dispose() = jquery.popover(&quot;dispose&quot;)
-<span class="lineno">  61 </span>    fun toggle() = jquery.popover(&quot;toggle&quot;)
-<span class="lineno">  62 </span>
-<span class="lineno">  63 </span>    fun hideIfClickOutside(<span class="error">event</span>: Event) {
-<span class="lineno">  64 </span>
-<span class="lineno">  65 </span>    }
-<span class="lineno">  66 </span>
-</code></pre>
-      </li>
-    </ul>
-  </details>
 </div>
 
 
-generated with <a href="https://detekt.dev/">detekt version 1.22.0</a> on 2023-02-02 21:38:59 UTC.
+generated with <a href="https://detekt.dev/">detekt version 1.22.0</a> on 2023-02-04 22:24:08 UTC.
 
 </body>
 </html>
