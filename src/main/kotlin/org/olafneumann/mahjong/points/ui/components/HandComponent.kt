@@ -8,6 +8,7 @@ import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.span
 import org.olafneumann.mahjong.points.game.Combination
+import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.model.Figure
 import org.olafneumann.mahjong.points.model.getCombination
@@ -77,11 +78,23 @@ class HandComponent(
 
             if (figure.canBeConcealed) {
                 div(classes = "col-4 col-md-3 px-1") {
-                    figureSwitches[figure]=
+                    onClickFunction = { handleSwitchClick(figure) }
+                    figureSwitches[figure] =
                         verticalSwitch("Closed", "Open") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
                 }
             }
             figureErrorOverlays[figure] = errorOverlay()
+        }
+    }
+
+    private fun handleSwitchClick(figure: Figure) {
+        val combination = model.calculatorModel.hand.getCombination(figure)
+        if (combination == null) {
+            model.select(figure)
+            figureErrorOverlays[figure]!!.show(
+                messages = listOf(StringKeys.ERR_SELECT_TILES_FIRST),
+                delay = ERROR_MESSAGE_DELAY
+            )
         }
     }
 

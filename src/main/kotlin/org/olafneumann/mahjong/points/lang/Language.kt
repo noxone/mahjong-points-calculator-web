@@ -117,6 +117,7 @@ class Language(
                         StringKeys.ERR_CHOW_ALREADY_FULL to "Chow is already full.",
                         StringKeys.ERR_KANG_ALREADY_FULL to "Kang is already full.",
                         StringKeys.ERR_NOT_BONUS_TILE to "Not a bonus tile.",
+                        StringKeys.ERR_SELECT_TILES_FIRST to "Please select tiles first.",
 
                         )
                 )
@@ -217,6 +218,7 @@ class Language(
                         StringKeys.ERR_CHOW_ALREADY_FULL to "Chi ist schon fertig.",
                         StringKeys.ERR_KANG_ALREADY_FULL to "Kang ist schon fertig.",
                         StringKeys.ERR_NOT_BONUS_TILE to "Kein Bonusziegel",
+                        StringKeys.ERR_SELECT_TILES_FIRST to "Bitte erst Ziegel auswählen.",
 
                         )
                 )

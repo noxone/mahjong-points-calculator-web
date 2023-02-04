@@ -16,8 +16,8 @@ import org.w3c.dom.HTMLElement
 import kotlin.properties.Delegates
 
 class ErrorOverlay private constructor(
-    val outer: HTMLDivElement,
-    val inner: HTMLDivElement,
+    private val outer: HTMLDivElement,
+    private val inner: HTMLDivElement,
 ) {
     private val jquery = outer.asJQuery()
 

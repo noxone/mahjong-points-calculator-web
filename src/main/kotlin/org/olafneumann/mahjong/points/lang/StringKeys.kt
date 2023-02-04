@@ -54,6 +54,7 @@ object StringKeys {
     const val ERR_CHOW_ALREADY_FULL = "Chow.Already.Full"
     const val ERR_KANG_ALREADY_FULL = "Kang.Already.Full"
     const val ERR_NOT_BONUS_TILE = "Not.Bonus.Tile"
+    const val ERR_SELECT_TILES_FIRST = "Select.Tiles.First"
 
 
 }
