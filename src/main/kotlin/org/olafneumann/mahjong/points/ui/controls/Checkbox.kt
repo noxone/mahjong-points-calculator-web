@@ -12,7 +12,7 @@ import kotlinx.html.label
 import kotlinx.html.small
 import kotlinx.html.title
 import org.olafneumann.mahjong.points.lang.not
-import org.olafneumann.mahjong.points.ui.html.injecting
+import org.olafneumann.mahjong.points.ui.html.returningRoot
 import org.olafneumann.mahjong.points.util.nextHtmlId
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
@@ -50,8 +50,8 @@ class Checkbox private constructor(
             val getLabel: () -> String = { !(if (input.checked) labelEnabled else realLabelDisabled) }
 
             div(classes = "form-check") {
-                injecting { input = it as HTMLInputElement }
-                    .input(type = InputType.checkBox, classes = "form-check-input") {
+                input = returningRoot {
+                    input(type = InputType.checkBox, classes = "form-check-input") {
                         value = ""
                         id = checkboxId
                         onInputFunction = {
@@ -59,11 +59,13 @@ class Checkbox private constructor(
                             action((it.target!! as HTMLInputElement).checked)
                         }
                     }
-                injecting { label = it as HTMLLabelElement }
-                    .label(classes = "form-check-label") {
+                }
+                label = returningRoot {
+                    label(classes = "form-check-label") {
                         htmlFor = checkboxId
                         +getLabel()
                     }
+                }
             }
 
             return Checkbox(input = input)
@@ -83,10 +85,8 @@ class Checkbox private constructor(
 
             div(classes = "d-flex flex-column justify-content-center align-items-center mr-vertical-switch h-100") {
                 div(classes = "form-check form-switch") {
-                    injecting {
-                        input = it as HTMLInputElement
-                    }
-                        .input(classes = "form-check-input", type = InputType.checkBox) {
+                    input = returningRoot {
+                        input(classes = "form-check-input", type = InputType.checkBox) {
                             id = checkboxId
                             onInputFunction = action
                             onChangeFunction = {
@@ -96,12 +96,15 @@ class Checkbox private constructor(
                             }
                             checked = true
                         }
+                    }
                 }
                 small {
-                    injecting { label = it as HTMLLabelElement }.label(classes = "form-check-label") {
-                        htmlFor = checkboxId
-                        title = getLabel()
-                        +getLabel()
+                    label = returningRoot {
+                        label(classes = "form-check-label") {
+                            htmlFor = checkboxId
+                            title = getLabel()
+                            +getLabel()
+                        }
                     }
                 }
             }

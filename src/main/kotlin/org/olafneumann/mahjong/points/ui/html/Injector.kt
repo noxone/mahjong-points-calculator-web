@@ -2,6 +2,7 @@ package org.olafneumann.mahjong.points.ui.html
 
 import kotlinx.html.TagConsumer
 import org.w3c.dom.HTMLElement
+import kotlin.properties.Delegates
 import kotlin.reflect.KMutableProperty0
 
 // https://github.com/Kotlin/kotlinx.html/wiki/Injector
@@ -26,6 +27,15 @@ fun TagConsumer<HTMLElement>.injecting(
 fun TagConsumer<HTMLElement>.injecting(
     action: (HTMLElement) -> Unit
 ): TagConsumer<HTMLElement> = InjectorConsumerRoot(this, action)
+
+inline fun <reified T : HTMLElement> TagConsumer<HTMLElement>.returningRoot(
+    block: TagConsumer<HTMLElement>.() -> Unit
+): T {
+    var t: T by Delegates.notNull()
+    injecting { t = it as T }
+        .block()
+    return t
+}
 
 private class InjectorConsumerRoot(
     private val downstream: TagConsumer<HTMLElement>,
