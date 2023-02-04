@@ -81,7 +81,7 @@ class Checkbox private constructor(
             val realLabelDisabled = labelDisabled ?: labelEnabled
             val getLabel: () -> String = { !(if (input.checked) labelEnabled else realLabelDisabled) }
 
-            div(classes = "d-flex flex-column justify-content-center align-items-center mr-vertical-switch mr-full-height") {
+            div(classes = "d-flex flex-column justify-content-center align-items-center mr-vertical-switch h-100") {
                 div(classes = "form-check form-switch") {
                     injectRoot {
                         input = it as HTMLInputElement
