@@ -9,7 +9,6 @@ import kotlinx.html.js.span
 import kotlinx.html.role
 import kotlinx.html.style
 import org.olafneumann.mahjong.points.lang.not
-import org.olafneumann.mahjong.points.ui.html.injecting
 import org.olafneumann.mahjong.points.ui.html.returningRoot
 import org.olafneumann.mahjong.points.ui.js.asJQuery
 import org.w3c.dom.HTMLDivElement
