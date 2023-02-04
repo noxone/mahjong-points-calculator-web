@@ -9,7 +9,7 @@ import kotlinx.html.js.span
 import kotlinx.html.role
 import kotlinx.html.style
 import org.olafneumann.mahjong.points.lang.not
-import org.olafneumann.mahjong.points.ui.html.injectRoot
+import org.olafneumann.mahjong.points.ui.html.injecting
 import org.olafneumann.mahjong.points.ui.js.asJQuery
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
@@ -46,10 +46,10 @@ class ErrorOverlay private constructor(
         fun TagConsumer<HTMLElement>.errorOverlay(): ErrorOverlay {
             var outer: HTMLDivElement by Delegates.notNull()
             var inner: HTMLDivElement by Delegates.notNull()
-            injectRoot { outer = it as HTMLDivElement }
+            injecting { outer = it as HTMLDivElement }
                 .div(classes = "mr-error-overlay") {
                     style = "display:none;"
-                    injectRoot { inner = it as HTMLDivElement }
+                    injecting { inner = it as HTMLDivElement }
                         .div(classes = "alert alert-danger p-2 m-0 h-100 d-flex flex-column justify-content-center") {
                             role = "alert"
                             +"Error Message"

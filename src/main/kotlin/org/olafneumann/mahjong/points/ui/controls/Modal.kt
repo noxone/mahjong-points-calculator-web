@@ -7,7 +7,7 @@ import kotlinx.html.js.div
 import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.ui.html.bsButton
 import org.olafneumann.mahjong.points.ui.html.closeButton
-import org.olafneumann.mahjong.points.ui.html.injectRoot
+import org.olafneumann.mahjong.points.ui.html.injecting
 import org.olafneumann.mahjong.points.ui.js.toJson
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
@@ -18,7 +18,7 @@ fun TagConsumer<HTMLElement>.modal(
     buttons: List<Button> = emptyList(),
     mainBlock: TagConsumer<HTMLElement>.() -> Unit = {}
 ) =
-    injectRoot { element ->
+    injecting { element ->
         element.addEventListener("hidden.bs.modal", { element.remove() })
     }
         .div(classes = "modal fade") {

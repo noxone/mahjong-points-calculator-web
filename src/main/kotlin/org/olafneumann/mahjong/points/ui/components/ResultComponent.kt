@@ -8,7 +8,7 @@ import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.ui.controls.showResultTable
 import org.olafneumann.mahjong.points.ui.html.bsButton
 import org.olafneumann.mahjong.points.ui.html.getElement
-import org.olafneumann.mahjong.points.ui.html.injectRoot
+import org.olafneumann.mahjong.points.ui.html.injecting
 import org.olafneumann.mahjong.points.ui.js.Popover
 import org.olafneumann.mahjong.points.ui.model.UIModel
 import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
@@ -28,7 +28,7 @@ class ResultComponent(
         var popover: Popover by Delegates.notNull()
         var resetButton: HTMLButtonElement by Delegates.notNull()
 
-        injectRoot {
+        injecting {
             resetButton = document.getElement("mr_reset_all")
         }
             .div(classes = "flex-fill d-flex flex-column flex-lg-row") {

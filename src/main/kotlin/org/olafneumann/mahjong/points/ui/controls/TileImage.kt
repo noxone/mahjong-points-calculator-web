@@ -5,7 +5,7 @@ import kotlinx.html.TagConsumer
 import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
 import org.olafneumann.mahjong.points.game.Tile
-import org.olafneumann.mahjong.points.ui.html.injectRoot
+import org.olafneumann.mahjong.points.ui.html.injecting
 import org.olafneumann.mahjong.points.ui.html.mrTile
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
@@ -84,9 +84,9 @@ class TileImage private constructor(
         fun TagConsumer<HTMLElement>.tileImage(tile: Tile?, onClickFunction: (Event) -> Unit = {}): TileImage {
             var outer: HTMLDivElement by Delegates.notNull()
             var inner: HTMLDivElement by Delegates.notNull()
-            injectRoot { outer = it as HTMLDivElement }
+            injecting { outer = it as HTMLDivElement }
                 .div(classes = "mr-tile") {
-                    injectRoot { inner = it as HTMLDivElement }
+                    injecting { inner = it as HTMLDivElement }
                         .div(classes = "mr-tile-face") {
                         }
                     this.onClickFunction = onClickFunction

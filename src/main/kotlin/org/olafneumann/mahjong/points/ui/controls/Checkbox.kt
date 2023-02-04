@@ -12,7 +12,7 @@ import kotlinx.html.label
 import kotlinx.html.small
 import kotlinx.html.title
 import org.olafneumann.mahjong.points.lang.not
-import org.olafneumann.mahjong.points.ui.html.injectRoot
+import org.olafneumann.mahjong.points.ui.html.injecting
 import org.olafneumann.mahjong.points.util.nextHtmlId
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
@@ -50,7 +50,7 @@ class Checkbox private constructor(
             val getLabel: () -> String = { !(if (input.checked) labelEnabled else realLabelDisabled) }
 
             div(classes = "form-check") {
-                injectRoot { input = it as HTMLInputElement }
+                injecting { input = it as HTMLInputElement }
                     .input(type = InputType.checkBox, classes = "form-check-input") {
                         value = ""
                         id = checkboxId
@@ -59,7 +59,7 @@ class Checkbox private constructor(
                             action((it.target!! as HTMLInputElement).checked)
                         }
                     }
-                injectRoot { label = it as HTMLLabelElement }
+                injecting { label = it as HTMLLabelElement }
                     .label(classes = "form-check-label") {
                         htmlFor = checkboxId
                         +getLabel()
@@ -83,7 +83,7 @@ class Checkbox private constructor(
 
             div(classes = "d-flex flex-column justify-content-center align-items-center mr-vertical-switch h-100") {
                 div(classes = "form-check form-switch") {
-                    injectRoot {
+                    injecting {
                         input = it as HTMLInputElement
                     }
                         .input(classes = "form-check-input", type = InputType.checkBox) {
@@ -98,7 +98,7 @@ class Checkbox private constructor(
                         }
                 }
                 small {
-                    injectRoot { label = it as HTMLLabelElement }.label(classes = "form-check-label") {
+                    injecting { label = it as HTMLLabelElement }.label(classes = "form-check-label") {
                         htmlFor = checkboxId
                         title = getLabel()
                         +getLabel()

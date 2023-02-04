@@ -22,7 +22,7 @@ import org.olafneumann.mahjong.points.ui.html.MrAttributes
 import org.olafneumann.mahjong.points.ui.html.filterAttributeIsPresent
 import org.olafneumann.mahjong.points.ui.html.getAllChildren
 import org.olafneumann.mahjong.points.ui.html.getElement
-import org.olafneumann.mahjong.points.ui.html.injectRoot
+import org.olafneumann.mahjong.points.ui.html.injecting
 import org.olafneumann.mahjong.points.ui.html.mrFigure
 import org.olafneumann.mahjong.points.ui.js.Popover
 import org.olafneumann.mahjong.points.ui.model.UIModel
@@ -56,7 +56,7 @@ class HandComponent(
     }
 
     override fun TagConsumer<HTMLElement>.createUI() {
-        injectRoot { element ->
+        injecting { element ->
             selectableDivs = element.getAllChildren<HTMLDivElement>()
                 .filterAttributeIsPresent(MrAttributes.FIGURE)
                 .associateBy { Figure.valueOf(it.mrFigure!!) }
