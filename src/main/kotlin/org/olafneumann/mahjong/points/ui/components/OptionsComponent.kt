@@ -16,7 +16,7 @@ import kotlin.properties.Delegates
 
 class OptionsComponent(
     parent: HTMLElement,
-    private val model: UIModel
+    private val model: UIModel,
 ) : AbstractComponent(parent = parent), UIModelChangeListener {
     private var rdaPrevailingWind: RadioGroup<Wind> by Delegates.notNull()
     private var rdaSeatWind: RadioGroup<Wind> by Delegates.notNull()
@@ -40,10 +40,8 @@ class OptionsComponent(
             form {
                 div(classes = "row g-0") {
                     div(classes = "col-6 col-lg-12") {
-                        div(classes = "mt-3") {
-                            createWindRadioButtons()
-                            createMahjongCheckboxes1()
-                        }
+                        createWindRadioButtons()
+                        createMahjongCheckboxes1()
                     }
                     div(classes = "col-6 col-lg-12") {
                         createMahjongCheckboxes2()
@@ -54,10 +52,10 @@ class OptionsComponent(
     }
 
     private fun TagConsumer<HTMLElement>.createWindRadioButtons() {
-        rdaPrevailingWind = radioButtonGroup("Prevailing Wind", Wind.values().asList()) {
+        rdaPrevailingWind = radioButtonGroup("Prevailing Wind", Wind.values().asList(), maxItemsPerRow = 2) {
             model.setGameModifiers(gameModifiers.copy(prevailingWind = it))
         }
-        rdaSeatWind = radioButtonGroup("Seat Wind", Wind.values().asList()) {
+        rdaSeatWind = radioButtonGroup("Seat Wind", Wind.values().asList(), maxItemsPerRow = 2) {
             model.setSeatWind(it)
         }
     }
