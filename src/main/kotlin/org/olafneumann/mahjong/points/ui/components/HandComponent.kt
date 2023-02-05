@@ -90,7 +90,6 @@ class HandComponent(
     private fun handleSwitchClick(figure: Figure) {
         val combination = model.calculatorModel.hand.getCombination(figure)
         if (combination == null) {
-            model.select(figure)
             figureErrorOverlays[figure]!!.show(
                 messages = listOf(StringKeys.ERR_SELECT_TILES_FIRST),
                 delay = ERROR_MESSAGE_DELAY
