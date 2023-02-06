@@ -8,7 +8,7 @@ class Language(
 ) {
     private val translationBuffer = mutableMapOf<String, String?>()
 
-    private fun String.emptyToNull() = trim().ifBlank { null }
+    private fun String.emptyToNull() = ifBlank { null }
     private fun getTranslationFor(string: String): String? = translations[string]?.emptyToNull()
 
     private val String.normalized: String
@@ -127,6 +127,10 @@ class Language(
                         StringKeys.ERR_NOT_BONUS_TILE to "Not a bonus tile.",
                         StringKeys.ERR_SELECT_TILES_FIRST to "Please select tiles first.",
 
+                        " is a tool to compute the points of a Mahjong game. " to " is a tool to compute the points of a Mahjong game.",
+                        "More Info" to "More Info",
+                        "Useful Mahjong Links" to "Useful Mahjong Links",
+                        "This project is built using" to "This project is built using",
                         )
                 )
 
@@ -229,6 +233,14 @@ class Language(
                         StringKeys.ERR_NOT_BONUS_TILE to "Kein Bonusziegel",
                         StringKeys.ERR_SELECT_TILES_FIRST to "Bitte erst Ziegel auswählen.",
 
+                        " is a tool to compute the points of a Mahjong game. " to " ist ein Werkzeug zum Berechnen der Punkte eines Mahjong-Spiels.",
+                        "More Info" to "Weitere Infos",
+                        "Useful Mahjong Links" to "Nützliche Mahjong-Links",
+                        "This project is built using" to "Diese Projekt wurde erstellt mit",
+                        " Find the project sources at " to " Den Quellcode finden sie auf ",
+                        " The project itself as well as the sources are hosted in " to "Das Projekt selbst, sowie die Quellen werden auf ",
+                        ". The version you are currently using it built from commit ID " to " gehostet. Die Version, die Sie gerade nutzen, wurde erstellt aus Commit-ID ",
+                        ". " to ". ",
                         )
                 )
 

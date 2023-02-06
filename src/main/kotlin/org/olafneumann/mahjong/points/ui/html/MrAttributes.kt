@@ -2,6 +2,7 @@ package org.olafneumann.mahjong.points.ui.html
 
 import kotlinx.html.CommonAttributeGroupFacade
 import kotlinx.html.org.w3c.dom.events.Event
+import org.w3c.dom.Element
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.get
 
@@ -15,6 +16,7 @@ import org.w3c.dom.get
  object MrAttributes {
     const val TILE = "mr-tile"
 //    const val FIGURE = "mr-figure"
+    const val NO_TRANSLATE = "mr-no-translate"
 }
 
 //var CommonAttributeGroupFacade.mrTile: String
@@ -28,6 +30,9 @@ import org.w3c.dom.get
 var HTMLElement.mrTile: String?
     get() = getAttribute(MrAttributes.TILE)
     set(value) { setAttribute(MrAttributes.TILE, value ?: "") }
+
+val Element.shouldNotTranslate: Boolean
+    get() = getAttributeNames().contains(MrAttributes.NO_TRANSLATE)
 
 //val HTMLElement.mrFigure: String?
 //    get() = attributes[MrAttributes.FIGURE]?.value
