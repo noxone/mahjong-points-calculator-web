@@ -15,8 +15,8 @@ import org.olafneumann.mahjong.points.model.getCombination
 import org.olafneumann.mahjong.points.model.getTiles
 import org.olafneumann.mahjong.points.ui.controls.Checkbox
 import org.olafneumann.mahjong.points.ui.controls.Checkbox.Companion.verticalSwitch
-import org.olafneumann.mahjong.points.ui.controls.ErrorOverlay
-import org.olafneumann.mahjong.points.ui.controls.ErrorOverlay.Companion.errorOverlay
+import org.olafneumann.mahjong.points.ui.controls.TextOverlay
+import org.olafneumann.mahjong.points.ui.controls.TextOverlay.Companion.textOverlay
 import org.olafneumann.mahjong.points.ui.controls.TileImage
 import org.olafneumann.mahjong.points.ui.controls.TileImage.Companion.tileImage
 import org.olafneumann.mahjong.points.ui.html.getElement
@@ -35,7 +35,7 @@ class HandComponent(
     private val model: UIModel,
 ) : AbstractComponent(parent = parent), UIModelChangeListener {
     private var selectableDivs: MutableMap<Figure, HTMLDivElement> = mutableMapOf()
-    private var figureErrorOverlays: MutableMap<Figure, ErrorOverlay?> = mutableMapOf()
+    private var figureTextOverlays: MutableMap<Figure, TextOverlay?> = mutableMapOf()
     private var figureTiles: MutableMap<Figure, List<TileImage>> = mutableMapOf()
     private var figureSwitches: MutableMap<Figure, Checkbox?> = mutableMapOf()
     private var figurePopovers: MutableMap<Figure, Popover> = mutableMapOf()
@@ -83,14 +83,14 @@ class HandComponent(
                         verticalSwitch("Closed", "Open") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
                 }
             }
-            figureErrorOverlays[figure] = errorOverlay()
+            figureTextOverlays[figure] = textOverlay()
         }
     }
 
     private fun handleSwitchClick(figure: Figure) {
         val combination = model.calculatorModel.hand.getCombination(figure)
         if (combination == null) {
-            figureErrorOverlays[figure]!!.show(
+            figureTextOverlays[figure]!!.show(
                 messages = listOf(StringKeys.ERR_SELECT_TILES_FIRST),
                 delay = ERROR_MESSAGE_DELAY
             )
@@ -152,7 +152,7 @@ class HandComponent(
                         ?: Combination.Visibility.Open) == Combination.Visibility.Open
             }
 
-            figureErrorOverlays[figure]?.show(
+            figureTextOverlays[figure]?.show(
                 messages = model.calculatorModel.errorMessages
                     .filter { it.figure == figure }
                     .mapNotNull { it.message },
