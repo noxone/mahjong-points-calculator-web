@@ -34,14 +34,12 @@ class MahjongOptionsComponent(
     private val gameModifiers: GameModifiers get() = model.calculatorModel.gameModifiers
 
     override fun TagConsumer<HTMLElement>.createUI() {
-        div(classes = "flex-fill d-flex flex-wrap") {
-            form {
-                createMahjongCheckboxes2()
-            }
+        div(classes = "flex-fill d-flex flex-column justify-content-between") {
+            createMahjongCheckboxes()
         }
     }
 
-    private fun TagConsumer<HTMLElement>.createMahjongCheckboxes2() {
+    private fun TagConsumer<HTMLElement>.createMahjongCheckboxes() {
         chkSchlussziegelVonDerMauer = checkbox("Schlussziegel von der Mauer") {
             model.setGameModifiers(gameModifiers.copy(schlussziegelVonMauer = it))
         }

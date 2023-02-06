@@ -28,7 +28,7 @@ class WindComponent(
     private val gameModifiers: GameModifiers get() = model.calculatorModel.gameModifiers
 
     override fun TagConsumer<HTMLElement>.createUI() {
-        div(classes = "flex-fill d-flex flex-column justify-content-lg-start justify-content-lg-between") {
+        div(classes = "flex-fill d-flex flex-column justify-content-around justify-content-lg-between gap-2") {
             createWindRadioButtons()
         }
     }
