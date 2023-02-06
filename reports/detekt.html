@@ -157,11 +157,11 @@
 
 <div>
   <ul>
-    <li>202 number of properties</li>
-    <li>156 number of functions</li>
-    <li>110 number of classes</li>
+    <li>213 number of properties</li>
+    <li>160 number of functions</li>
+    <li>111 number of classes</li>
     <li>12 number of packages</li>
-    <li>47 number of kt files</li>
+    <li>49 number of kt files</li>
   </ul>
 </div>
 
@@ -170,15 +170,15 @@
 
 <div>
   <ul>
-    <li>2,768 lines of code (loc)</li>
-    <li>2,345 source lines of code (sloc)</li>
-    <li>1,675 logical lines of code (lloc)</li>
-    <li>86 comment lines of code (cloc)</li>
-    <li>333 cyclomatic complexity (mcc)</li>
-    <li>152 cognitive complexity</li>
+    <li>2,872 lines of code (loc)</li>
+    <li>2,430 source lines of code (sloc)</li>
+    <li>1,731 logical lines of code (lloc)</li>
+    <li>88 comment lines of code (cloc)</li>
+    <li>340 cyclomatic complexity (mcc)</li>
+    <li>157 cognitive complexity</li>
     <li>10 number of total code smells</li>
     <li>3% comment source ratio</li>
-    <li>198 mcc per 1,000 lloc</li>
+    <li>196 mcc per 1,000 lloc</li>
     <li>5 code smells per 1,000 lloc</li>
   </ul>
 </div>
@@ -207,14 +207,14 @@
     <summary class="rule-container"><span class="rule">LongMethod: 2 </span><span class="description">One method should have one responsibility. Long methods tend to handle many things at once. Prefer smaller methods to make them easier to understand.</span></summary>
 <a href="https://detekt.dev/docs/rules/complexity#longmethod">Documentation</a>
     <ul>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/lang/Language.kt:22:21</span><span class="message">The function get is too long (199). The maximum length is 61.</span>
-        <pre><code><span class="lineno">  19 </span>
-<span class="lineno">  20 </span>    companion object {
-<span class="lineno">  21 </span>        private const val DEFAULT_LANGUAGE = &quot;en&quot;
-<span class="lineno">  22 </span>        private fun <span class="error">get</span>(languageKey: String): Language? =
-<span class="lineno">  23 </span>            when (languageKey) {
-<span class="lineno">  24 </span>                DEFAULT_LANGUAGE -&gt; Language(
-<span class="lineno">  25 </span>                    mapOf(
+      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/lang/Language.kt:29:21</span><span class="message">The function get is too long (213). The maximum length is 61.</span>
+        <pre><code><span class="lineno">  26 </span>        private val REGEX_WS = Regex(&quot;\\s+&quot;)
+<span class="lineno">  27 </span>
+<span class="lineno">  28 </span>        private const val DEFAULT_LANGUAGE = &quot;en&quot;
+<span class="lineno">  29 </span>        private fun <span class="error">get</span>(languageKey: String): Language? =
+<span class="lineno">  30 </span>            when (languageKey) {
+<span class="lineno">  31 </span>                DEFAULT_LANGUAGE -&gt; Language(
+<span class="lineno">  32 </span>                    mapOf(
 </code></pre>
       </li>
       <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/model/CalculatorModel.kt:68:9</span><span class="message">The function select is too long (146). The maximum length is 61.</span>
@@ -315,7 +315,7 @@
 </div>
 
 
-generated with <a href="https://detekt.dev/">detekt version 1.22.0</a> on 2023-02-04 22:24:08 UTC.
+generated with <a href="https://detekt.dev/">detekt version 1.22.0</a> on 2023-02-06 17:31:34 UTC.
 
 </body>
 </html>
