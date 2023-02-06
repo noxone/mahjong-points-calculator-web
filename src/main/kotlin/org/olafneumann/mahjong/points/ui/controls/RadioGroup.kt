@@ -41,8 +41,7 @@ class RadioGroup<T> private constructor(
             val chunks = items.chunked(maxItemsPerRow)
 
             val map = mutableMapOf<T, HTMLInputElement>()
-            div(classes = "mb-1 d-flex") {
-                style = "gap:0.5em;"
+            div(classes = "mb-1 d-flex justify-content-between flex-wrap flex-lg-nowrap gap-2") {
                 label(classes = "text-break") { translate(label) }
                 div(classes = "btn-group-vertical flex-shrink-0") {
                     chunks.forEach { chunk ->

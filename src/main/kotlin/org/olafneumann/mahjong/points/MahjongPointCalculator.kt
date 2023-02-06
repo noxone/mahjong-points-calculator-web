@@ -3,15 +3,17 @@ package org.olafneumann.mahjong.points
 import kotlinx.browser.document
 import kotlinx.browser.window
 import org.olafneumann.mahjong.points.ui.components.HandComponent
-import org.olafneumann.mahjong.points.ui.components.OptionsComponent
+import org.olafneumann.mahjong.points.ui.components.MahjongOptionsComponent
 import org.olafneumann.mahjong.points.ui.components.ResultComponent
 import org.olafneumann.mahjong.points.ui.html.getElement
 import org.olafneumann.mahjong.points.ui.components.TileSelectionComponent
+import org.olafneumann.mahjong.points.ui.components.WindComponent
 import org.olafneumann.mahjong.points.ui.controls.MainPage
 import org.olafneumann.mahjong.points.ui.js.asJQuery
 import org.olafneumann.mahjong.points.ui.model.UIModel
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
+import org.w3c.dom.events.Event
 import kotlin.js.json
 
 fun main() {
@@ -29,18 +31,31 @@ private fun initMahjongPointCalculator() {
     }
 }
 
+private fun isScrollIsRequired(): Boolean {
+    val body = document.body!!
+    console.log("scroll", body.scrollHeight, "client", body.clientHeight)
+    return body.scrollHeight > body.clientHeight
+}
+
+private fun enableDisableScrollIfRequired() {
+    document.body!!.style.overflowY = if (!isScrollIsRequired()) "hidden" else ""
+}
+
 private fun initMahjongPointCalculatorUnsafe() {
+    window.addEventListener("resize", { enableDisableScrollIfRequired() })
     MainPage.translate(document.getElement("mr_main"))
 
     val tilesDiv = document.getElement<HTMLDivElement>("mr_tiles")
     val selectedTilesDiv = document.getElement<HTMLDivElement>("mr_selected_tiles")
-    val optionsDiv = document.getElement<HTMLDivElement>("mr_options")
+    val windDiv = document.getElement<HTMLDivElement>("mr_wind")
+    val mahjongDiv = document.getElement<HTMLDivElement>("mr_mahjong")
     val resultDiv = document.getElement<HTMLDivElement>("mr_result")
 
     val model = UIModel()
 
     TileSelectionComponent(parent = tilesDiv, model = model)
-    OptionsComponent(parent = optionsDiv, model = model)
+    WindComponent(parent = windDiv, model = model)
+    MahjongOptionsComponent(parent = mahjongDiv, model = model)
     HandComponent(parent = selectedTilesDiv, model = model)
     ResultComponent(parent = resultDiv, model = model)
 
@@ -51,5 +66,6 @@ private fun initMahjongPointCalculatorUnsafe() {
         loading.asJQuery()
             .fadeOut(json("duration" to Constants.INTRO_FADE_DURATION, "complete" to { loading.asJQuery().remove() }))
     }, 1)
+    window.dispatchEvent(Event("resize"))
 }
 

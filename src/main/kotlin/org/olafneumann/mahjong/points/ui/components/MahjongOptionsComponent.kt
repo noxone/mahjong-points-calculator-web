@@ -14,12 +14,10 @@ import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
 import org.w3c.dom.HTMLElement
 import kotlin.properties.Delegates
 
-class OptionsComponent(
+class MahjongOptionsComponent(
     parent: HTMLElement,
     private val model: UIModel,
 ) : AbstractComponent(parent = parent), UIModelChangeListener {
-    private var rdaPrevailingWind: RadioGroup<Wind> by Delegates.notNull()
-    private var rdaSeatWind: RadioGroup<Wind> by Delegates.notNull()
     private var chkSchlussziegelVonDerMauer: Checkbox by Delegates.notNull()
     private var chkSchlussziegelIstEinzigMoeglicherZiegel: Checkbox by Delegates.notNull()
     private var chkSchlussziegelKomplettiertPaar: Checkbox by Delegates.notNull()
@@ -36,31 +34,14 @@ class OptionsComponent(
     private val gameModifiers: GameModifiers get() = model.calculatorModel.gameModifiers
 
     override fun TagConsumer<HTMLElement>.createUI() {
-        div(classes = "flex-fill") {
+        div(classes = "flex-fill d-flex flex-wrap") {
             form {
-                div(classes = "row g-0") {
-                    div(classes = "col-6 col-lg-12") {
-                        createWindRadioButtons()
-                        createMahjongCheckboxes1()
-                    }
-                    div(classes = "col-6 col-lg-12") {
-                        createMahjongCheckboxes2()
-                    }
-                }
+                createMahjongCheckboxes2()
             }
         }
     }
 
-    private fun TagConsumer<HTMLElement>.createWindRadioButtons() {
-        rdaPrevailingWind = radioButtonGroup("Prevailing Wind", Wind.values().asList(), maxItemsPerRow = 2) {
-            model.setGameModifiers(gameModifiers.copy(prevailingWind = it))
-        }
-        rdaSeatWind = radioButtonGroup("Seat Wind", Wind.values().asList(), maxItemsPerRow = 2) {
-            model.setSeatWind(it)
-        }
-    }
-
-    private fun TagConsumer<HTMLElement>.createMahjongCheckboxes1() {
+    private fun TagConsumer<HTMLElement>.createMahjongCheckboxes2() {
         chkSchlussziegelVonDerMauer = checkbox("Schlussziegel von der Mauer") {
             model.setGameModifiers(gameModifiers.copy(schlussziegelVonMauer = it))
         }
@@ -69,9 +50,6 @@ class OptionsComponent(
                 gameModifiers.copy(schlussziegelEinzigMoeglicherZiegel = it)
             )
         }
-    }
-
-    private fun TagConsumer<HTMLElement>.createMahjongCheckboxes2() {
         chkSchlussziegelKomplettiertPaar = checkbox("Schlussziegel komplettiert Paar") {
             model.setGameModifiers(gameModifiers.copy(schlussziegelKomplettiertPaar = it))
         }
@@ -97,9 +75,6 @@ class OptionsComponent(
 
     override fun updateUI() {
         val isMahjong = model.calculatorModel.isMahjong
-
-        rdaPrevailingWind.selection = gameModifiers.prevailingWind
-        rdaSeatWind.selection = model.calculatorModel.seatWind
 
         // checked or not
         chkSchlussziegelVonDerMauer.checked = isMahjong && gameModifiers.schlussziegelVonMauer

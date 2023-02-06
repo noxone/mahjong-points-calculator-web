@@ -39,9 +39,9 @@
     <link rel="stylesheet" href="styles/fonts.css?commitId=GIT_COMMIT_ID">
     <title>Mahjong Point Calculator</title>
 
-    <!-- REMOVE_LINE_FOR_PUBLISHING
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 
+    <!-- REMOVE_LINE_FOR_PUBLISHING
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -52,9 +52,10 @@
     REMOVE_LINE_FOR_PUBLISHING -->
 </head>
 
-<body class="bg-dark user-select-none">
-    <div id="mr_loading" class="fixed-top fixed-bottom bg-dark d-flex flex-column align-items-center justify-content-center">
-        <img src="images/mahjong-points-dark.svg" alt="Logo"/>
+<body class="bg-dark user-select-none vh-100">
+    <div id="mr_loading"
+        class="fixed-top fixed-bottom bg-dark d-flex flex-column align-items-center justify-content-center">
+        <img src="images/mahjong-points-dark.svg" alt="Logo" />
         <div class="text-light fw-bold p-3 display-4">
             Mahjong Points Calculator
         </div>
@@ -63,132 +64,183 @@
         </div>
     </div>
 
-    <div class="container-xxl my-3">
-        <div class="d-md-none bg-light rounded p-3 mb-2">
-            This page is currently only optimized for tablet size screens, like an iPad. Smaller screens will look strange and might not be good to handle.
+    <div class="container-xxl py-3 h-100">
+        <div class="d-md-none bg-light rounded p-3 pb-2">
+            This page is currently only optimized for tablet size screens, like an iPad. Smaller screens will look
+            strange and might not be good to handle.
         </div>
-        <div class="row g-0" id="mr_main">
-            <div class="col-lg-9 pe-lg-2 mb-2 order-first">
-                <div class="bg-danger text-light rounded p-4 d-flex align-items-center justify-content-center mr-full-height">
-                    <h1 class="fw-bold">Mahjong Points Calculator</h1>
+        <div class="h-100 row g-0" id="mr_main">
+            <div class="col-12 mb-2 order-first">
+                <div
+                    class="bg-danger text-light rounded px-4 py-1 py-md-3 py-lg-2 py-xl-3 py-xxl-4 d-flex align-items-center justify-content-center mr-full-height">
+                    <h1 class="fw-bold">Mahjong <span class="d-none d-md-inline-block">Points</span> Calculator</h1>
                     <!--REMOVE_LINE_FOR_PUBLISHING
                     <div class="d-none">
                     REMOVE_LINE_FOR_PUBLISHING -->
-                        <div class="ms-3">
-                            <span class="d-md-none">sm</span>
-                            <span class="d-none d-md-block d-lg-none">md</span>
-                            <span class="d-none d-lg-block d-xl-none">lg</span>
-                            <span class="d-none d-xl-block d-xxl-none">xl</span>
-                            <span class="d-none d-xxl-block">xxl</span>
-                        </div>
+                    <div class="ms-3">
+                        <span class="d-md-none">sm</span>
+                        <span class="d-none d-md-block d-lg-none">md</span>
+                        <span class="d-none d-lg-block d-xl-none">lg</span>
+                        <span class="d-none d-xl-block d-xxl-none">xl</span>
+                        <span class="d-none d-xxl-block">xxl</span>
+                    </div>
                     <!--REMOVE_LINE_FOR_PUBLISHING
                     </div>
                     REMOVE_LINE_FOR_PUBLISHING -->
                 </div>
             </div>
 
-            <div class="col-md-3 col-lg-3 mb-2 order-last order-lg-first">
+            <div class="col-12 col-lg-9 pb-2 row g-0">
+                <div class="col-8 pe-2">
+                    <div id="mr_tiles" class=" bg-light rounded d-flex flex-column p-3 mr-full-height">
+                        <h2>Tiles</h2>
+                    </div>
+                </div>
+                <div class="col-4 pe-lg-2">
+                    <div id="mr_selected_tiles" class="bg-light rounded mr-full-height d-flex flex-column p-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h2>Hand</h2>
+                            <button class="btn btn-sm btn-outline-secondary d-none" id="mr_btn_undo" type="button"
+                                title="Undo">
+                                <i class="bi bi-arrow-counterclockwise"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-9 col-lg-3 row g-0 pe-2 pe-lg-0 pb-2">
+                <div class="col-4 col-lg-12 pe-2 pe-lg-0 pb-lg-2">
+                    <div id="mr_wind" class="bg-light rounded mr-full-height d-flex flex-column p-3">
+                        <!--<h2>Wind</h2>-->
+                    </div>
+                </div>
+
+                <div class="col-8 col-lg-12">
+                    <div id="mr_mahjong" class="bg-light rounded mr-full-height d-flex flex-column p-3">
+                        <!--<h2>Mahjong</h2>-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-3 col-lg-4 order-lg-last pb-2 pb-lg-0">
                 <div id="mr_result"
-                    class="bg-secondary border border-secondary rounded text-light d-flex flex-column mr-full-height p-3">
+                    class="bg-secondary border border-secondary rounded text-light d-flex flex-column h-100 p-3">
                     <h2>Result</h2>
                 </div>
             </div>
 
-            <div class="col-md-8 col-lg-6 pe-2 mb-2">
-                <div id="mr_tiles" class=" bg-light rounded d-flex flex-column p-3 mr-full-height">
-                    <h2>Tiles</h2>
-                </div>
-            </div>
-
-            <div class="col-md-4 col-lg-3 pe-lg-2 mb-2 position-relative">
-                <div id="mr_selected_tiles" class="bg-light rounded mr-full-height d-flex flex-column p-3">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h2>Hand</h2>
-                        <button class="btn btn-sm btn-outline-secondary d-none" id="mr_btn_undo" type="button"
-                            title="Undo">
-                            <i class="bi bi-arrow-counterclockwise"></i>
-                        </button>
+            <div class="col-12 col-lg-8 pe-lg-2">
+                <div class="font-small bg-dark text-muted border border-secondary rounded row g-0 p-2 h-100">
+                    <h5 class="col-12 text-uppercase text-center">Mahjong Points Calculator</h5>
+                    <div class="col-12 row g-0 mb-3 mb-md-0">
+                        <div class="col-12 col-md-5 text-center text-md-start">
+                            <p>
+                                <code>Mahjong Point Calculator</code> is a tool to compute
+                                the points of a Mahjong game.
+                            </p>
+                        </div>
+                        <div class="col-12 col-md-5 text-center">
+                            <p class="mb-0">
+                                Find the project sources at <a href="https://github.com/noxone/mahjong-point-calculator"
+                                    target="_blank" rel="noopener">Github</a>.
+                            </p>
+                            <p>
+                                <a class="github-button" href="https://github.com/noxone/mahjong-point-calculator"
+                                    data-color-scheme="no-preference: dark; light: dark; dark: dark;"
+                                    data-icon="octicon-star" data-show-count="true"
+                                    aria-label="Star noxone/mahjong-point-calculator on GitHub">Star</a>
+                            </p>
+                        </div>
+                        <div class="col-12 col-md-2 text-center">
+                            <button type="button" class="btn btn-outline-primary">More Info</button>
+                        </div>
+                    </div>
+                    <div class="col-12 text-center">
+                        <p>
+                            &copy; Copyright 2023 <a href="https://olafneumann.org" target="_blank" rel="noopener">Olaf
+                                Neumann</a>
+                        </p>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-9 col-lg-3 pe-md-2 pe-lg-0 mb-2">
-                <div id="mr_options" class="bg-light rounded mr-full-height d-flex flex-column p-3">
-                    <h2>Options</h2>
-                </div>
-            </div>
-        </div>
+            <div class="col-12 col-lg-8 pe-lg-2 d-none">
+                <div class="font-small bg-dark text-muted border border-secondary rounded row g-0 p-2">
+                    <h5 class="text-uppercase text-md-start text-center">Mahjong Points Calculator</h5>
+                    <div class="text-center text-md-start collapse show" id="footerContent">
+                        <div class="row">
+                            <div class="col-md-6 mt-md-0 mt-3">
+                                <p>
+                                    <code>Mahjong Point Calculator</code> is a tool to compute
+                                    the points of a Mahjong game.
+                                </p>
+                                <p>
+                                    Find the project sources at <a
+                                        href="https://github.com/noxone/mahjong-point-calculator" target="_blank"
+                                        rel="noopener">Github</a>.
+                                    <!-- REMOVE_LINE_FOR_PUBLISHING
+                                    <a class="github-button" href="https://github.com/noxone/mahjong-point-calculator"
+                                        data-color-scheme="no-preference: dark; dark: dark; light: dark;"
+                                        data-icon="octicon-star" data-show-count="true"
+                                        aria-label="Star noxone/mahjong-point-calculator on GitHub">Star</a>
+                                    REMOVE_LINE_FOR_PUBLISHING -->
+                                </p>
+                                <!-- REMOVE_LINE_FOR_PUBLISHING
+                                <p>
+                                    Built from commit ID <a
+                                        href="https://github.com/noxone/mahjong-point-calculator/tree/GIT_COMMIT_ID"
+                                        target="_blank" rel="noopener">SHORT_COMMIT_ID</a>.
+                                </p>
+                                REMOVE_LINE_FOR_PUBLISHING -->
+                            </div>
+                            <hr class="clearfix w-100 d-md-none pb-3 border-secondary">
+                            <div class="col-md-3 mb-md-0 mb-3">
+                                <h5>Useful Mahjong Links</h5>
+                                <ul class="list-unstyled">
+                                    <li><a class="rounded" href="http://dmjl.de/mah-jongg/klassische-regeln"
+                                            target="_blank" rel="noopener">Mahjong Rules (German)</a></li>
+                                    <li><a class="rounded"
+                                            href="https://www.mastersofgames.com/rules/mah-jong-rules.htm"
+                                            target="_blank" rel="noopener">Mahjong Rules (English)</a></li>
+                                    <li><a class="rounded"
+                                            href="http://dmjl.de/wp-content/uploads/2009/05/DMJL_CC_Wertung_2005.pdf"
+                                            target="_blank" rel="noopener" id="rg_anchor_regex101">Mahjong Point
+                                            Table</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-3 mb-md-0 mb-3">
+                                <h5>This project is built using</h5>
+                                <ul class="list-unstyled">
+                                    <li><a class="rounded" href="https://kotlinlang.org/" target="_blank"
+                                            rel="noopener">Kotlin</a></li>
+                                    <li><a class="rounded" href="https://getbootstrap.com" target="_blank"
+                                            rel="noopener">Bootstrap</a></li>
+                                    <li><a class="rounded"
+                                            href="https://commons.wikimedia.org/wiki/Category:SVG_Planar_illustrations_of_Mahjong_tiles"
+                                            target="_blank" rel="noopener">Mahjong Tile Art by 碧海风</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
-        <!-- Footer -->
-        <footer class="page-footer font-small row bg-dark text-muted border border-secondary mt-3 p-4 g-0 rounded">
-            <h5 class="text-uppercase text-md-start text-center">Mahjong Points Calculator</h5>
-            <div class="text-center text-md-start collapse show" id="footerContent">
-                <div class="row">
-                    <div class="col-md-6 mt-md-0 mt-3">
+                    <!-- Copyright -->
+                    <div class="text-center pt-3">
                         <p>
-                            <code>Mahjong Point Calculator</code> is a tool to compute
-                            the points of a Mahjong game.
-                        </p>
-                        <p>
-                            Find the project sources at <a href="https://github.com/noxone/mahjong-point-calculator"
-                                target="_blank" rel="noopener">Github</a>.
-                            <!-- REMOVE_LINE_FOR_PUBLISHING
-                            <a class="github-button" href="https://github.com/noxone/mahjong-point-calculator"
-                                data-color-scheme="no-preference: dark; dark: dark; light: dark;"
-                                data-icon="octicon-star" data-show-count="true"
-                                aria-label="Star noxone/mahjong-point-calculator on GitHub">Star</a>
-                            REMOVE_LINE_FOR_PUBLISHING -->
+                            &copy; Copyright 2023 <a href="https://github.com/noxone/" target="_blank"
+                                rel="noopener">Olaf
+                                Neumann</a>
                         </p>
                         <!-- REMOVE_LINE_FOR_PUBLISHING
                         <p>
-                            Built from commit ID <a
-                                href="https://github.com/noxone/mahjong-point-calculator/tree/GIT_COMMIT_ID"
-                                target="_blank" rel="noopener">SHORT_COMMIT_ID</a>.
+                            <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fmahjong.olafneumann.org&count_bg=%23372929&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visitors&edge_flat=false"
+                                title="Visitor Counter" />
                         </p>
-                        REMOVE_LINE_FOR_PUBLISHING -->
-                    </div>
-                    <hr class="clearfix w-100 d-md-none pb-3 border-secondary">
-                    <div class="col-md-3 mb-md-0 mb-3">
-                        <h5>Useful Mahjong Links</h5>
-                        <ul class="list-unstyled">
-                            <li><a class="rounded" href="http://dmjl.de/mah-jongg/klassische-regeln" target="_blank"
-                                    rel="noopener">Mahjong Rules (German)</a></li>
-                            <li><a class="rounded" href="https://www.mastersofgames.com/rules/mah-jong-rules.htm"
-                                    target="_blank" rel="noopener">Mahjong Rules (English)</a></li>
-                            <li><a class="rounded"
-                                    href="http://dmjl.de/wp-content/uploads/2009/05/DMJL_CC_Wertung_2005.pdf"
-                                    target="_blank" rel="noopener" id="rg_anchor_regex101">Mahjong Point Table</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3 mb-md-0 mb-3">
-                        <h5>This project is built using</h5>
-                        <ul class="list-unstyled">
-                            <li><a class="rounded" href="https://kotlinlang.org/" target="_blank"
-                                    rel="noopener">Kotlin</a></li>
-                            <li><a class="rounded" href="https://getbootstrap.com" target="_blank"
-                                    rel="noopener">Bootstrap</a></li>
-                            <li><a class="rounded"
-                                    href="https://commons.wikimedia.org/wiki/Category:SVG_Planar_illustrations_of_Mahjong_tiles"
-                                    target="_blank" rel="noopener">Mahjong Tile Art by 碧海风</a></li>
-                        </ul>
+                                    REMOVE_LINE_FOR_PUBLISHING -->
                     </div>
                 </div>
             </div>
-
-            <!-- Copyright -->
-            <div class="text-center pt-3">
-                <p>
-                    © 2023 Copyright <a href="https://github.com/noxone/" target="_blank" rel="noopener">Olaf
-                        Neumann</a>
-                </p>
-                    <!-- REMOVE_LINE_FOR_PUBLISHING
-                <p>
-                    <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fmahjong.olafneumann.org&count_bg=%23372929&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visitors&edge_flat=false"
-                        title="Visitor Counter" />
-                </p>
-                            REMOVE_LINE_FOR_PUBLISHING -->
-            </div>
-        </footer>
+        </div>
     </div>
 
 

@@ -53,7 +53,7 @@ class HandComponent(
     }
 
     override fun TagConsumer<HTMLElement>.createUI() {
-        div(classes = "flex-fill mr-figure-list d-flex flex-column justify-content-between") {
+        div(classes = "flex-fill mr-figure-list d-flex flex-column justify-content-between gap-2") {
             Figure.values()
                 .forEach { divForFigure(it) }
         }

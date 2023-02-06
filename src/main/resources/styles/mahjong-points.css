@@ -116,7 +116,6 @@ h1 {
   border: none;
 }
 
-
 .mr-tile-background {
   background: linear-gradient(165deg, rgba(255, 255, 255, 1) 0%, rgba(194, 194, 194, 1) 12%, rgba(223, 223, 223, 1) 33%, rgba(251, 251, 251, 1) 100%);
   border-radius: 0.6em;
@@ -134,16 +133,8 @@ h1 {
   opacity: 40%;
 }
 
-.mr-radio label {
-  display: block;
-}
-
 .mr-figure-list > div {
   position: relative;
-}
-
-.mr-figure-list > div+div {
-  margin-top: 0.5rem;
 }
 
 .mr-vertical-switch .form-switch {
