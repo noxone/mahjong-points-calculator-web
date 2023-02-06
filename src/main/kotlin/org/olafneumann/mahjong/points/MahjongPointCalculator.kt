@@ -33,7 +33,6 @@ private fun initMahjongPointCalculator() {
 
 private fun isScrollIsRequired(): Boolean {
     val body = document.body!!
-    console.log("scroll", body.scrollHeight, "client", body.clientHeight)
     return body.scrollHeight > body.clientHeight
 }
 

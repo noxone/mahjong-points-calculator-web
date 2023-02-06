@@ -43,14 +43,14 @@ class TextOverlay private constructor(
     private fun hideBox() = jquery.fadeOut()
 
     companion object {
-        fun TagConsumer<HTMLElement>.textOverlay(): TextOverlay {
+        fun TagConsumer<HTMLElement>.textOverlay(type: String = "danger"): TextOverlay {
             var inner: HTMLDivElement by Delegates.notNull()
             val outer: HTMLDivElement = returningRoot {
                 div(classes = "mr-error-overlay") {
                     style = "display:none;"
 
                     inner = returningRoot {
-                        div(classes = "alert alert-danger p-2 m-0 h-100 d-flex flex-column justify-content-center") {
+                        div(classes = "alert alert-$type p-2 m-0 h-100 d-flex flex-column justify-content-center") {
                             role = "alert"
                             +"Error Message"
                         }

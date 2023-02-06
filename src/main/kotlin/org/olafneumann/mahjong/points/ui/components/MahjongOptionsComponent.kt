@@ -2,13 +2,12 @@ package org.olafneumann.mahjong.points.ui.components
 
 import kotlinx.html.TagConsumer
 import kotlinx.html.div
-import kotlinx.html.form
 import org.olafneumann.mahjong.points.game.GameModifiers
-import org.olafneumann.mahjong.points.game.Wind
 import org.olafneumann.mahjong.points.ui.controls.Checkbox
 import org.olafneumann.mahjong.points.ui.controls.Checkbox.Companion.checkbox
-import org.olafneumann.mahjong.points.ui.controls.RadioGroup
-import org.olafneumann.mahjong.points.ui.controls.RadioGroup.Companion.radioButtonGroup
+import org.olafneumann.mahjong.points.ui.controls.TextOverlay
+import org.olafneumann.mahjong.points.ui.controls.TextOverlay.Companion.textOverlay
+import org.olafneumann.mahjong.points.ui.html.returningRoot
 import org.olafneumann.mahjong.points.ui.model.UIModel
 import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
 import org.w3c.dom.HTMLElement
@@ -27,6 +26,8 @@ class MahjongOptionsComponent(
     private var chkBeraubungDesKang: Checkbox by Delegates.notNull()
     private var chkMahjongZuBeginn: Checkbox by Delegates.notNull()
 
+    private var overlay: TextOverlay by Delegates.notNull()
+
     init {
         model.registerChangeListener(this)
     }
@@ -34,8 +35,9 @@ class MahjongOptionsComponent(
     private val gameModifiers: GameModifiers get() = model.calculatorModel.gameModifiers
 
     override fun TagConsumer<HTMLElement>.createUI() {
-        div(classes = "flex-fill d-flex flex-column justify-content-between") {
+        div(classes = "flex-fill d-flex flex-column justify-content-between position-relative") {
             createMahjongCheckboxes()
+            overlay = textOverlay("light")
         }
     }
 
