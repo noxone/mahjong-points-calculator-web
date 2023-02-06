@@ -4,20 +4,27 @@ import kotlinx.browser.window
 
 @Suppress("MaxLineLength")
 class Language(
-    private val translations: Map<String, String>
+    private val translations: Map<String, String>,
 ) {
+    private val translationBuffer = mutableMapOf<String, String?>()
 
     private fun String.emptyToNull() = trim().ifBlank { null }
     private fun getTranslationFor(string: String): String? = translations[string]?.emptyToNull()
 
-    fun translate(string: String): String {
-        getTranslationFor(string)?.let { return it }
+    private val String.normalized: String
+        get() = this.replace(REGEX_WS, " ")
 
-        console.warn("Untranslated text:", string)
+    fun translate(string: String): String {
+        translationBuffer.getOrPut(string) { getTranslationFor(string.normalized) }
+            ?.let { return it }
+
+        console.warn("Untranslated text:", string.normalized)
         return string
     }
 
     companion object {
+        private val REGEX_WS = Regex("\\s+")
+
         private const val DEFAULT_LANGUAGE = "en"
         private fun get(languageKey: String): Language? =
             when (languageKey) {
