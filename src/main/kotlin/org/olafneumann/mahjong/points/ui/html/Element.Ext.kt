@@ -5,19 +5,33 @@ import org.w3c.dom.HTMLElement
 import org.w3c.dom.Node
 import org.w3c.dom.asList
 
-fun Element.getAllChildren(): Sequence<Element> =
-    children.asList().asSequence().selectRecursive { children.asList().asSequence() }
+fun Element.getAllChildren(predicate: (Element) -> Boolean = { true }): Sequence<Element> =
+    children.asList()
+        .asSequence()
+        .filter(predicate)
+        .selectRecursive {
+            children.asList()
+                .asSequence()
+                .filter(predicate)
+        }
 
-inline fun <reified T : HTMLElement> Element.getAllChildren() =
-    getAllChildren().filterIsInstance<T>()
+//inline fun <reified T : HTMLElement> Element.getAllChildren() =
+//    getAllChildren{true}.filterIsInstance<T>()
 
-fun Node.getAllChildNodes(): Sequence<Node> =
-    childNodes.asList().asSequence().selectRecursive { childNodes.asList().asSequence() }
+fun Node.getAllChildNodes(predicate: (Node) -> Boolean = { true }): Sequence<Node> =
+    childNodes.asList()
+        .asSequence()
+        .filter(predicate)
+        .selectRecursive {
+            childNodes.asList()
+                .asSequence()
+                .filter(predicate)
+        }
 
 fun <T : Element> Sequence<T>.filterAttributeIsPresent(attributeName: String) =
     filter { it.hasAttribute(attributeName) }
 
-//fun <T: HTMLElement> Sequence<T>.filterClassIsPresent(className: String) =
+//fun <T: Element> Sequence<T>.filterClassIsPresent(className: String) =
 //    filter { it.classList.contains(className) }
 
 // https://stackoverflow.com/questions/66755991/kotlin-get-all-children-recursively

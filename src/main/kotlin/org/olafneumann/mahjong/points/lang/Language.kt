@@ -4,20 +4,27 @@ import kotlinx.browser.window
 
 @Suppress("MaxLineLength")
 class Language(
-    private val translations: Map<String, String>
+    private val translations: Map<String, String>,
 ) {
+    private val translationBuffer = mutableMapOf<String, String?>()
 
-    private fun String.emptyToNull() = trim().ifBlank { null }
+    private fun String.emptyToNull() = ifBlank { null }
     private fun getTranslationFor(string: String): String? = translations[string]?.emptyToNull()
 
-    fun translate(string: String): String {
-        getTranslationFor(string)?.let { return it }
+    private val String.normalized: String
+        get() = this.replace(REGEX_WS, " ")
 
-        console.warn("Untranslated text:", string)
+    fun translate(string: String): String {
+        translationBuffer.getOrPut(string) { getTranslationFor(string.normalized) }
+            ?.let { return it }
+
+        console.warn("Untranslated text:", string.normalized)
         return string
     }
 
     companion object {
+        private val REGEX_WS = Regex("\\s+")
+
         private const val DEFAULT_LANGUAGE = "en"
         private fun get(languageKey: String): Language? =
             when (languageKey) {
@@ -45,6 +52,7 @@ class Language(
                         "Bonus" to "Bonus",
                         "Reset" to "Reset",
                         "Result" to "Result",
+                        "Wind" to "Wind",
                         "Prevailing Wind" to "Prevailing Wind",
                         "Seat Wind" to "Seat Wind",
                         "Point Calculation" to "Point Calculation",
@@ -76,7 +84,7 @@ class Language(
                         StringKeys.KANG_MAINTILE_OPEN to "Kang of major tiles (exposed)",
                         StringKeys.KANG_MAINTILE_CLOSED to "Kang of major tiles (concealed)",
                         StringKeys.PAIR_OF_DRAGONS to "Pair of dragons",
-                        StringKeys.MAHJONG to "Mah-Jong!",
+                        StringKeys.MAHJONG to "Mah-Jong",
                         StringKeys.WINNING_TILE_FROM_WALL to "Winning tile from the wall",
                         StringKeys.WINNING_TILE_ONLY_POSSIBLE_TILE to "Winning tile is only possible tile",
                         StringKeys.WINNING_TILE_COMPLETES_PAIR_OF_MINOR_TILES to "Winning tile completes pair of minor tiles",
@@ -119,6 +127,10 @@ class Language(
                         StringKeys.ERR_NOT_BONUS_TILE to "Not a bonus tile.",
                         StringKeys.ERR_SELECT_TILES_FIRST to "Please select tiles first.",
 
+                        " is a tool to compute the points of a Mahjong game. " to " is a tool to compute the points of a Mahjong game.",
+                        "More Info" to "More Info",
+                        "Useful Mahjong Links" to "Useful Mahjong Links",
+                        "This project is built using" to "This project is built using",
                         )
                 )
 
@@ -146,6 +158,7 @@ class Language(
                         "Bonus" to "Bonus",
                         "Reset" to "Zurücksetzen",
                         "Result" to "Ergebnis",
+                        "Wind" to "Wind",
                         "Prevailing Wind" to "Rundenwind",
                         "Seat Wind" to "Platzwind",
                         "Point Calculation" to "Punkteberechnung",
@@ -177,7 +190,7 @@ class Language(
                         StringKeys.KANG_MAINTILE_OPEN to "Kang aus Hauptziegeln (offen)",
                         StringKeys.KANG_MAINTILE_CLOSED to "Kang aus Hauptziegeln (geschlossen)",
                         StringKeys.PAIR_OF_DRAGONS to "Paar von Drachen",
-                        StringKeys.MAHJONG to "Mahjong!",
+                        StringKeys.MAHJONG to "Mahjong",
                         StringKeys.WINNING_TILE_FROM_WALL to "Schlussziegel von der Mauer",
                         StringKeys.WINNING_TILE_ONLY_POSSIBLE_TILE to "Schlussziegel ist einzig möglicher Ziegel",
                         StringKeys.WINNING_TILE_COMPLETES_PAIR_OF_MINOR_TILES to "Schlussziegel komplettiert Paar aus Grundziegeln",
@@ -185,7 +198,7 @@ class Language(
                         StringKeys.PAIR_WIND_SEAT to "Paar des Platzwindes",
                         StringKeys.PAIR_WIND_PREVAILING to "Paar des Rundenwindes",
                         StringKeys.ALL_FLOWERS to "Alle Blumenziegel",
-                        StringKeys.ALL_SEASONS to "Alle Jahreszeigenziegel",
+                        StringKeys.ALL_SEASONS to "Alle Jahreszeitenziegel",
                         StringKeys.PUNG_DRAGONS to "Pong aus Drachen",
                         StringKeys.KANG_DRAGONS to "Kang aus Drachen",
                         StringKeys.PUNG_SEAT_WIND to "Pung des Platzwindes",
@@ -220,6 +233,14 @@ class Language(
                         StringKeys.ERR_NOT_BONUS_TILE to "Kein Bonusziegel",
                         StringKeys.ERR_SELECT_TILES_FIRST to "Bitte erst Ziegel auswählen.",
 
+                        " is a tool to compute the points of a Mahjong game. " to " ist ein Werkzeug zum Berechnen der Punkte eines Mahjong-Spiels.",
+                        "More Info" to "Weitere Infos",
+                        "Useful Mahjong Links" to "Nützliche Mahjong-Links",
+                        "This project is built using" to "Diese Projekt wurde erstellt mit",
+                        " Find the project sources at " to " Den Quellcode finden sie auf ",
+                        " The project itself as well as the sources are hosted in " to "Das Projekt selbst, sowie die Quellen werden auf ",
+                        ". The version you are currently using it built from commit ID " to " gehostet. Die Version, die Sie gerade nutzen, wurde erstellt aus Commit-ID ",
+                        ". " to ". ",
                         )
                 )
 

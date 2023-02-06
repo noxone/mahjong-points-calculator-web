@@ -100,7 +100,7 @@ class Checkbox private constructor(
                 }
                 small {
                     label = returningRoot {
-                        label(classes = "form-check-label") {
+                        label(classes = "form-check-label text-break") {
                             htmlFor = checkboxId
                             title = getLabel()
                             +getLabel()

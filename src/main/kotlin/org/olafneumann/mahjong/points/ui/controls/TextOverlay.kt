@@ -15,7 +15,7 @@ import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
 import kotlin.properties.Delegates
 
-class ErrorOverlay private constructor(
+class TextOverlay private constructor(
     private val outer: HTMLDivElement,
     private val inner: HTMLDivElement,
 ) {
@@ -43,21 +43,21 @@ class ErrorOverlay private constructor(
     private fun hideBox() = jquery.fadeOut()
 
     companion object {
-        fun TagConsumer<HTMLElement>.errorOverlay(): ErrorOverlay {
+        fun TagConsumer<HTMLElement>.textOverlay(type: String = "danger"): TextOverlay {
             var inner: HTMLDivElement by Delegates.notNull()
             val outer: HTMLDivElement = returningRoot {
                 div(classes = "mr-error-overlay") {
                     style = "display:none;"
 
                     inner = returningRoot {
-                        div(classes = "alert alert-danger p-2 m-0 h-100 d-flex flex-column justify-content-center") {
+                        div(classes = "alert alert-$type p-2 m-0 h-100 d-flex flex-column justify-content-center") {
                             role = "alert"
                             +"Error Message"
                         }
                     }
                 }
             }
-            return ErrorOverlay(outer = outer, inner = inner)
+            return TextOverlay(outer = outer, inner = inner)
         }
     }
 }
