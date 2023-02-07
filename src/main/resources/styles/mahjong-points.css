@@ -85,6 +85,22 @@ h1 {
   border: none !important;
 }
 
+.mr-tile .mr-character {
+  position: absolute;
+  font-size: 1.2em;
+  top: 0.3em;
+  left: 0.6em;
+}
+.mr-tile-face[mr-tile="DragonWhite"] + .mr-character {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
 .mr-alert {
   background: inherit;
   background-size: 99%;

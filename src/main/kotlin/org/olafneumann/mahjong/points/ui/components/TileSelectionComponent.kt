@@ -28,10 +28,10 @@ class TileSelectionComponent(
             div { imageTiles.putAll(tileImages(Tile.characters)) }
             div { imageTiles.putAll(tileImages(Tile.circles)) }
             div {
-                imageTiles.putAll(tileImages(Tile.winds))
+                imageTiles.putAll(tileImages(Tile.winds, showCharacter = true))
                 tileImage(null)
                 tileImage(null)
-                imageTiles.putAll(tileImages(Tile.dragons))
+                imageTiles.putAll(tileImages(Tile.dragons, showCharacter = true))
             }
             div {
                 imageTiles.putAll(tileImages(Tile.flowers))
@@ -42,8 +42,8 @@ class TileSelectionComponent(
         this@TileSelectionComponent.imageTiles = imageTiles
     }
 
-    private fun TagConsumer<HTMLElement>.tileImages(tiles: Collection<Tile>): Map<Tile, TileImage> =
-        tiles.associateWith { tileImage(tile = it, onClickFunction = createOnClickListener(it)) }
+    private fun TagConsumer<HTMLElement>.tileImages(tiles: Collection<Tile>, showCharacter: Boolean = false): Map<Tile, TileImage> =
+        tiles.associateWith { tileImage(tile = it, showCharacter = showCharacter, onClickFunction = createOnClickListener(it)) }
 
     private fun createOnClickListener(tile: Tile): (Event) -> Unit = {
         if (tile.isSelectable) {

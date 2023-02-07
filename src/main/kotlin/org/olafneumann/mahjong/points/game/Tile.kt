@@ -11,6 +11,7 @@ enum class Tile(
     val color: Color?,
     val number: Int?,
     val wind: Wind? = null,
+    val character: Char = number?.toString()?.get(0) ?: wind?.name?.uppercase()?.get(0) ?: ' '
 ) {
     Bamboo1(color = Color.Bamboo, number = 1),
     Bamboo2(color = Color.Bamboo, number = 2),
@@ -43,9 +44,9 @@ enum class Tile(
     WindSouth(color = null, number = null, wind = South),
     WindWest(color = null, number = null, wind = West),
     WindNorth(color = null, number = null, wind = North),
-    DragonWhite(color = null, number = null),
-    DragonGreen(color = null, number = null),
-    DragonRed(color = null, number = null),
+    DragonWhite(color = null, number = null, character = 'P'),
+    DragonGreen(color = null, number = null, character = 'F'),
+    DragonRed(color = null, number = null, character = 'C'),
     Flower1(color = null, number = 1),
     Flower2(color = null, number = 2),
     Flower3(color = null, number = 3),
