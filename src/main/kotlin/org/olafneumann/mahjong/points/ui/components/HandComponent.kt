@@ -53,14 +53,14 @@ class HandComponent(
     }
 
     override fun TagConsumer<HTMLElement>.createUI() {
-        div(classes = "flex-fill mr-figure-list d-flex flex-column justify-content-between gap-2") {
+        div(classes = "flex-fill mr-figure-list row g-0") {
             Figure.values()
                 .forEach { divForFigure(it) }
         }
     }
 
     private fun TagConsumer<HTMLElement>.divForFigure(figure: Figure) {
-        div(classes = "row g-0") {
+        div(classes = "col-6 col-sm-12 row g-0 px-1 px-sm-0 mb-2 mb-sm-0") {
             selectableDivs[figure] = returningRoot {
                 div(classes = "${(!figure.canBeConcealed).toString("col", "col-8 col-md-9")} mr-figure border") {
                     span { +!figure.title }

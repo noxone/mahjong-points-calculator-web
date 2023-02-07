@@ -18,12 +18,26 @@ h1 {
   font-size: 3rem;
 }
 
+.mr-screen-fill {
+  height: 100vh;
+}
+
 .mr-tile-container {
-  font-size: 0.97vw;
+  font-size: 1.2vw;
 }
 
 .mr-full-height {
   height: 100%;
+}
+
+@media (min-width: 576px) {
+  .mr-figure-list {
+    gap: 0.5em;
+  }
+
+  .mr-figure span {
+    font-size: 2.5rem !important;
+  }
 }
 
 @media (min-width: 768px) {
@@ -42,6 +56,10 @@ h1 {
 @media (min-width: 1400px) {
   .mr-tile-container {
     font-size: 9pt;
+  }
+
+  .mr-screen-fill {
+    height: inherit !important;
   }
 }
 
@@ -189,7 +207,7 @@ h1 {
 
 .mr-figure span {
   position: absolute;
-  font-size: 2.5rem;
+  font-size: 2rem;
   opacity: 0.3;
   width: 100%;
   height: 100%;

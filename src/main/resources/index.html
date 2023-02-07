@@ -52,7 +52,7 @@
     REMOVE_LINE_FOR_PUBLISHING -->
 </head>
 
-<body class="bg-dark user-select-none vh-100">
+<body class="bg-dark user-select-none mr-screen-fill">
     <div id="mr_loading"
         class="fixed-top fixed-bottom bg-dark d-flex flex-column align-items-center justify-content-center">
         <img src="images/mahjong-points-dark.svg" alt="Logo" />
@@ -74,12 +74,12 @@
             </div>
 
             <div class="col-12 col-lg-9 pb-2 row g-0">
-                <div class="col-8 pe-2">
+                <div class="col-sm-8 pe-sm-2 pb-2 pb-sm-0">
                     <div id="mr_tiles" class=" bg-light rounded d-flex flex-column p-3 mr-full-height">
                         <h2>Tiles</h2>
                     </div>
                 </div>
-                <div class="col-4 pe-lg-2">
+                <div class="col-sm-4 pe-lg-2">
                     <div id="mr_selected_tiles" class="bg-light rounded mr-full-height d-flex flex-column p-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <h2>Hand</h2>
@@ -92,27 +92,29 @@
                 </div>
             </div>
 
-            <div class="col-9 col-lg-3 row g-0 pe-2 pe-lg-0 pb-2">
-                <div class="col-4 col-lg-12 pe-2 pe-lg-0 pb-lg-2">
+            <div class="col-12 col-md-9 col-lg-3 row g-0 pe-md-2 pe-lg-0 pb-2">
+                <div class="col-sm-4 col-md-4 col-lg-12 pe-0 pe-sm-2 pe-lg-0 pb-2 pb-sm-0 pb-lg-2">
                     <div id="mr_wind" class="bg-light rounded mr-full-height d-flex flex-column p-3">
                         <!--<h2>Wind</h2>-->
                     </div>
                 </div>
 
-                <div class="col-8 col-lg-12">
+                <div class="col-sm-8 col-md-8 col-lg-12">
                     <div id="mr_mahjong" class="bg-light rounded mr-full-height d-flex flex-column p-3">
                         <!--<h2>Mahjong</h2>-->
                     </div>
                 </div>
             </div>
 
-            <div class="col-3 col-lg-4 order-lg-last pb-2 pb-lg-0">
+            <div class="col-12 col-md-3 col-lg-4 order-lg-last pb-2 pb-lg-0 ">
                 <div id="mr_result"
                     class="bg-secondary border border-secondary rounded text-light d-flex flex-column h-100 p-3">
                     <h2>Result</h2>
                 </div>
             </div>
 
+
+            <!-- footer part -->
             <div class="col-12 col-lg-8 pe-lg-2">
                 <div class="font-small bg-dark text-muted border border-secondary rounded row g-0 p-2 h-100">
                     <h5 class="col-12 text-uppercase text-center">Mahjong Points Calculator</h5>
@@ -147,7 +149,7 @@
                                 REMOVE_LINE_FOR_PUBLISHING -->
                             </div>
 
-                            <div class="modal fade" id="footerModal" tabindex="-1">
+                            <div class="modal fade" id="footerModal" data-bs-backdrop="static" tabindex="-1">
                                 <div class="modal-dialog modal-dialog-centered modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
