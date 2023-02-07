@@ -4,6 +4,7 @@ import kotlinx.browser.window
 import kotlinx.html.TagConsumer
 import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
+import kotlinx.html.span
 import org.olafneumann.mahjong.points.game.Tile
 import org.olafneumann.mahjong.points.ui.html.mrTile
 import org.olafneumann.mahjong.points.ui.html.returningRoot
@@ -81,12 +82,17 @@ class TileImage private constructor(
         private const val ROTATION_ANIMATION_DURATION = 500
         private const val BLINK_DURATION = 920
 
-        fun TagConsumer<HTMLElement>.tileImage(tile: Tile?, onClickFunction: (Event) -> Unit = {}): TileImage {
+        fun TagConsumer<HTMLElement>.tileImage(tile: Tile?, showCharacter: Boolean = false, onClickFunction: (Event) -> Unit = {}): TileImage {
             var inner: HTMLDivElement by Delegates.notNull()
             val outer: HTMLDivElement = returningRoot {
-                div(classes = "mr-tile") {
+                div(classes = "mr-tile position-relative") {
                     inner = returningRoot {
                         div(classes = "mr-tile-face") {
+                        }
+                    }
+                    if (showCharacter) {
+                        span(classes = "mr-character") {
+                            +tile?.character.toString()
                         }
                     }
                     this.onClickFunction = onClickFunction
