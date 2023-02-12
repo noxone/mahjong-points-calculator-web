@@ -31,6 +31,7 @@ private fun initMahjongPointCalculator() {
     }
 }
 
+/*
 private fun isScrollIsRequired(): Boolean {
     val body = document.body!!
     return body.scrollHeight > body.clientHeight
@@ -39,9 +40,10 @@ private fun isScrollIsRequired(): Boolean {
 private fun enableDisableScrollIfRequired() {
     document.body!!.style.overflowY = if (!isScrollIsRequired()) "hidden" else ""
 }
+*/
 
 private fun initMahjongPointCalculatorUnsafe() {
-    window.addEventListener("resize", { enableDisableScrollIfRequired() })
+    // window.addEventListener("resize", { enableDisableScrollIfRequired() })
     MainPage.translate(document.getElement("mr_main"))
 
     val tilesDiv = document.getElement<HTMLDivElement>("mr_tiles")

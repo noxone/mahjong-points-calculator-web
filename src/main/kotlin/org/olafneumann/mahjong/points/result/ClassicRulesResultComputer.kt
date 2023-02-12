@@ -151,29 +151,29 @@ class ClassicRulesResultComputer : ResultComputer {
                 // drei verdeckte pong
                 hand.fullFigures.filter { it.type == Pung || it.type == Kang }
                     .filter { it.visibility == Closed }
-                    .hasSize(3)
+                    .hasSize(THREE)
                     .map { Line(description = StringKeys.THREE_CLOSED_PUNGS, doublings = 1) },
                 // kleine drei Drachen
                 (hand.fullFigures.filter { it.type == Pung || it.type == Kang }
                     .filter { it.tile.isDragon }
-                    .hasSize(2)
+                    .hasSize(TWO)
                         && hand.pair?.tile?.isDragon == true)
                     .map { Line(description = StringKeys.SMALL_THREE_DRAGONS, doublings = 1) },
                 // große drei Drachen
                 hand.fullFigures.filter { it.type == Pung || it.type == Kang }
                     .filter { it.tile.isDragon }
-                    .hasSize(3)
+                    .hasSize(THREE)
                     .map { Line(description = StringKeys.BIG_THREE_DRAGONS, doublings = 2) },
                 // kleine drei Freunde
                 (hand.fullFigures.filter { it.type == Pung || it.type == Kang }
                     .filter { it.tile.isWind }
-                    .hasSize(3)
+                    .hasSize(THREE)
                         && hand.pair?.tile?.isWind == true)
                     .map { Line(description = StringKeys.SMALL_THREE_FRIENDS, doublings = 1) },
                 // große drei Freunde
                 hand.fullFigures.filter { it.type == Pung || it.type == Kang }
                     .filter { it.tile.isWind }
-                    .hasSize(4)
+                    .hasSize(FOUR)
                     .map { Line(description = StringKeys.BIG_FOUR_FRIENDS, doublings = 2) },
             ),
         )
@@ -185,19 +185,19 @@ class ClassicRulesResultComputer : ResultComputer {
             // TODO Null-Punkte-Hand 1
             listOf(
                 // Kein Chi
-                hand.getFigures(Chow).hasSize(0)
+                hand.getFigures(Chow).hasSize(ZERO)
                     .map { Line(description = StringKeys.NO_CHOW, doublings = 1) },
                 // Alle Figuren verdeckt
-                hand.getFigures(visibility = Closed).hasSize(5)
+                hand.getFigures(visibility = Closed).hasSize(FIVE)
                     .map { Line(description = StringKeys.ALL_FIGURES_CLOSED, doublings = 1) },
                 // Nur Ziegel einer Farbe und Bildziegel
-                (hand.allTilesOfFigures.map { it.color }.distinct().hasSize(2)
+                (hand.allTilesOfFigures.map { it.color }.distinct().hasSize(TWO)
                         && hand.allTilesOfFigures.mapNotNull { it.color }.distinct().hasSize(1))
                     .map { Line(description = StringKeys.ALL_TILES_OF_ONE_COLOR_AND_PICTURES, doublings = 1) },
                 // Nur Ziegel einer Farbe
-                (hand.allTilesOfFigures.map { it.color }.distinct().hasSize(1)
+                (hand.allTilesOfFigures.map { it.color }.distinct().hasSize(ONE)
                         && hand.allTilesOfFigures.first().color != null)
-                    .map { Line(description = StringKeys.ALL_TILES_ONE_COLOR, doublings = 3) },
+                    .map { Line(description = StringKeys.ALL_TILES_ONE_COLOR, doublings = THREE) },
                 // Nur Hauptziegel
                 hand.allTilesOfFigures.all { !it.isBaseTile }
                     .map { Line(description = StringKeys.ONLY_MAINTILES, doublings = 1) },
@@ -226,6 +226,12 @@ class ClassicRulesResultComputer : ResultComputer {
             .mapNotNull { it }
 
     companion object {
+        private const val ZERO = 0
+        private const val ONE = 1
+        private const val TWO = 2
+        private const val THREE = 3
+        private const val FOUR = 4
+        private const val FIVE = 5
         private const val POINT_BONUS = 4
 
         private fun Collection<Any?>.hasSize(size: Int) = this.size == size

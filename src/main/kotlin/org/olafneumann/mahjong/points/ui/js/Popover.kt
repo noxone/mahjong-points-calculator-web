@@ -10,10 +10,7 @@ import kotlinx.html.js.onClickFunction
 import kotlinx.html.title
 import org.olafneumann.mahjong.points.lang.not
 import org.w3c.dom.HTMLElement
-import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventTarget
-import kotlin.js.Json
-import kotlin.js.json
 
 @Suppress("LongParameterList")
 class Popover(
