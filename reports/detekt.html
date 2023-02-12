@@ -157,8 +157,8 @@
 
 <div>
   <ul>
-    <li>213 number of properties</li>
-    <li>160 number of functions</li>
+    <li>221 number of properties</li>
+    <li>159 number of functions</li>
     <li>111 number of classes</li>
     <li>12 number of packages</li>
     <li>49 number of kt files</li>
@@ -170,188 +170,25 @@
 
 <div>
   <ul>
-    <li>2,879 lines of code (loc)</li>
-    <li>2,437 source lines of code (sloc)</li>
-    <li>1,735 logical lines of code (lloc)</li>
-    <li>88 comment lines of code (cloc)</li>
-    <li>343 cyclomatic complexity (mcc)</li>
-    <li>160 cognitive complexity</li>
-    <li>13 number of total code smells</li>
+    <li>2,916 lines of code (loc)</li>
+    <li>2,467 source lines of code (sloc)</li>
+    <li>1,763 logical lines of code (lloc)</li>
+    <li>98 comment lines of code (cloc)</li>
+    <li>342 cyclomatic complexity (mcc)</li>
+    <li>158 cognitive complexity</li>
+    <li>0 number of total code smells</li>
     <li>3% comment source ratio</li>
-    <li>197 mcc per 1,000 lloc</li>
-    <li>7 code smells per 1,000 lloc</li>
+    <li>193 mcc per 1,000 lloc</li>
+    <li>0 code smells per 1,000 lloc</li>
   </ul>
 </div>
 
 
 <h2>Findings</h2>
-<div>Total: 13
-  <h3>complexity: 3</h3>
-  <details id="CyclomaticComplexMethod" open="open">
-    <summary class="rule-container"><span class="rule">CyclomaticComplexMethod: 1 </span><span class="description">Prefer splitting up complex methods into smaller, easier to test methods.</span></summary>
-<a href="https://detekt.dev/docs/rules/complexity#cyclomaticcomplexmethod">Documentation</a>
-    <ul>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/model/CalculatorModel.kt:68:9</span><span class="message">The function select appears to be too complex based on Cyclomatic Complexity (complexity: 34). Defined complexity threshold for methods is set to '15'</span>
-        <pre><code><span class="lineno">  65 </span>        return tiles.all { remaining.remove(it) }
-<span class="lineno">  66 </span>    }
-<span class="lineno">  67 </span>
-<span class="lineno">  68 </span>    fun <span class="error">select</span>(tile: Tile): CalculatorModel {
-<span class="lineno">  69 </span>        if (tile.isBonusTile) {
-<span class="lineno">  70 </span>            return evolve(
-<span class="lineno">  71 </span>                hand = hand.copy(bonusTiles = hand.bonusTiles + tile),
-</code></pre>
-      </li>
-    </ul>
-  </details>
-  <details id="LongMethod" open="open">
-    <summary class="rule-container"><span class="rule">LongMethod: 2 </span><span class="description">One method should have one responsibility. Long methods tend to handle many things at once. Prefer smaller methods to make them easier to understand.</span></summary>
-<a href="https://detekt.dev/docs/rules/complexity#longmethod">Documentation</a>
-    <ul>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/lang/Language.kt:29:21</span><span class="message">The function get is too long (213). The maximum length is 61.</span>
-        <pre><code><span class="lineno">  26 </span>        private val REGEX_WS = Regex(&quot;\\s+&quot;)
-<span class="lineno">  27 </span>
-<span class="lineno">  28 </span>        private const val DEFAULT_LANGUAGE = &quot;en&quot;
-<span class="lineno">  29 </span>        private fun <span class="error">get</span>(languageKey: String): Language? =
-<span class="lineno">  30 </span>            when (languageKey) {
-<span class="lineno">  31 </span>                DEFAULT_LANGUAGE -&gt; Language(
-<span class="lineno">  32 </span>                    mapOf(
-</code></pre>
-      </li>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/model/CalculatorModel.kt:68:9</span><span class="message">The function select is too long (146). The maximum length is 61.</span>
-        <pre><code><span class="lineno">  65 </span>        return tiles.all { remaining.remove(it) }
-<span class="lineno">  66 </span>    }
-<span class="lineno">  67 </span>
-<span class="lineno">  68 </span>    fun <span class="error">select</span>(tile: Tile): CalculatorModel {
-<span class="lineno">  69 </span>        if (tile.isBonusTile) {
-<span class="lineno">  70 </span>            return evolve(
-<span class="lineno">  71 </span>                hand = hand.copy(bonusTiles = hand.bonusTiles + tile),
-</code></pre>
-      </li>
-    </ul>
-  </details>
-  <h3>style: 10</h3>
-  <details id="ForbiddenComment" open="open">
-    <summary class="rule-container"><span class="rule">ForbiddenComment: 2 </span><span class="description">Flags a forbidden comment.</span></summary>
-<a href="https://detekt.dev/docs/rules/style#forbiddencomment">Documentation</a>
-    <ul>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/model/CalculatorModel.kt:89:9</span><span class="message">This comment contains 'TODO:' that has been defined as forbidden in detekt.</span>
-        <pre><code><span class="lineno">  86 </span>            )
-<span class="lineno">  87 </span>        }
-<span class="lineno">  88 </span>
-<span class="lineno">  89 </span>        <span class="error">// TODO: Move down into 'when'</span>
-<span class="lineno">  90 </span>        if (selectedFigure == Pair) {
-<span class="lineno">  91 </span>            if (!canConsume(tile, tile)) {
-<span class="lineno">  92 </span>                return withError(tile, StringKeys.ERR_NO_TILES_LEFT_FOR_PAIR)
-</code></pre>
-      </li>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/model/CalculatorModel.kt:226:29</span><span class="message">This comment contains 'TODO:' that has been defined as forbidden in detekt.</span>
-        <pre><code><span class="lineno"> 223 </span>            }
-<span class="lineno"> 224 </span>
-<span class="lineno"> 225 </span>            FinishingPair -&gt; {
-<span class="lineno"> 226 </span>                return this <span class="error">// TODO: move here</span>
-<span class="lineno"> 227 </span>            }
-<span class="lineno"> 228 </span>        }
-<span class="lineno"> 229 </span>    }
-</code></pre>
-      </li>
-    </ul>
-  </details>
-  <details id="MagicNumber" open="open">
-    <summary class="rule-container"><span class="rule">MagicNumber: 5 </span><span class="description">Report magic numbers. Magic number is a numeric literal that is not defined as a constant and hence it's unclear what the purpose of this number is. It's better to declare such numbers as constants and give them a proper name. By default, -1, 0, 1, and 2 are not considered to be magic numbers.</span></summary>
-<a href="https://detekt.dev/docs/rules/style#magicnumber">Documentation</a>
-    <ul>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/result/ClassicRulesResultComputer.kt:154:30</span><span class="message">This expression contains a magic number. Consider defining it to a well named constant.</span>
-        <pre><code><span class="lineno"> 151 </span>                // drei verdeckte pong
-<span class="lineno"> 152 </span>                hand.fullFigures.filter { it.type == Pung || it.type == Kang }
-<span class="lineno"> 153 </span>                    .filter { it.visibility == Closed }
-<span class="lineno"> 154 </span>                    .hasSize(<span class="error">3</span>)
-<span class="lineno"> 155 </span>                    .map { Line(description = StringKeys.THREE_CLOSED_PUNGS, doublings = 1) },
-<span class="lineno"> 156 </span>                // kleine drei Drachen
-<span class="lineno"> 157 </span>                (hand.fullFigures.filter { it.type == Pung || it.type == Kang }
-</code></pre>
-      </li>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/result/ClassicRulesResultComputer.kt:165:30</span><span class="message">This expression contains a magic number. Consider defining it to a well named constant.</span>
-        <pre><code><span class="lineno"> 162 </span>                // große drei Drachen
-<span class="lineno"> 163 </span>                hand.fullFigures.filter { it.type == Pung || it.type == Kang }
-<span class="lineno"> 164 </span>                    .filter { it.tile.isDragon }
-<span class="lineno"> 165 </span>                    .hasSize(<span class="error">3</span>)
-<span class="lineno"> 166 </span>                    .map { Line(description = StringKeys.BIG_THREE_DRAGONS, doublings = 2) },
-<span class="lineno"> 167 </span>                // kleine drei Freunde
-<span class="lineno"> 168 </span>                (hand.fullFigures.filter { it.type == Pung || it.type == Kang }
-</code></pre>
-      </li>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/result/ClassicRulesResultComputer.kt:170:30</span><span class="message">This expression contains a magic number. Consider defining it to a well named constant.</span>
-        <pre><code><span class="lineno"> 167 </span>                // kleine drei Freunde
-<span class="lineno"> 168 </span>                (hand.fullFigures.filter { it.type == Pung || it.type == Kang }
-<span class="lineno"> 169 </span>                    .filter { it.tile.isWind }
-<span class="lineno"> 170 </span>                    .hasSize(<span class="error">3</span>)
-<span class="lineno"> 171 </span>                        &amp;&amp; hand.pair?.tile?.isWind == true)
-<span class="lineno"> 172 </span>                    .map { Line(description = StringKeys.SMALL_THREE_FRIENDS, doublings = 1) },
-<span class="lineno"> 173 </span>                // große drei Freunde
-</code></pre>
-      </li>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/result/ClassicRulesResultComputer.kt:176:30</span><span class="message">This expression contains a magic number. Consider defining it to a well named constant.</span>
-        <pre><code><span class="lineno"> 173 </span>                // große drei Freunde
-<span class="lineno"> 174 </span>                hand.fullFigures.filter { it.type == Pung || it.type == Kang }
-<span class="lineno"> 175 </span>                    .filter { it.tile.isWind }
-<span class="lineno"> 176 </span>                    .hasSize(<span class="error">4</span>)
-<span class="lineno"> 177 </span>                    .map { Line(description = StringKeys.BIG_FOUR_FRIENDS, doublings = 2) },
-<span class="lineno"> 178 </span>            ),
-<span class="lineno"> 179 </span>        )
-</code></pre>
-      </li>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/result/ClassicRulesResultComputer.kt:191:62</span><span class="message">This expression contains a magic number. Consider defining it to a well named constant.</span>
-        <pre><code><span class="lineno"> 188 </span>                hand.getFigures(Chow).hasSize(0)
-<span class="lineno"> 189 </span>                    .map { Line(description = StringKeys.NO_CHOW, doublings = 1) },
-<span class="lineno"> 190 </span>                // Alle Figuren verdeckt
-<span class="lineno"> 191 </span>                hand.getFigures(visibility = Closed).hasSize(<span class="error">5</span>)
-<span class="lineno"> 192 </span>                    .map { Line(description = StringKeys.ALL_FIGURES_CLOSED, doublings = 1) },
-<span class="lineno"> 193 </span>                // Nur Ziegel einer Farbe und Bildziegel
-<span class="lineno"> 194 </span>                (hand.allTilesOfFigures.map { it.color }.distinct().hasSize(2)
-</code></pre>
-      </li>
-    </ul>
-  </details>
-  <details id="MaxLineLength" open="open">
-    <summary class="rule-container"><span class="rule">MaxLineLength: 3 </span><span class="description">Line detected, which is longer than the defined maximum line length in the code style.</span></summary>
-<a href="https://detekt.dev/docs/rules/style#maxlinelength">Documentation</a>
-    <ul>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/ui/components/TileSelectionComponent.kt:45:5</span><span class="message">Line detected, which is longer than the defined maximum line length in the code style.</span>
-        <pre><code><span class="lineno">  42 </span>        this@TileSelectionComponent.imageTiles = imageTiles
-<span class="lineno">  43 </span>    }
-<span class="lineno">  44 </span>
-<span class="lineno">  45 </span>    <span class="error">private</span> fun TagConsumer&lt;HTMLElement&gt;.tileImages(tiles: Collection&lt;Tile&gt;, showCharacter: Boolean = false): Map&lt;Tile, TileImage&gt; =
-<span class="lineno">  46 </span>        tiles.associateWith { tileImage(tile = it, showCharacter = showCharacter, onClickFunction = createOnClickListener(it)) }
-<span class="lineno">  47 </span>
-<span class="lineno">  48 </span>    private fun createOnClickListener(tile: Tile): (Event) -&gt; Unit = {
-</code></pre>
-      </li>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/ui/components/TileSelectionComponent.kt:46:9</span><span class="message">Line detected, which is longer than the defined maximum line length in the code style.</span>
-        <pre><code><span class="lineno">  43 </span>    }
-<span class="lineno">  44 </span>
-<span class="lineno">  45 </span>    private fun TagConsumer&lt;HTMLElement&gt;.tileImages(tiles: Collection&lt;Tile&gt;, showCharacter: Boolean = false): Map&lt;Tile, TileImage&gt; =
-<span class="lineno">  46 </span>        <span class="error">tiles.associateWith { tileImage(tile = it, showCharacter = showCharacter, onClickFunction = createOnClickListener(it)) }</span>
-<span class="lineno">  47 </span>
-<span class="lineno">  48 </span>    private fun createOnClickListener(tile: Tile): (Event) -&gt; Unit = {
-<span class="lineno">  49 </span>        if (tile.isSelectable) {
-</code></pre>
-      </li>
-      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/ui/controls/TileImage.kt:85:9</span><span class="message">Line detected, which is longer than the defined maximum line length in the code style.</span>
-        <pre><code><span class="lineno">  82 </span>        private const val ROTATION_ANIMATION_DURATION = 500
-<span class="lineno">  83 </span>        private const val BLINK_DURATION = 920
-<span class="lineno">  84 </span>
-<span class="lineno">  85 </span>        <span class="error">fun</span> TagConsumer&lt;HTMLElement&gt;.tileImage(tile: Tile?, showCharacter: Boolean = false, onClickFunction: (Event) -&gt; Unit = {}): TileImage {
-<span class="lineno">  86 </span>            var inner: HTMLDivElement by Delegates.notNull()
-<span class="lineno">  87 </span>            val outer: HTMLDivElement = returningRoot {
-<span class="lineno">  88 </span>                div(classes = &quot;mr-tile position-relative&quot;) {
-</code></pre>
-      </li>
-    </ul>
-  </details>
-</div>
+<div>Total: 0</div>
 
 
-generated with <a href="https://detekt.dev/">detekt version 1.22.0</a> on 2023-02-07 14:28:23 UTC.
+generated with <a href="https://detekt.dev/">detekt version 1.22.0</a> on 2023-02-12 16:54:01 UTC.
 
 </body>
 </html>
