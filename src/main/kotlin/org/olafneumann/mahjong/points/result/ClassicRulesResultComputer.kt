@@ -185,17 +185,17 @@ class ClassicRulesResultComputer : ResultComputer {
             // TODO Null-Punkte-Hand 1
             listOf(
                 // Kein Chi
-                hand.getFigures(Chow).hasSize(0)
+                hand.getFigures(Chow).hasSize(ZERO)
                     .map { Line(description = StringKeys.NO_CHOW, doublings = 1) },
                 // Alle Figuren verdeckt
-                hand.getFigures(visibility = Closed).hasSize(5)
+                hand.getFigures(visibility = Closed).hasSize(FIVE)
                     .map { Line(description = StringKeys.ALL_FIGURES_CLOSED, doublings = 1) },
                 // Nur Ziegel einer Farbe und Bildziegel
-                (hand.allTilesOfFigures.map { it.color }.distinct().hasSize(2)
+                (hand.allTilesOfFigures.map { it.color }.distinct().hasSize(TWO)
                         && hand.allTilesOfFigures.mapNotNull { it.color }.distinct().hasSize(1))
                     .map { Line(description = StringKeys.ALL_TILES_OF_ONE_COLOR_AND_PICTURES, doublings = 1) },
                 // Nur Ziegel einer Farbe
-                (hand.allTilesOfFigures.map { it.color }.distinct().hasSize(1)
+                (hand.allTilesOfFigures.map { it.color }.distinct().hasSize(ONE)
                         && hand.allTilesOfFigures.first().color != null)
                     .map { Line(description = StringKeys.ALL_TILES_ONE_COLOR, doublings = THREE) },
                 // Nur Hauptziegel
@@ -226,9 +226,12 @@ class ClassicRulesResultComputer : ResultComputer {
             .mapNotNull { it }
 
     companion object {
+        private const val ZERO = 0
+        private const val ONE = 1
         private const val TWO = 2
         private const val THREE = 3
         private const val FOUR = 4
+        private const val FIVE = 5
         private const val POINT_BONUS = 4
 
         private fun Collection<Any?>.hasSize(size: Int) = this.size == size
