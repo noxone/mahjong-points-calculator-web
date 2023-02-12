@@ -44,7 +44,7 @@ class HandComponent(
     init {
         model.registerChangeListener(this)
         btnUndo.onclick = {
-            // TODO
+            model.undo()
         }
     }
 
@@ -159,6 +159,8 @@ class HandComponent(
                 delay = ERROR_MESSAGE_DELAY
             )
         }
+
+        btnUndo.disabled = !model.isUndoPossible
     }
 
     override fun modelChanged(model: UIModel) {
