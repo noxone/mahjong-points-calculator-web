@@ -65,6 +65,7 @@ data class CalculatorModel(
         return tiles.all { remaining.remove(it) }
     }
 
+    @Suppress("LongMethod", "CyclomaticComplexMethod")
     fun select(tile: Tile): CalculatorModel {
         if (tile.isBonusTile) {
             return evolve(

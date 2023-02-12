@@ -26,6 +26,8 @@ class Language(
         private val REGEX_WS = Regex("\\s+")
 
         private const val DEFAULT_LANGUAGE = "en"
+
+        @Suppress("LongMethod")
         private fun get(languageKey: String): Language? =
             when (languageKey) {
                 DEFAULT_LANGUAGE -> Language(
