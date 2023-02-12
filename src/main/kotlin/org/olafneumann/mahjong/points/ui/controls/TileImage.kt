@@ -16,7 +16,7 @@ import kotlin.properties.Delegates
 class TileImage private constructor(
     private val outer: HTMLDivElement,
     private val inner: HTMLDivElement,
-    tile: Tile?
+    tile: Tile?,
 ) {
     var tile: Tile? = null
         set(value) {
@@ -44,7 +44,9 @@ class TileImage private constructor(
 
     var isLastTileInRow: Boolean
         get() = outer.classList.contains(CLS_BS_FLEX_SHRINK_0)
-        set(value) { outer.classList.toggle(CLS_BS_FLEX_SHRINK_0, value) }
+        set(value) {
+            outer.classList.toggle(CLS_BS_FLEX_SHRINK_0, value)
+        }
 
     fun blinkForAlert() {
         toggleAlert(true)
@@ -82,7 +84,11 @@ class TileImage private constructor(
         private const val ROTATION_ANIMATION_DURATION = 500
         private const val BLINK_DURATION = 920
 
-        fun TagConsumer<HTMLElement>.tileImage(tile: Tile?, showCharacter: Boolean = false, onClickFunction: (Event) -> Unit = {}): TileImage {
+        fun TagConsumer<HTMLElement>.tileImage(
+            tile: Tile?,
+            showCharacter: Boolean = false,
+            onClickFunction: (Event) -> Unit = {},
+        ): TileImage {
             var inner: HTMLDivElement by Delegates.notNull()
             val outer: HTMLDivElement = returningRoot {
                 div(classes = "mr-tile position-relative") {
