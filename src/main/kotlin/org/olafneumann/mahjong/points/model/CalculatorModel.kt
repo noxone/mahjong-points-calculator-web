@@ -87,7 +87,7 @@ data class CalculatorModel(
             )
         }
 
-        // TODO: Move down into 'when'
+        // TODO Move down into 'when'
         if (selectedFigure == Pair) {
             if (!canConsume(tile, tile)) {
                 return withError(tile, StringKeys.ERR_NO_TILES_LEFT_FOR_PAIR)
@@ -224,7 +224,7 @@ data class CalculatorModel(
             }
 
             FinishingPair -> {
-                return this // TODO: move here
+                return this // TODO move here
             }
         }
     }
