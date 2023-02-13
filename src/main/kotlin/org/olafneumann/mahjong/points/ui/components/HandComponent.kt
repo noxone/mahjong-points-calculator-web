@@ -40,12 +40,12 @@ class HandComponent(
     private var figureSwitches: MutableMap<Figure, Checkbox?> = mutableMapOf()
     private var figurePopovers: MutableMap<Figure, Popover> = mutableMapOf()
     private val btnUndo = document.getElement<HTMLButtonElement>("mr_btn_undo")
+    private val btnRedo = document.getElement<HTMLButtonElement>("mr_btn_redo")
 
     init {
         model.registerChangeListener(this)
-        btnUndo.onclick = {
-            model.undo()
-        }
+        btnUndo.onclick = { model.undo() }
+        btnRedo.onclick = { model.redo() }
     }
 
     private fun hideAllPopovers() {
@@ -161,6 +161,7 @@ class HandComponent(
         }
 
         btnUndo.disabled = !model.isUndoPossible
+        btnRedo.disabled = !model.isRedoPossible
     }
 
     override fun modelChanged(model: UIModel) {

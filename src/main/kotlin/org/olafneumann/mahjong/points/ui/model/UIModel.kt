@@ -7,6 +7,7 @@ import org.olafneumann.mahjong.points.game.Wind
 import org.olafneumann.mahjong.points.model.CalculatorModel
 import org.olafneumann.mahjong.points.model.Figure
 import kotlin.math.max
+import kotlin.math.min
 
 class UIModel {
     private val changeListeners = mutableListOf<UIModelChangeListener>()
@@ -35,7 +36,13 @@ class UIModel {
         fireChange()
     }
 
+    fun redo() {
+        modelPointer = min(calculatorModels.indices.last, modelPointer + 1)
+        fireChange()
+    }
+
     val isUndoPossible: Boolean get() = modelPointer > 0
+    val isRedoPossible: Boolean get() = modelPointer < calculatorModels.indices.last
 
     fun select(tile: Tile) = setNewModel(calculatorModel.select(tile))
 
