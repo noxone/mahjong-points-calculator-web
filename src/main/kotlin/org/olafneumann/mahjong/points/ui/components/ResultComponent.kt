@@ -7,16 +7,16 @@ import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.ui.controls.showResultTable
 import org.olafneumann.mahjong.points.ui.html.bsButton
 import org.olafneumann.mahjong.points.ui.js.Popover
-import org.olafneumann.mahjong.points.ui.model.UIModel
-import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
+import org.olafneumann.mahjong.points.ui.model.UIState
+import org.olafneumann.mahjong.points.ui.model.UIStateChangeListener
 import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLElement
 import kotlin.properties.Delegates
 
 class ResultComponent(
     parent: HTMLElement,
-    private val model: UIModel
-) : AbstractComponent(parent = parent), UIModelChangeListener {
+    private val model: UIState
+) : AbstractComponent(parent = parent), UIStateChangeListener {
     init {
         model.registerChangeListener(this)
     }
@@ -67,7 +67,7 @@ class ResultComponent(
         }
     }
 
-    override fun modelChanged(model: UIModel) {
+    override fun modelChanged(model: UIState) {
         buildUI()
     }
 }

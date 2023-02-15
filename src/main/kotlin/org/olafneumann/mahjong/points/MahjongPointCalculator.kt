@@ -10,7 +10,7 @@ import org.olafneumann.mahjong.points.ui.components.TileSelectionComponent
 import org.olafneumann.mahjong.points.ui.components.WindComponent
 import org.olafneumann.mahjong.points.ui.controls.MainPage
 import org.olafneumann.mahjong.points.ui.js.asJQuery
-import org.olafneumann.mahjong.points.ui.model.UIModel
+import org.olafneumann.mahjong.points.ui.model.UIState
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
@@ -52,7 +52,7 @@ private fun initMahjongPointCalculatorUnsafe() {
     val mahjongDiv = document.getElement<HTMLDivElement>("mr_mahjong")
     val resultDiv = document.getElement<HTMLDivElement>("mr_result")
 
-    val model = UIModel()
+    val model = UIState()
 
     TileSelectionComponent(parent = tilesDiv, model = model)
     WindComponent(parent = windDiv, model = model)

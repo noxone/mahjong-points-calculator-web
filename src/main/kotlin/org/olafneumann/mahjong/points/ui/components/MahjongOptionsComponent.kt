@@ -7,16 +7,15 @@ import org.olafneumann.mahjong.points.ui.controls.Checkbox
 import org.olafneumann.mahjong.points.ui.controls.Checkbox.Companion.checkbox
 import org.olafneumann.mahjong.points.ui.controls.TextOverlay
 import org.olafneumann.mahjong.points.ui.controls.TextOverlay.Companion.textOverlay
-import org.olafneumann.mahjong.points.ui.html.returningRoot
-import org.olafneumann.mahjong.points.ui.model.UIModel
-import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
+import org.olafneumann.mahjong.points.ui.model.UIState
+import org.olafneumann.mahjong.points.ui.model.UIStateChangeListener
 import org.w3c.dom.HTMLElement
 import kotlin.properties.Delegates
 
 class MahjongOptionsComponent(
     parent: HTMLElement,
-    private val model: UIModel,
-) : AbstractComponent(parent = parent), UIModelChangeListener {
+    private val model: UIState,
+) : AbstractComponent(parent = parent), UIStateChangeListener {
     private var chkSchlussziegelVonDerMauer: Checkbox by Delegates.notNull()
     private var chkSchlussziegelIstEinzigMoeglicherZiegel: Checkbox by Delegates.notNull()
     private var chkSchlussziegelKomplettiertPaar: Checkbox by Delegates.notNull()
@@ -99,7 +98,7 @@ class MahjongOptionsComponent(
         chkMahjongZuBeginn.enabled = isMahjong
     }
 
-    override fun modelChanged(model: UIModel) {
+    override fun modelChanged(model: UIState) {
         buildUI()
     }
 }

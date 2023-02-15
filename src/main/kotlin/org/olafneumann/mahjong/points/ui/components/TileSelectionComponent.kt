@@ -1,20 +1,23 @@
 package org.olafneumann.mahjong.points.ui.components
 
+import kotlinx.browser.document
 import kotlinx.html.TagConsumer
 import kotlinx.html.div
 import org.olafneumann.mahjong.points.game.Tile
 import org.olafneumann.mahjong.points.ui.controls.TileImage
 import org.olafneumann.mahjong.points.ui.controls.TileImage.Companion.tileImage
-import org.olafneumann.mahjong.points.ui.model.UIModel
-import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
+import org.olafneumann.mahjong.points.ui.html.getElement
+import org.olafneumann.mahjong.points.ui.model.UIState
+import org.olafneumann.mahjong.points.ui.model.UIStateChangeListener
+import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
 import kotlin.properties.Delegates
 
 class TileSelectionComponent(
     parent: HTMLElement,
-    private val model: UIModel,
-) : AbstractComponent(parent = parent), UIModelChangeListener {
+    private val model: UIState,
+) : AbstractComponent(parent = parent), UIStateChangeListener {
     private var imageTiles: Map<Tile, TileImage> by Delegates.notNull()
 
     init {
@@ -65,12 +68,12 @@ class TileSelectionComponent(
             element.selectable = tile.isSelectable
         }
 
-        model.calculatorModel.errorMessages.forEach { errorMessage ->
+        model.errorMessages.forEach { errorMessage ->
             errorMessage.tile?.let { imageTiles[it]?.blinkForAlert() }
         }
     }
 
-    override fun modelChanged(model: UIModel) {
+    override fun modelChanged(model: UIState) {
         buildUI()
     }
 
