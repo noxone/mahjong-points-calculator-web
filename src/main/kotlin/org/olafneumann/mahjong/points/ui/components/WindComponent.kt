@@ -2,22 +2,19 @@ package org.olafneumann.mahjong.points.ui.components
 
 import kotlinx.html.TagConsumer
 import kotlinx.html.div
-import kotlinx.html.form
 import org.olafneumann.mahjong.points.game.GameModifiers
 import org.olafneumann.mahjong.points.game.Wind
-import org.olafneumann.mahjong.points.ui.controls.Checkbox
-import org.olafneumann.mahjong.points.ui.controls.Checkbox.Companion.checkbox
 import org.olafneumann.mahjong.points.ui.controls.RadioGroup
 import org.olafneumann.mahjong.points.ui.controls.RadioGroup.Companion.radioButtonGroup
-import org.olafneumann.mahjong.points.ui.model.UIModel
-import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
+import org.olafneumann.mahjong.points.ui.model.UIState
+import org.olafneumann.mahjong.points.ui.model.UIStateChangeListener
 import org.w3c.dom.HTMLElement
 import kotlin.properties.Delegates
 
 class WindComponent(
     parent: HTMLElement,
-    private val model: UIModel,
-) : AbstractComponent(parent = parent), UIModelChangeListener {
+    private val model: UIState,
+) : AbstractComponent(parent = parent), UIStateChangeListener {
     private var rdaPrevailingWind: RadioGroup<Wind> by Delegates.notNull()
     private var rdaSeatWind: RadioGroup<Wind> by Delegates.notNull()
 
@@ -49,7 +46,7 @@ class WindComponent(
         rdaSeatWind.selection = model.calculatorModel.seatWind
     }
 
-    override fun modelChanged(model: UIModel) {
+    override fun modelChanged(model: UIState) {
         buildUI()
     }
 }

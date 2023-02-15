@@ -25,26 +25,22 @@ data class CalculatorModel(
     val gameModifiers: GameModifiers = GameModifiers(prevailingWind = Wind.East),
     val seatWind: Wind = Wind.East,
     val selectedFigure: Figure = Figure1,
-    val errorMessages: List<ErrorMessage> = emptyList(),
 ) {
-    fun withoutErrors() = evolve()
-
     private fun evolve(
         hand: Hand = this.hand,
         gameModifiers: GameModifiers = this.gameModifiers,
         seatWind: Wind = this.seatWind,
         selectedFigure: Figure = this.selectedFigure,
         vararg errorMessage: ErrorMessage
-    ): CalculatorModel =
+    ): kotlin.Pair<CalculatorModel, List<ErrorMessage>> =
         copy(
             hand = hand,
             gameModifiers = gameModifiers,
             seatWind = seatWind,
             selectedFigure = selectedFigure,
-            errorMessages = errorMessage.asList()
-        )
+        ) to errorMessage.asList()
 
-    private fun withError(tile: Tile, message: String): CalculatorModel =
+    private fun withError(tile: Tile, message: String): kotlin.Pair<CalculatorModel, List<ErrorMessage>> =
         evolve(errorMessage = arrayOf(ErrorMessage(tile = tile, figure = selectedFigure, message = message)))
 
     private val availableTiles = run {
@@ -58,7 +54,7 @@ data class CalculatorModel(
         availableTiles.filter { it == tile }.size >= times
 
     fun select(figure: Figure): CalculatorModel =
-        evolve(selectedFigure = figure)
+        evolve(selectedFigure = figure).first
 
     private fun canConsume(vararg tiles: Tile): Boolean {
         val remaining = availableTiles.toMutableList()
@@ -66,7 +62,7 @@ data class CalculatorModel(
     }
 
     @Suppress("LongMethod", "CyclomaticComplexMethod")
-    fun select(tile: Tile): CalculatorModel {
+    fun select(tile: Tile): kotlin.Pair<CalculatorModel, List<ErrorMessage>> {
         if (tile.isBonusTile) {
             return evolve(
                 hand = hand.copy(bonusTiles = hand.bonusTiles + tile),
@@ -224,37 +220,37 @@ data class CalculatorModel(
             }
 
             FinishingPair -> {
-                return this // TODO move here
+                return evolve() // TODO move here
             }
         }
     }
 
-    fun setGameModifiers(gameModifiers: GameModifiers) = evolve(
+    fun setGameModifiers(gameModifiers: GameModifiers): CalculatorModel = evolve(
         gameModifiers = gameModifiers,
-    )
+    ).first
 
-    fun setSeatWind(wind: Wind) = evolve(
+    fun setSeatWind(wind: Wind): CalculatorModel = evolve(
         seatWind = wind,
-    )
+    ).first
 
     fun setOpen(figure: Figure, open: Boolean): CalculatorModel =
         hand.getCombination(figure)?.let {
             evolve(
                 hand = it.replace(hand = hand, visibility = Combination.Visibility.from(open)),
-            )
+            ).first
         } ?: this
 
     fun reset(figure: Figure): CalculatorModel {
         if (figure == Bonus) {
             return evolve(
                 hand = hand.copy(bonusTiles = emptySet()),
-            )
+            ).first
         }
         val combination = hand.getCombination(figure)
         if (combination != null) {
             return evolve(
                 hand = hand.replace(combination, null),
-            )
+            ).first
         }
         return this
     }
@@ -264,7 +260,7 @@ data class CalculatorModel(
             hand = Hand(),
             seatWind = moveSeatWind.to(seatWind.next, seatWind),
             selectedFigure = Figure1,
-        )
+        ).first
 
     val isMahjong: Boolean = hand.isMahjong
 

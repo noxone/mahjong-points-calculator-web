@@ -22,8 +22,8 @@ import org.olafneumann.mahjong.points.ui.controls.TileImage.Companion.tileImage
 import org.olafneumann.mahjong.points.ui.html.getElement
 import org.olafneumann.mahjong.points.ui.html.returningRoot
 import org.olafneumann.mahjong.points.ui.js.Popover
-import org.olafneumann.mahjong.points.ui.model.UIModel
-import org.olafneumann.mahjong.points.ui.model.UIModelChangeListener
+import org.olafneumann.mahjong.points.ui.model.UIState
+import org.olafneumann.mahjong.points.ui.model.UIStateChangeListener
 import org.olafneumann.mahjong.points.util.toString
 import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLDivElement
@@ -32,20 +32,20 @@ import kotlin.properties.Delegates
 
 class HandComponent(
     parent: HTMLElement,
-    private val model: UIModel,
-) : AbstractComponent(parent = parent), UIModelChangeListener {
+    private val model: UIState,
+) : AbstractComponent(parent = parent), UIStateChangeListener {
     private var selectableDivs: MutableMap<Figure, HTMLDivElement> = mutableMapOf()
     private var figureTextOverlays: MutableMap<Figure, TextOverlay?> = mutableMapOf()
     private var figureTiles: MutableMap<Figure, List<TileImage>> = mutableMapOf()
     private var figureSwitches: MutableMap<Figure, Checkbox?> = mutableMapOf()
     private var figurePopovers: MutableMap<Figure, Popover> = mutableMapOf()
     private val btnUndo = document.getElement<HTMLButtonElement>("mr_btn_undo")
+    private val btnRedo = document.getElement<HTMLButtonElement>("mr_btn_redo")
 
     init {
         model.registerChangeListener(this)
-        btnUndo.onclick = {
-            model.undo()
-        }
+        btnUndo.onclick = { model.undo() }
+        btnRedo.onclick = { model.redo() }
     }
 
     private fun hideAllPopovers() {
@@ -153,7 +153,7 @@ class HandComponent(
             }
 
             figureTextOverlays[figure]?.show(
-                messages = model.calculatorModel.errorMessages
+                messages = model.errorMessages
                     .filter { it.figure == figure }
                     .mapNotNull { it.message },
                 delay = ERROR_MESSAGE_DELAY
@@ -161,9 +161,10 @@ class HandComponent(
         }
 
         btnUndo.disabled = !model.isUndoPossible
+        btnRedo.disabled = !model.isRedoPossible
     }
 
-    override fun modelChanged(model: UIModel) {
+    override fun modelChanged(model: UIState) {
         buildUI()
     }
 
