@@ -8,8 +8,8 @@ import kotlinx.html.js.div
 import kotlinx.html.js.span
 import kotlinx.html.role
 import kotlinx.html.style
-import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.ui.html.returningRoot
+import org.olafneumann.mahjong.points.ui.i18n.translate
 import org.olafneumann.mahjong.points.ui.js.asJQuery
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
@@ -26,7 +26,7 @@ class TextOverlay private constructor(
         inner.append {
             messages.forEach {
                 span {
-                    +!it
+                    translate(it)
                 }
             }
         }
@@ -60,7 +60,7 @@ class TextOverlay private constructor(
     private fun hideBox() = jquery.fadeOut()
 
     companion object {
-        fun TagConsumer<HTMLElement>.textOverlay(type: Type, initialText: String? = null): TextOverlay {
+        fun TagConsumer<HTMLElement>.textOverlay(type: Type, initialText: String = ""): TextOverlay {
             var inner: HTMLDivElement by Delegates.notNull()
             val outer: HTMLDivElement = returningRoot {
                 div(classes = "mr-error-overlay") {
@@ -69,7 +69,7 @@ class TextOverlay private constructor(
                     inner = returningRoot {
                         div(classes = "alert alert-${type.color} p-2 m-0 h-100 ${type.classes}") {
                             role = "alert"
-                            +(initialText?.let { !it } ?: "Some Message")
+                            translate(initialText)
                         }
                     }
                 }

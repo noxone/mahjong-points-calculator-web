@@ -7,7 +7,7 @@ import kotlinx.html.js.span
 import kotlinx.html.sup
 import org.olafneumann.mahjong.points.result.Line
 import org.olafneumann.mahjong.points.result.PlayerResult
-import org.olafneumann.mahjong.points.lang.not
+import org.olafneumann.mahjong.points.ui.i18n.translate
 import org.w3c.dom.HTMLElement
 
 fun showResultTable(result: PlayerResult, onNextPlayerClick: () -> Unit = {}) =
@@ -50,7 +50,7 @@ private fun TagConsumer<HTMLElement>.pointRow(
 ) =
     div(classes = "mr-result-row") {
         div(classes = "mr-result-row-heading") {
-            +!description
+            translate(description)
         }
         div(classes = "mr-result-row-points") {
             if (doublings != 0) {
@@ -75,7 +75,7 @@ private fun TagConsumer<HTMLElement>.pointRow(
 private fun TagConsumer<HTMLElement>.pointSumRow(description: String, points: Int, doublings: Int, result: Int) =
     div(classes = "mr-result-sum-row") {
         div(classes = "mr-result-row-heading") {
-            +!description
+            translate(description)
         }
         div(classes = "mr-result-row-points") {
             if (doublings > 0) {
@@ -96,7 +96,7 @@ private fun TagConsumer<HTMLElement>.pointSumRow(description: String, points: In
 private fun TagConsumer<HTMLElement>.resultPart(heading: String, lines: List<Line>, sum: Int) =
     div(classes = "mr-result-part") {
         div(classes = "mr-result-heading") {
-            +!heading
+            translate(heading)
         }
         lines.forEach { pointRow(it) }
         pointSumRow("Sum $heading", 0, 0, sum)

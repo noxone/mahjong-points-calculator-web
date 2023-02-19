@@ -15,15 +15,16 @@ private val htmlIdGenerator = IdGenerator()
 val nextHtmlId: String get() = "mr_id_${htmlIdGenerator.next}"
 
 class HtmlId private constructor(
-    val value: String
+    val id: String
 ) {
     companion object {
-        fun create(name: String? = null) {
+        fun create(name: String? = null): HtmlId {
             val value = "id_" + (name ?: "") + "_" + htmlIdGenerator.next.toString()
+            return HtmlId(id = value)
         }
     }
 
-    val selector: String by lazy { "#$value" }
+    val selector: String by lazy { "#$id" }
 
     val jQuery: JQuery by lazy { jQuery(selector) }
 }

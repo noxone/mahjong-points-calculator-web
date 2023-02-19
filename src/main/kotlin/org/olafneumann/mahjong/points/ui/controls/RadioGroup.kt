@@ -9,9 +9,8 @@ import kotlinx.html.js.div
 import kotlinx.html.js.onInputFunction
 import kotlinx.html.label
 import kotlinx.html.style
-import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.ui.html.returningRoot
-import org.olafneumann.mahjong.points.ui.html.translate
+import org.olafneumann.mahjong.points.ui.i18n.translate
 import org.olafneumann.mahjong.points.util.nextHtmlId
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement

@@ -8,7 +8,7 @@ import org.olafneumann.mahjong.points.ui.components.ResultComponent
 import org.olafneumann.mahjong.points.ui.html.getElement
 import org.olafneumann.mahjong.points.ui.components.TileSelectionComponent
 import org.olafneumann.mahjong.points.ui.components.WindComponent
-import org.olafneumann.mahjong.points.ui.controls.MainPage
+import org.olafneumann.mahjong.points.ui.i18n.translateChildNodes
 import org.olafneumann.mahjong.points.ui.js.asJQuery
 import org.olafneumann.mahjong.points.ui.model.UIState
 import org.w3c.dom.HTMLDivElement
@@ -44,7 +44,7 @@ private fun enableDisableScrollIfRequired() {
 
 private fun initMahjongPointCalculatorUnsafe() {
     // window.addEventListener("resize", { enableDisableScrollIfRequired() })
-    MainPage.translate(document.getElement("mr_main"))
+    document.getElement<HTMLElement>("mr_main").translateChildNodes()
 
     val tilesDiv = document.getElement<HTMLDivElement>("mr_tiles")
     val selectedTilesDiv = document.getElement<HTMLDivElement>("mr_selected_tiles")

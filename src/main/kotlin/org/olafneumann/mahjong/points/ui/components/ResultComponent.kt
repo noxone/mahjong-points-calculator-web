@@ -3,9 +3,9 @@ package org.olafneumann.mahjong.points.ui.components
 import kotlinx.html.TagConsumer
 import kotlinx.html.js.div
 import kotlinx.html.js.p
-import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.ui.controls.showResultTable
 import org.olafneumann.mahjong.points.ui.html.bsButton
+import org.olafneumann.mahjong.points.ui.i18n.translate
 import org.olafneumann.mahjong.points.ui.js.Popover
 import org.olafneumann.mahjong.points.ui.model.UIState
 import org.olafneumann.mahjong.points.ui.model.UIStateChangeListener
@@ -57,7 +57,7 @@ class ResultComponent(
             div {
                 // onClickFunction = { it.stopPropagation() }
                 p {
-                    +!"Do you really want to reset your input?"
+                    translate("Do you really want to reset your input?")
                 }
                 bsButton("Reset", colorClass = "danger") {
                     popover.hide()
