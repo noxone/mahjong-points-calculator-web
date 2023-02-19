@@ -18,6 +18,7 @@ dependencies {
 
 kotlin {
     js {
+        useCommonJs()
         binaries.executable()
         browser {
             commonWebpackConfig {
