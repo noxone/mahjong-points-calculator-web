@@ -77,6 +77,11 @@ h1 {
   margin-top: 0.5rem;
 }
 
+.alert-mahjong {
+  --bs-alert-bg: var(--bs-light);
+  --bs-alert-border-color: var(--bs-light);
+}
+
 .mr-tile-field > div {
   display: flex;
   justify-content: space-between;

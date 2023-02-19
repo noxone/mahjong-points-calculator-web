@@ -83,7 +83,7 @@ class HandComponent(
                         verticalSwitch("Open", "Closed") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
                 }
             }
-            figureTextOverlays[figure] = textOverlay()
+            figureTextOverlays[figure] = textOverlay(type = TextOverlay.Type.Error)
         }
     }
 
@@ -92,7 +92,7 @@ class HandComponent(
         if (combination == null) {
             figureTextOverlays[figure]!!.show(
                 messages = listOf(StringKeys.ERR_SELECT_TILES_FIRST),
-                delay = ERROR_MESSAGE_DELAY
+                delayToHideInMs = ERROR_MESSAGE_DELAY
             )
         }
     }
@@ -136,7 +136,7 @@ class HandComponent(
             val imageTiles = figureTiles[figure]!!
             val combination = model.calculatorModel.hand.getCombination(figure)
             val isConcealed = combination?.let { it.visibility == Combination.Visibility.Closed } ?: false
-            val tiles = model.calculatorModel.hand.getTiles(figure).toList()//.sortedBy { it.ordinal }
+            val tiles = model.calculatorModel.hand.getTiles(figure).toList()
 
             for (index in 0 until figure.maxTilesPerFigure) {
                 imageTiles[index].tile = tiles.getOrNull(index)
@@ -156,7 +156,7 @@ class HandComponent(
                 messages = model.errorMessages
                     .filter { it.figure == figure }
                     .mapNotNull { it.message },
-                delay = ERROR_MESSAGE_DELAY
+                delayToHideInMs = ERROR_MESSAGE_DELAY
             )
         }
 

@@ -36,7 +36,10 @@ class MahjongOptionsComponent(
     override fun TagConsumer<HTMLElement>.createUI() {
         div(classes = "flex-fill d-flex flex-column justify-content-between position-relative") {
             createMahjongCheckboxes()
-            overlay = textOverlay("light")
+            overlay = textOverlay(
+                type = TextOverlay.Type.Mahjong,
+                initialText = "As soon as the selected tiles correspond to a winning hand (that is, when the player has \"Mahjong\"), more options will be displayed here."
+            )
         }
     }
 
@@ -96,6 +99,8 @@ class MahjongOptionsComponent(
         chkSchlussziegelIstAbgelegterZiegelNachLetztem.enabled = isMahjong
         chkBeraubungDesKang.enabled = isMahjong
         chkMahjongZuBeginn.enabled = isMahjong
+
+        overlay.toggle(!isMahjong)
     }
 
     override fun modelChanged(model: UIState) {
