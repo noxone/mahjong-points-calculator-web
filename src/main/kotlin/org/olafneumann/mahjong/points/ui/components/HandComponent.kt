@@ -9,7 +9,6 @@ import kotlinx.html.js.onClickFunction
 import kotlinx.html.span
 import org.olafneumann.mahjong.points.game.Combination
 import org.olafneumann.mahjong.points.lang.StringKeys
-import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.model.Figure
 import org.olafneumann.mahjong.points.model.getCombination
 import org.olafneumann.mahjong.points.model.getTiles
@@ -21,6 +20,7 @@ import org.olafneumann.mahjong.points.ui.controls.TileImage
 import org.olafneumann.mahjong.points.ui.controls.TileImage.Companion.tileImage
 import org.olafneumann.mahjong.points.ui.html.getElement
 import org.olafneumann.mahjong.points.ui.html.returningRoot
+import org.olafneumann.mahjong.points.ui.i18n.translate
 import org.olafneumann.mahjong.points.ui.js.Popover
 import org.olafneumann.mahjong.points.ui.model.UIState
 import org.olafneumann.mahjong.points.ui.model.UIStateChangeListener
@@ -63,7 +63,7 @@ class HandComponent(
         div(classes = "col-6 col-sm-12 row g-0 px-1 px-sm-0 mb-2 mb-sm-0") {
             selectableDivs[figure] = returningRoot {
                 div(classes = "${(!figure.canBeConcealed).toString("col", "col-8 col-md-9")} mr-figure border") {
-                    span { +!figure.title }
+                    span { translate(figure.title) }
                     div(classes = "mr-tile-container") {
                         figureTiles[figure] = (1..figure.maxTilesPerFigure)
                             .map { tileImage(null) }
@@ -83,7 +83,7 @@ class HandComponent(
                         verticalSwitch("Open", "Closed") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
                 }
             }
-            figureTextOverlays[figure] = textOverlay()
+            figureTextOverlays[figure] = textOverlay(type = TextOverlay.Type.Error)
         }
     }
 
@@ -92,7 +92,7 @@ class HandComponent(
         if (combination == null) {
             figureTextOverlays[figure]!!.show(
                 messages = listOf(StringKeys.ERR_SELECT_TILES_FIRST),
-                delay = ERROR_MESSAGE_DELAY
+                delayToHideInMs = ERROR_MESSAGE_DELAY
             )
         }
     }
@@ -118,7 +118,7 @@ class HandComponent(
             hideOnOutsideClick = true,
         ) {
             button(classes = "btn btn-danger", type = ButtonType.button) {
-                +!"Reset"
+                translate("Reset")
                 onClickFunction = {
                     model.reset(figure)
                     popover.hide()
@@ -136,7 +136,7 @@ class HandComponent(
             val imageTiles = figureTiles[figure]!!
             val combination = model.calculatorModel.hand.getCombination(figure)
             val isConcealed = combination?.let { it.visibility == Combination.Visibility.Closed } ?: false
-            val tiles = model.calculatorModel.hand.getTiles(figure).toList()//.sortedBy { it.ordinal }
+            val tiles = model.calculatorModel.hand.getTiles(figure).toList()
 
             for (index in 0 until figure.maxTilesPerFigure) {
                 imageTiles[index].tile = tiles.getOrNull(index)
@@ -156,7 +156,7 @@ class HandComponent(
                 messages = model.errorMessages
                     .filter { it.figure == figure }
                     .mapNotNull { it.message },
-                delay = ERROR_MESSAGE_DELAY
+                delayToHideInMs = ERROR_MESSAGE_DELAY
             )
         }
 

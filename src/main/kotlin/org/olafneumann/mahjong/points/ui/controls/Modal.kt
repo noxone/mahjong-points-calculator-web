@@ -6,11 +6,11 @@ import kotlinx.html.div
 import kotlinx.html.dom.create
 import kotlinx.html.h5
 import kotlinx.html.js.div
-import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.ui.html.bsButton
 import org.olafneumann.mahjong.points.ui.html.closeButton
 import org.olafneumann.mahjong.points.ui.html.onModalHiddenFunction
 import org.olafneumann.mahjong.points.ui.html.returningRoot
+import org.olafneumann.mahjong.points.ui.i18n.translate
 import org.olafneumann.mahjong.points.ui.js.toJson
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
@@ -29,7 +29,7 @@ private fun TagConsumer<HTMLElement>.modal(
             div(classes = "modal-dialog modal-dialog-centered") {
                 div(classes = "modal-content") {
                     div(classes = "modal-header") {
-                        h5(classes = "modal-title") { +!title }
+                        h5(classes = "modal-title") { translate(title) }
                         closeButton(additionalAttributes = listOf("data-bs-dismiss" to "modal"))
                     }
                     div(classes = "modal-body") {

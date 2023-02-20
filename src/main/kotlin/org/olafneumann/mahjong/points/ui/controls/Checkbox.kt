@@ -11,8 +11,8 @@ import kotlinx.html.js.onInputFunction
 import kotlinx.html.label
 import kotlinx.html.small
 import kotlinx.html.title
-import org.olafneumann.mahjong.points.lang.not
 import org.olafneumann.mahjong.points.ui.html.returningRoot
+import org.olafneumann.mahjong.points.ui.i18n.translate
 import org.olafneumann.mahjong.points.util.nextHtmlId
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
@@ -47,7 +47,7 @@ class Checkbox private constructor(
 
             val checkboxId = nextHtmlId
             val realLabelDisabled = labelDisabled ?: labelEnabled
-            val getLabel: () -> String = { !(if (input.checked) labelEnabled else realLabelDisabled) }
+            val getLabel: () -> String = { if (input.checked) labelEnabled else realLabelDisabled }
 
             div(classes = "form-check") {
                 input = returningRoot {
@@ -55,7 +55,7 @@ class Checkbox private constructor(
                         value = ""
                         id = checkboxId
                         onInputFunction = {
-                            label.innerText = getLabel()
+                            label.innerText = getLabel().translate()
                             action((it.target!! as HTMLInputElement).checked)
                         }
                     }
@@ -63,7 +63,7 @@ class Checkbox private constructor(
                 label = returningRoot {
                     label(classes = "form-check-label") {
                         htmlFor = checkboxId
-                        +getLabel()
+                        translate(getLabel())
                     }
                 }
             }
@@ -81,7 +81,7 @@ class Checkbox private constructor(
 
             val checkboxId = nextHtmlId
             val realLabelDisabled = labelDisabled ?: labelEnabled
-            val getLabel: () -> String = { !(if (input.checked) labelEnabled else realLabelDisabled) }
+            val getLabel: () -> String = { if (input.checked) labelEnabled else realLabelDisabled }
 
             div(classes = "d-flex flex-column justify-content-center align-items-center mr-vertical-switch h-100") {
                 div(classes = "form-check form-switch") {
@@ -90,7 +90,7 @@ class Checkbox private constructor(
                             id = checkboxId
                             onInputFunction = action
                             onChangeFunction = {
-                                val labelText = getLabel()
+                                val labelText = getLabel().translate()
                                 label.innerText = labelText
                                 label.title = labelText
                             }
@@ -102,8 +102,8 @@ class Checkbox private constructor(
                     label = returningRoot {
                         label(classes = "form-check-label text-break") {
                             htmlFor = checkboxId
-                            title = getLabel()
-                            +getLabel()
+                            title = getLabel().translate()
+                            translate(getLabel())
                         }
                     }
                 }
