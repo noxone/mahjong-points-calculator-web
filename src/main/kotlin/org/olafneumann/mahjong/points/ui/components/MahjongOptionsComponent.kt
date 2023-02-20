@@ -3,6 +3,7 @@ package org.olafneumann.mahjong.points.ui.components
 import kotlinx.html.TagConsumer
 import kotlinx.html.div
 import org.olafneumann.mahjong.points.game.GameModifiers
+import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.ui.controls.Checkbox
 import org.olafneumann.mahjong.points.ui.controls.Checkbox.Companion.checkbox
 import org.olafneumann.mahjong.points.ui.controls.TextOverlay
@@ -38,7 +39,7 @@ class MahjongOptionsComponent(
             createMahjongCheckboxes()
             overlay = textOverlay(
                 type = TextOverlay.Type.Mahjong,
-                initialText = "As soon as the selected tiles correspond to a winning hand (that is, when the player has \"Mahjong\"), more options will be displayed here."
+                initialText = StringKeys.KEY_MAHJONG_OPTIONS_EXPLANATION
             )
         }
     }

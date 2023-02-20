@@ -92,5 +92,6 @@ object StringKeys {
     const val ERR_NOT_BONUS_TILE = "Not.Bonus.Tile"
     const val ERR_SELECT_TILES_FIRST = "Select.Tiles.First"
 
+    const val KEY_MAHJONG_OPTIONS_EXPLANATION = "Mahjong.Options.Explanation"
 
 }
