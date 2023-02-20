@@ -30,13 +30,10 @@
         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
-    <!-- sources of regex generator -->
-    <script type="text/javascript" src="mahjong-points.js?commitId=78f6efad1649fb1ccded6b350fc3df4bc86eca50"></script>
-
     <!-- now for our page -->
-    <link rel="stylesheet" href="styles/mahjong-points.css?commitId=78f6efad1649fb1ccded6b350fc3df4bc86eca50">
-    <link rel="stylesheet" href="styles/tiles.css?commitId=78f6efad1649fb1ccded6b350fc3df4bc86eca50">
-    <link rel="stylesheet" href="styles/fonts.css?commitId=78f6efad1649fb1ccded6b350fc3df4bc86eca50">
+    <link rel="stylesheet" href="styles/mahjong-points.css?commitId=d53cd9600a87d9142b58a7654251fa4e68e1d2ac">
+    <link rel="stylesheet" href="styles/tiles.css?commitId=d53cd9600a87d9142b58a7654251fa4e68e1d2ac">
+    <link rel="stylesheet" href="styles/fonts.css?commitId=d53cd9600a87d9142b58a7654251fa4e68e1d2ac">
     <title>Mahjong Point Calculator</title>
 
     <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -74,7 +71,15 @@
             <div class="col-12 col-lg-9 pb-2 row g-0">
                 <div class="col-sm-8 pe-sm-2 pb-2 pb-sm-0">
                     <div id="mr_tiles" class=" bg-light rounded d-flex flex-column p-3 mr-full-height">
-                        <h2>Tiles</h2>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h2>Tiles</h2>
+                            <div class="btn-group d-none">
+                                <button class="btn btn-sm btn-outline-secondary" id="mr_btn_help" type="button"
+                                        title="Undo">
+                                    <i class="bi bi-question-circle"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-4 pe-lg-2">
@@ -166,8 +171,8 @@
                                                     href="https://github.com/noxone/mahjong-point-calculator"
                                                     target="_blank" rel="noopener" mr-no-translate>Github</a>.
                                                 The version you are currently using it built from commit ID <a
-                                                    href="https://github.com/noxone/mahjong-point-calculator/tree/78f6efad1649fb1ccded6b350fc3df4bc86eca50"
-                                                    target="_blank" rel="noopener" mr-no-translate>78f6efa</a>.
+                                                    href="https://github.com/noxone/mahjong-point-calculator/tree/d53cd9600a87d9142b58a7654251fa4e68e1d2ac"
+                                                    target="_blank" rel="noopener" mr-no-translate>d53cd96</a>.
                                             </p>
                                         </div>
                                         <div class="modal-body row g-0 text-start">
@@ -237,6 +242,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
         integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
         crossorigin="anonymous"></script>
+
+    <!-- sources of regex generator -->
+    <script type="text/javascript" src="mahjong-points.js?commitId=d53cd9600a87d9142b58a7654251fa4e68e1d2ac"></script>
 </body>
 
 </html>
