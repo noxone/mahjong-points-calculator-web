@@ -250,7 +250,7 @@ class Language(
                         " The project itself as well as the sources are hosted in " to "Das Projekt selbst, sowie die Quellen werden auf ",
                         ". The version you are currently using it built from commit ID " to " gehostet. Die Version, die Sie gerade nutzen, wurde erstellt aus Commit-ID ",
                         ". " to ". ",
-                        "As soon as the selected tiles correspond to a winning hand (that is, when the player has \"Mahjong\"), more options will be displayed here." to "Sobald die ausgewählten Spielsteine einem Gewinnblatt entsprechen (d.h. wenn der Spieler \"Mahjong\" hat), werden hier weitere Optionen angezeigt."
+                        "As soon as the selected tiles correspond to a winning hand (that is, when the player has \"Mahjong\"), more options will be displayed here." to "Sobald die ausgewählten Spielsteine einem Gewinnblatt entsprechen (d.h. wenn der Spieler „Mahjong“ hat), werden hier weitere Optionen angezeigt."
                     )
                 )
 

@@ -4,6 +4,7 @@ import kotlinx.html.TagConsumer
 import kotlinx.html.div
 import org.olafneumann.mahjong.points.game.GameModifiers
 import org.olafneumann.mahjong.points.game.Wind
+import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.ui.controls.RadioGroup
 import org.olafneumann.mahjong.points.ui.controls.RadioGroup.Companion.radioButtonGroup
 import org.olafneumann.mahjong.points.ui.model.UIState
@@ -31,10 +32,10 @@ class WindComponent(
     }
 
     private fun TagConsumer<HTMLElement>.createWindRadioButtons() {
-        rdaPrevailingWind = radioButtonGroup("Prevailing Wind", Wind.values().asList(), maxItemsPerRow = 2) {
+        rdaPrevailingWind = radioButtonGroup(StringKeys.KEY_PREVAILING_WIND, Wind.values().asList(), maxItemsPerRow = 2) {
             model.setGameModifiers(gameModifiers.copy(prevailingWind = it))
         }
-        rdaSeatWind = radioButtonGroup("Seat Wind", Wind.values().asList(), maxItemsPerRow = 2) {
+        rdaSeatWind = radioButtonGroup(StringKeys.KEY_SEAT_WIND, Wind.values().asList(), maxItemsPerRow = 2) {
             model.setSeatWind(it)
         }
     }

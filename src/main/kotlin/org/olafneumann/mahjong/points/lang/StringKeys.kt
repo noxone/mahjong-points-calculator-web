@@ -1,5 +1,8 @@
 package org.olafneumann.mahjong.points.lang
 
+import org.olafneumann.mahjong.points.game.Wind
+import org.olafneumann.mahjong.points.model.Figure
+
 object StringKeys {
     const val KEY_COMPUTE = "Compute"
     const val KEY_OPTIONS = "Options"
@@ -8,19 +11,19 @@ object StringKeys {
     const val KEY_REDO = "Redo"
     const val KEY_NEXT_PLAYER = "Next Player"
     const val KEY_TILES = "Tiles"
-    const val KEY_WEST = "West"
-    const val KEY_EAST = "East"
-    const val KEY_NORTH = "North"
-    const val KEY_SOUTH = "South"
+    val KEY_WEST = Wind.West.name
+    val KEY_EAST = Wind.East.name
+    val KEY_NORTH = Wind.North.name
+    val KEY_SOUTH = Wind.South.name
     const val KEY_HAND = "Hand"
     const val KEY_OPEN = "Exposed"
     const val KEY_CLOSED = "Concealed"
-    const val KEY_FIGURE1 = "Set 1"
-    const val KEY_FIGURE2 = "Set 2"
-    const val KEY_FIGURE3 = "Set 3"
-    const val KEY_FIGURE4 = "Set 4"
-    const val KEY_PAIR = "Pair"
-    const val KEY_BONUS = "Bonus"
+    val KEY_FIGURE1 = Figure.Figure1.title
+    val KEY_FIGURE2 = Figure.Figure2.title
+    val KEY_FIGURE3 = Figure.Figure3.title
+    val KEY_FIGURE4 = Figure.Figure4.title
+    val KEY_PAIR = Figure.Pair.title
+    val KEY_BONUS = Figure.Bonus.title
     const val KEY_RESET = "Reset"
     const val KEY_RESULT = "Result"
     const val KEY_WIND = "Wind"
