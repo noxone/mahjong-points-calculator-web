@@ -170,22 +170,22 @@
 
 <div>
   <ul>
-    <li>3,080 lines of code (loc)</li>
-    <li>2,602 source lines of code (sloc)</li>
-    <li>1,899 logical lines of code (lloc)</li>
-    <li>97 comment lines of code (cloc)</li>
+    <li>3,087 lines of code (loc)</li>
+    <li>2,609 source lines of code (sloc)</li>
+    <li>1,902 logical lines of code (lloc)</li>
+    <li>96 comment lines of code (cloc)</li>
     <li>371 cyclomatic complexity (mcc)</li>
     <li>170 cognitive complexity</li>
-    <li>2 number of total code smells</li>
+    <li>4 number of total code smells</li>
     <li>3% comment source ratio</li>
     <li>195 mcc per 1,000 lloc</li>
-    <li>1 code smells per 1,000 lloc</li>
+    <li>2 code smells per 1,000 lloc</li>
   </ul>
 </div>
 
 
 <h2>Findings</h2>
-<div>Total: 2
+<div>Total: 4
   <h3>complexity: 1</h3>
   <details id="TooManyFunctions" open="open">
     <summary class="rule-container"><span class="rule">TooManyFunctions: 1 </span><span class="description">Too many functions inside a/an file/class/object/interface always indicate a violation of the single responsibility principle. Maybe the file/class/object/interface wants to manage too many things at once. Extract functionality which clearly belongs together.</span></summary>
@@ -203,9 +203,9 @@
       </li>
     </ul>
   </details>
-  <h3>style: 1</h3>
+  <h3>style: 3</h3>
   <details id="MaxLineLength" open="open">
-    <summary class="rule-container"><span class="rule">MaxLineLength: 1 </span><span class="description">Line detected, which is longer than the defined maximum line length in the code style.</span></summary>
+    <summary class="rule-container"><span class="rule">MaxLineLength: 3 </span><span class="description">Line detected, which is longer than the defined maximum line length in the code style.</span></summary>
 <a href="https://detekt.dev/docs/rules/style#maxlinelength">Documentation</a>
     <ul>
       <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/ui/components/MahjongOptionsComponent.kt:41:17</span><span class="message">Line detected, which is longer than the defined maximum line length in the code style.</span>
@@ -218,12 +218,32 @@
 <span class="lineno">  44 </span>    }
 </code></pre>
       </li>
+      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/ui/components/WindComponent.kt:35:9</span><span class="message">Line detected, which is longer than the defined maximum line length in the code style.</span>
+        <pre><code><span class="lineno">  32 </span>    }
+<span class="lineno">  33 </span>
+<span class="lineno">  34 </span>    private fun TagConsumer&lt;HTMLElement&gt;.createWindRadioButtons() {
+<span class="lineno">  35 </span>        <span class="error">rdaPrevailingWind</span> = radioButtonGroup(StringKeys.KEY_PREVAILING_WIND, Wind.values().asList(), maxItemsPerRow = 2) {
+<span class="lineno">  36 </span>            model.setGameModifiers(gameModifiers.copy(prevailingWind = it))
+<span class="lineno">  37 </span>        }
+<span class="lineno">  38 </span>        rdaSeatWind = radioButtonGroup(StringKeys.KEY_SEAT_WIND, Wind.values().asList(), maxItemsPerRow = 2) {
+</code></pre>
+      </li>
+      <li><span class="location">/home/runner/work/mahjong-point-calculator/mahjong-point-calculator/src/main/kotlin/org/olafneumann/mahjong/points/ui/controls/ResultTable.kt:38:17</span><span class="message">Line detected, which is longer than the defined maximum line length in the code style.</span>
+        <pre><code><span class="lineno">  35 </span>                sum = result.doublings
+<span class="lineno">  36 </span>            )
+<span class="lineno">  37 </span>            div(classes = &quot;mr-result-part mr-result-final&quot;) {
+<span class="lineno">  38 </span>                <span class="error">pointSumRow(StringKeys.KEY_FINAL_RESULT, points = result.points, doublings = result.doublings, result.result)</span>
+<span class="lineno">  39 </span>            }
+<span class="lineno">  40 </span>        }
+<span class="lineno">  41 </span>    }
+</code></pre>
+      </li>
     </ul>
   </details>
 </div>
 
 
-generated with <a href="https://detekt.dev/">detekt version 1.22.0</a> on 2023-02-20 11:15:31 UTC.
+generated with <a href="https://detekt.dev/">detekt version 1.22.0</a> on 2023-02-20 15:01:47 UTC.
 
 </body>
 </html>
