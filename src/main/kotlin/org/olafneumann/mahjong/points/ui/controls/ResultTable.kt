@@ -35,7 +35,12 @@ private fun TagConsumer<HTMLElement>.resultTable(result: PlayerResult) =
                 sum = result.doublings
             )
             div(classes = "mr-result-part mr-result-final") {
-                pointSumRow(StringKeys.KEY_FINAL_RESULT, points = result.points, doublings = result.doublings, result.result)
+                pointSumRow(
+                    StringKeys.KEY_FINAL_RESULT,
+                    points = result.points,
+                    doublings = result.doublings,
+                    result.result
+                )
             }
         }
     }
