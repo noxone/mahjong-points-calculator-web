@@ -1,25 +1,29 @@
 package org.olafneumann.mahjong.points.lang
 
 import kotlinx.browser.window
+import kotlinx.html.Entities
+import org.olafneumann.mahjong.points.lang.TextItem.Companion.text
+import org.olafneumann.mahjong.points.lang.TextItem.Companion.toTextItems
+import org.olafneumann.mahjong.points.ui.i18n.parseEntity
 
 @Suppress("MaxLineLength")
 class Language(
     private val translations: Map<String, String>,
 ) {
-    private val translationBuffer = mutableMapOf<String, String?>()
+    private val translationBuffer = mutableMapOf<String, List<TextItem>?>()
 
     private fun String.emptyToNull() = ifBlank { null }
-    private fun getTranslationFor(string: String): String? = translations[string]?.emptyToNull()
+    private fun getTranslationFor(string: String): List<TextItem>? = translations[string]?.emptyToNull()?.toTextItems()
 
     private val String.normalized: String
         get() = this.replace(REGEX_WS, " ")
 
-    fun translate(string: String): String {
+    fun translate(string: String): List<TextItem> {
         translationBuffer.getOrPut(string) { getTranslationFor(string.normalized) }
             ?.let { return it }
 
         console.warn("Untranslated text:", string.normalized)
-        return string
+        return listOf(text(string))
     }
 
     companion object {
@@ -134,7 +138,7 @@ class Language(
                         "More Info" to "More Info",
                         "Useful Mahjong Links" to "Useful Mahjong Links",
                         "This project is built using" to "This project is built using",
-                        )
+                    )
                 )
 
                 "de" -> Language(
@@ -144,9 +148,9 @@ class Language(
                         "Options" to "Optionen",
                         "Close" to "Schließen",
                         "Undo" to "Rückgängig",
-                        "Redo" to "Wiederherstellen",
+                        "Redo" to "Wieder&shy;herstellen",
                         "Next Player" to "Nächster Spieler",
-                        "Tiles" to "Spielsteine",
+                        "Tiles" to "Spiel&shy;steine",
                         "West" to "Westen",
                         "East" to "Osten",
                         "North" to "Norden",
@@ -160,12 +164,12 @@ class Language(
                         "Figure4" to "Figur 4",
                         "Pair" to "Paar",
                         "Bonus" to "Bonus",
-                        "Reset" to "Zurücksetzen",
+                        "Reset" to "Zurück&shy;setzen",
                         "Result" to "Ergebnis",
                         "Wind" to "Wind",
-                        "Prevailing Wind" to "Rundenwind",
-                        "Seat Wind" to "Platzwind",
-                        "Point Calculation" to "Punkteberechnung",
+                        "Prevailing Wind" to "Runden&shy;wind",
+                        "Seat Wind" to "Platz&shy;wind",
+                        "Point Calculation" to "Punkte&shy;berechnung",
                         "Points" to "Punkte",
                         "Sum Points" to "Summe Punkte",
                         "Doublings" to "Verdoppelungen",
@@ -245,7 +249,7 @@ class Language(
                         " The project itself as well as the sources are hosted in " to "Das Projekt selbst, sowie die Quellen werden auf ",
                         ". The version you are currently using it built from commit ID " to " gehostet. Die Version, die Sie gerade nutzen, wurde erstellt aus Commit-ID ",
                         ". " to ". ",
-                        )
+                    )
                 )
 
                 else -> null

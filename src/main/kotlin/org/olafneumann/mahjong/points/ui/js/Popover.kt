@@ -9,6 +9,7 @@ import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.title
 import org.olafneumann.mahjong.points.ui.i18n.translate
+import org.olafneumann.mahjong.points.ui.i18n.translateDiv
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.EventTarget
 
@@ -69,7 +70,7 @@ class Popover(
                 null
             } else {
                 document.create.div(classes = "d-flex justify-content-between align-items-center") {
-                    translate(this@Popover.title)
+                    translateDiv(this@Popover.title)
                     button(classes = "btn-close", type = ButtonType.button) {
                         attributes["aria-label"] = "Close".translate()
                         title = "Cancel"

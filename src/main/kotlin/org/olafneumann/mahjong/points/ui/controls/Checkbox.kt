@@ -13,7 +13,6 @@ import kotlinx.html.small
 import kotlinx.html.title
 import org.olafneumann.mahjong.points.ui.html.returningRoot
 import org.olafneumann.mahjong.points.ui.i18n.translate
-import org.olafneumann.mahjong.points.util.HtmlId
 import org.olafneumann.mahjong.points.util.nextHtmlId
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
