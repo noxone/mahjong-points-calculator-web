@@ -4,6 +4,7 @@ import kotlinx.html.DIV
 import kotlinx.html.Entities
 import kotlinx.html.TagConsumer
 import org.olafneumann.mahjong.points.lang.Language
+import org.olafneumann.mahjong.points.lang.TextItem
 import org.olafneumann.mahjong.points.ui.html.filterAttributeIsPresent
 import org.olafneumann.mahjong.points.ui.html.getAllChildNodes
 import org.olafneumann.mahjong.points.ui.html.getAllChildren
@@ -26,9 +27,9 @@ fun DIV.translateDiv(text: String) =
 
 fun String.translate(): String = translateToItems().mapNotNull { it.text }.joinToString(separator = "")
 
-private fun String.translateToItems(): List<Language.TextItem> = Language.current.translate(this)
+private fun String.translateToItems(): List<TextItem> = Language.current.translate(this)
 
-private fun Collection<Language.TextItem>.apply(forText: (String) -> Unit, forEntity: (Entities) -> Unit) =
+private fun Collection<TextItem>.apply(forText: (String) -> Unit, forEntity: (Entities) -> Unit) =
     forEach {
         if (it.text != null) {
             forText(it.text)
