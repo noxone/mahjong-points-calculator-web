@@ -80,7 +80,7 @@ class HandComponent(
                 div(classes = "col-4 col-md-3 px-1") {
                     onClickFunction = { handleSwitchClick(figure) }
                     figureSwitches[figure] =
-                        verticalSwitch("Open", "Closed") { model.setOpen(figure, figureSwitches[figure]!!.checked) }
+                        verticalSwitch(StringKeys.KEY_OPEN, StringKeys.KEY_CLOSED) { model.setOpen(figure, figureSwitches[figure]!!.checked) }
                 }
             }
             figureTextOverlays[figure] = textOverlay(type = TextOverlay.Type.Error)
