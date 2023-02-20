@@ -5,6 +5,7 @@ import kotlinx.html.TagConsumer
 import kotlinx.html.js.div
 import kotlinx.html.js.span
 import kotlinx.html.sup
+import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.result.Line
 import org.olafneumann.mahjong.points.result.PlayerResult
 import org.olafneumann.mahjong.points.ui.i18n.translate
@@ -14,8 +15,8 @@ fun showResultTable(result: PlayerResult, onNextPlayerClick: () -> Unit = {}) =
     createModal(
         title = "Point Calculation",
         buttons = listOf(
-            Button(title = "Next Player", colorClass = "secondary") { onNextPlayerClick(); this.hide() },
-            Button(title = "Close") { this.hide() }
+            Button(title = StringKeys.KEY_NEXT_PLAYER, colorClass = "secondary") { onNextPlayerClick(); this.hide() },
+            Button(title = StringKeys.KEY_CLOSE) { this.hide() }
         )
     ) { resultTable(result) }
         .show()
@@ -24,17 +25,17 @@ private fun TagConsumer<HTMLElement>.resultTable(result: PlayerResult) =
     div(classes = "mr-result") {
         div(classes = "mr-result-points") {
             resultPart(
-                heading = "Points",
+                heading = StringKeys.KEY_POINTS,
                 lines = result.lines.filter { it.doublings == 0 },
                 sum = result.points
             )
             resultPart(
-                heading = "Doublings",
+                heading = StringKeys.KEY_DOUBLINGS,
                 lines = result.lines.filter { it.doublings != 0 },
                 sum = result.doublings
             )
             div(classes = "mr-result-part mr-result-final") {
-                pointSumRow("Final Result", points = result.points, doublings = result.doublings, result.result)
+                pointSumRow(StringKeys.KEY_FINAL_RESULT, points = result.points, doublings = result.doublings, result.result)
             }
         }
     }

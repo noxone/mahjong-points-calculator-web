@@ -3,6 +3,7 @@ package org.olafneumann.mahjong.points.ui.components
 import kotlinx.html.TagConsumer
 import kotlinx.html.js.div
 import kotlinx.html.js.p
+import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.ui.controls.showResultTable
 import org.olafneumann.mahjong.points.ui.html.bsButton
 import org.olafneumann.mahjong.points.ui.i18n.translate
@@ -28,7 +29,7 @@ class ResultComponent(
         div(classes = "flex-fill d-flex flex-column flex-lg-row") {
             div(classes = "flex-fill") {
                 bsButton(
-                    label = "Compute",
+                    label = StringKeys.KEY_COMPUTE,
                     tooltip = "Compute points of current hand",
                     colorClass = "primary flex-fill"
                 ) {
@@ -37,7 +38,7 @@ class ResultComponent(
             }
             div(classes = "ps-lg-2 pt-2 pt-lg-0") {
                 resetButton = bsButton(
-                    label = "Reset",
+                    label = StringKeys.KEY_RESET,
                     tooltip = "Reset current hand",
                     colorClass = "danger",
                     id = "mr_reset_all",
@@ -55,11 +56,10 @@ class ResultComponent(
             hideOnOutsideClick = true
         ) {
             div {
-                // onClickFunction = { it.stopPropagation() }
                 p {
                     translate("Do you really want to reset your input?")
                 }
-                bsButton("Reset", colorClass = "danger") {
+                bsButton(StringKeys.KEY_RESET, colorClass = "danger") {
                     popover.hide()
                     model.reset()
                 }

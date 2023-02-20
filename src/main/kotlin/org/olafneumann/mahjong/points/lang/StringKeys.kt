@@ -1,5 +1,6 @@
 package org.olafneumann.mahjong.points.lang
 
+import org.olafneumann.mahjong.points.game.Wind
 import org.olafneumann.mahjong.points.model.Figure
 
 object StringKeys {
@@ -10,10 +11,10 @@ object StringKeys {
     const val KEY_REDO = "Redo"
     const val KEY_NEXT_PLAYER = "Next Player"
     const val KEY_TILES = "Tiles"
-    const val KEY_WEST = "West"
-    const val KEY_EAST = "East"
-    const val KEY_NORTH = "North"
-    const val KEY_SOUTH = "South"
+    val KEY_WEST = Wind.West.name
+    val KEY_EAST = Wind.East.name
+    val KEY_NORTH = Wind.North.name
+    val KEY_SOUTH = Wind.South.name
     const val KEY_HAND = "Hand"
     const val KEY_OPEN = "Exposed"
     const val KEY_CLOSED = "Concealed"
