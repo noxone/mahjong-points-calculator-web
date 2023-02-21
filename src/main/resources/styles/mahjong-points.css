@@ -1,3 +1,10 @@
+:root {
+  --mr-tile-border-size: 0.27em;
+  --mr-tile-border-radius: 0.6em;
+  --mr-tile-width: 5em;
+  --mr-tile-height: 7.1em;
+}
+
 body {
   touch-action:
     /*pan-x*/
@@ -93,8 +100,8 @@ h1 {
 
 .mr-tile {
   display: inline-block;
-  width: 5em;
-  height: 7.1em;
+  width: var(--mr-tile-width);
+  height: var(--mr-tile-height);
   cursor: pointer;
   transition: transform 0.5s ease-in-out, 
     width 0.2s ease-in-out,
@@ -139,7 +146,8 @@ h1 {
 }
 
 .mr-tile.mr-tile-backside {
-  background-size: 5em;
+  background-size: var(--mr-tile-width);
+  border: var(--mr-tile-border-size) solid rgba(205,133,63,0.4);
 }
 
 .mr-tile.mr-tile-rotated {
@@ -148,8 +156,6 @@ h1 {
 
 .mr-tile-backside > div {
   background-image: none !important;
-  border: 3px solid rgba(205,133,63,0.4);
-  border-radius: 0.6em;
 }
 .mr-tile-backside.mr-invisible > div {
   border: none;
@@ -157,12 +163,15 @@ h1 {
 
 .mr-tile-background {
   background: linear-gradient(165deg, rgba(255, 255, 255, 1) 0%, rgba(194, 194, 194, 1) 12%, rgba(223, 223, 223, 1) 33%, rgba(251, 251, 251, 1) 100%);
-  border-radius: 0.6em;
+  border-radius: var(--mr-tile-border-radius);
+  border: var(--mr-tile-border-size) solid black;
 }
 
 .mr-tile-face {
-  background-size: 5em;
+  background-size: var(--mr-tile-width);
   background-repeat: no-repeat;
+  background-position-x: calc(-1 * var(--mr-tile-border-size));
+  background-position-y: calc(-1 * var(--mr-tile-border-size));
   width: 100%;
   height: 100%;
 }
