@@ -6,6 +6,7 @@ import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.span
 import org.olafneumann.mahjong.points.game.Tile
+import org.olafneumann.mahjong.points.ui.html.MrAttributes
 import org.olafneumann.mahjong.points.ui.html.mrTile
 import org.olafneumann.mahjong.points.ui.html.returningRoot
 import org.w3c.dom.HTMLDivElement
@@ -65,7 +66,7 @@ class TileImage private constructor(
         outer.classList.toggle(CLS_BS_D_NONE, !show)
 
     private fun setTileName(name: String?) {
-        inner.mrTile = name ?: ""
+        inner.mrTile = name
     }
 
     init {
