@@ -105,7 +105,7 @@ class ClassicRulesResultComputer : ResultComputer {
             // Mahjong
             Line(description = StringKeys.MAHJONG, points = 20),
             // Schlussziegel von der Mauer
-            gameModifiers.schlussziegelVonMauer
+            gameModifiers.schlussziegelVonDerMauer
                 .map { Line(StringKeys.WINNING_TILE_FROM_WALL, points = 2) },
             // Schlussziegel ist einzig möglicher Stein
             gameModifiers.schlussziegelEinzigMoeglicherZiegel
@@ -205,16 +205,16 @@ class ClassicRulesResultComputer : ResultComputer {
                 hand.allTilesOfFigures.all { it.isImage }
                     .map { Line(description = StringKeys.ONLY_IMAGETILES, doublings = 2) },
                 // Schlussziegel von der toten Mauer
-                gameModifiers.schlussziegelVonToterMauer
+                gameModifiers.outOnSupplementTile
                     .map { Line(description = StringKeys.WINNING_TILE_FROM_DEAD_WALL, doublings = 1) },
                 // mit dem letzten Ziegel der Mauer gewonnenes Spiel
-                gameModifiers.mitDemLetztenZiegelDerMauerGewonnen
+                gameModifiers.outOnLastTileOfWall
                     .map { Line(description = StringKeys.WINNING_TILE_IS_LAST_TILE_FROM_WALL, doublings = 1) },
                 // Schlussziegel: abgelegter Ziegel nach Abbau der Mauer 1
-                gameModifiers.schlussziegelIstAbgelegterZiegelNachAbbauDerMauer
+                gameModifiers.outOnLastDiscard
                     .map { Line(description = StringKeys.WINNING_TILE_IS_DISCARD_AFTER_END_OF_WALL, doublings = 1) },
                 // Beraubung des Kang
-                gameModifiers.beraubungDesKang
+                gameModifiers.outByRobbingTheKong
                     .map { Line(description = StringKeys.ROBBING_THE_KANG, doublings = 1) },
                 // Mahjong-Ruf zu Beginn
                 gameModifiers.mahjongAtBeginning
