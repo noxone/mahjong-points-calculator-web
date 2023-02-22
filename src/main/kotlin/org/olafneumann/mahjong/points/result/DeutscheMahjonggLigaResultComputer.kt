@@ -18,12 +18,11 @@ import org.olafneumann.mahjong.points.util.map
 import kotlin.math.pow
 
 // according to: http://dmjl.de/wp-content/uploads/2009/05/DMJL_CC_Wertung_2005.pdf
-class ClassicRulesResultComputer : ResultComputer {
-    override fun computeResult(gameModifiers: GameModifiers, seatWind: Wind, hand: Hand): PlayerResult {
-        TODO("Not yet implemented")
-    }
+class DeutscheMahjonggLigaResultComputer : ResultComputer {
+    override val name: String
+        get() = "Deutsche Mah-Jongg Liga"
 
-    fun computeResult(hand: Hand, gameModifiers: GameModifiers, seatWind: Wind): PlayerResult {
+    override fun computeResult(hand: Hand, gameModifiers: GameModifiers, seatWind: Wind): PlayerResult {
         val lines = listOf(
             // Points
             checkForChis(hand),
