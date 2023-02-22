@@ -4,7 +4,7 @@
 <svg
    width="1024"
    height="1024"
-   viewBox="0 0 270.93333 270.93334"
+   viewBox="0 0 270 270"
    version="1.1"
    id="svg1054"
    inkscape:version="1.1.1 (c3084ef, 2021-09-22)"
@@ -85,11 +85,11 @@
     <rect
        style="opacity:1;fill:url(#linearGradient1673);fill-opacity:1;fill-rule:nonzero;stroke-width:1.11397"
        id="rect1173"
-       width="269.14325"
-       height="269.34424"
-       x="1.0583334"
-       y="1.0583333"
-       ry="30.62038" />
+       width="270"
+       height="270"
+       x="0"
+       y="0"
+       ry="42" />
   </g>
   <g
      inkscape:label="Schatten"
