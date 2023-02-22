@@ -81,8 +81,8 @@ class Language(
                         "Do you really want to reset your input?" to "Do you really want to reset your input?",
                         "Reset current hand" to "Reset current hand",
                         StringKeys.KEY_BONUS_TILES to "Bonus tiles",
-                        StringKeys.KEY_CHOW_OPEN to "Chow (open)",
-                        StringKeys.KEY_CHOW_CLOSED to "Chow (closed)",
+                        StringKeys.KEY_CHOW_OPEN to "Chow (exposed)",
+                        StringKeys.KEY_CHOW_CLOSED to "Chow (concealed)",
                         StringKeys.PUNG_BASETILE_OPEN to "Pung of minor tiles (exposed)",
                         StringKeys.PUNG_BASETILE_CLOSED to "Pung of minor tiles (concealed)",
                         StringKeys.PUNG_MAINTILE_OPEN to "Pung of major tiles (exposed)",
@@ -139,6 +139,8 @@ class Language(
                         "More Info" to "More Info",
                         "Useful Mahjong Links" to "Useful Mahjong Links",
                         "This project is built using" to "This project is built using",
+
+                        StringKeys.KEY_MAHJONG_OPTIONS_EXPLANATION to "As soon as the selected tiles correspond to a winning hand (that is, when the player has \"Mahjong\"), more options will be displayed here."
                     )
                 )
 
@@ -189,15 +191,15 @@ class Language(
                         "Reset current hand" to "Blatt zurücksetzen",
                         StringKeys.KEY_BONUS_TILES to "Bonusziegel",
                         StringKeys.KEY_CHOW_OPEN to "Chi (offen)",
-                        StringKeys.KEY_CHOW_CLOSED to "Chi (geschlossen)",
+                        StringKeys.KEY_CHOW_CLOSED to "Chi (verdeckt)",
                         StringKeys.PUNG_BASETILE_OPEN to "Pong aus Basisziegeln (offen)",
-                        StringKeys.PUNG_BASETILE_CLOSED to "Pong aus Basisziegeln (geschlossen)",
+                        StringKeys.PUNG_BASETILE_CLOSED to "Pong aus Basisziegeln (verdeckt)",
                         StringKeys.PUNG_MAINTILE_OPEN to "Pong aus Hauptziegeln (offen)",
-                        StringKeys.PUNG_MAINTILE_CLOSED to "Pong aus Hauptziegeln (geschlossen)",
+                        StringKeys.PUNG_MAINTILE_CLOSED to "Pong aus Hauptziegeln (verdeckt)",
                         StringKeys.KANG_BASETILE_OPEN to "Kang aus Basisziegeln (offen)",
-                        StringKeys.KANG_BASETILE_CLOSED to "Kang aus Basisziegeln (geschlossen)",
+                        StringKeys.KANG_BASETILE_CLOSED to "Kang aus Basisziegeln (verdeckt)",
                         StringKeys.KANG_MAINTILE_OPEN to "Kang aus Hauptziegeln (offen)",
-                        StringKeys.KANG_MAINTILE_CLOSED to "Kang aus Hauptziegeln (geschlossen)",
+                        StringKeys.KANG_MAINTILE_CLOSED to "Kang aus Hauptziegeln (verdeckt)",
                         StringKeys.PAIR_OF_DRAGONS to "Paar von Drachen",
                         StringKeys.MAHJONG to "Mahjong",
                         StringKeys.WINNING_TILE_FROM_WALL to "Schlussziegel von der Mauer",
@@ -250,7 +252,7 @@ class Language(
                         " The project itself as well as the sources are hosted in " to "Das Projekt selbst, sowie die Quellen werden auf ",
                         ". The version you are currently using it built from commit ID " to " gehostet. Die Version, die Sie gerade nutzen, wurde erstellt aus Commit-ID ",
                         ". " to ". ",
-                        "As soon as the selected tiles correspond to a winning hand (that is, when the player has \"Mahjong\"), more options will be displayed here." to "Sobald die ausgewählten Spielsteine einem Gewinnblatt entsprechen (d.h. wenn der Spieler „Mahjong“ hat), werden hier weitere Optionen angezeigt."
+                        StringKeys.KEY_MAHJONG_OPTIONS_EXPLANATION to "Sobald die ausgewählten Spielsteine einem Gewinnblatt entsprechen (d.h. wenn der Spieler „Mahjong“ hat), werden hier weitere Optionen angezeigt."
                     )
                 )
 

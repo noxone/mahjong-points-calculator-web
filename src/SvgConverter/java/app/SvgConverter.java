@@ -20,7 +20,7 @@ public class SvgConverter {
 			String css = s.filter(p -> p.getFileName().toString().toLowerCase().endsWith(".svg"))
 					.map(p -> new SvgContent(p.getFileName().toString(), readFile(p)))
 					.map(a -> new SvgContent(a.name.substring(0, a.name.length() - 4), a.content))//
-					// .peek(SvgContent::write)//
+					.peek(SvgContent::write)//
 					.map(SvgContent::toCss)//
 					.collect(Collectors.joining());
 			Files.write(Paths.get("out.css"), css.getBytes(StandardCharsets.UTF_8));
@@ -53,6 +53,10 @@ public class SvgConverter {
 				, Pattern.compile("sodipodi:\\S*?=\".*?\"")//
 				, Pattern.compile("<sodipodi:.*?/>")//
 				, Pattern.compile("<metadata.*?</metadata>")//
+				, Pattern.compile("viewBox=\"[ 0-9\\.]*\"")//
+				, Pattern.compile("enable-background=\"[ a-z0-9\\.]*\"")//
+				, Pattern.compile("id=\"[a-z0-9]*\"")//
+				, Pattern.compile("<defs\s*/>")//
 		);
 		private static final List<String> HEADERS = Arrays.asList(
 				"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>",
@@ -61,11 +65,19 @@ public class SvgConverter {
 				"xmlns:cc=\"http://creativecommons.org/ns#\"", "xmlns:cc=\"http://creativecommons.org/ns#\"", //
 				"xmlns:dc=\"http://purl.org/dc/elements/1.1/\"", //
 				"xmlns:svg=\"http://www.w3.org/2000/svg\"", //
-				"xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"",//
-				"id='图层_1'","xml:space=\"preserve\""
-				);
+				"xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"", //
+				"id='图层_1'", //
+				"xml:space=\"preserve\""//
+				, "id=\"图层_1\""//
+				, "version=\"1.1\""
+				,"x=\"0px\"",
+				"y=\"0px\"");
+		private static final List<String> FIRSTS = Arrays.asList(//
+				"<path\\s*d=\"[-,A-Za-z0-9.\\s]*?\"\\s/>" //
+		);
 
 		private String shortenContent() {
+			System.out.print("Handling: " + name + " -> ");
 			String[] out = { content };
 
 			HEADERS.forEach(h -> {
@@ -76,16 +88,20 @@ public class SvgConverter {
 				out[0] = p.matcher(out[0]).replaceAll("");
 			});
 			out[0] = WS.matcher(out[0]).replaceAll(" ");
+			FIRSTS.forEach(p -> {
+				System.out.print(out[0].length() + ";");
+				out[0] = out[0].replaceFirst(p, "");
+			});
 
+			System.out.println(out[0].length());
 			return out[0];
 		}
 
 		private String wrap() {
-			 return "background-image: url(data:image/svg+xml;base64,"
-			 +
-			 Base64.getEncoder().encodeToString(shortenContent().getBytes(StandardCharsets.UTF_8))
-			 + ");";
-			//return "background-image: url(\"data:image/svg+xml," + encode(shortenContent()) + "\");";
+			return "background-image: url(data:image/svg+xml;base64,"
+					+ Base64.getEncoder().encodeToString(shortenContent().getBytes(StandardCharsets.UTF_8)) + ");";
+			// return "background-image: url(\"data:image/svg+xml," +
+			// encode(shortenContent()) + "\");";
 		}
 
 		private static String encode(String string) {
@@ -100,7 +116,11 @@ public class SvgConverter {
 		}
 
 		String toCss() {
-			return ".mr-tile-" + name + " {\n  " + wrap() + "\n}\n";
+			return ".mr-tile-face[mr-tile=\"" + firstUpper(name) + "\"]{\n  " + wrap() + "\n}\n";
+		}
+
+		private String firstUpper(String string) {
+			return Character.toUpperCase(string.charAt(0)) + string.substring(1);
 		}
 
 		void write() {

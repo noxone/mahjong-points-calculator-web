@@ -32,9 +32,10 @@ class WindComponent(
     }
 
     private fun TagConsumer<HTMLElement>.createWindRadioButtons() {
-        rdaPrevailingWind = radioButtonGroup(StringKeys.KEY_PREVAILING_WIND, Wind.values().asList(), maxItemsPerRow = 2) {
-            model.setGameModifiers(gameModifiers.copy(prevailingWind = it))
-        }
+        rdaPrevailingWind =
+            radioButtonGroup(StringKeys.KEY_PREVAILING_WIND, Wind.values().asList(), maxItemsPerRow = 2) {
+                model.setGameModifiers(gameModifiers.copy(prevailingWind = it))
+            }
         rdaSeatWind = radioButtonGroup(StringKeys.KEY_SEAT_WIND, Wind.values().asList(), maxItemsPerRow = 2) {
             model.setSeatWind(it)
         }

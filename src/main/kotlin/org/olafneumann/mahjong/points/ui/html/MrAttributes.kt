@@ -29,7 +29,11 @@ import org.w3c.dom.get
 
 var HTMLElement.mrTile: String?
     get() = getAttribute(MrAttributes.TILE)
-    set(value) { setAttribute(MrAttributes.TILE, value ?: "") }
+    set(value) { if (value != null) {
+        setAttribute(MrAttributes.TILE, value)
+    } else {
+        removeAttribute(MrAttributes.TILE)
+    }}
 
 val Element.shouldNotTranslate: Boolean
     get() = getAttributeNames().contains(MrAttributes.NO_TRANSLATE)
