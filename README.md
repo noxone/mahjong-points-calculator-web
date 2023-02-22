@@ -1,4 +1,4 @@
-# Mahjong Points Calculator [![Build and publish project](https://github.com/noxone/mahjong-point-calculator/actions/workflows/publish-project.yml/badge.svg?event=push)](https://github.com/noxone/mahjong-point-calculator/actions/workflows/publish-project.yml)
+# <img width=32 src="art/icon/mahjong-points.svg"> Mahjong Points Calculator [![Build and publish project](https://github.com/noxone/mahjong-point-calculator/actions/workflows/publish-project.yml/badge.svg?event=push)](https://github.com/noxone/mahjong-point-calculator/actions/workflows/publish-project.yml)
 
 ``Mahjong Point Calculator`` is a tool to compute the points of a Mahjong game. In a second mode it will be able to track the points of all players of a whole Mahjong party.
 
