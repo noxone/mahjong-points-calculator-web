@@ -109,6 +109,7 @@ h1 {
   z-index: 100;
   transform-style: preserve-3d;
   overflow: hidden;
+  border-radius: var(--mr-tile-border-radius);
 }
 
 .mr-figure .mr-tile.mr-invisible {
