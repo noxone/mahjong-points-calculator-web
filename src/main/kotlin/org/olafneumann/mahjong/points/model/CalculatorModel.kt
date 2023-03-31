@@ -16,7 +16,6 @@ import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.model.Figure.Bonus
 import org.olafneumann.mahjong.points.model.Figure.Pair
 import org.olafneumann.mahjong.points.model.Figure.Figure1
-import org.olafneumann.mahjong.points.result.DeutscheMahjonggLigaResultComputer
 import org.olafneumann.mahjong.points.result.PlayerResult
 import org.olafneumann.mahjong.points.result.ResultComputer
 import org.olafneumann.mahjong.points.util.to
@@ -269,7 +268,7 @@ data class CalculatorModel(
 
 
     val result: PlayerResult by lazy {
-        resultComputer.computeResult(
+        resultComputer.computePlayerResult(
             hand,
             gameModifiers,
             seatWind = seatWind

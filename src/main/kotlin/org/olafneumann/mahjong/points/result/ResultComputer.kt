@@ -6,12 +6,12 @@ import org.olafneumann.mahjong.points.game.Wind
 
 interface ResultComputer {
     val name: String
-    fun computeResult(hand: Hand, gameModifiers: GameModifiers, seatWind: Wind): PlayerResult
+    fun computePlayerResult(hand: Hand, gameModifiers: GameModifiers, seatWind: Wind): PlayerResult
 
     companion object {
-        val values: List<ResultComputer> = listOf(
+        val availableResultComputers: List<ResultComputer> = listOf(
             DeutscheMahjonggLigaResultComputer()
         )
-        val default = values.first()
+        val default = availableResultComputers.first()
     }
 }

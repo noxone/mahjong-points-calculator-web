@@ -31,4 +31,17 @@ data class Hand(
             figure4 = if (figure4 == oldCombination) newCombination else figure4,
             pair = if (pair == oldCombination) newCombination else pair
         )
+
+    fun getFigures(
+        type: Combination.Type? = null,
+        visibility: Combination.Visibility? = null,
+        baseTile: Boolean? = null,
+        tiles: Collection<Tile> = emptySet(),
+    ): List<Combination> =
+        allFigures.asSequence()
+            .filter { type == null || it.type == type }
+            .filter { visibility == null || it.visibility == visibility }
+            .filter { baseTile == null || it.tile.isBaseTile == baseTile }
+            .filter { tiles.isEmpty() || it.tile in tiles }
+            .toList()
 }

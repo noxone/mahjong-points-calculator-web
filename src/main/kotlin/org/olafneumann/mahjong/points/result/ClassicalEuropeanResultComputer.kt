@@ -1,10 +1,13 @@
 package org.olafneumann.mahjong.points.result
 
 import org.olafneumann.mahjong.points.lang.StringKeys
+import org.olafneumann.mahjong.points.game.Combination
+import org.olafneumann.mahjong.points.game.Combination.Type
 import org.olafneumann.mahjong.points.game.Combination.Type.Pung
 import org.olafneumann.mahjong.points.game.Combination.Type.Chow
 import org.olafneumann.mahjong.points.game.Combination.Type.Kang
 import org.olafneumann.mahjong.points.game.Combination.Type.FinishingPair
+import org.olafneumann.mahjong.points.game.Combination.Visibility
 import org.olafneumann.mahjong.points.game.Combination.Visibility.Open
 import org.olafneumann.mahjong.points.game.Combination.Visibility.Closed
 import org.olafneumann.mahjong.points.game.GameModifiers
@@ -14,10 +17,10 @@ import org.olafneumann.mahjong.points.game.Wind
 import org.olafneumann.mahjong.points.util.map
 import kotlin.math.pow
 
-// according to: http://dmjl.de/wp-content/uploads/2009/05/DMJL_CC_Wertung_2005.pdf
-class DeutscheMahjonggLigaResultComputer : ResultComputer {
+// according to: https://www.4windsmj.com/kb/kb.htm
+class ClassicalEuropeanResultComputer : ResultComputer {
     override val name: String
-        get() = "Deutsche Mah-Jongg Liga"
+        get() = "Classical European"
 
     override fun computePlayerResult(hand: Hand, gameModifiers: GameModifiers, seatWind: Wind): PlayerResult {
         val lines = listOf(
