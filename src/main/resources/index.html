@@ -75,10 +75,21 @@
         <div class="h-100 row g-0" id="mr_main">
             <div class="col-12 mb-2 order-first">
                 <div
-                    class="bg-danger text-light rounded px-4 py-1 py-md-3 py-lg-2 py-xl-3 py-xxl-4 d-flex align-items-center justify-content-center mr-full-height">
-                    <h1 class="fw-bold">Mahjong Points Calculator</h1>
+                    class="bg-danger text-light rounded px-4 py-1 py-md-3 py-lg-2 py-xl-3 py-xxl-4 mr-full-height d-sm-flex">
+                    <div class="flex-fill align-self-center text-center">
+                        <h1 class="fw-bold">Mahjong Points Calculator</h1>
+                    </div>
+                    <!--<div class="align-self-center">
+                        <button class="btn btn-danger border" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">Multiple Players</button>
+                    </div>-->
                 </div>
             </div>
+
+            <!--<div class="col-12 order-first">
+                <div class="bg-success text-light rounded py-1 mb-2">
+                    <button>abc</button>
+                </div>
+            </div>-->
 
             <div class="col-12 col-lg-9 pb-2 row g-0">
                 <div class="col-sm-8 pe-sm-2 pb-2 pb-sm-0">
@@ -242,6 +253,37 @@
                                 Neumann</a>
                         </p>
                     </div>
+                </div>
+            </div>
+
+            <div class="offcanvas offcanvas-end text-bg-dark border-start" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasTopLabel">Multiple Players</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <p>To start a game with multiple players, just add all their names here:</p>
+                    <form>
+                        <div class="mb-3">
+                            <label for="textNamePlayer1" class="form-label">Player 1 <small class="text-muted">East Wind</small></label>
+                            <input type="text" class="form-control" id="textNamePlayer1" aria-describedby="helpNamePlayer1">
+                            <div id="helpNamePlayer1" class="form-text">This is the start player.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="textNamePlayer2" class="form-label">Player 2 <small class="text-muted">South Wind</small></label>
+                            <input type="text" class="form-control" id="textNamePlayer2">
+                        </div>
+                        <div class="mb-3">
+                            <label for="textNamePlayer3" class="form-label">Player 3 <small class="text-muted">West Wind</small></label>
+                            <input type="text" class="form-control" id="textNamePlayer3">
+                        </div>
+                        <div class="mb-3">
+                            <label for="textNamePlayer4" class="form-label">Player 4 <small class="text-muted">North Wind</small></label>
+                            <input type="text" class="form-control" id="textNamePlayer4">
+                        </div>
+                        <p>After clicking 'Start Game' the app will keep track of the current round and winds. It will also ask for the players' names one after the other.</p>
+                        <button class="btn btn-primary" type="button">Start Game</button>
+                    </form>
                 </div>
             </div>
         </div>
