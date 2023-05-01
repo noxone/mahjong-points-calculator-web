@@ -16,11 +16,12 @@ import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.model.Figure.Bonus
 import org.olafneumann.mahjong.points.model.Figure.Pair
 import org.olafneumann.mahjong.points.model.Figure.Figure1
-import org.olafneumann.mahjong.points.result.ClassicRulesResultComputer
 import org.olafneumann.mahjong.points.result.PlayerResult
+import org.olafneumann.mahjong.points.result.ResultComputer
 import org.olafneumann.mahjong.points.util.to
 
 data class CalculatorModel(
+    val resultComputer: ResultComputer = ResultComputer.default,
     val hand: Hand,
     val gameModifiers: GameModifiers = GameModifiers(prevailingWind = Wind.East),
     val seatWind: Wind = Wind.East,
@@ -264,8 +265,10 @@ data class CalculatorModel(
 
     val isMahjong: Boolean = hand.isMahjong
 
+
+
     val result: PlayerResult by lazy {
-        ClassicRulesResultComputer().computeResult(
+        resultComputer.computePlayerResult(
             hand,
             gameModifiers,
             seatWind = seatWind

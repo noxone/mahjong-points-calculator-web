@@ -5,5 +5,13 @@ import org.olafneumann.mahjong.points.game.Hand
 import org.olafneumann.mahjong.points.game.Wind
 
 interface ResultComputer {
-    fun computeResult(gameModifiers: GameModifiers, seatWind: Wind, hand: Hand): PlayerResult
+    val name: String
+    fun computePlayerResult(hand: Hand, gameModifiers: GameModifiers, seatWind: Wind): PlayerResult
+
+    companion object {
+        val availableResultComputers: List<ResultComputer> = listOf(
+            DeutscheMahjonggLigaResultComputer()
+        )
+        val default = availableResultComputers.first()
+    }
 }

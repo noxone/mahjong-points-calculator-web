@@ -17,26 +17,29 @@ import org.olafneumann.mahjong.points.game.Wind
 import org.olafneumann.mahjong.points.util.map
 import kotlin.math.pow
 
-// according to: http://dmjl.de/wp-content/uploads/2009/05/DMJL_CC_Wertung_2005.pdf
-class ClassicRulesResultComputer : ResultComputer {
-    override fun computeResult(gameModifiers: GameModifiers, seatWind: Wind, hand: Hand): PlayerResult {
-        TODO("Not yet implemented")
-    }
+// according to: https://www.4windsmj.com/kb/kb.htm
+class ClassicalEuropeanResultComputer : ResultComputer {
+    override val name: String
+        get() = "Classical European"
 
-    fun computeResult(hand: Hand, gameModifiers: GameModifiers, seatWind: Wind): PlayerResult {
+    override fun computePlayerResult(hand: Hand, gameModifiers: GameModifiers, seatWind: Wind): PlayerResult {
         val lines = listOf(
             // Points
-            checkForChis(hand),
-            checkForPungs(hand),
-            checkForKangs(hand),
+            checkPointsForAll(hand),
             checkPairs(hand, gameModifiers, seatWind),
-            checkForFlowers(hand),
+            checkForFlowersForAll(hand),
             // Points for Mahjong
-            hand.isMahjong.map { checkMahjongPoints(hand, gameModifiers) },
+            hand.isMahjong.map {
+                checkPointsForWinner(
+                    hand = hand,
+                    gameModifiers = gameModifiers,
+                    seatWind = seatWind
+                )
+            },
             // Doublings for all
             checkDoublings(hand = hand, prevailingWind = gameModifiers.prevailingWind, seatWind = seatWind),
             // Doublings for Mahjong
-            hand.isMahjong.map { checkMahjongDoublings(gameModifiers, hand) }
+            hand.isMahjong.map { checkDoublingsForWinner(gameModifiers, hand) }
         )
             .mapNotNull { it }
             .flatten()
@@ -52,14 +55,16 @@ class ClassicRulesResultComputer : ResultComputer {
         return PlayerResult(lines = lines, points = points, doublings = doublings, result = resultPoints.toInt())
     }
 
-    private fun checkForFlowers(hand: Hand): List<Line>? =
-        if (hand.bonusTiles.isNotEmpty()) {
-            listOf(
-                Line(description = StringKeys.KEY_BONUS_TILES, points = POINT_BONUS, times = hand.bonusTiles.size)
-            )
-        } else {
-            null
-        }
+    private fun checkForFlowersForAll(hand: Hand): List<Line> =
+        listOfNotNull(hand.bonusTiles.isNotEmpty().map {
+            Line(description = StringKeys.KEY_BONUS_TILES, points = POINT_BONUS, times = hand.bonusTiles.size)
+        })
+
+    private fun checkPointsForAll(hand: Hand): List<Line> = listOf(
+        checkForChis(hand),
+        checkForPungs(hand),
+        checkForKangs(hand),
+    ).flatten()
 
     private fun checkForChis(hand: Hand) = (
             hand.getFigures(Chow, Open)
@@ -90,7 +95,27 @@ class ClassicRulesResultComputer : ResultComputer {
                 .map { Line(description = StringKeys.KANG_MAINTILE_CLOSED, points = 32) }
             )
 
-    private fun checkPairs(hand: Hand, gameModifiers: GameModifiers, seatWind: Wind) = (
+    private fun checkPointsForWinner(hand: Hand, gameModifiers: GameModifiers, seatWind: Wind): List<Line> {
+        return checkPairs(hand = hand, gameModifiers = gameModifiers, seatWind = seatWind) +
+                listOfNotNull(
+                    // Mahjong
+                    Line(description = StringKeys.MAHJONG, points = 20),
+                    // Schlussziegel von der Mauer
+                    gameModifiers.schlussziegelVonDerMauer
+                        .map { Line(StringKeys.WINNING_TILE_FROM_WALL, points = 2) },
+                    // Schlussziegel ist einzig möglicher Stein
+                    gameModifiers.schlussziegelEinzigMoeglicherZiegel
+                        .map { Line(StringKeys.WINNING_TILE_ONLY_POSSIBLE_TILE, points = 2) },
+                    // Schlussziegel komplettiert Paar aus Grundziegeln
+                    (gameModifiers.schlussziegelKomplettiertPaar && (hand.pair?.tile?.isBaseTile ?: false))
+                        .map { Line(StringKeys.WINNING_TILE_COMPLETES_PAIR_OF_MINOR_TILES, points = 2) },
+                    // Schlussziegel komplettiert Paar aus Hauptziegeln
+                    (gameModifiers.schlussziegelKomplettiertPaar && !(hand.pair?.tile?.isBaseTile ?: false))
+                        .map { Line(StringKeys.WINNING_TILE_COMPLETES_PAIR_OF_MAJOR_TILES, points = 4) },
+                )
+    }
+
+    private fun checkPairs(hand: Hand, gameModifiers: GameModifiers, seatWind: Wind): List<Line> = (
             hand.getFigures(FinishingPair, tiles = Tile.dragons)
                 .map { Line(description = StringKeys.PAIR_OF_DRAGONS, points = 2) }
                     + hand.getFigures(FinishingPair, tiles = seatWind.tiles)
@@ -98,26 +123,6 @@ class ClassicRulesResultComputer : ResultComputer {
                     + hand.getFigures(FinishingPair, tiles = gameModifiers.prevailingWind.tiles)
                 .map { Line(description = StringKeys.PAIR_WIND_PREVAILING, points = 2) }
             )
-
-    private fun checkMahjongPoints(hand: Hand, gameModifiers: GameModifiers): List<Line> {
-        console.log(gameModifiers)
-        return listOf(
-            // Mahjong
-            Line(description = StringKeys.MAHJONG, points = 20),
-            // Schlussziegel von der Mauer
-            gameModifiers.schlussziegelVonMauer
-                .map { Line(StringKeys.WINNING_TILE_FROM_WALL, points = 2) },
-            // Schlussziegel ist einzig möglicher Stein
-            gameModifiers.schlussziegelEinzigMoeglicherZiegel
-                .map { Line(StringKeys.WINNING_TILE_ONLY_POSSIBLE_TILE, points = 2) },
-            // Schlussziegel komplettiert Paar aus Grundziegeln
-            (gameModifiers.schlussziegelKomplettiertPaar && (hand.pair?.tile?.isBaseTile ?: false))
-                .map { Line(StringKeys.WINNING_TILE_COMPLETES_PAIR_OF_MINOR_TILES, points = 2) },
-            // Schlussziegel komplettiert Paar aus Hauptziegeln
-            (gameModifiers.schlussziegelKomplettiertPaar && !(hand.pair?.tile?.isBaseTile ?: false))
-                .map { Line(StringKeys.WINNING_TILE_COMPLETES_PAIR_OF_MAJOR_TILES, points = 4) },
-        ).mapNotNull { it }
-    }
 
     private fun checkDoublings(hand: Hand, prevailingWind: Wind, seatWind: Wind): List<Line> =
         listOf(
@@ -180,7 +185,7 @@ class ClassicRulesResultComputer : ResultComputer {
             .flatten()
             .mapNotNull { it }
 
-    private fun checkMahjongDoublings(gameModifiers: GameModifiers, hand: Hand): List<Line> =
+    private fun checkDoublingsForWinner(gameModifiers: GameModifiers, hand: Hand): List<Line> =
         listOf(
             // TODO Null-Punkte-Hand 1
             listOf(
@@ -205,16 +210,16 @@ class ClassicRulesResultComputer : ResultComputer {
                 hand.allTilesOfFigures.all { it.isImage }
                     .map { Line(description = StringKeys.ONLY_IMAGETILES, doublings = 2) },
                 // Schlussziegel von der toten Mauer
-                gameModifiers.schlussziegelVonToterMauer
+                gameModifiers.outOnSupplementTile
                     .map { Line(description = StringKeys.WINNING_TILE_FROM_DEAD_WALL, doublings = 1) },
                 // mit dem letzten Ziegel der Mauer gewonnenes Spiel
-                gameModifiers.mitDemLetztenZiegelDerMauerGewonnen
+                gameModifiers.outOnLastTileOfWall
                     .map { Line(description = StringKeys.WINNING_TILE_IS_LAST_TILE_FROM_WALL, doublings = 1) },
                 // Schlussziegel: abgelegter Ziegel nach Abbau der Mauer 1
-                gameModifiers.schlussziegelIstAbgelegterZiegelNachAbbauDerMauer
+                gameModifiers.outOnLastDiscard
                     .map { Line(description = StringKeys.WINNING_TILE_IS_DISCARD_AFTER_END_OF_WALL, doublings = 1) },
                 // Beraubung des Kang
-                gameModifiers.beraubungDesKang
+                gameModifiers.outByRobbingTheKong
                     .map { Line(description = StringKeys.ROBBING_THE_KANG, doublings = 1) },
                 // Mahjong-Ruf zu Beginn
                 gameModifiers.mahjongAtBeginning
@@ -235,18 +240,5 @@ class ClassicRulesResultComputer : ResultComputer {
         private const val POINT_BONUS = 4
 
         private fun Collection<Any?>.hasSize(size: Int) = this.size == size
-
-        private fun Hand.getFigures(
-            type: Type? = null,
-            visibility: Visibility? = null,
-            baseTile: Boolean? = null,
-            tiles: Collection<Tile> = emptySet(),
-        ): List<Combination> =
-            allFigures.asSequence()
-                .filter { type == null || it.type == type }
-                .filter { visibility == null || it.visibility == visibility }
-                .filter { baseTile == null || it.tile.isBaseTile == baseTile }
-                .filter { tiles.isEmpty() || it.tile in tiles }
-                .toList()
     }
 }
