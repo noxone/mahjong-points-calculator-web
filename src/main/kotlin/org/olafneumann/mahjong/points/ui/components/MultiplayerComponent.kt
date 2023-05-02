@@ -22,7 +22,7 @@ class MultiplayerComponent(
     init {
         model.registerChangeListener(this)
 
-        btnMultiplayer.onclick = { multiplayerInput.hide() }
+        btnMultiplayer.onclick = { multiplayerInput.show() }
     }
 
     override fun TagConsumer<HTMLElement>.createUI() {
@@ -32,6 +32,6 @@ class MultiplayerComponent(
     }
 
     override fun modelChanged(model: UIState) {
-        // TODO("Not yet implemented")
+        buildUI()
     }
 }

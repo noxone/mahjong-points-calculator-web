@@ -55,7 +55,7 @@ private fun initMahjongPointCalculatorUnsafe() {
 
     val model = UIState()
 
-    MultiplayerComponent(model = model)
+    MultiplayerComponent(parent = windDiv, model = model)
     TileSelectionComponent(parent = tilesDiv, model = model)
     WindComponent(parent = windDiv, model = model)
     MahjongOptionsComponent(parent = mahjongDiv, model = model)
