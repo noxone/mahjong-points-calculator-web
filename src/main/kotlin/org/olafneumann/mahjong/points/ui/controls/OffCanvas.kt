@@ -51,7 +51,7 @@ fun createOffCanvas(
     return offCanvas
 }
 
-@Suppress("UnusedPrivateMember") // both members are used in JS code
+@Suppress("UnusedPrivateMember", "unused") // both members are used in JS code
 private fun createOffCanvas(
     element: HTMLElement,
     backdrop: Boolean = true,

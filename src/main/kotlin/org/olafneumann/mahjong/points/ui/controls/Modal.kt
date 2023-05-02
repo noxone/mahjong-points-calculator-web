@@ -66,7 +66,7 @@ fun createModal(
     return modal
 }
 
-@Suppress("UnusedPrivateMember") // both members are used in JS code
+@Suppress("UnusedPrivateMember", "unused") // both members are used in JS code
 private fun createModal(element: HTMLElement, static: Boolean = true): Modal {
     val options = mapOf(
         "backdrop" to if (static) "static" else null,
