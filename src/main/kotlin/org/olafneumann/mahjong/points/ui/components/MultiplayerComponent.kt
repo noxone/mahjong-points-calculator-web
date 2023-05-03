@@ -27,9 +27,10 @@ class MultiplayerComponent(
     }
 
     override fun TagConsumer<HTMLElement>.createUI() {
-        multiplayerInput = createOffCanvas("Multiple Players", placement = Placement.End) {
-            translate("Some text")
-        }
+        multiplayerInput =
+            createOffCanvas("Multiple Players", placement = Placement.End, darkBackground = true, border = "start") {
+                translate("Some text")
+            }
     }
 
     override fun modelChanged(model: UIState) {

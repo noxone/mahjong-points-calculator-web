@@ -21,16 +21,23 @@ private fun TagConsumer<HTMLElement>.offCanvas(
     title: String,
     placement: Placement = Placement.Start,
     darkBackground: Boolean = false,
+    border: String? = null,
     mainBlock: TagConsumer<HTMLElement>.() -> Unit = {},
-    getOffCanvas: () -> OffCanvas,
 ): HTMLElement {
     var element: HTMLElement by Delegates.notNull()
     element = returningRoot {
-        div(classes = "offcanvas ${placement.value} ${darkBackground.map { "text-bg-dark" } ?: ""}") {
+        div(classes = "offcanvas " +
+                "${placement.value} " +
+                "${darkBackground.map { "text-bg-dark" } ?: ""} " +
+                (border?.let { "border-$it" } ?: ""))
+        {
             tabIndex = "-1"
             div(classes = "offcanvas-header") {
                 h5(classes = "offcanvas-title") { translate(title) }
-                closeButton(additionalAttributes = listOf("data-bs-dismiss" to "offcanvas"))
+                closeButton(
+                    darkBackground = darkBackground,
+                    additionalAttributes = listOf("data-bs-dismiss" to "offcanvas")
+                )
             }
 
             div(classes = "offcanvas-body") {
@@ -44,10 +51,18 @@ private fun TagConsumer<HTMLElement>.offCanvas(
 fun createOffCanvas(
     title: String,
     placement: Placement = Placement.Start,
+    darkBackground: Boolean = false,
+    border: String? = null,
     mainBlock: TagConsumer<HTMLElement>.() -> Unit = {}
 ): OffCanvas {
     var offCanvas: OffCanvas by Delegates.notNull()
-    val element = document.create.offCanvas(title = title, placement = placement, mainBlock = mainBlock, getOffCanvas = { offCanvas })
+    val element = document.create.offCanvas(
+        title = title,
+        placement = placement,
+        darkBackground = darkBackground,
+        border = border,
+        mainBlock = mainBlock
+    )
     offCanvas = createOffCanvas(element = element)
     return offCanvas
 }
