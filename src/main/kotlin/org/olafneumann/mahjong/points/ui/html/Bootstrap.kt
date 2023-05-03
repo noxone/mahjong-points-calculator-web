@@ -7,6 +7,7 @@ import kotlinx.html.id
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.title
 import org.olafneumann.mahjong.points.ui.i18n.translate
+import org.olafneumann.mahjong.points.util.map
 import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
@@ -27,11 +28,12 @@ fun TagConsumer<HTMLElement>.bsButton(
 }
 
 fun TagConsumer<HTMLElement>.closeButton(
+    darkBackground: Boolean = false,
     tooltip: String? = null,
     additionalAttributes: List<Pair<String, String>> = emptyList(),
     onClickFunction: (Event) -> Unit = {}
 ): HTMLButtonElement = returningRoot {
-    button(classes = "btn-close", type = ButtonType.button) {
+    button(classes = "btn-close ${ darkBackground.map { "btn-close-white" } ?: "" }", type = ButtonType.button) {
         additionalAttributes.forEach {
             attributes[it.first] = it.second
         }
