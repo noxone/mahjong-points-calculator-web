@@ -43,10 +43,11 @@ private fun TagConsumer<HTMLElement>.offCanvas(
 
 fun createOffCanvas(
     title: String,
+    placement: Placement = Placement.Start,
     mainBlock: TagConsumer<HTMLElement>.() -> Unit = {}
 ): OffCanvas {
     var offCanvas: OffCanvas by Delegates.notNull()
-    val element = document.create.offCanvas(title = title, mainBlock = mainBlock, getOffCanvas = { offCanvas })
+    val element = document.create.offCanvas(title = title, placement = placement, mainBlock = mainBlock, getOffCanvas = { offCanvas })
     offCanvas = createOffCanvas(element = element)
     return offCanvas
 }
@@ -64,6 +65,7 @@ private fun createOffCanvas(
         "keyboard" to closeOnEscape
     )
         .toJson()
+    document.body?.appendChild(element)
     val modal = js("new bootstrap.Offcanvas(element, options)")
     return modal.unsafeCast<OffCanvas>()
 }

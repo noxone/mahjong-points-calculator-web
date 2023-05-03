@@ -3,6 +3,7 @@ package org.olafneumann.mahjong.points.ui.components
 import kotlinx.browser.document
 import kotlinx.html.TagConsumer
 import org.olafneumann.mahjong.points.ui.controls.OffCanvas
+import org.olafneumann.mahjong.points.ui.controls.Placement
 import org.olafneumann.mahjong.points.ui.controls.createOffCanvas
 import org.olafneumann.mahjong.points.ui.html.getElement
 import org.olafneumann.mahjong.points.ui.i18n.translate
@@ -26,7 +27,7 @@ class MultiplayerComponent(
     }
 
     override fun TagConsumer<HTMLElement>.createUI() {
-        multiplayerInput = createOffCanvas("Multiple Players") {
+        multiplayerInput = createOffCanvas("Multiple Players", placement = Placement.End) {
             translate("Some text")
         }
     }
