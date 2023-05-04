@@ -1,21 +1,19 @@
 package org.olafneumann.mahjong.points.model
 
-import org.olafneumann.mahjong.points.game.Combination
-import org.olafneumann.mahjong.points.game.Combination.Type.Chow
-import org.olafneumann.mahjong.points.game.Combination.Type.Kang
-import org.olafneumann.mahjong.points.game.Combination.Type.Pung
-import org.olafneumann.mahjong.points.game.Combination.Type.FinishingPair
-import org.olafneumann.mahjong.points.game.Combination.Type.Unfinished0
-import org.olafneumann.mahjong.points.game.Combination.Type.UnfinishedPlus1
-import org.olafneumann.mahjong.points.game.Combination.Visibility.Open
+import org.olafneumann.mahjong.points.definition.Tile
+import org.olafneumann.mahjong.points.definition.Wind
 import org.olafneumann.mahjong.points.game.GameModifiers
-import org.olafneumann.mahjong.points.game.Hand
-import org.olafneumann.mahjong.points.game.Tile
-import org.olafneumann.mahjong.points.game.Wind
 import org.olafneumann.mahjong.points.lang.StringKeys
+import org.olafneumann.mahjong.points.model.Combination.Type.Chow
+import org.olafneumann.mahjong.points.model.Combination.Type.FinishingPair
+import org.olafneumann.mahjong.points.model.Combination.Type.Kang
+import org.olafneumann.mahjong.points.model.Combination.Type.Pung
+import org.olafneumann.mahjong.points.model.Combination.Type.Unfinished0
+import org.olafneumann.mahjong.points.model.Combination.Type.UnfinishedPlus1
+import org.olafneumann.mahjong.points.model.Combination.Visibility.Open
 import org.olafneumann.mahjong.points.model.Figure.Bonus
-import org.olafneumann.mahjong.points.model.Figure.Pair
 import org.olafneumann.mahjong.points.model.Figure.Figure1
+import org.olafneumann.mahjong.points.model.Figure.Pair
 import org.olafneumann.mahjong.points.result.PlayerResult
 import org.olafneumann.mahjong.points.result.ResultComputer
 import org.olafneumann.mahjong.points.util.to
@@ -92,7 +90,7 @@ data class CalculatorModel(
             return evolve(
                 hand = hand.copy(
                     pair = Combination(
-                        type = Combination.Type.FinishingPair,
+                        type = FinishingPair,
                         tile = tile,
                         visibility = Open
                     )

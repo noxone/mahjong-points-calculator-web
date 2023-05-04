@@ -1,14 +1,8 @@
 package org.olafneumann.mahjong.points.model
 
 import org.olafneumann.mahjong.points.Constants
-import org.olafneumann.mahjong.points.game.Combination
-import org.olafneumann.mahjong.points.game.Hand
-import org.olafneumann.mahjong.points.game.Tile
-import org.olafneumann.mahjong.points.model.Figure.Figure1
-import org.olafneumann.mahjong.points.model.Figure.Figure2
-import org.olafneumann.mahjong.points.model.Figure.Figure3
-import org.olafneumann.mahjong.points.model.Figure.Figure4
-import org.olafneumann.mahjong.points.model.Figure.Pair
+import org.olafneumann.mahjong.points.definition.Tile
+import org.olafneumann.mahjong.points.model.Figure.*
 
 enum class Figure(val canBeConcealed: Boolean = true) {
     Figure1,

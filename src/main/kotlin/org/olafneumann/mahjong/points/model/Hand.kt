@@ -1,6 +1,7 @@
-package org.olafneumann.mahjong.points.game
+package org.olafneumann.mahjong.points.model
 
 import org.olafneumann.mahjong.points.Constants
+import org.olafneumann.mahjong.points.definition.Tile
 
 data class Hand(
     val figure1: Combination? = null,

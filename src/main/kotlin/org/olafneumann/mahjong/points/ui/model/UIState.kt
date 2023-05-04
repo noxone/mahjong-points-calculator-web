@@ -1,9 +1,9 @@
 package org.olafneumann.mahjong.points.ui.model
 
+import org.olafneumann.mahjong.points.definition.Tile
+import org.olafneumann.mahjong.points.definition.Wind
 import org.olafneumann.mahjong.points.game.GameModifiers
-import org.olafneumann.mahjong.points.game.Hand
-import org.olafneumann.mahjong.points.game.Tile
-import org.olafneumann.mahjong.points.game.Wind
+import org.olafneumann.mahjong.points.model.Hand
 import org.olafneumann.mahjong.points.model.CalculatorModel
 import org.olafneumann.mahjong.points.model.ErrorMessage
 import org.olafneumann.mahjong.points.model.Figure

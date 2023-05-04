@@ -12,7 +12,7 @@ import kotlinx.html.js.form
 import kotlinx.html.js.p
 import kotlinx.html.label
 import kotlinx.html.small
-import org.olafneumann.mahjong.points.game.Wind
+import org.olafneumann.mahjong.points.definition.Wind
 import org.olafneumann.mahjong.points.ui.controls.OffCanvas
 import org.olafneumann.mahjong.points.ui.controls.Placement
 import org.olafneumann.mahjong.points.ui.controls.createOffCanvas

@@ -7,7 +7,7 @@ import kotlinx.html.button
 import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.span
-import org.olafneumann.mahjong.points.game.Combination
+import org.olafneumann.mahjong.points.model.Combination
 import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.model.Figure
 import org.olafneumann.mahjong.points.model.getCombination

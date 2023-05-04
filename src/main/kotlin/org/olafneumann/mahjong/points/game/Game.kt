@@ -1,5 +1,7 @@
 package org.olafneumann.mahjong.points.game
 
+import org.olafneumann.mahjong.points.definition.Wind
+
 data class Game(
     val match: Match,
     val mahjong: Player,

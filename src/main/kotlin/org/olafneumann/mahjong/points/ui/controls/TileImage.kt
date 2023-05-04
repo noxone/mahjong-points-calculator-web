@@ -5,8 +5,7 @@ import kotlinx.html.TagConsumer
 import kotlinx.html.js.div
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.span
-import org.olafneumann.mahjong.points.game.Tile
-import org.olafneumann.mahjong.points.ui.html.MrAttributes
+import org.olafneumann.mahjong.points.definition.Tile
 import org.olafneumann.mahjong.points.ui.html.mrTile
 import org.olafneumann.mahjong.points.ui.html.returningRoot
 import org.w3c.dom.HTMLDivElement

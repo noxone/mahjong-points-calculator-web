@@ -2,8 +2,8 @@ package org.olafneumann.mahjong.points.ui.components
 
 import kotlinx.html.TagConsumer
 import kotlinx.html.div
+import org.olafneumann.mahjong.points.definition.Wind
 import org.olafneumann.mahjong.points.game.GameModifiers
-import org.olafneumann.mahjong.points.game.Wind
 import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.ui.controls.RadioGroup
 import org.olafneumann.mahjong.points.ui.controls.RadioGroup.Companion.radioButtonGroup

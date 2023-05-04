@@ -1,4 +1,4 @@
-package org.olafneumann.mahjong.points.game
+package org.olafneumann.mahjong.points.definition
 
 enum class Color {
     Circle,

@@ -1,6 +1,6 @@
 package org.olafneumann.mahjong.points.model
 
-import org.olafneumann.mahjong.points.game.Tile
+import org.olafneumann.mahjong.points.definition.Tile
 
 data class ErrorMessage(
     val tile: Tile? = null,

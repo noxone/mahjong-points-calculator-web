@@ -1,6 +1,6 @@
 package org.olafneumann.mahjong.points.lang
 
-import org.olafneumann.mahjong.points.game.Wind
+import org.olafneumann.mahjong.points.definition.Wind
 import org.olafneumann.mahjong.points.model.Figure
 
 object StringKeys {

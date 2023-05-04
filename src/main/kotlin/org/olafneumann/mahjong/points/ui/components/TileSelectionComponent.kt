@@ -2,7 +2,7 @@ package org.olafneumann.mahjong.points.ui.components
 
 import kotlinx.html.TagConsumer
 import kotlinx.html.div
-import org.olafneumann.mahjong.points.game.Tile
+import org.olafneumann.mahjong.points.definition.Tile
 import org.olafneumann.mahjong.points.ui.controls.TileImage
 import org.olafneumann.mahjong.points.ui.controls.TileImage.Companion.tileImage
 import org.olafneumann.mahjong.points.ui.model.UIState

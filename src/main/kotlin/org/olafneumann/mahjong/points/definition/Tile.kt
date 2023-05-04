@@ -1,11 +1,11 @@
-package org.olafneumann.mahjong.points.game
+package org.olafneumann.mahjong.points.definition
 
 import org.olafneumann.mahjong.points.Constants.BASE_TILES
 import org.olafneumann.mahjong.points.Constants.MAX_NUMBER_OF_TILES_PER_TYPE
-import org.olafneumann.mahjong.points.game.Wind.East
-import org.olafneumann.mahjong.points.game.Wind.North
-import org.olafneumann.mahjong.points.game.Wind.South
-import org.olafneumann.mahjong.points.game.Wind.West
+import org.olafneumann.mahjong.points.definition.Wind.East
+import org.olafneumann.mahjong.points.definition.Wind.North
+import org.olafneumann.mahjong.points.definition.Wind.South
+import org.olafneumann.mahjong.points.definition.Wind.West
 
 enum class Tile(
     val color: Color?,

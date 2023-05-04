@@ -1,5 +1,6 @@
-package org.olafneumann.mahjong.points.game
+package org.olafneumann.mahjong.points.model
 
+import org.olafneumann.mahjong.points.definition.Tile
 import org.olafneumann.mahjong.points.util.IdGenerator
 
 data class Combination(

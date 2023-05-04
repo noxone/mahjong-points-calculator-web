@@ -1,8 +1,8 @@
 package org.olafneumann.mahjong.points.result
 
+import org.olafneumann.mahjong.points.definition.Wind
 import org.olafneumann.mahjong.points.game.GameModifiers
-import org.olafneumann.mahjong.points.game.Hand
-import org.olafneumann.mahjong.points.game.Wind
+import org.olafneumann.mahjong.points.model.Hand
 
 interface ResultComputer {
     val name: String
