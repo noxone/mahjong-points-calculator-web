@@ -10,6 +10,7 @@ import org.olafneumann.mahjong.points.model.Figure
 import kotlin.math.max
 import kotlin.math.min
 
+@Suppress("TooManyFunctions")
 class UIState {
     private val changeListeners = mutableListOf<UIStateChangeListener>()
     fun registerChangeListener(listener: UIStateChangeListener) = changeListeners.add(listener)

@@ -45,4 +45,31 @@ data class Hand(
             .filter { baseTile == null || it.tile.isBaseTile == baseTile }
             .filter { tiles.isEmpty() || it.tile in tiles }
             .toList()
+
+
+    fun getCombination(figure: Figure): Combination? =
+        when (figure) {
+            Figure.Figure1 -> figure1
+            Figure.Figure2 -> figure2
+            Figure.Figure3 -> figure3
+            Figure.Figure4 -> figure4
+            Figure.Pair -> pair
+            else -> null
+        }
+
+    fun setCombination(figure: Figure, combination: Combination): Hand =
+        when (figure) {
+            Figure.Figure1 -> copy(figure1 = combination)
+            Figure.Figure2 -> copy(figure2 = combination)
+            Figure.Figure3 -> copy(figure3 = combination)
+            Figure.Figure4 -> copy(figure4 = combination)
+            Figure.Pair -> copy(pair = combination)
+            else -> this
+        }
+
+    fun getTiles(figure: Figure): Collection<Tile> =
+        when (figure) {
+            Figure.Bonus -> bonusTiles
+            else -> getCombination(figure)?.getTiles() ?: emptyList()
+        }
 }

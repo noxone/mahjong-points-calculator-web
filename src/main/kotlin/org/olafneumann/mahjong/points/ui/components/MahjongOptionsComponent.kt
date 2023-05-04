@@ -76,6 +76,7 @@ class MahjongOptionsComponent(
         }
     }
 
+    @Suppress("CyclomaticComplexMethod")
     override fun updateUI() {
         val isMahjong = model.calculatorModel.isMahjong
 

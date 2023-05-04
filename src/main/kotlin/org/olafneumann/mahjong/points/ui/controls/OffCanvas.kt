@@ -7,11 +7,7 @@ import kotlinx.html.dom.create
 import kotlinx.html.h5
 import kotlinx.html.js.div
 import kotlinx.html.tabIndex
-import org.olafneumann.mahjong.points.ui.html.bsButton
 import org.olafneumann.mahjong.points.ui.html.closeButton
-import org.olafneumann.mahjong.points.ui.html.onModalHiddenFunction
-import org.olafneumann.mahjong.points.ui.html.onOffCanvasHiddenFunction
-import org.olafneumann.mahjong.points.ui.html.onOffCanvasShowFunction
 import org.olafneumann.mahjong.points.ui.html.returningRoot
 import org.olafneumann.mahjong.points.ui.i18n.translate
 import org.olafneumann.mahjong.points.ui.js.toJson
@@ -24,17 +20,14 @@ private fun TagConsumer<HTMLElement>.offCanvas(
     title: String,
     placement: Placement = Placement.Start,
     darkBackground: Boolean = false,
-    border: String? = null,
     onShow: (Event) -> Unit = {},
-    onHidden: (Event) -> Unit = {},
     mainBlock: TagConsumer<HTMLElement>.() -> Unit = {},
 ): HTMLElement {
     var element: HTMLElement by Delegates.notNull()
     element = returningRoot {
         div(classes = "offcanvas " +
                 "${placement.value} " +
-                "${darkBackground.map { "text-bg-dark" } ?: ""} " +
-                (border?.let { "border-$it" } ?: ""))
+                "${darkBackground.map { "text-bg-dark border-${placement.border}" } ?: ""} ")
         {
             tabIndex = "-1"
             div(classes = "offcanvas-header") {
@@ -51,7 +44,6 @@ private fun TagConsumer<HTMLElement>.offCanvas(
         }
     }
     element.addEventListener("show.bs.offcanvas", onShow)
-    element.addEventListener("hidden.bs.offcanvas", onHidden)
     return element
 }
 
@@ -59,9 +51,7 @@ fun createOffCanvas(
     title: String,
     placement: Placement = Placement.Start,
     darkBackground: Boolean = false,
-    border: String? = null,
     onShow: (Event) -> Unit = {},
-    onHidden: (Event) -> Unit = {},
     mainBlock: TagConsumer<HTMLElement>.() -> Unit = {}
 ): OffCanvas {
     var offCanvas: OffCanvas by Delegates.notNull()
@@ -69,9 +59,7 @@ fun createOffCanvas(
         title = title,
         placement = placement,
         darkBackground = darkBackground,
-        border = border,
         onShow = onShow,
-        onHidden = onHidden,
         mainBlock = mainBlock
     )
     offCanvas = createOffCanvas(element = element)
@@ -85,6 +73,7 @@ private fun createOffCanvas(
     allowScrolling: Boolean = false,
     closeOnEscape: Boolean = true
 ): OffCanvas {
+    @Suppress("unused")
     val options = mapOf(
         "backdrop" to backdrop,
         "scroll" to allowScrolling,
@@ -97,12 +86,13 @@ private fun createOffCanvas(
 }
 
 enum class Placement(
-    val value: String
+    val value: String,
+    val border: String
 ) {
-    Top("offcanvas-top"),
-    Bottom("offcanvas-bottom"),
-    Start("offcanvas-start"),
-    End("offcanvas-end")
+    Top("offcanvas-top", "bottom"),
+    Bottom("offcanvas-bottom", "top"),
+    Start("offcanvas-start", "end"),
+    End("offcanvas-end", "start")
 }
 
 external class OffCanvas {

@@ -42,8 +42,6 @@ class WindComponent(
     }
 
     override fun updateUI() {
-        val isMahjong = model.calculatorModel.isMahjong
-
         rdaPrevailingWind.selection = gameModifiers.prevailingWind
         rdaSeatWind.selection = model.calculatorModel.seatWind
     }

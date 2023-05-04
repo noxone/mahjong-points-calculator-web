@@ -51,7 +51,6 @@ class MultiplayerComponent(
                 "Multiple Players",
                 placement = Placement.End,
                 darkBackground = true,
-                border = "start",
                 onShow = { resetInputs() }) {
                 p { translate("start.game.with.multiple.players") }
                 form {
