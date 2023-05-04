@@ -10,11 +10,14 @@ import kotlinx.html.tabIndex
 import org.olafneumann.mahjong.points.ui.html.bsButton
 import org.olafneumann.mahjong.points.ui.html.closeButton
 import org.olafneumann.mahjong.points.ui.html.onModalHiddenFunction
+import org.olafneumann.mahjong.points.ui.html.onOffCanvasHiddenFunction
+import org.olafneumann.mahjong.points.ui.html.onOffCanvasShowFunction
 import org.olafneumann.mahjong.points.ui.html.returningRoot
 import org.olafneumann.mahjong.points.ui.i18n.translate
 import org.olafneumann.mahjong.points.ui.js.toJson
 import org.olafneumann.mahjong.points.util.map
 import org.w3c.dom.HTMLElement
+import org.w3c.dom.events.Event
 import kotlin.properties.Delegates
 
 private fun TagConsumer<HTMLElement>.offCanvas(
@@ -22,6 +25,8 @@ private fun TagConsumer<HTMLElement>.offCanvas(
     placement: Placement = Placement.Start,
     darkBackground: Boolean = false,
     border: String? = null,
+    onShow: (Event) -> Unit = {},
+    onHidden: (Event) -> Unit = {},
     mainBlock: TagConsumer<HTMLElement>.() -> Unit = {},
 ): HTMLElement {
     var element: HTMLElement by Delegates.notNull()
@@ -31,6 +36,8 @@ private fun TagConsumer<HTMLElement>.offCanvas(
                 "${darkBackground.map { "text-bg-dark" } ?: ""} " +
                 (border?.let { "border-$it" } ?: ""))
         {
+            onOffCanvasShowFunction = onShow
+            onOffCanvasHiddenFunction = onHidden
             tabIndex = "-1"
             div(classes = "offcanvas-header") {
                 h5(classes = "offcanvas-title") { translate(title) }
@@ -53,6 +60,8 @@ fun createOffCanvas(
     placement: Placement = Placement.Start,
     darkBackground: Boolean = false,
     border: String? = null,
+    onShow: (Event) -> Unit = {},
+    onHidden: (Event) -> Unit = {},
     mainBlock: TagConsumer<HTMLElement>.() -> Unit = {}
 ): OffCanvas {
     var offCanvas: OffCanvas by Delegates.notNull()
@@ -61,6 +70,8 @@ fun createOffCanvas(
         placement = placement,
         darkBackground = darkBackground,
         border = border,
+        onShow = onShow,
+        onHidden = onHidden,
         mainBlock = mainBlock
     )
     offCanvas = createOffCanvas(element = element)
@@ -99,3 +110,5 @@ external class OffCanvas {
     fun hide()
     fun toggle()
 }
+
+

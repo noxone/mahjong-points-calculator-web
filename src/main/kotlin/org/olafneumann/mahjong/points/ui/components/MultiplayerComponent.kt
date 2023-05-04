@@ -1,7 +1,6 @@
 package org.olafneumann.mahjong.points.ui.components
 
 import kotlinx.browser.document
-import kotlinx.browser.window
 import kotlinx.html.ButtonType
 import kotlinx.html.InputType
 import kotlinx.html.TagConsumer
@@ -18,6 +17,8 @@ import org.olafneumann.mahjong.points.ui.controls.OffCanvas
 import org.olafneumann.mahjong.points.ui.controls.Placement
 import org.olafneumann.mahjong.points.ui.controls.createOffCanvas
 import org.olafneumann.mahjong.points.ui.html.getElement
+import org.olafneumann.mahjong.points.ui.html.isInvalid
+import org.olafneumann.mahjong.points.ui.html.isValid
 import org.olafneumann.mahjong.points.ui.html.returningRoot
 import org.olafneumann.mahjong.points.ui.i18n.translate
 import org.olafneumann.mahjong.points.ui.model.UIState
@@ -46,7 +47,12 @@ class MultiplayerComponent(
 
     override fun TagConsumer<HTMLElement>.createUI() {
         multiplayerInput =
-            createOffCanvas("Multiple Players", placement = Placement.End, darkBackground = true, border = "start") {
+            createOffCanvas(
+                "Multiple Players",
+                placement = Placement.End,
+                darkBackground = true,
+                border = "start",
+                onShow = { resetInputs() }) {
                 p { translate("start.game.with.multiple.players") }
                 form {
                     playerInputs[Wind.East] = createInput("Player 1", "East Wind", "This is the start player.")
@@ -62,7 +68,12 @@ class MultiplayerComponent(
                     ) { translate("Start Game") }
                 }
             }
-        // btnStartGame.onclick = { window.alert() }
+
+        btnStartGame.onclick = {
+            if (checkInputsAndReturnResult()) {
+                // TODO: Start game
+            }
+        }
     }
 
     private fun TagConsumer<HTMLElement>.createInput(
@@ -85,13 +96,33 @@ class MultiplayerComponent(
                     required = true
                 }
             }
-            div(classes = "valid-feedback") { +"OK" }
             div(classes = "invalid-feedback") { translate("Player name is required.") }
             help?.let { div(classes = "form-text") { translate(it) } }
         }
 
+        input.onblur = { validateInput(input) }
+
         return input
     }
+
+    private fun resetInputs() {
+        playerInputs.values.forEach {
+            it.value = ""
+            it.isValid = false
+            it.isInvalid = false
+        }
+    }
+
+    private fun validateInput(input: HTMLInputElement) {
+        input.isInvalid = input.value.isBlank()
+        input.isValid = !input.isInvalid
+    }
+
+    private fun checkInputsAndReturnResult(): Boolean {
+        playerInputs.values.forEach { validateInput(it) }
+        return playerInputs.values.none { it.isInvalid }
+    }
+
 
     override fun modelChanged(model: UIState) {
         buildUI()

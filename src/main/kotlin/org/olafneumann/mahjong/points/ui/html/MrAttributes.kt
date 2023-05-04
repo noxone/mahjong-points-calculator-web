@@ -42,6 +42,13 @@ val Element.shouldNotTranslate: Boolean
 //    get() = attributes[MrAttributes.FIGURE]?.value
 
 var CommonAttributeGroupFacade.onModalHiddenFunction : (org.w3c.dom.events.Event) -> Unit
-    get()  = throw UnsupportedOperationException("You can't read variable onInput")
+    get()  = throw UnsupportedOperationException("You can't read variable onModelHidden")
     set(newValue) {consumer.onTagEvent(this, "hidden.bs.modal", newValue.unsafeCast<(Event) -> Unit>())}
 
+var CommonAttributeGroupFacade.onOffCanvasShowFunction : (org.w3c.dom.events.Event) -> Unit
+    get() = throw UnsupportedOperationException("You can't read variable onOffCanvasShow")
+    set(newValue) {consumer.onTagEvent(this, "show.bs.offcanvas", newValue.unsafeCast<(Event) -> Unit>())}
+
+var CommonAttributeGroupFacade.onOffCanvasHiddenFunction : (org.w3c.dom.events.Event) -> Unit
+    get() = throw UnsupportedOperationException("You can't read variable onOffCanvasHidden")
+    set(newValue) {consumer.onTagEvent(this, "hidden.bs.offcanvas", newValue.unsafeCast<(Event) -> Unit>())}

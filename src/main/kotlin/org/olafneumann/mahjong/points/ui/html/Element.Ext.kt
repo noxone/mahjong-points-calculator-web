@@ -2,6 +2,7 @@ package org.olafneumann.mahjong.points.ui.html
 
 import org.w3c.dom.Element
 import org.w3c.dom.HTMLElement
+import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.Node
 import org.w3c.dom.asList
 
@@ -41,3 +42,11 @@ private fun <T> Sequence<T>.selectRecursive(recursiveSelector: T.() -> Sequence<
         yieldAll(it.recursiveSelector().selectRecursive(recursiveSelector))
     }
 }
+
+var HTMLInputElement.isInvalid: Boolean
+    get() = classList.contains("is-invalid")
+    set(value) { classList.toggle("is-invalid", value) }
+
+var HTMLInputElement.isValid: Boolean
+    get() = classList.contains("is-valid")
+    set(value) { classList.toggle("is-valid", value) }
