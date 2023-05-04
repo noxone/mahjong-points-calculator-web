@@ -36,8 +36,6 @@ private fun TagConsumer<HTMLElement>.offCanvas(
                 "${darkBackground.map { "text-bg-dark" } ?: ""} " +
                 (border?.let { "border-$it" } ?: ""))
         {
-            onOffCanvasShowFunction = onShow
-            onOffCanvasHiddenFunction = onHidden
             tabIndex = "-1"
             div(classes = "offcanvas-header") {
                 h5(classes = "offcanvas-title") { translate(title) }
@@ -52,6 +50,8 @@ private fun TagConsumer<HTMLElement>.offCanvas(
             }
         }
     }
+    element.addEventListener("show.bs.offcanvas", onShow)
+    element.addEventListener("hidden.bs.offcanvas", onHidden)
     return element
 }
 
