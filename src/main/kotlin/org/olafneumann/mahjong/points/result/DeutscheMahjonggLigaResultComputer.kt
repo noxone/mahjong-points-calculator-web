@@ -49,7 +49,13 @@ class DeutscheMahjonggLigaResultComputer : ResultComputer {
             .sumOf { it.doublings }
         val resultPoints = points * 2.0.pow(doublings)
 
-        return PlayerResult(lines = lines, points = points, doublings = doublings, result = resultPoints.toInt())
+        return PlayerResult(
+            hasMahjong = hand.isMahjong,
+            lines = lines,
+            points = points,
+            doublings = doublings,
+            result = resultPoints.toInt()
+        )
     }
 
     private fun checkForFlowersForAll(hand: Hand): List<Line> =
