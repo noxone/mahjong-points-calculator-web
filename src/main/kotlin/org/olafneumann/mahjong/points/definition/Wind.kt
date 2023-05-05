@@ -22,4 +22,8 @@ enum class Wind {
     }
 
     val tiles: Collection<Tile> by lazy { setOf(tile) }
+
+    companion object {
+        val first = East
+    }
 }

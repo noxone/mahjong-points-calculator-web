@@ -2,7 +2,7 @@ package org.olafneumann.mahjong.points.model
 
 import org.olafneumann.mahjong.points.definition.Tile
 import org.olafneumann.mahjong.points.definition.Wind
-import org.olafneumann.mahjong.points.game.GameModifiers
+import org.olafneumann.mahjong.points.game.Modifiers
 import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.model.Combination.Type.Chow
 import org.olafneumann.mahjong.points.model.Combination.Type.FinishingPair
@@ -21,13 +21,13 @@ import org.olafneumann.mahjong.points.util.to
 data class CalculatorModel(
     val resultComputer: ResultComputer = ResultComputer.default,
     val hand: Hand,
-    val gameModifiers: GameModifiers = GameModifiers(prevailingWind = Wind.East),
+    val gameModifiers: Modifiers = Modifiers(prevailingWind = Wind.East),
     val seatWind: Wind = Wind.East,
     val selectedFigure: Figure = Figure1,
 ) {
     private fun evolve(
         hand: Hand = this.hand,
-        gameModifiers: GameModifiers = this.gameModifiers,
+        gameModifiers: Modifiers = this.gameModifiers,
         seatWind: Wind = this.seatWind,
         selectedFigure: Figure = this.selectedFigure,
         vararg errorMessage: ErrorMessage
@@ -224,7 +224,7 @@ data class CalculatorModel(
         }
     }
 
-    fun setGameModifiers(gameModifiers: GameModifiers): CalculatorModel = evolve(
+    fun setGameModifiers(gameModifiers: Modifiers): CalculatorModel = evolve(
         gameModifiers = gameModifiers,
     ).first
 

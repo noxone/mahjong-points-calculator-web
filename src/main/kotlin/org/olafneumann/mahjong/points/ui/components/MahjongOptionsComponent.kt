@@ -2,7 +2,7 @@ package org.olafneumann.mahjong.points.ui.components
 
 import kotlinx.html.TagConsumer
 import kotlinx.html.div
-import org.olafneumann.mahjong.points.game.GameModifiers
+import org.olafneumann.mahjong.points.game.Modifiers
 import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.ui.controls.Checkbox
 import org.olafneumann.mahjong.points.ui.controls.Checkbox.Companion.checkbox
@@ -32,7 +32,7 @@ class MahjongOptionsComponent(
         model.registerChangeListener(this)
     }
 
-    private val gameModifiers: GameModifiers get() = model.calculatorModel.gameModifiers
+    private val gameModifiers: Modifiers get() = model.calculatorModel.gameModifiers
 
     override fun TagConsumer<HTMLElement>.createUI() {
         div(classes = "flex-fill d-flex flex-column justify-content-between position-relative") {

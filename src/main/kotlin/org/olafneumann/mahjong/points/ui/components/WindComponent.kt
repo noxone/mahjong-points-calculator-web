@@ -3,7 +3,7 @@ package org.olafneumann.mahjong.points.ui.components
 import kotlinx.html.TagConsumer
 import kotlinx.html.div
 import org.olafneumann.mahjong.points.definition.Wind
-import org.olafneumann.mahjong.points.game.GameModifiers
+import org.olafneumann.mahjong.points.game.Modifiers
 import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.ui.controls.RadioGroup
 import org.olafneumann.mahjong.points.ui.controls.RadioGroup.Companion.radioButtonGroup
@@ -23,7 +23,7 @@ class WindComponent(
         model.registerChangeListener(this)
     }
 
-    private val gameModifiers: GameModifiers get() = model.calculatorModel.gameModifiers
+    private val gameModifiers: Modifiers get() = model.calculatorModel.gameModifiers
 
     override fun TagConsumer<HTMLElement>.createUI() {
         div(classes = "flex-fill d-flex flex-column justify-content-around justify-content-lg-between gap-2") {

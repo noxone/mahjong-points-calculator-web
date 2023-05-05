@@ -37,7 +37,7 @@ class MultiplayerComponent(
     private var multiplayerInput: OffCanvas by Delegates.notNull()
 
     private val playerInputs: MutableMap<Wind, HTMLInputElement> = mutableMapOf()
-    private var btnStartGame: HTMLButtonElement by Delegates.notNull()
+    private var btnStartSession: HTMLButtonElement by Delegates.notNull()
 
     init {
         model.registerChangeListener(this)
@@ -60,15 +60,15 @@ class MultiplayerComponent(
                     playerInputs[Wind.North] = createInput("Player 4", "North Wind")
                 }
                 p { translate("after.click.start.game") }
-                btnStartGame = returningRoot {
+                btnStartSession = returningRoot {
                     button(
                         classes = "btn btn-primary",
                         type = ButtonType.button
-                    ) { translate("Start Game") }
+                    ) { translate("Start Session") }
                 }
             }
 
-        btnStartGame.onclick = {
+        btnStartSession.onclick = {
             if (checkInputsAndReturnResult()) {
                 // TODO: Start game
             }

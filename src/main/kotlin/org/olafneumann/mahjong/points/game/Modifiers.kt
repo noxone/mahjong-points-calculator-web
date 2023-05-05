@@ -2,7 +2,7 @@ package org.olafneumann.mahjong.points.game
 
 import org.olafneumann.mahjong.points.definition.Wind
 
-data class GameModifiers(
+data class Modifiers(
     val prevailingWind: Wind,
     val mahjongAtBeginning: Boolean = false,
     val schlussziegelVonDerMauer: Boolean = false,

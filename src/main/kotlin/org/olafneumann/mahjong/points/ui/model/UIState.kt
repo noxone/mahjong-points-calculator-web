@@ -2,7 +2,7 @@ package org.olafneumann.mahjong.points.ui.model
 
 import org.olafneumann.mahjong.points.definition.Tile
 import org.olafneumann.mahjong.points.definition.Wind
-import org.olafneumann.mahjong.points.game.GameModifiers
+import org.olafneumann.mahjong.points.game.Modifiers
 import org.olafneumann.mahjong.points.model.Hand
 import org.olafneumann.mahjong.points.model.CalculatorModel
 import org.olafneumann.mahjong.points.model.ErrorMessage
@@ -70,7 +70,7 @@ class UIState {
 
     fun reset(figure: Figure) = setNewModel(calculatorModel.reset(figure))
 
-    fun setGameModifiers(gameModifiers: GameModifiers) = setNewModel(calculatorModel.setGameModifiers(gameModifiers))
+    fun setGameModifiers(gameModifiers: Modifiers) = setNewModel(calculatorModel.setGameModifiers(gameModifiers))
 
     fun setSeatWind(wind: Wind) = setNewModel(calculatorModel.setSeatWind(wind))
 

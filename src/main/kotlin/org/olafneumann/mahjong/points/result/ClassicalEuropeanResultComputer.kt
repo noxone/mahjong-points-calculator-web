@@ -2,7 +2,7 @@ package org.olafneumann.mahjong.points.result
 
 import org.olafneumann.mahjong.points.definition.Tile
 import org.olafneumann.mahjong.points.definition.Wind
-import org.olafneumann.mahjong.points.game.GameModifiers
+import org.olafneumann.mahjong.points.game.Modifiers
 import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.model.Combination.Type.Chow
 import org.olafneumann.mahjong.points.model.Combination.Type.FinishingPair
@@ -19,7 +19,7 @@ class ClassicalEuropeanResultComputer : ResultComputer {
     override val name: String
         get() = "Classical European"
 
-    override fun computePlayerResult(hand: Hand, gameModifiers: GameModifiers, seatWind: Wind): PlayerResult {
+    override fun computePlayerResult(hand: Hand, gameModifiers: Modifiers, seatWind: Wind): PlayerResult {
         val lines = listOf(
             // Points
             checkPointsForAll(hand),
@@ -98,7 +98,7 @@ class ClassicalEuropeanResultComputer : ResultComputer {
                 .map { Line(description = StringKeys.KANG_MAINTILE_CLOSED, points = 32) }
             )
 
-    private fun checkPointsForWinner(hand: Hand, gameModifiers: GameModifiers, seatWind: Wind): List<Line> {
+    private fun checkPointsForWinner(hand: Hand, gameModifiers: Modifiers, seatWind: Wind): List<Line> {
         return checkPairs(hand = hand, gameModifiers = gameModifiers, seatWind = seatWind) +
                 listOfNotNull(
                     // Mahjong
@@ -118,7 +118,7 @@ class ClassicalEuropeanResultComputer : ResultComputer {
                 )
     }
 
-    private fun checkPairs(hand: Hand, gameModifiers: GameModifiers, seatWind: Wind): List<Line> = (
+    private fun checkPairs(hand: Hand, gameModifiers: Modifiers, seatWind: Wind): List<Line> = (
             hand.getFigures(FinishingPair, tiles = Tile.dragons)
                 .map { Line(description = StringKeys.PAIR_OF_DRAGONS, points = 2) }
                     + hand.getFigures(FinishingPair, tiles = seatWind.tiles)
@@ -188,7 +188,7 @@ class ClassicalEuropeanResultComputer : ResultComputer {
             .flatten()
             .mapNotNull { it }
 
-    private fun checkDoublingsForWinner(gameModifiers: GameModifiers, hand: Hand): List<Line> =
+    private fun checkDoublingsForWinner(gameModifiers: Modifiers, hand: Hand): List<Line> =
         listOf(
             // TODO Null-Punkte-Hand 1
             listOf(
