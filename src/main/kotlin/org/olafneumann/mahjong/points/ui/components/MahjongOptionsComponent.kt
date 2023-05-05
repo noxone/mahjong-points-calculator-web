@@ -32,7 +32,7 @@ class MahjongOptionsComponent(
         model.registerChangeListener(this)
     }
 
-    private val gameModifiers: Modifiers get() = model.calculatorModel.modifiers
+    private val modifiers: Modifiers get() = model.calculatorModel.modifiers
 
     override fun TagConsumer<HTMLElement>.createUI() {
         div(classes = "flex-fill d-flex flex-column justify-content-between position-relative") {
@@ -46,34 +46,27 @@ class MahjongOptionsComponent(
 
     private fun TagConsumer<HTMLElement>.createMahjongCheckboxes() {
         chkSchlussziegelVonDerMauer = checkbox("Schlussziegel von der Mauer") {
-            model.setModifiers(gameModifiers.copy(schlussziegelVonDerMauer = it))
+            model.setModifiers(modifiers.copy(schlussziegelVonDerMauer = it))
         }
         chkSchlussziegelIstEinzigMoeglicherZiegel = checkbox("Schlussziegel ist einzig möglicher Ziegel") {
-            model.setModifiers(
-                gameModifiers.copy(schlussziegelEinzigMoeglicherZiegel = it)
-            )
+            model.setModifiers(modifiers.copy(schlussziegelEinzigMoeglicherZiegel = it))
         }
         chkSchlussziegelKomplettiertPaar = checkbox("Schlussziegel komplettiert Paar") {
-            model.setModifiers(gameModifiers.copy(schlussziegelKomplettiertPaar = it))
+            model.setModifiers(modifiers.copy(schlussziegelKomplettiertPaar = it))
         }
         chkOutOnSupplementTile = checkbox("Schlussziegel von der toten Mauer") {
-            model.setModifiers(gameModifiers.copy(outOnSupplementTile = it))
+            model.setModifiers(modifiers.copy(outOnSupplementTile = it))
         }
         chkOutOnLastTileOfWall = checkbox("mit dem letzten Ziegel der Mauer gewonnen") {
-            model.setModifiers(gameModifiers.copy(outOnLastTileOfWall = it))
+            model.setModifiers(modifiers.copy(outOnLastTileOfWall = it))
         }
-        chkOutOnLastDiscard =
-            checkbox("Schlussziegel ist abgelegter Ziegel nach Abbau der Mauer") {
-                model.setModifiers(
-                    gameModifiers.copy(outOnLastDiscard = it)
-                )
-            }
-        chkOutByRobbingTheKong = checkbox("Beraubung des Kang") {
-            model.setModifiers(gameModifiers.copy(outByRobbingTheKong = it))
+        chkOutOnLastDiscard = checkbox("Schlussziegel ist abgelegter Ziegel nach Abbau der Mauer") {
+            model.setModifiers(modifiers.copy(outOnLastDiscard = it))
         }
-        chkMahjongZuBeginn = checkbox("Mahjong-Ruf zu Beginn") {
-            model.setModifiers(gameModifiers.copy(mahjongAtBeginning = it))
-        }
+        chkOutByRobbingTheKong =
+            checkbox("Beraubung des Kang") { model.setModifiers(modifiers.copy(outByRobbingTheKong = it)) }
+        chkMahjongZuBeginn =
+            checkbox("Mahjong-Ruf zu Beginn") { model.setModifiers(modifiers.copy(mahjongAtBeginning = it)) }
     }
 
     @Suppress("CyclomaticComplexMethod")
@@ -81,26 +74,25 @@ class MahjongOptionsComponent(
         val isMahjong = model.calculatorModel.isMahjong
 
         // checked or not
-        chkSchlussziegelVonDerMauer.checked = isMahjong && gameModifiers.schlussziegelVonDerMauer
-        chkSchlussziegelIstEinzigMoeglicherZiegel.checked =
-            isMahjong && gameModifiers.schlussziegelEinzigMoeglicherZiegel
-        chkSchlussziegelKomplettiertPaar.checked = isMahjong && gameModifiers.schlussziegelKomplettiertPaar
-        chkOutOnSupplementTile.checked = isMahjong && gameModifiers.outOnSupplementTile
-        chkOutOnLastTileOfWall.checked = isMahjong && gameModifiers.outOnLastTileOfWall
-        chkOutOnLastDiscard.checked = isMahjong && gameModifiers.outOnLastDiscard
-        chkOutByRobbingTheKong.checked = isMahjong && gameModifiers.outByRobbingTheKong
-        chkMahjongZuBeginn.checked = isMahjong && gameModifiers.mahjongAtBeginning
+        chkSchlussziegelVonDerMauer.checked = isMahjong && modifiers.schlussziegelVonDerMauer
+        chkSchlussziegelIstEinzigMoeglicherZiegel.checked = isMahjong && modifiers.schlussziegelEinzigMoeglicherZiegel
+        chkSchlussziegelKomplettiertPaar.checked = isMahjong && modifiers.schlussziegelKomplettiertPaar
+        chkOutOnSupplementTile.checked = isMahjong && modifiers.outOnSupplementTile
+        chkOutOnLastTileOfWall.checked = isMahjong && modifiers.outOnLastTileOfWall
+        chkOutOnLastDiscard.checked = isMahjong && modifiers.outOnLastDiscard
+        chkOutByRobbingTheKong.checked = isMahjong && modifiers.outByRobbingTheKong
+        chkMahjongZuBeginn.checked = isMahjong && modifiers.mahjongAtBeginning
 
         // activated or not
-        chkSchlussziegelVonDerMauer.enabled = isMahjong && gameModifiers.isSchlussziegelVonDerMauerPossible
+        chkSchlussziegelVonDerMauer.enabled = isMahjong && modifiers.isSchlussziegelVonDerMauerPossible
         chkSchlussziegelIstEinzigMoeglicherZiegel.enabled =
-            isMahjong && gameModifiers.isSchlussziegelIStEinzigMoeglicherZiegelPossible
-        chkSchlussziegelKomplettiertPaar.enabled = isMahjong && gameModifiers.isSchlussziegelKomplettiertPaarPossible
-        chkOutOnSupplementTile.enabled = isMahjong && gameModifiers.isOutOnSupplementTilePossible
-        chkOutOnLastTileOfWall.enabled = isMahjong && gameModifiers.itOutOnLastTileOfWallPossible
-        chkOutOnLastDiscard.enabled = isMahjong && gameModifiers.isOutOnLastDiscardPossible
-        chkOutByRobbingTheKong.enabled = isMahjong && gameModifiers.isOutByRobbingTheKongPossible
-        chkMahjongZuBeginn.enabled = isMahjong && gameModifiers.isMahjongAtBeginningPossible
+            isMahjong && modifiers.isSchlussziegelIStEinzigMoeglicherZiegelPossible
+        chkSchlussziegelKomplettiertPaar.enabled = isMahjong && modifiers.isSchlussziegelKomplettiertPaarPossible
+        chkOutOnSupplementTile.enabled = isMahjong && modifiers.isOutOnSupplementTilePossible
+        chkOutOnLastTileOfWall.enabled = isMahjong && modifiers.itOutOnLastTileOfWallPossible
+        chkOutOnLastDiscard.enabled = isMahjong && modifiers.isOutOnLastDiscardPossible
+        chkOutByRobbingTheKong.enabled = isMahjong && modifiers.isOutByRobbingTheKongPossible
+        chkMahjongZuBeginn.enabled = isMahjong && modifiers.isMahjongAtBeginningPossible
 
         overlay.toggle(!isMahjong)
     }

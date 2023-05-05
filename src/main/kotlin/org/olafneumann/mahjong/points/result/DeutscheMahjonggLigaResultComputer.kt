@@ -189,7 +189,7 @@ class DeutscheMahjonggLigaResultComputer : ResultComputer {
             .flatten()
             .mapNotNull { it }
 
-    private fun checkDoublingsForWinner(gameModifiers: Modifiers, hand: Hand): List<Line> =
+    private fun checkDoublingsForWinner(modifiers: Modifiers, hand: Hand): List<Line> =
         listOf(
             // TODO Null-Punkte-Hand 1
             listOf(
@@ -214,19 +214,19 @@ class DeutscheMahjonggLigaResultComputer : ResultComputer {
                 hand.allTilesOfFigures.all { it.isImage }
                     .map { Line(description = StringKeys.ONLY_IMAGETILES, doublings = 2) },
                 // Schlussziegel von der toten Mauer
-                gameModifiers.outOnSupplementTile
+                modifiers.outOnSupplementTile
                     .map { Line(description = StringKeys.WINNING_TILE_FROM_DEAD_WALL, doublings = 1) },
                 // mit dem letzten Ziegel der Mauer gewonnenes Spiel
-                gameModifiers.outOnLastTileOfWall
+                modifiers.outOnLastTileOfWall
                     .map { Line(description = StringKeys.WINNING_TILE_IS_LAST_TILE_FROM_WALL, doublings = 1) },
                 // Schlussziegel: abgelegter Ziegel nach Abbau der Mauer 1
-                gameModifiers.outOnLastDiscard
+                modifiers.outOnLastDiscard
                     .map { Line(description = StringKeys.WINNING_TILE_IS_DISCARD_AFTER_END_OF_WALL, doublings = 1) },
                 // Beraubung des Kang
-                gameModifiers.outByRobbingTheKong
+                modifiers.outByRobbingTheKong
                     .map { Line(description = StringKeys.ROBBING_THE_KANG, doublings = 1) },
                 // Mahjong-Ruf zu Beginn
-                gameModifiers.mahjongAtBeginning
+                modifiers.mahjongAtBeginning
                     .map { Line(description = StringKeys.MAHJONG_AT_BEGINNING, doublings = 1) },
             )
 
