@@ -23,7 +23,7 @@ class WindComponent(
         model.registerChangeListener(this)
     }
 
-    private val gameModifiers: Modifiers get() = model.calculatorModel.gameModifiers
+    private val gameModifiers: Modifiers get() = model.calculatorModel.modifiers
 
     override fun TagConsumer<HTMLElement>.createUI() {
         div(classes = "flex-fill d-flex flex-column justify-content-around justify-content-lg-between gap-2") {

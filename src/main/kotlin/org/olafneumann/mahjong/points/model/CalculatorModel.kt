@@ -3,6 +3,7 @@ package org.olafneumann.mahjong.points.model
 import org.olafneumann.mahjong.points.definition.Tile
 import org.olafneumann.mahjong.points.definition.Wind
 import org.olafneumann.mahjong.points.game.Modifiers
+import org.olafneumann.mahjong.points.game.Session
 import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.model.Combination.Type.Chow
 import org.olafneumann.mahjong.points.model.Combination.Type.FinishingPair
@@ -21,20 +22,21 @@ import org.olafneumann.mahjong.points.util.to
 data class CalculatorModel(
     val resultComputer: ResultComputer = ResultComputer.default,
     val hand: Hand,
-    val gameModifiers: Modifiers = Modifiers(prevailingWind = Wind.East),
+    val modifiers: Modifiers = Modifiers(prevailingWind = Wind.East),
     val seatWind: Wind = Wind.East,
     val selectedFigure: Figure = Figure1,
+    val session: Session? = null,
 ) {
     private fun evolve(
         hand: Hand = this.hand,
-        gameModifiers: Modifiers = this.gameModifiers,
+        modifiers: Modifiers = this.modifiers,
         seatWind: Wind = this.seatWind,
         selectedFigure: Figure = this.selectedFigure,
         vararg errorMessage: ErrorMessage
     ): kotlin.Pair<CalculatorModel, List<ErrorMessage>> =
         copy(
             hand = hand,
-            gameModifiers = gameModifiers,
+            modifiers = modifiers,
             seatWind = seatWind,
             selectedFigure = selectedFigure,
         ) to errorMessage.asList()
@@ -224,8 +226,8 @@ data class CalculatorModel(
         }
     }
 
-    fun setGameModifiers(gameModifiers: Modifiers): CalculatorModel = evolve(
-        gameModifiers = gameModifiers,
+    fun setModifiers(gameModifiers: Modifiers): CalculatorModel = evolve(
+        modifiers = gameModifiers,
     ).first
 
     fun setSeatWind(wind: Wind): CalculatorModel = evolve(
@@ -263,12 +265,10 @@ data class CalculatorModel(
 
     val isMahjong: Boolean = hand.isMahjong
 
-
-
     val result: PlayerResult by lazy {
         resultComputer.computePlayerResult(
             hand,
-            gameModifiers,
+            modifiers,
             seatWind = seatWind
         )
     }
