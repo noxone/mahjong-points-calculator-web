@@ -3,7 +3,6 @@ package org.olafneumann.mahjong.points.ui.components
 import kotlinx.html.TagConsumer
 import kotlinx.html.div
 import org.olafneumann.mahjong.points.definition.Wind
-import org.olafneumann.mahjong.points.game.Modifiers
 import org.olafneumann.mahjong.points.lang.StringKeys
 import org.olafneumann.mahjong.points.ui.controls.RadioGroup
 import org.olafneumann.mahjong.points.ui.controls.RadioGroup.Companion.radioButtonGroup
@@ -23,8 +22,6 @@ class WindComponent(
         model.registerChangeListener(this)
     }
 
-    private val gameModifiers: Modifiers get() = model.calculatorModel.modifiers
-
     override fun TagConsumer<HTMLElement>.createUI() {
         div(classes = "flex-fill d-flex flex-column justify-content-around justify-content-lg-between gap-2") {
             createWindRadioButtons()
@@ -34,7 +31,7 @@ class WindComponent(
     private fun TagConsumer<HTMLElement>.createWindRadioButtons() {
         rdaPrevailingWind =
             radioButtonGroup(StringKeys.KEY_PREVAILING_WIND, Wind.values().asList(), maxItemsPerRow = 2) {
-                model.setGameModifiers(gameModifiers.copy(prevailingWind = it))
+                model.setPrevailingWind(it)
             }
         rdaSeatWind = radioButtonGroup(StringKeys.KEY_SEAT_WIND, Wind.values().asList(), maxItemsPerRow = 2) {
             model.setSeatWind(it)
@@ -42,8 +39,8 @@ class WindComponent(
     }
 
     override fun updateUI() {
-        rdaPrevailingWind.selection = gameModifiers.prevailingWind
-        rdaSeatWind.selection = model.calculatorModel.seatWind
+        rdaPrevailingWind.selection = model.calculatorModel.winds.prevailingWind
+        rdaSeatWind.selection = model.calculatorModel.winds.seatWind
     }
 
     override fun modelChanged(model: UIState) {

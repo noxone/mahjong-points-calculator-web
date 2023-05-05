@@ -3,6 +3,8 @@ package org.olafneumann.mahjong.points.ui.model
 import org.olafneumann.mahjong.points.definition.Tile
 import org.olafneumann.mahjong.points.definition.Wind
 import org.olafneumann.mahjong.points.game.Modifiers
+import org.olafneumann.mahjong.points.game.Player
+import org.olafneumann.mahjong.points.game.Session
 import org.olafneumann.mahjong.points.model.Hand
 import org.olafneumann.mahjong.points.model.CalculatorModel
 import org.olafneumann.mahjong.points.model.ErrorMessage
@@ -70,9 +72,11 @@ class UIState {
 
     fun reset(figure: Figure) = setNewModel(calculatorModel.reset(figure))
 
-    fun setGameModifiers(gameModifiers: Modifiers) = setNewModel(calculatorModel.setGameModifiers(gameModifiers))
+    fun setModifiers(modifiers: Modifiers) = setNewModel(calculatorModel.setModifiers(modifiers))
 
-    fun setSeatWind(wind: Wind) = setNewModel(calculatorModel.setSeatWind(wind))
+    fun setPrevailingWind(wind: Wind) = setNewModel(calculatorModel.setWinds(prevailingWind = wind))
+
+    fun setSeatWind(wind: Wind) = setNewModel(calculatorModel.setWinds(seatWind = wind))
 
 
     fun reset() = setNewModel(calculatorModel.forNextPlayer(moveSeatWind = false))
@@ -80,6 +84,10 @@ class UIState {
     fun setNextPlayer() = setNewModel(calculatorModel.forNextPlayer(moveSeatWind = true))
 
     fun start() = fireChange()
+
+    fun startSession(players: Map<Wind, Player>) {
+        val session = Session(players = Wind.values().map { players[it]!! }, rounds = emptyList())
+    }
 
     companion object {
         private fun createInitialCalculatorModel(): CalculatorModel =

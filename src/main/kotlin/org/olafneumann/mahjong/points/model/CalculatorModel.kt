@@ -22,22 +22,22 @@ import org.olafneumann.mahjong.points.util.to
 data class CalculatorModel(
     val resultComputer: ResultComputer = ResultComputer.default,
     val hand: Hand,
-    val modifiers: Modifiers = Modifiers(prevailingWind = Wind.East),
-    val seatWind: Wind = Wind.East,
+    val modifiers: Modifiers = Modifiers(),
+    val winds: ManualWinds = ManualWinds(prevailingWind = Wind.East, seatWind = Wind.East),
     val selectedFigure: Figure = Figure1,
     val session: Session? = null,
 ) {
     private fun evolve(
         hand: Hand = this.hand,
         modifiers: Modifiers = this.modifiers,
-        seatWind: Wind = this.seatWind,
+        winds: ManualWinds = this.winds,
         selectedFigure: Figure = this.selectedFigure,
         vararg errorMessage: ErrorMessage
     ): kotlin.Pair<CalculatorModel, List<ErrorMessage>> =
         copy(
             hand = hand,
             modifiers = modifiers,
-            seatWind = seatWind,
+            winds = winds,
             selectedFigure = selectedFigure,
         ) to errorMessage.asList()
 
@@ -226,12 +226,15 @@ data class CalculatorModel(
         }
     }
 
-    fun setModifiers(gameModifiers: Modifiers): CalculatorModel = evolve(
-        modifiers = gameModifiers,
+    fun setModifiers(modifiers: Modifiers): CalculatorModel = evolve(
+        modifiers = modifiers,
     ).first
 
-    fun setSeatWind(wind: Wind): CalculatorModel = evolve(
-        seatWind = wind,
+    fun setWinds(prevailingWind: Wind? = null, seatWind: Wind? = null): CalculatorModel = evolve(
+        winds = winds.copy(
+            prevailingWind = prevailingWind ?: winds.prevailingWind,
+            seatWind = seatWind ?: winds.seatWind
+        )
     ).first
 
     fun setOpen(figure: Figure, open: Boolean): CalculatorModel =
@@ -259,7 +262,7 @@ data class CalculatorModel(
     fun forNextPlayer(moveSeatWind: Boolean): CalculatorModel =
         evolve(
             hand = Hand(),
-            seatWind = moveSeatWind.to(seatWind.next, seatWind),
+            winds = winds.copy(seatWind = moveSeatWind.to(winds.seatWind.next, winds.seatWind)),
             selectedFigure = Figure1,
         ).first
 
@@ -269,7 +272,8 @@ data class CalculatorModel(
         resultComputer.computePlayerResult(
             hand,
             modifiers,
-            seatWind = seatWind
+            prevailingWind = winds.prevailingWind,
+            seatWind = winds.seatWind
         )
     }
 

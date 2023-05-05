@@ -6,7 +6,7 @@ import org.olafneumann.mahjong.points.model.Hand
 
 interface ResultComputer {
     val name: String
-    fun computePlayerResult(hand: Hand, gameModifiers: Modifiers, seatWind: Wind): PlayerResult
+    fun computePlayerResult(hand: Hand, modifiers: Modifiers, prevailingWind: Wind, seatWind: Wind): PlayerResult
 
     companion object {
         val availableResultComputers: List<ResultComputer> = listOf(

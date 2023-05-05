@@ -19,24 +19,25 @@ class DeutscheMahjonggLigaResultComputer : ResultComputer {
     override val name: String
         get() = "Deutsche Mah-Jongg Liga"
 
-    override fun computePlayerResult(hand: Hand, gameModifiers: Modifiers, seatWind: Wind): PlayerResult {
+    override fun computePlayerResult(hand: Hand, modifiers: Modifiers, prevailingWind: Wind, seatWind: Wind): PlayerResult {
         val lines = listOf(
             // Points
             checkPointsForAll(hand),
-            checkPairs(hand, gameModifiers, seatWind),
+            checkPairs(hand, prevailingWind, seatWind),
             checkForFlowersForAll(hand),
             // Points for Mahjong
             hand.isMahjong.map {
                 checkPointsForWinner(
                     hand = hand,
-                    gameModifiers = gameModifiers,
+                    modifiers = modifiers,
+                    prevailingWind = prevailingWind,
                     seatWind = seatWind
                 )
             },
             // Doublings for all
-            checkDoublings(hand = hand, prevailingWind = gameModifiers.prevailingWind, seatWind = seatWind),
+            checkDoublings(hand = hand, prevailingWind = prevailingWind, seatWind = seatWind),
             // Doublings for Mahjong
-            hand.isMahjong.map { checkDoublingsForWinner(gameModifiers, hand) }
+            hand.isMahjong.map { checkDoublingsForWinner(modifiers, hand) }
         )
             .mapNotNull { it }
             .flatten()
@@ -98,32 +99,32 @@ class DeutscheMahjonggLigaResultComputer : ResultComputer {
                 .map { Line(description = StringKeys.KANG_MAINTILE_CLOSED, points = 32) }
             )
 
-    private fun checkPointsForWinner(hand: Hand, gameModifiers: Modifiers, seatWind: Wind): List<Line> {
-        return checkPairs(hand = hand, gameModifiers = gameModifiers, seatWind = seatWind) +
+    private fun checkPointsForWinner(hand: Hand, modifiers: Modifiers, prevailingWind: Wind, seatWind: Wind): List<Line> {
+        return checkPairs(hand = hand, prevailingWind = prevailingWind, seatWind = seatWind) +
                 listOfNotNull(
                     // Mahjong
                     Line(description = StringKeys.MAHJONG, points = 20),
                     // Schlussziegel von der Mauer
-                    gameModifiers.schlussziegelVonDerMauer
+                    modifiers.schlussziegelVonDerMauer
                         .map { Line(StringKeys.WINNING_TILE_FROM_WALL, points = 2) },
                     // Schlussziegel ist einzig möglicher Stein
-                    gameModifiers.schlussziegelEinzigMoeglicherZiegel
+                    modifiers.schlussziegelEinzigMoeglicherZiegel
                         .map { Line(StringKeys.WINNING_TILE_ONLY_POSSIBLE_TILE, points = 2) },
                     // Schlussziegel komplettiert Paar aus Grundziegeln
-                    (gameModifiers.schlussziegelKomplettiertPaar && (hand.pair?.tile?.isBaseTile ?: false))
+                    (modifiers.schlussziegelKomplettiertPaar && (hand.pair?.tile?.isBaseTile ?: false))
                         .map { Line(StringKeys.WINNING_TILE_COMPLETES_PAIR_OF_MINOR_TILES, points = 2) },
                     // Schlussziegel komplettiert Paar aus Hauptziegeln
-                    (gameModifiers.schlussziegelKomplettiertPaar && !(hand.pair?.tile?.isBaseTile ?: false))
+                    (modifiers.schlussziegelKomplettiertPaar && !(hand.pair?.tile?.isBaseTile ?: false))
                         .map { Line(StringKeys.WINNING_TILE_COMPLETES_PAIR_OF_MAJOR_TILES, points = 4) },
                 )
     }
 
-    private fun checkPairs(hand: Hand, gameModifiers: Modifiers, seatWind: Wind): List<Line> = (
+    private fun checkPairs(hand: Hand, prevailingWind: Wind, seatWind: Wind): List<Line> = (
             hand.getFigures(FinishingPair, tiles = Tile.dragons)
                 .map { Line(description = StringKeys.PAIR_OF_DRAGONS, points = 2) }
                     + hand.getFigures(FinishingPair, tiles = seatWind.tiles)
                 .map { Line(description = StringKeys.PAIR_WIND_SEAT, points = 2) }
-                    + hand.getFigures(FinishingPair, tiles = gameModifiers.prevailingWind.tiles)
+                    + hand.getFigures(FinishingPair, tiles = prevailingWind.tiles)
                 .map { Line(description = StringKeys.PAIR_WIND_PREVAILING, points = 2) }
             )
 

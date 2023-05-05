@@ -46,33 +46,33 @@ class MahjongOptionsComponent(
 
     private fun TagConsumer<HTMLElement>.createMahjongCheckboxes() {
         chkSchlussziegelVonDerMauer = checkbox("Schlussziegel von der Mauer") {
-            model.setGameModifiers(gameModifiers.copy(schlussziegelVonDerMauer = it))
+            model.setModifiers(gameModifiers.copy(schlussziegelVonDerMauer = it))
         }
         chkSchlussziegelIstEinzigMoeglicherZiegel = checkbox("Schlussziegel ist einzig möglicher Ziegel") {
-            model.setGameModifiers(
+            model.setModifiers(
                 gameModifiers.copy(schlussziegelEinzigMoeglicherZiegel = it)
             )
         }
         chkSchlussziegelKomplettiertPaar = checkbox("Schlussziegel komplettiert Paar") {
-            model.setGameModifiers(gameModifiers.copy(schlussziegelKomplettiertPaar = it))
+            model.setModifiers(gameModifiers.copy(schlussziegelKomplettiertPaar = it))
         }
         chkOutOnSupplementTile = checkbox("Schlussziegel von der toten Mauer") {
-            model.setGameModifiers(gameModifiers.copy(outOnSupplementTile = it))
+            model.setModifiers(gameModifiers.copy(outOnSupplementTile = it))
         }
         chkOutOnLastTileOfWall = checkbox("mit dem letzten Ziegel der Mauer gewonnen") {
-            model.setGameModifiers(gameModifiers.copy(outOnLastTileOfWall = it))
+            model.setModifiers(gameModifiers.copy(outOnLastTileOfWall = it))
         }
         chkOutOnLastDiscard =
             checkbox("Schlussziegel ist abgelegter Ziegel nach Abbau der Mauer") {
-                model.setGameModifiers(
+                model.setModifiers(
                     gameModifiers.copy(outOnLastDiscard = it)
                 )
             }
         chkOutByRobbingTheKong = checkbox("Beraubung des Kang") {
-            model.setGameModifiers(gameModifiers.copy(outByRobbingTheKong = it))
+            model.setModifiers(gameModifiers.copy(outByRobbingTheKong = it))
         }
         chkMahjongZuBeginn = checkbox("Mahjong-Ruf zu Beginn") {
-            model.setGameModifiers(gameModifiers.copy(mahjongAtBeginning = it))
+            model.setModifiers(gameModifiers.copy(mahjongAtBeginning = it))
         }
     }
 

@@ -13,6 +13,7 @@ import kotlinx.html.js.p
 import kotlinx.html.label
 import kotlinx.html.small
 import org.olafneumann.mahjong.points.definition.Wind
+import org.olafneumann.mahjong.points.game.Player
 import org.olafneumann.mahjong.points.ui.controls.OffCanvas
 import org.olafneumann.mahjong.points.ui.controls.Placement
 import org.olafneumann.mahjong.points.ui.controls.createOffCanvas
@@ -70,10 +71,13 @@ class MultiplayerComponent(
 
         btnStartSession.onclick = {
             if (checkInputsAndReturnResult()) {
-                // TODO: Start game
+                model.startSession(players = createPlayers())
             }
         }
     }
+
+    private fun createPlayers(): Map<Wind, Player> =
+        playerInputs.mapValues { Player(it.value.value.trim()) }
 
     private fun TagConsumer<HTMLElement>.createInput(
         labelLarge: String,
