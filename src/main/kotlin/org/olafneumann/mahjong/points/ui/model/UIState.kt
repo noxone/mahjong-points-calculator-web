@@ -68,7 +68,7 @@ class UIState {
 
     fun select(figure: Figure) = setNewModel(calculatorModel.select(figure))
 
-    fun setOpen(figure: Figure, open: Boolean) = setNewModel(calculatorModel.setOpen(figure, open))
+    fun setOpen(figure: Figure, open: Boolean) = setNewModel(calculatorModel.setFigureOpen(figure, open))
 
     fun reset(figure: Figure) = setNewModel(calculatorModel.reset(figure))
 

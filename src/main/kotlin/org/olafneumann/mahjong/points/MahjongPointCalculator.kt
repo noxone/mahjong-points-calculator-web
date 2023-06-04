@@ -4,7 +4,7 @@ import kotlinx.browser.document
 import kotlinx.browser.window
 import org.olafneumann.mahjong.points.ui.components.HandComponent
 import org.olafneumann.mahjong.points.ui.components.MahjongOptionsComponent
-import org.olafneumann.mahjong.points.ui.components.MultiplayerComponent
+import org.olafneumann.mahjong.points.ui.components.SessionComponent
 import org.olafneumann.mahjong.points.ui.components.ResultComponent
 import org.olafneumann.mahjong.points.ui.components.TileSelectionComponent
 import org.olafneumann.mahjong.points.ui.components.WindComponent
@@ -49,15 +49,15 @@ private fun initMahjongPointCalculatorUnsafe() {
 
     val tilesDiv = document.getElement<HTMLDivElement>("mr_tiles")
     val selectedTilesDiv = document.getElement<HTMLDivElement>("mr_selected_tiles")
-    val windDiv = document.getElement<HTMLDivElement>("mr_wind")
+    val sessionDiv = document.getElement<HTMLDivElement>("mr_session")
     val mahjongDiv = document.getElement<HTMLDivElement>("mr_mahjong")
     val resultDiv = document.getElement<HTMLDivElement>("mr_result")
 
     val model = UIState()
 
-    MultiplayerComponent(parent = windDiv, model = model)
+    SessionComponent(parent = sessionDiv, model = model)
     TileSelectionComponent(parent = tilesDiv, model = model)
-    WindComponent(parent = windDiv, model = model)
+    WindComponent(parent = sessionDiv, model = model)
     MahjongOptionsComponent(parent = mahjongDiv, model = model)
     HandComponent(parent = selectedTilesDiv, model = model)
     ResultComponent(parent = resultDiv, model = model)

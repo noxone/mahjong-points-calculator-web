@@ -26,14 +26,17 @@ import org.olafneumann.mahjong.points.ui.model.UIState
 import org.olafneumann.mahjong.points.ui.model.UIStateChangeListener
 import org.olafneumann.mahjong.points.util.HtmlId
 import org.w3c.dom.HTMLButtonElement
+import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
 import kotlin.properties.Delegates
 
-class MultiplayerComponent(
+class SessionComponent(
     parent: HTMLElement,
     private val model: UIState,
 ) : AbstractComponent(parent = parent), UIStateChangeListener {
+    private var divWind: HTMLElement by Delegates.notNull()
+    private var divSession: HTMLElement by Delegates.notNull()
     private var btnMultiplayer = document.getElement<HTMLButtonElement>("mr_btn_multiplayer")
     private var multiplayerInput: OffCanvas by Delegates.notNull()
 
@@ -125,7 +128,6 @@ class MultiplayerComponent(
         playerInputs.values.forEach { validateInput(it) }
         return playerInputs.values.none { it.isInvalid }
     }
-
 
     override fun modelChanged(model: UIState) {
         buildUI()

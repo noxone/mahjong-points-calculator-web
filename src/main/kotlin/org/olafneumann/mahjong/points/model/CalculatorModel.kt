@@ -237,7 +237,7 @@ data class CalculatorModel(
         )
     ).first
 
-    fun setOpen(figure: Figure, open: Boolean): CalculatorModel =
+    fun setFigureOpen(figure: Figure, open: Boolean): CalculatorModel =
         hand.getCombination(figure)?.let {
             evolve(
                 hand = it.replace(hand = hand, visibility = Combination.Visibility.from(open)),
@@ -276,6 +276,8 @@ data class CalculatorModel(
             seatWind = winds.seatWind
         )
     }
+
+    val isSessionActive: Boolean = session != null
 
     companion object {
         private const val FIRST_OF_COLOR = 1
