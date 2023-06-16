@@ -13,7 +13,7 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    implementation("org.jetbrains.kotlinx:kotlinx-html:0.8.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-html:0.9.0")
 }
 
 kotlin {
