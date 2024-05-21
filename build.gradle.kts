@@ -1,5 +1,5 @@
 plugins {
-    kotlin("js") version "1.9.24"
+    kotlin("js") version "2.0.0"
     id("io.gitlab.arturbosch.detekt").version("1.22.0")
 }
 
