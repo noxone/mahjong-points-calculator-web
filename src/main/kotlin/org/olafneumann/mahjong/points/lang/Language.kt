@@ -126,6 +126,7 @@ class Language(
 
                         StringKeys.ERR_NO_TILES_LEFT_FOR_PAIR to "Not enough tiles left for a pair.",
                         StringKeys.ERR_NO_TILES_LEFT_FOR_CHOW to "Not enough tiles left for a Chow.",
+                        StringKeys.ERR_NO_TILES_LEFT_FOR_PUNG to "Not enough tiles left for a Pung.",
                         StringKeys.ERR_TILES_DOES_NOT_FIT_TO_CHOW_OR_PONG to "Tile cannot be used for Pong or Chow in the selected set.",
                         StringKeys.ERR_TILE_DOES_NOT_FIT_TO_SET to "Tile does not fit to selected set.",
                         StringKeys.ERR_NO_TILE_LEFT_FOR_KANG to "No tile left for Kang.",
@@ -234,7 +235,8 @@ class Language(
                         StringKeys.WINNING_TILE_IS_LAST_TILE_FROM_WALL to "Schlussziegel ist letzter Ziegel der Mauer",
 
                         StringKeys.ERR_NO_TILES_LEFT_FOR_PAIR to "Nicht genug Ziegel für Paar übrig.",
-                        StringKeys.ERR_NO_TILES_LEFT_FOR_CHOW to "Nicht genug Ziegel für Pong übrig.",
+                        StringKeys.ERR_NO_TILES_LEFT_FOR_CHOW to "Nicht genug Ziegel für Chi übrig.",
+                        StringKeys.ERR_NO_TILES_LEFT_FOR_PUNG to "Nicht genug Ziegel für Pong übrig.",
                         StringKeys.ERR_TILES_DOES_NOT_FIT_TO_CHOW_OR_PONG to "Ziegel kann nicht für Chi oder Pong in der markierten Figur genutzt werden.",
                         StringKeys.ERR_TILE_DOES_NOT_FIT_TO_SET to "Ziegel passt nicht zur markierten Figur.",
                         StringKeys.ERR_NO_TILE_LEFT_FOR_KANG to "Nicht genug Ziegel für Kang.",
