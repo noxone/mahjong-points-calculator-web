@@ -157,11 +157,11 @@
 
 <div>
   <ul>
-    <li>270 number of properties</li>
-    <li>173 number of functions</li>
-    <li>116 number of classes</li>
+    <li>311 number of properties</li>
+    <li>189 number of functions</li>
+    <li>117 number of classes</li>
     <li>13 number of packages</li>
-    <li>48 number of kt files</li>
+    <li>49 number of kt files</li>
   </ul>
 </div>
 
@@ -170,23 +170,39 @@
 
 <div>
   <ul>
-    <li>3,102 lines of code (loc)</li>
-    <li>2,623 source lines of code (sloc)</li>
-    <li>1,914 logical lines of code (lloc)</li>
-    <li>96 comment lines of code (cloc)</li>
-    <li>370 cyclomatic complexity (mcc)</li>
-    <li>170 cognitive complexity</li>
-    <li>1 number of total code smells</li>
+    <li>3,633 lines of code (loc)</li>
+    <li>3,096 source lines of code (sloc)</li>
+    <li>2,308 logical lines of code (lloc)</li>
+    <li>100 comment lines of code (cloc)</li>
+    <li>401 cyclomatic complexity (mcc)</li>
+    <li>197 cognitive complexity</li>
+    <li>2 number of total code smells</li>
     <li>3% comment source ratio</li>
-    <li>193 mcc per 1,000 lloc</li>
+    <li>173 mcc per 1,000 lloc</li>
     <li>0 code smells per 1,000 lloc</li>
   </ul>
 </div>
 
 
 <h2>Findings</h2>
-<div>Total: 1
-  <h3>complexity: 1</h3>
+<div>Total: 2
+  <h3>complexity: 2</h3>
+  <details id="NestedBlockDepth" open="open">
+    <summary class="rule-container"><span class="rule">NestedBlockDepth: 1 </span><span class="description">Excessive nesting leads to hidden complexity. Prefer extracting code to make it easier to understand.</span></summary>
+<a href="https://detekt.dev/docs/rules/complexity#nestedblockdepth">Documentation</a>
+    <ul>
+      <li><span class="location">/home/runner/work/mahjong-points-calculator-web/mahjong-points-calculator-web/src/main/kotlin/org/olafneumann/mahjong/points/model/CalculatorModel.kt:65:9</span><span class="message">Function select is nested too deeply.</span>
+        <pre><code><span class="lineno">  62 </span>    }
+<span class="lineno">  63 </span>
+<span class="lineno">  64 </span>    @Suppress(&quot;LongMethod&quot;, &quot;CyclomaticComplexMethod&quot;)
+<span class="lineno">  65 </span>    fun <span class="error">select</span>(tile: Tile): kotlin.Pair&lt;CalculatorModel, List&lt;ErrorMessage&gt;&gt; {
+<span class="lineno">  66 </span>        if (tile.isBonusTile) {
+<span class="lineno">  67 </span>            return evolve(
+<span class="lineno">  68 </span>                hand = hand.copy(bonusTiles = hand.bonusTiles + tile),
+</code></pre>
+      </li>
+    </ul>
+  </details>
   <details id="TooManyFunctions" open="open">
     <summary class="rule-container"><span class="rule">TooManyFunctions: 1 </span><span class="description">Too many functions inside a/an file/class/object/interface always indicate a violation of the single responsibility principle. Maybe the file/class/object/interface wants to manage too many things at once. Extract functionality which clearly belongs together.</span></summary>
 <a href="https://detekt.dev/docs/rules/complexity#toomanyfunctions">Documentation</a>
@@ -206,7 +222,7 @@
 </div>
 
 
-generated with <a href="https://detekt.dev/">detekt version 1.22.0</a> on 2024-07-12 12:18:02 UTC.
+generated with <a href="https://detekt.dev/">detekt version 1.22.0</a> on 2024-07-15 18:52:27 UTC.
 
 </body>
 </html>
