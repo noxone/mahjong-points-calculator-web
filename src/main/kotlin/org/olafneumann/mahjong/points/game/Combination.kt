@@ -42,6 +42,16 @@ data class Combination(
         }
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (other == null || other !is Combination) {
+            return false
+        }
+
+        return type == other.type
+                && tile == other.tile
+                && visibility == other.visibility
+    }
+
     companion object {
         private val idGenerator = IdGenerator()
     }

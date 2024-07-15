@@ -100,7 +100,6 @@ class ClassicRulesResultComputer : ResultComputer {
             )
 
     private fun checkMahjongPoints(hand: Hand, gameModifiers: GameModifiers): List<Line> {
-        console.log(gameModifiers)
         return listOf(
             // Mahjong
             Line(description = StringKeys.MAHJONG, points = 20),
@@ -123,7 +122,7 @@ class ClassicRulesResultComputer : ResultComputer {
         listOf(
             listOf(
                 // Beide Bonusziegel des Platzwindes
-                (hand.pair?.getTiles()?.all { it.wind == seatWind } ?: false)
+                hand.bonusTiles.containsAll(Tile.windBonusTiles[seatWind]!!)
                     .map { Line(description = StringKeys.PAIR_WIND_SEAT, doublings = 1) },
                 // alle Blumenziegel
                 hand.bonusTiles.containsAll(Tile.flowers)

@@ -104,7 +104,7 @@ data class CalculatorModel(
         if (combination == null) {
             if (tile.isTrump) {
                 if (!canConsume(tile, tile, tile)) {
-                    return withError(tile, StringKeys.ERR_NO_TILES_LEFT_FOR_CHOW)
+                    return withError(tile, StringKeys.ERR_NO_TILES_LEFT_FOR_PUNG)
                 }
                 return evolve(
                     hand = hand.setCombination(selectedFigure, Combination(Pung, tile, Open)),
@@ -118,7 +118,7 @@ data class CalculatorModel(
             Unfinished0 -> {
                 if (tile == combination.tile) {
                     if (!canConsume(tile, tile)) {
-                        return withError(tile, StringKeys.ERR_NO_TILES_LEFT_FOR_CHOW)
+                        return withError(tile, StringKeys.ERR_NO_TILES_LEFT_FOR_PUNG)
                     }
                     return evolve(
                         hand = combination.replace(
@@ -127,8 +127,15 @@ data class CalculatorModel(
                         ),
                     )
                 }
+                if (!canConsume(tile)) {
+                    return withError(tile, StringKeys.ERR_NO_TILES_LEFT_FOR_CHOW)
+                }
+
                 // nächste Tile am Anfang
                 if (tile == combination.tile.next && combination.tile.number == FIRST_OF_COLOR) {
+                    if (!canConsume(tile.next!!)) {
+                        return withError(tile.next!!, StringKeys.ERR_NO_TILES_LEFT_FOR_CHOW)
+                    }
                     return evolve(
                         hand = combination.replace(hand = hand, type = Chow),
                         selectedFigure = selectedFigure.next,
@@ -136,6 +143,9 @@ data class CalculatorModel(
                 }
                 // vorige Tile am Ende
                 if (tile == combination.tile.previous && combination.tile.number == LAST_OF_COLOR) {
+                    if (!canConsume(tile.previous!!)) {
+                        return withError(tile.previous!!, StringKeys.ERR_NO_TILES_LEFT_FOR_CHOW)
+                    }
                     return evolve(
                         hand = combination.replace(hand = hand, tile = tile.previous!!, type = Chow),
                         selectedFigure = selectedFigure.next,
@@ -143,6 +153,9 @@ data class CalculatorModel(
                 }
                 // übernächste Tile
                 if (tile == combination.tile.next?.next) {
+                    if (!canConsume(tile.previous!!)) {
+                        return withError(tile.previous!!, StringKeys.ERR_NO_TILES_LEFT_FOR_CHOW)
+                    }
                     return evolve(
                         hand = combination.replace(hand = hand, type = Chow),
                         selectedFigure = selectedFigure.next,
@@ -151,6 +164,9 @@ data class CalculatorModel(
                 // nächste Tile
                 if (tile == combination.tile.next) {
                     if (tile.number == LAST_OF_COLOR) {
+                        if (!canConsume(tile.previous!!)) {
+                            return withError(tile.previous!!, StringKeys.ERR_NO_TILES_LEFT_FOR_CHOW)
+                        }
                         return evolve(
                             hand = combination.replace(hand = hand, type = Chow, tile = combination.tile.previous!!),
                             selectedFigure = selectedFigure.next
@@ -163,6 +179,9 @@ data class CalculatorModel(
                 // vorige Tile
                 if (tile == combination.tile.previous) {
                     if (tile.number == FIRST_OF_COLOR) {
+                        if (!canConsume(tile.next!!.next!!)) {
+                            return withError(tile.next!!.next!!, StringKeys.ERR_NO_TILES_LEFT_FOR_CHOW)
+                        }
                         return evolve(
                             hand = combination.replace(hand = hand, type = Chow, tile = tile),
                             selectedFigure = selectedFigure.next
@@ -174,6 +193,9 @@ data class CalculatorModel(
                 }
                 // vor-vorige Tile
                 if (tile == combination.tile.previous?.previous) {
+                    if (!canConsume(tile.next!!)) {
+                        return withError(tile.next!!, StringKeys.ERR_NO_TILES_LEFT_FOR_CHOW)
+                    }
                     return evolve(
                         hand = combination.replace(hand = hand, type = Chow, tile = tile),
                         selectedFigure = selectedFigure.next,
@@ -183,6 +205,9 @@ data class CalculatorModel(
             }
 
             UnfinishedPlus1 -> {
+                if (!canConsume(tile)) {
+                    return withError(tile, StringKeys.ERR_NO_TILES_LEFT_FOR_CHOW)
+                }
                 if (tile == combination.tile.next?.next) {
                     return evolve(
                         hand = combination.replace(hand = hand, type = Chow),

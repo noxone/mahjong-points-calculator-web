@@ -83,6 +83,7 @@ object StringKeys {
 
     const val ERR_NO_TILES_LEFT_FOR_PAIR = "Not enough tiles left for a pair."
     const val ERR_NO_TILES_LEFT_FOR_CHOW = "Not enough tiles left for a Chow."
+    const val ERR_NO_TILES_LEFT_FOR_PUNG = "Not enough tiles left for a Pung."
     const val ERR_TILES_DOES_NOT_FIT_TO_CHOW_OR_PONG = "Tile cannot be used for Pong or Chow in the selected set."
     const val ERR_TILE_DOES_NOT_FIT_TO_SET = "Tile does not fit to selected set."
     const val ERR_NO_TILE_LEFT_FOR_KANG = "No tile left for Kang."
