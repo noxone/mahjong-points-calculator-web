@@ -9,6 +9,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class DeutscheMahjongLigaResultComputerTests {
+    @Suppress("LongParameterList")
     private fun check(
         hand: Hand,
         gameModifiers: GameModifiers? = null,
@@ -159,6 +160,7 @@ class DeutscheMahjongLigaResultComputerTests {
     }
 
     @Test
+    @Suppress("LongMethod")
     fun testSimpleHands() {
         var hand = Hand(
             figure1 = Combination(
