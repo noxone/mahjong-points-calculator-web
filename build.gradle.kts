@@ -1,22 +1,25 @@
-plugins {
-    kotlin("js") version "2.0.0"
-    id("io.gitlab.arturbosch.detekt").version("1.22.0")
-}
-
 group = "org.olafneumann.mahjong.points"
 version = "1.0-SNAPSHOT"
+
+plugins {
+    kotlin("multiplatform") version "2.0.0"
+    id("io.gitlab.arturbosch.detekt").version("1.22.0")
+}
 
 repositories {
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
 }
 
-dependencies {
-    testImplementation(kotlin("test"))
-    implementation("org.jetbrains.kotlinx:kotlinx-html:0.11.0")
-}
-
 kotlin {
+    sourceSets {
+        jsMain.dependencies {
+            implementation("org.jetbrains.kotlinx:kotlinx-html:0.11.0")
+        }
+        jsTest.dependencies {
+            implementation(kotlin("test"))
+        }
+    }
     js {
         useCommonJs()
         binaries.executable()
