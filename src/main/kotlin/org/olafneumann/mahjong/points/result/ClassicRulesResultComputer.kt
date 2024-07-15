@@ -123,7 +123,7 @@ class ClassicRulesResultComputer : ResultComputer {
         listOf(
             listOf(
                 // Beide Bonusziegel des Platzwindes
-                (hand.pair?.getTiles()?.all { it.wind == seatWind } ?: false)
+                hand.bonusTiles.containsAll(Tile.windBonusTiles[seatWind]!!)
                     .map { Line(description = StringKeys.PAIR_WIND_SEAT, doublings = 1) },
                 // alle Blumenziegel
                 hand.bonusTiles.containsAll(Tile.flowers)

@@ -31,9 +31,9 @@ class DeutscheMahjongLigaResultComputerTests {
         // for line in result.lines {
         //     print(line)
         // }
-        assertEquals(expected = finalResult, actual = result.result)
-        points?.let { assertEquals(expected = it, actual = result.points) }
-        doublings?.let { assertEquals(expected = it, actual = result.doublings) }
+        assertEquals(expected = finalResult, actual = result.result, message = "result")
+        points?.let { assertEquals(expected = it, actual = result.points, message = "points") }
+        doublings?.let { assertEquals(expected = it, actual = result.doublings, message = "doublings") }
     }
 
     @Test

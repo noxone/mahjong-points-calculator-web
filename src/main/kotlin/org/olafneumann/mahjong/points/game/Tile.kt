@@ -68,7 +68,7 @@ enum class Tile(
     private val isFlower: Boolean get() = this in flowers
     private val isSeason: Boolean get() = this in seasons
     val isTrump: Boolean get() = isWind || isDragon
-    val isBonusTile: Boolean get() = isFlower ||isSeason
+    val isBonusTile: Boolean get() = isFlower || isSeason
     val numberOfTilesInSet: Int get() = if (isBonusTile) 1 else MAX_NUMBER_OF_TILES_PER_TYPE
 
     companion object {
@@ -79,6 +79,13 @@ enum class Tile(
         val bamboos: Collection<Tile> = allOfColor(Color.Bamboo)
         val characters: Collection<Tile> = allOfColor(Color.Character)
         val circles: Collection<Tile> = allOfColor(Color.Circle)
+        val windBonusTiles: Map<Wind, Collection<Tile>> =
+            mapOf(
+                East to setOf(Flower1, Season1),
+                South to setOf(Flower2, Season2),
+                West to setOf(Flower3, Season3),
+                North to setOf(Flower4, Season4)
+            )
 
         private fun allOfColor(color: Color) = values().filter { it.color == color }
     }
