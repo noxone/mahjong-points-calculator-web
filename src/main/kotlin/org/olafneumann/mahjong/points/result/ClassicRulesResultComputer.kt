@@ -100,7 +100,6 @@ class ClassicRulesResultComputer : ResultComputer {
             )
 
     private fun checkMahjongPoints(hand: Hand, gameModifiers: GameModifiers): List<Line> {
-        console.log(gameModifiers)
         return listOf(
             // Mahjong
             Line(description = StringKeys.MAHJONG, points = 20),

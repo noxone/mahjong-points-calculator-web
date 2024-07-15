@@ -27,10 +27,6 @@ class DeutscheMahjongLigaResultComputerTests {
     }
 
     private fun check(result: PlayerResult, finalResult: Int, points: Int? = null, doublings: Int? = null) {
-        print("--- new Check")
-        // for line in result.lines {
-        //     print(line)
-        // }
         assertEquals(expected = finalResult, actual = result.result, message = "result")
         points?.let { assertEquals(expected = it, actual = result.points, message = "points") }
         doublings?.let { assertEquals(expected = it, actual = result.doublings, message = "doublings") }
