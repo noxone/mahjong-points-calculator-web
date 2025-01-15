@@ -49,7 +49,7 @@ class RadioGroup<T> private constructor(
                                 val radioId = nextHtmlId
                                 map[item] = returningRoot {
                                     input(type = InputType.radio, classes = "btn-check", name = radioId) {
-                                        autoComplete = false
+                                        autoComplete = "false"
                                         id = radioId
                                         onInputFunction = {
                                             val input = it.target!! as HTMLInputElement
