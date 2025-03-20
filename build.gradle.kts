@@ -2,7 +2,7 @@ group = "org.olafneumann.mahjong.points"
 version = "1.0-SNAPSHOT"
 
 plugins {
-    kotlin("multiplatform") version "2.1.10"
+    kotlin("multiplatform") version "2.1.20"
     id("io.gitlab.arturbosch.detekt").version("1.22.0")
 }
 
